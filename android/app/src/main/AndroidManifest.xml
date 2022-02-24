@@ -1,7 +1,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.cppcc_app">
+    package="com.lingrit.cppcc.app">
    <application
-        android:label="cppcc_app"
+        android:label="官渡政协"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

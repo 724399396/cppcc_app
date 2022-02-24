@@ -1,4 +1,4 @@
-package com.example.cppcc_app
+package com.lingrit.cppcc.app
 
 import io.flutter.embedding.android.FlutterActivity
 

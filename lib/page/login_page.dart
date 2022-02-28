@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/user_bloc.dart';
+import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -20,150 +21,176 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
-
+    const itemSpace = SizedBox(height: 32);
+    const formItemSpace = SizedBox(height: 16);
     return Scaffold(
-      backgroundColor: Theme.of(context).backgroundColor,
-      appBar: AppBar(
-        leading: Navigator.of(context).canPop()
-            ? IconButton(
-                icon: Image.asset(
-                  'assets/icons/ic_back.png',
-                  height: 30,
-                  width: 30,
-                ),
-                onPressed: () => Navigator.of(context).pop())
-            : Container(),
-        title: Text('登录',
-            style: Theme.of(context)
-                .primaryTextTheme
-                .headline6
-                ?.copyWith(color: Colors.white)),
-        centerTitle: true,
-      ),
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 36.0, vertical: 16),
-        child: ListView(
-          children: [
-            Image.asset(
-              'assets/icons/ico_green.png',
-              height: deviceSize.height / 6,
-              fit: BoxFit.contain,
+      backgroundColor: AppColors.background,
+      resizeToAvoidBottomInset: false,
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Positioned.fill(
+            child: Image.asset(
+              'assets/bg/bg_dl.png',
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topLeft,
             ),
-            ConstrainedBox(
-              constraints: BoxConstraints(
-                  minHeight: deviceSize.height / 4,
-                  maxHeight: deviceSize.height / 3),
-              child: Form(
-                key: _formKey,
-                onChanged: _onFormChange,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.spaceAround,
-                  children: [
-                    BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) => TextFormField(
-                        key: const ValueKey('username'),
-                        initialValue: state.username,
-                        readOnly: state.username?.isNotEmpty ?? false,
-                        onSaved: (String? val) => _username = val,
-                        decoration: InputDecoration(
-                            prefixIcon: Image.asset(
-                              'assets/icons/ic_user.png',
-                              width: 40,
-                              height: 40,
+          ),
+          Center(
+            child: Column(
+              children: [
+                SizedBox(height: itemSpace.height! * 1.5),
+                const Text("手机登录",
+                    style: TextStyle(fontSize: 20, color: Colors.white)),
+                itemSpace,
+                Image.asset(
+                  'assets/icons/ic_logo_dl.png',
+                  width: deviceSize.width / 3,
+                  fit: BoxFit.contain,
+                ),
+                itemSpace,
+                Container(
+                  margin: const EdgeInsets.symmetric(horizontal: 16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    border: Border.all(
+                      color: Colors.white,
+                    ),
+                    borderRadius: BorderRadius.circular(16),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.grey.withOpacity(0.5),
+                        spreadRadius: 5,
+                        blurRadius: 7,
+                        offset:
+                            const Offset(0, 3), // changes position of shadow
+                      ),
+                    ],
+                  ),
+                  child: Form(
+                    key: _formKey,
+                    onChanged: _onFormChange,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 30, vertical: 40),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) => TextFormField(
+                              key: const ValueKey('username'),
+                              initialValue: state.username,
+                              readOnly: state.username?.isNotEmpty ?? false,
+                              onSaved: (String? val) => _username = val,
+                              decoration: InputDecoration(
+                                  prefixIconConstraints: const BoxConstraints(
+                                      maxHeight: 24, minWidth: 48),
+                                  prefixIcon: Image.asset(
+                                    'assets/icons/ic_shoujih.png',
+                                  ),
+                                  hintText: '请输入手机号',
+                                  hintStyle: Theme.of(context)
+                                      .textTheme
+                                      .subtitle1
+                                      ?.copyWith(color: Colors.grey)),
+                              autovalidateMode:
+                                  AutovalidateMode.onUserInteraction,
+                              validator: (String? val) {
+                                if (val?.isEmpty ?? true) return '手机号不能为空';
+                                return null;
+                              },
                             ),
-                            hintText: '请输入用户名',
-                            hintStyle: Theme.of(context)
-                                .textTheme
-                                .subtitle1
-                                ?.copyWith(color: Colors.grey)),
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        validator: (String? val) {
-                          if (val?.isEmpty ?? true) return '用户名/邮箱不能为空';
-                          return null;
-                        },
+                          ),
+                          formItemSpace,
+                          TextFormField(
+                            key: const ValueKey('password'),
+                            onSaved: (String? val) => _password = val,
+                            decoration: InputDecoration(
+                                prefixIconConstraints: const BoxConstraints(
+                                    maxHeight: 24, minWidth: 48),
+                                prefixIcon: Image.asset(
+                                  'assets/icons/ic_mima.png',
+                                ),
+                                hintText: '请输入密码',
+                                hintStyle: Theme.of(context)
+                                    .textTheme
+                                    .subtitle1
+                                    ?.copyWith(color: Colors.grey)),
+                            obscureText: true,
+                            autovalidateMode:
+                                AutovalidateMode.onUserInteraction,
+                            validator: (String? val) {
+                              if (val?.isEmpty ?? true) return '密码不能为空';
+                              return null;
+                            },
+                          ),
+                          formItemSpace,
+                          BlocBuilder<UserBloc, UserState>(
+                            builder: (context, state) => state.status ==
+                                    FormStatus.submissionInProgress
+                                ? const Center(
+                                    child: CircularProgressIndicator(),
+                                  )
+                                : SizedBox(
+                                    width: MediaQuery.of(context).size.width,
+                                    child: ElevatedButton(
+                                      key: const ValueKey('login'),
+                                      style: ButtonStyle(
+                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                          RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(8.0),
+                                          ),
+                                        ),
+                                      ),
+                                      child: const Text('登录',style: TextStyle(fontSize: 18, color: Colors.white)),
+                                      onPressed: () {
+                                        if (_formKey.currentState?.validate() ??
+                                            false) {
+                                          _formKey.currentState?.save();
+                                          BlocProvider.of<UserBloc>(context)
+                                              .add(UserLoginRequested(
+                                                  _username!, _password!, () {
+                                            Navigator.of(context).canPop()
+                                                ? Navigator.pop(context)
+                                                : Navigator.of(context)
+                                                    .pushReplacementNamed(
+                                                        Routes.home);
+                                          }));
+                                        }
+                                      },
+                                    ),
+                                  ),
+                          ),
+                          formItemSpace,
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              GestureDetector(
+                                onTap: () {
+                                  Navigator.of(context)
+                                      .pushNamed(Routes.resetPasswordPage);
+                                },
+                                child: Text(
+                                  '忘记密码?',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyText1
+                                      ?.copyWith(color: AppColors.primaryBlue),
+                                ),
+                              ),
+                            ],
+                          )
+                        ],
                       ),
                     ),
-                    TextFormField(
-                      key: const ValueKey('password'),
-                      onSaved: (String? val) => _password = val,
-                      decoration: InputDecoration(
-                          prefixIcon: Image.asset(
-                            'assets/icons/ic_mima.png',
-                            width: 40,
-                            height: 40,
-                          ),
-                          hintText: '请输入密码',
-                          hintStyle: Theme.of(context)
-                              .textTheme
-                              .subtitle1
-                              ?.copyWith(color: Colors.grey)),
-                      obscureText: true,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      validator: (String? val) {
-                        if (val?.isEmpty ?? true) return '密码不能为空';
-                        return null;
-                      },
-                    ),
-                    BlocBuilder<UserBloc, UserState>(
-                      builder: (context, state) =>
-                          state.status == FormStatus.submissionInProgress
-                              ? const Center(
-                                  child: CircularProgressIndicator(),
-                                )
-                              : SizedBox(
-                                  width: MediaQuery.of(context).size.width,
-                                  child: ElevatedButton(
-                                    key: const ValueKey('login'),
-                                    style: ElevatedButton.styleFrom(
-                                      primary: Theme.of(context).primaryColor,
-                                      onPrimary: Colors.white,
-                                      shape: const StadiumBorder(),
-                                    ),
-                                    child: const Text('登录'),
-                                    onPressed: () {
-                                      if (_formKey.currentState?.validate() ??
-                                          false) {
-                                        _formKey.currentState?.save();
-                                        BlocProvider.of<UserBloc>(context).add(
-                                            UserLoginRequested(
-                                                _username!, _password!, () {
-                                          Navigator.of(context).canPop()
-                                              ? Navigator.pop(context)
-                                              : Navigator.of(context)
-                                                  .pushReplacementNamed(
-                                                      Routes.home);
-                                        }));
-                                      }
-                                    },
-                                  ),
-                                ),
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            Navigator.of(context)
-                                .pushNamed(Routes.resetPasswordPage);
-                          },
-                          child: Text(
-                            '找回密码',
-                            style: Theme.of(context)
-                                .textTheme
-                                .bodyText1
-                                ?.copyWith(
-                                    color: Theme.of(context).primaryColor),
-                          ),
-                        ),
-                      ],
-                    )
-                  ],
+                  ),
                 ),
-              ),
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

@@ -16,7 +16,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _userRepository;
 
   UserBloc(this._userRepository) : super(const UserState()) {
-    on<UserInitialed>((event, emit) => emit(_populateUserData()));
+    on<UserInitialed>((event, emit) {
+      _userRepository.freshUserInfo().then((_) {
+        emit(_populateUserData());
+      });
+    });
     on<UserLoginRequested>(
         ((event, emit) => _generateCallApi(event, emit, () async {
               await _userRepository.login(event.username, event.password);

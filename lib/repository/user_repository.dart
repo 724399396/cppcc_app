@@ -33,6 +33,14 @@ class UserRepository {
     await _localDataProvider.setAvatar('');
   }
 
+  Future<void> freshUserInfo() async {
+    var userInfo = await _apiDataProvider.getUserInfo();
+    await _localDataProvider.setUserName(userInfo.username);
+    await _localDataProvider.setNickname(userInfo.realname);
+    await _localDataProvider.setAvatar(userInfo.avatar ?? "");
+  }
+
+
   Future<Response<void>> updatePassword(
       String oldPassword, String newPassword) async {
     return await _apiDataProvider.modifyPassword(oldPassword, newPassword);

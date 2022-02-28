@@ -21,14 +21,12 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       json['username'] as String,
       json['realname'] as String,
-      json['email'] as String,
-      json['avatar'] as String,
+      json['avatar'] as String?,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
     <String, dynamic>{
       'username': instance.username,
       'realname': instance.realname,
-      'email': instance.email,
       'avatar': instance.avatar,
     };

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class AppColors {
-  static const background = Color(0xFFF2F2F2);
+  static const background = Color(0xFFF4F4F4);
 
   static const textColor = Color.fromRGBO(35, 35, 50, .7);
 
   static const displayTextColor = Colors.black;
+
+  static const primaryBlue = Colors.blue;
 
   static MaterialColor primary = MaterialColor(0xFFFB7D30, _primarySwatch);
 }

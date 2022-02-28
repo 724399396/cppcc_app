@@ -25,7 +25,8 @@ Future<void> main() async {
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
         // TODO replace
-        baseUrl: 'https://bgris.lingrit.com/',
+        // baseUrl: 'https://bgris.lingrit.com/',
+        baseUrl: 'http://172.10.1.202:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -33,20 +34,20 @@ Future<void> main() async {
       navigationService);
   await localDataProvider.init();
 
+  // Don't allow landscape mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
-    FlutterNativeSplash.remove();
     runApp(MultiRepositoryProvider(
       providers: [
         RepositoryProvider<UserRepository>(
-          create: (context) {
-            return UserRepository(localDataProvider, apiDataProvider);
-          },
+          create: (context) =>
+              UserRepository(localDataProvider, apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(
         providers: [
           BlocProvider<UserBloc>(
+            lazy: false,
             create: (BuildContext context) => UserBloc(
               context.read<UserRepository>(),
             )..add(const UserInitialed()),
@@ -55,5 +56,6 @@ Future<void> main() async {
         child: CppccApp(navigationService),
       ),
     ));
+    FlutterNativeSplash.remove();
   });
 }

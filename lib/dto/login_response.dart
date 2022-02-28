@@ -18,10 +18,9 @@ class LoginResponse {
 class UserResponse {
   final String username;
   final String realname;
-  final String email;
   final String? avatar;
 
-  UserResponse(this.username, this.realname, this.email, this.avatar);
+  UserResponse(this.username, this.realname, this.avatar);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);

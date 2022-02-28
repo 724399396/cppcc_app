@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -26,6 +28,7 @@ class ApiDataProvider {
             DioError(error: '网络错误', requestOptions: response.requestOptions));
       }
       if (!response.data['success']) {
+        showToast(response.data['message']);
         return handler.reject(DioError(
             error: response.data['message'],
             requestOptions: response.requestOptions));
@@ -34,7 +37,7 @@ class ApiDataProvider {
     }, onError: (e, handler) {
       var currentTimestamp = DateTime.now().millisecondsSinceEpoch;
       if (e.response != null && e.response?.data['message'] != null) {
-        if (e.response?.data['message'] == 'Token失效，请重新登录') {
+        if (e.response?.data['code'] == 401) {
           if (!e.requestOptions.extra.containsKey('dontRedirectLogin') ||
               !e.requestOptions.extra['dontRedirectLogin']) {
             showToast(e.response?.data['message']);
@@ -44,26 +47,22 @@ class ApiDataProvider {
         } else {
           showToast(e.response?.data['message']);
         }
-      } else if (e.error != null) {
-        if (currentTimestamp - _lastErrorTimestamp > 1000 * 5) {
-          showToast('网络错误');
-        }
       } else {
         if (currentTimestamp - _lastErrorTimestamp > 1000 * 5) {
           showToast('网络错误');
         }
+        return handler.next(e);
       }
       _lastErrorTimestamp = currentTimestamp;
-      return handler.next(e);
     }));
   }
 
-  Future<LoginResponse> login(String email, String password) {
-    return _dio.post('/sys/mLogin', data: {
-      'username': email,
-      'password': password
-    }).then((value) => LoginResponse.fromJson(
-        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+  Future<LoginResponse> login(String phone, String password) {
+    return _dio.post('/app/user/login',
+        data: {'phone': phone, 'password': password}).then((value) {
+      return LoginResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 
   Future<Response<void>> modifyPassword(
@@ -79,5 +78,11 @@ class ApiDataProvider {
     return _dio.get('', queryParameters: {
       'password': password,
     });
+  }
+
+  Future<UserResponse> getUserInfo() {
+    return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
+            BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
+        .userInfo);
   }
 }

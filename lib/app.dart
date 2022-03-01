@@ -1,4 +1,5 @@
 import 'package:cppcc_app/page/login_page.dart';
+import 'package:cppcc_app/page/reset_password_page.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -10,6 +11,7 @@ final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 final routesDef = {
   Routes.loginPage: (context) => const LoginPage(),
   Routes.home: (context) => const PageContainer(),
+  Routes.resetPasswordPage: (context) => const ResetPasswordPage(),
 };
 
 class CppccApp extends StatelessWidget {

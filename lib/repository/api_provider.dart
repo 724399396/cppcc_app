@@ -1,5 +1,3 @@
-import 'dart:developer';
-
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -51,9 +49,9 @@ class ApiDataProvider {
         if (currentTimestamp - _lastErrorTimestamp > 1000 * 5) {
           showToast('网络错误');
         }
-        return handler.next(e);
       }
       _lastErrorTimestamp = currentTimestamp;
+      return handler.next(e);
     }));
   }
 
@@ -74,9 +72,12 @@ class ApiDataProvider {
     });
   }
 
-  Future<Response<void>> resetPassword(String password) {
-    return _dio.get('', queryParameters: {
+  Future<Response<void>> resetPassword(
+      String phone, String password, String verifyCode) {
+    return _dio.post('/app/user/resetPassword', data: {
+      'phone': phone,
       'password': password,
+      'verifyCode': verifyCode
     });
   }
 
@@ -84,5 +85,9 @@ class ApiDataProvider {
     return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
             BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
         .userInfo);
+  }
+
+  Future<Response<void>> sendSmsVerifyCode(String phone) {
+    return _dio.post('/app/user/sendSmsVerifyCode', data: {'phone': phone});
   }
 }

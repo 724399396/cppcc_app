@@ -29,6 +29,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         ((event, emit) => _generateCallApi(event, emit, () async {
               await _userRepository.logout();
             })));
+    on<UserSendSmsVerifyCodeRequested>(
+        ((event, emit) => _generateCallApi(event, emit, () async {
+              await _userRepository.sendSmsVerifyCode(event.phone);
+            })));
     on<UserUpdatePasswordRequested>(
         (event, emit) => _generateCallApi(event, emit, () async {
               await _userRepository.updatePassword(
@@ -36,7 +40,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             }));
     on<UserResetPasswordRequested>(
         ((event, emit) => _generateCallApi(event, emit, () async {
-              await _userRepository.resetPassword(event.password);
+              await _userRepository.resetPassword(event.phone, event.password, event.verifyCode);
             })));
   }
 

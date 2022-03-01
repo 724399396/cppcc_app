@@ -46,7 +46,11 @@ class UserRepository {
     return await _apiDataProvider.modifyPassword(oldPassword, newPassword);
   }
 
-  Future<Response<void>> resetPassword(String password) async {
-    return await _apiDataProvider.resetPassword(password);
+  Future<Response<void>> resetPassword(String phone, String password, String verifyCode) async {
+    return await _apiDataProvider.resetPassword(phone, password, verifyCode);
+  }
+
+  Future<Response<void>> sendSmsVerifyCode(String phone) async {
+    return await _apiDataProvider.sendSmsVerifyCode(phone);
   }
 }

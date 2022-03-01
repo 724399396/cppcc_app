@@ -1,3 +1,4 @@
+import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
@@ -46,6 +47,9 @@ Future<void> main() async {
       ],
       child: MultiBlocProvider(
         providers: [
+          BlocProvider<TimerBloc>(
+            create: (BuildContext context) => TimerBloc(),
+          ),
           BlocProvider<UserBloc>(
             lazy: false,
             create: (BuildContext context) => UserBloc(

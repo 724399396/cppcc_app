@@ -42,12 +42,24 @@ class UserUpdatePasswordRequested extends UserEvent {
   List<Object> get props => [oldPassword, newPassword];
 }
 
-class UserResetPasswordRequested extends UserEvent {
-  final String password;
+class UserSendSmsVerifyCodeRequested extends UserEvent {
+  final String phone;
 
-  const UserResetPasswordRequested(this.password, successCallback)
+  const UserSendSmsVerifyCodeRequested(this.phone, successCallback) : super(successCallback);
+
+  @override
+  List<Object> get props => [phone];
+}
+
+class UserResetPasswordRequested extends UserEvent {
+  final String phone;
+  final String password;
+  final String verifyCode;
+
+  const UserResetPasswordRequested(
+      this.phone, this.password, this.verifyCode, successCallback)
       : super(successCallback);
 
   @override
-  List<Object> get props => [password];
+  List<Object> get props => [phone, password, verifyCode];
 }

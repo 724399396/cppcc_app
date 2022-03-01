@@ -1,6 +1,11 @@
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:flutter/material.dart';
 
+import 'package:cppcc_app/page/home_news.dart';
+import 'package:cppcc_app/page/home_contacts.dart';
+import 'package:cppcc_app/page/home_message.dart';
+import 'package:cppcc_app/page/home_me.dart';
+
 class PageContainer extends StatefulWidget {
   const PageContainer({Key? key}) : super(key: key);
 
@@ -68,12 +73,12 @@ class _PageContainerState extends State<PageContainer>
       ),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          Icon(Icons.directions_transit),
-          Icon(Icons.directions_transit),
-          Icon(Icons.directions_transit),
-          Icon(Icons.directions_transit),
-          Icon(Icons.directions_transit),
+        children: [
+          HomeMe(),
+          HomeNews(),
+          HomeContacts(),
+          HomeMessage(),
+          HomeMe(),
         ],
         controller: _tabController,
       ),

@@ -131,32 +131,18 @@ class _HomeMeState extends State<HomeMe> {
                                       margin: new EdgeInsets.only(left: 10.0),
                                       width: 24.0,
                                       height: 24.0,
-                                      child: new PreferredSize(
-                                        child: new Container(
-                                          child: new ClipOval(
-                                            child: new Container(
-                                              color: Colors.white,
-                                              child: new Image.asset(
-                                                  'assets/icons/ic_bianji.png'),
-                                            ),
-                                          ),
-                                        ),
+                                      child: new Container(
+                                        child: new Image.asset(
+                                            'assets/icons/ic_bianji.png'),
                                       ),
                                     ),
                                     Container(
                                       margin: new EdgeInsets.only(left: 10.0),
                                       width: 24.0,
                                       height: 24.0,
-                                      child: new PreferredSize(
-                                        child: new Container(
-                                          child: new ClipOval(
-                                            child: new Container(
-                                              color: Colors.white,
-                                              child: new Image.asset(
-                                                  'assets/icons/ic_erweima.png'),
-                                            ),
-                                          ),
-                                        ),
+                                      child: new Container(
+                                        child: new Image.asset(
+                                            'assets/icons/ic_erweima.png'),
                                       ),
                                     ),
                                   ],

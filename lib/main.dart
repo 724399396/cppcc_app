@@ -27,7 +27,8 @@ Future<void> main() async {
       Dio(BaseOptions(
         // TODO replace
         // baseUrl: 'https://bgris.lingrit.com/',
-        baseUrl: 'http://172.10.1.202:10030/cppcc-boot/',
+        // baseUrl: 'http://172.10.1.202:10030/cppcc-boot/',
+        baseUrl: 'http://cppcc.lingrit.com/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),

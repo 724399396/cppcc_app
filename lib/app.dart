@@ -6,12 +6,29 @@ import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/page_container.dart';
 import 'package:flutter/material.dart';
 
+
+//个人中心页面
+import 'package:cppcc_app/page/settings/archives_page.dart';
+import 'package:cppcc_app/page/settings/collection_page.dart';
+import 'package:cppcc_app/page/settings/feedback_page.dart';
+import 'package:cppcc_app/page/settings/settings_page.dart';
+import 'package:cppcc_app/page/settings/visiting_card_page.dart';
+
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
 final routesDef = {
   Routes.loginPage: (context) => const LoginPage(),
   Routes.home: (context) => const PageContainer(),
   Routes.resetPasswordPage: (context) => const ResetPasswordPage(),
+
+  //个人中心相关功能
+  Routes.archivesPage: (context) => const ArchivesPage(),
+  Routes.collectionPage: (context) => const CollectionPage(),
+  Routes.feedbackPage: (context) => const FeedbackPage(),
+  Routes.settingsPage: (context) => const SettingsPage(),
+  Routes.visitingCardPage: (context) => const VisitingCardPage(),
+
+
 };
 
 class CppccApp extends StatelessWidget {

@@ -26,7 +26,7 @@ class _VisitingCardPageState extends State<VisitingCardPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Text("test"),
+          Text("功能开发中"),
         ],
       ),
     );

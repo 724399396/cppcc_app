@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import '../widget/user_list_item.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../widget/user_list_item.dart';
 import 'package:cppcc_app/utils/routes.dart';
 
 /// 个人中心页面

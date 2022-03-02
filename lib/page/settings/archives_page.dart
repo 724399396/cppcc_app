@@ -26,7 +26,7 @@ class _ArchivesPageState extends State<ArchivesPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Text("test"),
+          Text("功能开发中"),
         ],
       ),
     );

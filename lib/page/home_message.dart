@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
+import '../widget/user_list_item.dart';
+import 'package:cppcc_app/utils/routes.dart';
 
 class HomeMessage extends StatelessWidget {
 
@@ -37,10 +40,34 @@ static List<Tab> tabs = [
           ),
         ),
         body: TabBarView(children: [
-          Center(child: Text('名片消息')),
-          Center(child: Text('系统消息')),
+          VisitingCardMessage(),
+          SystemMessage(),
         ]),
       ),
     );
   }
 }
+
+
+
+// 名片消息
+class VisitingCardMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: Color(0xffffffff),
+        child: Text("名片消息"));
+  }
+}
+
+
+// 系统消息
+class SystemMessage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+        color: Color(0xffffffff),
+        child: Text("系统消息"));
+  }
+}
+

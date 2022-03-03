@@ -270,7 +270,7 @@ class SettingsDuties extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic_lvzhidanganhdpi.png',
                 ),
@@ -280,7 +280,7 @@ class SettingsDuties extends StatelessWidget {
                   Navigator.of(context).pushNamed(Routes.archivesPage);
                 },
               ),
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic_shouchdpi.png',
                 ),
@@ -306,7 +306,7 @@ class SettingsSystem extends StatelessWidget {
           padding: EdgeInsets.all(10.0),
           child: Column(
             children: <Widget>[
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic_wodmphdpi.png',
                 ),
@@ -316,7 +316,7 @@ class SettingsSystem extends StatelessWidget {
                   Navigator.of(context).pushNamed(Routes.visitingCardPage);
                 },
               ),
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic-banbenhdpi.png',
                 ),
@@ -324,7 +324,7 @@ class SettingsSystem extends StatelessWidget {
                 titleColor: Color(0xff5d5d5d),
                 onPressed: () {},
               ),
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic_liuyhdpi.png',
                 ),
@@ -334,7 +334,7 @@ class SettingsSystem extends StatelessWidget {
                   Navigator.of(context).pushNamed(Routes.feedbackPage);
                 },
               ),
-              ListItem(
+              UserListItem(
                 icon: Image.asset(
                   'assets/icons/ic_shezhihdpi.png',
                 ),

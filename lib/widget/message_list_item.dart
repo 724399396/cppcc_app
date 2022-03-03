@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 /// 列表项
-class UserListItem extends StatefulWidget {
+class MessageListItem extends StatefulWidget {
   // 点击事件
   final VoidCallback? onPressed;
 
@@ -10,26 +10,35 @@ class UserListItem extends StatefulWidget {
 
   // 标题
   final String? title;
+
+  // 描述
+  final String? describe;
+
+  // 时间
+  final String? createTime;
+
   final Color titleColor;
 
   // 右侧控件
   final Widget? rightWidget;
 
   // 构造函数
-  UserListItem({
+  MessageListItem({
     Key? key,
     this.onPressed,
     this.icon,
     this.title,
+    this.describe,
+    this.createTime,
     this.titleColor: Colors.black,
     this.rightWidget,
   }) : super(key: key);
 
   @override
-  _UserListItemState createState() => _UserListItemState();
+  _MessageListItemState createState() => _MessageListItemState();
 }
 
-class _UserListItemState extends State<UserListItem> {
+class _MessageListItemState extends State<MessageListItem> {
   @override
   Widget build(BuildContext context) {
     return FlatButton(
@@ -41,7 +50,7 @@ class _UserListItemState extends State<UserListItem> {
         style: BorderStyle.none,
       ),
       child: Container(
-          height: 60.0,
+          height: 100.0,
           width: double.infinity,
           decoration: BoxDecoration(
             border: Border(
@@ -50,18 +59,9 @@ class _UserListItemState extends State<UserListItem> {
           ),
           child: Row(
             children: <Widget>[
-              widget.icon != null
-                  ? Container(
-                      padding: EdgeInsets.all(14.0),
-                      child: SizedBox(
-                        height: 32.0,
-                        width: 32.0,
-                        child: widget.icon,
-                      ),
-                    )
-                  : Container(
-                      width: 14.0,
-                    ),
+              Container(
+                child: Text("ccc"),
+              ),
               Expanded(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,

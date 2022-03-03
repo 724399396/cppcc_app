@@ -43,48 +43,100 @@ class _MessageListItemState extends State<MessageListItem> {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: widget.onPressed,
-      padding: EdgeInsets.all(0.0),
+      padding: EdgeInsets.all(5.0),
       shape: Border.all(
         color: Colors.transparent,
         width: 0.1,
         style: BorderStyle.none,
       ),
       child: Container(
-          height: 100.0,
-          width: double.infinity,
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
-            ),
+        height: 100.0,
+        width: double.infinity,
+        padding: EdgeInsets.all(10.0),
+        decoration: BoxDecoration(
+          border: Border(
+            bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
           ),
-          child: Row(
-            children: <Widget>[
-              Container(
-                child: Text("ccc"),
-              ),
-              Expanded(
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: <Widget>[
-                    widget.title != null
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: <Widget>[
+            Container(
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                textDirection: TextDirection.ltr,
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  Container(
+                    child: widget.title != null
                         ? Text(
                             widget.title!,
                             style: TextStyle(
-                              color: widget.titleColor,
+                              color: Color(0xff333333),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Container(),
+                  ),
+                  Container(
+                    child: widget.createTime != null
+                        ? Text(
+                            widget.createTime!,
+                            style: TextStyle(
+                              color: Color(0xff999999),
+                              fontSize: 16.0,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          )
+                        : Container(),
+                  )
+                ],
+              ),
+            ),
+            Container(
+              padding: EdgeInsets.only(top: 15.0),
+              child: Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisSize: MainAxisSize.max,
+                textDirection: TextDirection.ltr,
+                verticalDirection: VerticalDirection.down,
+                children: <Widget>[
+                  Container(
+                    child: widget.describe != null
+                        ? Text(
+                            widget.describe!,
+                            style: TextStyle(
+                              color: Color(0xff999999),
                               fontSize: 12.0,
                               fontWeight: FontWeight.bold,
                             ),
                           )
                         : Container(),
-                  ],
-                ),
+                  ),
+                  Container(
+                    child: widget.icon != null
+                        ? Container(
+                            child: SizedBox(
+                              height: 16.0,
+                              width: 16.0,
+                              child: widget.icon,
+                            ),
+                          )
+                        : Container(
+                            width: 14.0,
+                          ),
+                  )
+                ],
               ),
-              Container(
-                width: 14.0,
-              ),
-            ],
-          )),
+            )
+          ],
+        ),
+      ),
     );
   }
 }

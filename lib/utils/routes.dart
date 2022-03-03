@@ -8,6 +8,7 @@ class Routes {
   //通讯录页面
 
   //消息页面
+  static const messageDetailsPage = '/messageDetailsPage';
 
   //个人中心页面
   static const archivesPage = '/archivesPage';

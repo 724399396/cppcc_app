@@ -14,6 +14,8 @@ import 'package:cppcc_app/page/settings/feedback_page.dart';
 import 'package:cppcc_app/page/settings/settings_page.dart';
 import 'package:cppcc_app/page/settings/visiting_card_page.dart';
 
+import 'package:cppcc_app/page/message/message_details_page.dart';
+
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
 final routesDef = {
@@ -27,6 +29,9 @@ final routesDef = {
   Routes.feedbackPage: (context) => const FeedbackPage(),
   Routes.settingsPage: (context) => const SettingsPage(),
   Routes.visitingCardPage: (context) => const VisitingCardPage(),
+
+  //消息相关功能
+  Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
 
 
 };

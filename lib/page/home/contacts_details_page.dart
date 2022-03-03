@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class HomeContacts extends StatefulWidget {
-  const HomeContacts({Key? key}) : super(key: key);
+class MessageDetailsPage extends StatefulWidget {
+  const MessageDetailsPage({Key? key}) : super(key: key);
 
   @override
-  _HomeContactsState createState() => _HomeContactsState();
+  _MessageDetailsPageState createState() => _MessageDetailsPageState();
 }
 
-class _HomeContactsState extends State<HomeContacts> {
+class _MessageDetailsPageState extends State<MessageDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -16,7 +16,7 @@ class _HomeContactsState extends State<HomeContacts> {
           color: Colors.white, //修改颜色
         ),
         title: Text(
-          "通讯录",
+          "消息详情",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,

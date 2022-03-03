@@ -34,7 +34,7 @@ class _HomeMeState extends State<HomeMe> {
                       children: <Widget>[
                         Container(
                           width: double.infinity,
-                          height: 300.0,
+                          height: 280.0,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(0.0),
@@ -87,7 +87,7 @@ class _HomeMeState extends State<HomeMe> {
                                           "李某某",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0),
+                                              fontSize: 12.0),
                                         ),
                                       ),
                                       Container(
@@ -96,7 +96,7 @@ class _HomeMeState extends State<HomeMe> {
                                           "积分：138****0674",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0),
+                                              fontSize: 12.0),
                                         ),
                                       ),
                                       Container(
@@ -105,16 +105,16 @@ class _HomeMeState extends State<HomeMe> {
                                           "身份证：510************555",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0),
+                                              fontSize: 12.0),
                                         ),
                                       ),
                                       Container(
                                         margin: new EdgeInsets.only(top: 10.0),
                                         child: new Text(
-                                          "职务：政协副主席、XXXXXXXXXXXX",
+                                          "职务：政协副主席",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0),
+                                              fontSize: 12.0),
                                         ),
                                       ),
                                       Container(
@@ -123,7 +123,7 @@ class _HomeMeState extends State<HomeMe> {
                                           "单位：XXXXXXXXXXXXXXX",
                                           style: TextStyle(
                                               color: Colors.white,
-                                              fontSize: 16.0),
+                                              fontSize: 12.0),
                                         ),
                                       ),
                                     ],
@@ -223,7 +223,7 @@ class DutiesNumber extends StatelessWidget {
         style: BorderStyle.none,
       ),
       child: Container(
-          height: 60.0,
+          height: 48.0,
           width: double.infinity,
           child: Row(
             children: <Widget>[
@@ -244,7 +244,7 @@ class DutiesNumber extends StatelessWidget {
                       "履职卡号",
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 16.0,
+                        fontSize: 12.0,
                         fontWeight: FontWeight.bold,
                       ),
                     ),

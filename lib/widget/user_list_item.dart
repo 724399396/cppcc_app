@@ -67,7 +67,7 @@ class _ListItemState extends State<ListItem> {
                             widget.title!,
                             style: TextStyle(
                               color: widget.titleColor,
-                              fontSize: 16.0,
+                              fontSize: 12.0,
                               fontWeight: FontWeight.bold,
                             ),
                           )

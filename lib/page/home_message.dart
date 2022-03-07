@@ -57,6 +57,7 @@ class HomeMessage extends StatelessWidget {
   }
 }
 
+// 名片消息页面
 // 名片消息
 class VisitingCardMessage extends StatelessWidget {
   late EasyRefreshController _controller = EasyRefreshController();
@@ -68,8 +69,6 @@ class VisitingCardMessage extends StatelessWidget {
   // 是否开启加载
   bool _enableLoad = true;
 
-  int pageNo = 1;
-
   // 信息列表
   late List<MessageRecords> _msgList = [];
 
@@ -80,11 +79,38 @@ class VisitingCardMessage extends StatelessWidget {
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
-            pageNo = state.pageNo;
-            print("====00000000000000====" + state.listDatas.length.toString());
+            print("====listDatas====" + state.listDatas.length.toString());
             print("====_msgList====" + _msgList.length.toString());
-            print("====pageNo====" + pageNo.toString());
             return EasyRefresh.custom(
+              emptyWidget: state.listDatas.length == 0
+                  ? Container(
+                      height: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: SizedBox(),
+                            flex: 2,
+                          ),
+                          SizedBox(
+                            width: 100.0,
+                            height: 100.0,
+                            child: new Image.asset('assets/nodata.png'),
+                          ),
+                          Text(
+                            "未加载到数据",
+                            style: TextStyle(
+                                fontSize: 16.0, color: Colors.grey[400]),
+                          ),
+                          Expanded(
+                            child: SizedBox(),
+                            flex: 3,
+                          ),
+                        ],
+                      ),
+                    )
+                  : null,
               firstRefresh: true,
               header: _enableRefresh
                   ? ClassicalHeader(
@@ -118,7 +144,7 @@ class VisitingCardMessage extends StatelessWidget {
                   ? () async {
                       _msgList = [];
                       BlocProvider.of<MessageBloc>(context)
-                          .add(GetListData(state.pageNo, state.pageSize));
+                          .add(GetListData(1, state.pageSize));
                       _controller.resetLoadState();
                       _controller.finishRefresh();
                     }
@@ -127,7 +153,7 @@ class VisitingCardMessage extends StatelessWidget {
                   ? () async {
                       await Future.delayed(Duration(seconds: 2), () {
                         BlocProvider.of<MessageBloc>(context)
-                            .add(GetListData(pageNo + 1, state.pageSize));
+                            .add(GetListData(state.pageNo + 1, state.pageSize));
 
                         _controller.finishLoad();
                       });
@@ -144,7 +170,7 @@ class VisitingCardMessage extends StatelessWidget {
                         describe: state.listDatas[index].esContent,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
-                         print("${state.listDatas[index].id}");
+                          print("${state.listDatas[index].id}");
                           Navigator.of(context).pushNamed(Routes.settingsPage);
                         },
                       );
@@ -170,8 +196,6 @@ class SystemMessage extends StatelessWidget {
   // 是否开启加载
   bool _enableLoad = true;
 
-  int pageNo = 1;
-
   // 信息列表
   late List<MessageRecords> _msgList = [];
 
@@ -182,11 +206,38 @@ class SystemMessage extends StatelessWidget {
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
-            pageNo = state.pageNo;
             print("====listDatas====" + state.listDatas.length.toString());
             print("====_msgList====" + _msgList.length.toString());
-            print("====pageNo====" + pageNo.toString());
             return EasyRefresh.custom(
+              emptyWidget: state.listDatas.length == 0
+                  ? Container(
+                      height: double.infinity,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Expanded(
+                            child: SizedBox(),
+                            flex: 2,
+                          ),
+                          SizedBox(
+                            width: 100.0,
+                            height: 100.0,
+                            child: new Image.asset('assets/nodata.png'),
+                          ),
+                          Text(
+                            "未加载到数据",
+                            style: TextStyle(
+                                fontSize: 16.0, color: Colors.grey[400]),
+                          ),
+                          Expanded(
+                            child: SizedBox(),
+                            flex: 3,
+                          ),
+                        ],
+                      ),
+                    )
+                  : null,
               firstRefresh: true,
               header: _enableRefresh
                   ? ClassicalHeader(
@@ -220,7 +271,7 @@ class SystemMessage extends StatelessWidget {
                   ? () async {
                       _msgList = [];
                       BlocProvider.of<MessageBloc>(context)
-                          .add(GetListData(state.pageNo, state.pageSize));
+                          .add(GetListData(1, state.pageSize));
                       _controller.resetLoadState();
                       _controller.finishRefresh();
                     }
@@ -229,7 +280,8 @@ class SystemMessage extends StatelessWidget {
                   ? () async {
                       await Future.delayed(Duration(seconds: 2), () {
                         BlocProvider.of<MessageBloc>(context)
-                            .add(GetListData(pageNo + 1, state.pageSize));
+                            .add(GetListData(state.pageNo + 1, state.pageSize));
+
                         _controller.finishLoad();
                       });
                     }
@@ -240,16 +292,17 @@ class SystemMessage extends StatelessWidget {
                     (context, index) {
                       return MessageListItem(
                         icon: Icon(Icons.chevron_right, color: Colors.grey),
-                        title: _msgList[index].esTitle,
-                        createTime: _msgList[index].createTime,
-                        describe: _msgList[index].esContent,
+                        title: state.listDatas[index].esTitle,
+                        createTime: state.listDatas[index].createTime,
+                        describe: state.listDatas[index].esContent,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
+                          print("${state.listDatas[index].id}");
                           Navigator.of(context).pushNamed(Routes.settingsPage);
                         },
                       );
                     },
-                    childCount: _msgList.length,
+                    childCount: state.listDatas.length,
                   ),
                 ),
               ],

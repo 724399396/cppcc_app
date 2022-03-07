@@ -1,9 +1,6 @@
 part of 'message_bloc.dart';
 
 class MessageState extends Equatable {
-  @override
-  List<Object> get props => [];
-
   final int pageNo;
   final int pageSize;
   final int total;
@@ -13,7 +10,7 @@ class MessageState extends Equatable {
 
   MessageState({
     this.pageNo = 1,
-    this.pageSize = 1,
+    this.pageSize = 10,
     this.total = 0,
     this.listDatas = const [],
   });
@@ -22,11 +19,22 @@ class MessageState extends Equatable {
     int pageNo,
     MessageEntity result,
   ) {
+    print("pageNo===========================" + pageNo.toString());
     return MessageState(
       pageNo: pageNo,
       pageSize: result.size,
       total: result.total,
       listDatas: result.records,
     );
+  }
+
+  @override
+  List<Object> get props {
+    return [
+      pageNo,
+      pageSize,
+      total,
+      listDatas,
+    ];
   }
 }

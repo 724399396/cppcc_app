@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cppcc_app/bloc/message_bloc.dart';
 
 class MessageDetailsPage extends StatefulWidget {
   const MessageDetailsPage({Key? key}) : super(key: key);

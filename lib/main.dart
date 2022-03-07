@@ -1,8 +1,8 @@
+import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
-import 'package:cppcc_app/repository/user_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:dio/dio.dart';
@@ -10,6 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+
+//用户登录
+import 'package:cppcc_app/repository/user_repository.dart';
+
+//消息
+import 'package:cppcc_app/repository/message_repository.dart';
 
 import 'app.dart';
 
@@ -45,6 +51,10 @@ Future<void> main() async {
           create: (context) =>
               UserRepository(localDataProvider, apiDataProvider),
         ),
+        RepositoryProvider<MessageRepository>(
+          create: (context) =>
+              MessageRepository(localDataProvider, apiDataProvider),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -56,6 +66,11 @@ Future<void> main() async {
             create: (BuildContext context) => UserBloc(
               context.read<UserRepository>(),
             )..add(const UserInitialed()),
+          ),
+          BlocProvider<MessageBloc>(
+            create: (BuildContext context) => MessageBloc(
+              context.read<MessageRepository>(),
+            ),
           ),
         ],
         child: CppccApp(navigationService),

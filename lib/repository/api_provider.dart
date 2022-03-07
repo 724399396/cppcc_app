@@ -7,6 +7,9 @@ import 'package:dio/dio.dart';
 
 import 'local_data_provider.dart';
 
+//消息
+import 'package:cppcc_app/dto/message/message_entity.dart';
+
 class ApiDataProvider {
   final Dio _dio;
   final LocalDataProvider _localDataProvider;
@@ -74,11 +77,8 @@ class ApiDataProvider {
 
   Future<Response<void>> resetPassword(
       String phone, String password, String verifyCode) {
-    return _dio.post('/app/user/resetPassword', data: {
-      'phone': phone,
-      'password': password,
-      'verifyCode': verifyCode
-    });
+    return _dio.post('/app/user/resetPassword',
+        data: {'phone': phone, 'password': password, 'verifyCode': verifyCode});
   }
 
   Future<UserResponse> getUserInfo() {
@@ -89,5 +89,18 @@ class ApiDataProvider {
 
   Future<Response<void>> sendSmsVerifyCode(String phone) {
     return _dio.post('/app/user/sendSmsVerifyCode', data: {'phone': phone});
+  }
+
+  /**
+   * 获取消息
+   */
+  Future<MessageEntity> getMassage(int pageNo, int pageSize) {
+    return _dio.get('/sys/message/sysMessage/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize
+    }).then((value) {
+      return MessageEntity.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 }

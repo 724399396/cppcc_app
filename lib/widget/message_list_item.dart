@@ -50,7 +50,7 @@ class _MessageListItemState extends State<MessageListItem> {
         style: BorderStyle.none,
       ),
       child: Container(
-        height: 100.0,
+        height: 120.0,
         width: double.infinity,
         padding: EdgeInsets.all(10.0),
         decoration: BoxDecoration(
@@ -108,12 +108,15 @@ class _MessageListItemState extends State<MessageListItem> {
                 children: <Widget>[
                   Container(
                     child: widget.describe != null
-                        ? Text(
-                            widget.describe!,
-                            style: TextStyle(
-                              color: Color(0xff999999),
-                              fontSize: 12.0,
-                              fontWeight: FontWeight.bold,
+                        ? Expanded(
+                            child: Text(
+                              widget.describe!,
+                              maxLines: 100,
+                              style: TextStyle(
+                                color: Color(0xff999999),
+                                fontSize: 12.0,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           )
                         : Container(),

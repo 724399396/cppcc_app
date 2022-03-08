@@ -136,14 +136,18 @@ class _LoginPageState extends State<LoginPage> {
                                     child: ElevatedButton(
                                       key: const ValueKey('login'),
                                       style: ButtonStyle(
-                                        shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                        shape: MaterialStateProperty.all<
+                                            RoundedRectangleBorder>(
                                           RoundedRectangleBorder(
                                             borderRadius:
                                                 BorderRadius.circular(8.0),
                                           ),
                                         ),
                                       ),
-                                      child: const Text('登录',style: TextStyle(fontSize: 18, color: Colors.white)),
+                                      child: const Text('登录',
+                                          style: TextStyle(
+                                              fontSize: 18,
+                                              color: Colors.white)),
                                       onPressed: () {
                                         if (_formKey.currentState?.validate() ??
                                             false) {

@@ -45,7 +45,8 @@ class UserUpdatePasswordRequested extends UserEvent {
 class UserSendSmsVerifyCodeRequested extends UserEvent {
   final String phone;
 
-  const UserSendSmsVerifyCodeRequested(this.phone, successCallback) : super(successCallback);
+  const UserSendSmsVerifyCodeRequested(this.phone, successCallback)
+      : super(successCallback);
 
   @override
   List<Object> get props => [phone];

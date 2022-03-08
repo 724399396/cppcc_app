@@ -58,7 +58,6 @@ class HomeMessage extends StatelessWidget {
 }
 
 // 名片消息页面
-// 名片消息
 class VisitingCardMessage extends StatelessWidget {
   late EasyRefreshController _controller = EasyRefreshController();
   late ScrollController _scrollController = ScrollController();

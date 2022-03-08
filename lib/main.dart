@@ -1,4 +1,6 @@
 import 'package:cppcc_app/bloc/message_bloc.dart';
+import 'package:cppcc_app/bloc/news_bloc.dart';
+import 'package:cppcc_app/bloc/news_topic_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
@@ -16,6 +18,9 @@ import 'package:cppcc_app/repository/user_repository.dart';
 
 //消息
 import 'package:cppcc_app/repository/message_repository.dart';
+
+//资讯
+import 'package:cppcc_app/repository/news_repository.dart';
 
 import 'app.dart';
 
@@ -52,8 +57,10 @@ Future<void> main() async {
               UserRepository(localDataProvider, apiDataProvider),
         ),
         RepositoryProvider<MessageRepository>(
-          create: (context) =>
-              MessageRepository(localDataProvider, apiDataProvider),
+          create: (context) => MessageRepository(apiDataProvider),
+        ),
+        RepositoryProvider<NewsRepository>(
+          create: (context) => NewsRepository(apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(
@@ -70,6 +77,16 @@ Future<void> main() async {
           BlocProvider<MessageBloc>(
             create: (BuildContext context) => MessageBloc(
               context.read<MessageRepository>(),
+            ),
+          ),
+          BlocProvider<NewsTopicBloc>(
+            create: (BuildContext context) => NewsTopicBloc(
+              context.read<NewsRepository>(),
+            ),
+          ),
+          BlocProvider<NewsBloc>(
+            create: (BuildContext context) => NewsBloc(
+              context.read<NewsRepository>(),
             ),
           ),
         ],

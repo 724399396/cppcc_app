@@ -6,6 +6,11 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/message/message_entity.dart';
+import 'package:cppcc_app/generated/json/message_entity.g.dart';
+import 'package:cppcc_app/dto/news/news_entity.dart';
+import 'package:cppcc_app/generated/json/news_entity.g.dart';
+import 'package:cppcc_app/dto/news/news_topic_entity.dart';
+import 'package:cppcc_app/generated/json/news_topic_entity.g.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 
@@ -91,6 +96,18 @@ class JsonConvert {
 		if(type == (MessageRecords).toString()){
 			return MessageRecords.fromJson(json) as M;
 		}
+		if(type == (NewsEntity).toString()){
+			return NewsEntity.fromJson(json) as M;
+		}
+		if(type == (NewsRecords).toString()){
+			return NewsRecords.fromJson(json) as M;
+		}
+		if(type == (NewsTopicEntity).toString()){
+			return NewsTopicEntity.fromJson(json) as M;
+		}
+		if(type == (NewsTopicRecords).toString()){
+			return NewsTopicRecords.fromJson(json) as M;
+		}
 
 		print("$type not found");
 	
@@ -113,6 +130,18 @@ class JsonConvert {
 		}
 		if(<MessageRecords>[] is M){
 			return data.map<MessageRecords>((Map<String, dynamic> e) => MessageRecords.fromJson(e)).toList() as M;
+		}
+		if(<NewsEntity>[] is M){
+			return data.map<NewsEntity>((Map<String, dynamic> e) => NewsEntity.fromJson(e)).toList() as M;
+		}
+		if(<NewsRecords>[] is M){
+			return data.map<NewsRecords>((Map<String, dynamic> e) => NewsRecords.fromJson(e)).toList() as M;
+		}
+		if(<NewsTopicEntity>[] is M){
+			return data.map<NewsTopicEntity>((Map<String, dynamic> e) => NewsTopicEntity.fromJson(e)).toList() as M;
+		}
+		if(<NewsTopicRecords>[] is M){
+			return data.map<NewsTopicRecords>((Map<String, dynamic> e) => NewsTopicRecords.fromJson(e)).toList() as M;
 		}
 
 		print("${M.toString()} not found");

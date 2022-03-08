@@ -170,7 +170,6 @@ class VisitingCardMessage extends StatelessWidget {
                         describe: state.listDatas[index].esContent,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
-                          print("${state.listDatas[index].id}");
                           Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
                         },
                       );
@@ -206,8 +205,8 @@ class SystemMessage extends StatelessWidget {
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
-            print("====listDatas====" + state.listDatas.length.toString());
-            print("====_msgList====" + _msgList.length.toString());
+            // print("====listDatas====" + state.listDatas.length.toString());
+            // print("====_msgList====" + _msgList.length.toString());
             return EasyRefresh.custom(
               emptyWidget: state.listDatas.length == 0
                   ? Container(
@@ -297,8 +296,7 @@ class SystemMessage extends StatelessWidget {
                         describe: state.listDatas[index].esContent,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
-                          print("${state.listDatas[index].id}");
-                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"id": state.listDatas[index].id});
+                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
                         },
                       );
                     },

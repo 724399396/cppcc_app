@@ -88,7 +88,7 @@ class _MessageListItemState extends State<MessageListItem> {
                             widget.createTime!,
                             style: TextStyle(
                               color: Color(0xff999999),
-                              fontSize: 16.0,
+                              fontSize: 15.0,
                               fontWeight: FontWeight.bold,
                             ),
                           )

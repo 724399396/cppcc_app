@@ -19,9 +19,6 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
     if (obj != null) {
       msgID = obj["msgID"];
     }
-
-    print("===============" + msgID.toString());
-
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -35,19 +32,71 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
         backgroundColor: Color(0xfff27f56),
         elevation: 0.0,
       ),
+      backgroundColor: Color(0xfff4f4f4),
       body: Stack(
         alignment: Alignment.center,
         children: [
           Container(child: BlocBuilder<MessageBloc, MessageState>(
             builder: (context, state) {
-              print("====listDatas====" + state.listDatas.length.toString());
+              // print("====listDatas====" + state.listDatas.length.toString());
               state.listDatas
                   .where((item) => item.id == msgID)
                   .forEach((item) => message = item);
 
-              print(message?.esContent);
-
-              return Text("data");
+              return Container(
+                width: double.infinity,
+                height: double.maxFinite,
+                padding: new EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  color: Color(0xffffffff),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: double.maxFinite,
+                      padding: EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xfff4f4f4)),
+                        ),
+                      ),
+                      child: Text(message?.esTitle ?? "",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Color(0xff333333),
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: Text(message?.esContent ?? "",
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Color(0xff333333),
+                          )),
+                    ),
+                    Container(
+                      alignment: Alignment.topRight,
+                      padding: EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
+                        ),
+                      ),
+                      child: Text(message?.createTime ?? "",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Color(0xff999999),
+                          )),
+                    )
+                  ],
+                ),
+              );
             },
           ))
         ],

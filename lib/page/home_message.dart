@@ -93,11 +93,11 @@ class VisitingCardMessage extends StatelessWidget {
                             child: SizedBox(),
                             flex: 2,
                           ),
-                          SizedBox(
-                            width: 100.0,
-                            height: 100.0,
-                            child: new Image.asset('assets/nodata.png'),
-                          ),
+                          // SizedBox(
+                          //   width: 100.0,
+                          //   height: 100.0,
+                          //   child: new Image.asset('assets/icons/ic_wode_selected.png'),
+                          // ),
                           Text(
                             "未加载到数据",
                             style: TextStyle(
@@ -171,7 +171,7 @@ class VisitingCardMessage extends StatelessWidget {
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
                           print("${state.listDatas[index].id}");
-                          Navigator.of(context).pushNamed(Routes.settingsPage);
+                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
                         },
                       );
                     },
@@ -220,11 +220,11 @@ class SystemMessage extends StatelessWidget {
                             child: SizedBox(),
                             flex: 2,
                           ),
-                          SizedBox(
-                            width: 100.0,
-                            height: 100.0,
-                            child: new Image.asset('assets/nodata.png'),
-                          ),
+                          // SizedBox(
+                          //   width: 100.0,
+                          //   height: 100.0,
+                          //   child: new Image.asset('assets/icons/ic_wode_selected.png'),
+                          // ),
                           Text(
                             "未加载到数据",
                             style: TextStyle(
@@ -298,7 +298,7 @@ class SystemMessage extends StatelessWidget {
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
                           print("${state.listDatas[index].id}");
-                          Navigator.of(context).pushNamed(Routes.settingsPage);
+                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"id": state.listDatas[index].id});
                         },
                       );
                     },

@@ -19,6 +19,15 @@ class GetListData extends MessageEvent {
   List<Object> get props => [pageNo, pageSize];
 }
 
+class GetDetailsData extends MessageEvent {
+  final String id;
+
+  const GetDetailsData(this.id) : super();
+
+  @override
+  List<Object> get props => [id];
+}
+
 class MessageInitialed extends MessageEvent {
   const MessageInitialed() : super();
 }

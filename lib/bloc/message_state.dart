@@ -38,3 +38,24 @@ class MessageState extends Equatable {
     ];
   }
 }
+
+// class MessageEntityState extends Equatable {
+//   final MessageRecords? entity = MessageRecords();
+//
+//   MessageEntityState({
+//     this.entity,
+//   });
+//
+//   MessageEntityState copyWith(
+//     MessageRecords result,
+//   ) {
+//     return MessageEntityState(
+//       entity: result,
+//     );
+//   }
+//
+//   @override
+//   List<Object> get props {
+//     return [entity];
+//   }
+// }

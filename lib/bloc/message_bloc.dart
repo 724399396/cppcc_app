@@ -45,3 +45,26 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     return state.copyWith(result.current, result);
   }
 }
+
+// class MessageDetailsBloc extends Bloc<MessageEvent, MessageEntityState> {
+//   final MessageRepository _messageRepository;
+
+//   MessageDetailsBloc(this._messageRepository) : super(MessageEntityState()) {
+//     //请求获取列表数据
+//     on<GetDetailsData>((event, emit) async {
+//       await _messageRepository.getMessageInfo(event.id).then((result) {
+//         emit(_populateMessageData(result));
+//       });
+//     });
+//   }
+
+//   @override
+//   void onChange(Change<MessageEntityState> change) {
+//     super.onChange(change);
+//     print("object");
+//   }
+
+//   _populateMessageData(MessageRecords result) {
+//     return state.copyWith(result);
+//   }
+// }

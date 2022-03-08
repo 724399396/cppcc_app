@@ -1,5 +1,7 @@
+import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MessageDetailsPage extends StatefulWidget {
   const MessageDetailsPage({Key? key}) : super(key: key);
@@ -9,8 +11,17 @@ class MessageDetailsPage extends StatefulWidget {
 }
 
 class _MessageDetailsPageState extends State<MessageDetailsPage> {
+  String? msgID = null;
+  MessageRecords? message = null;
   @override
   Widget build(BuildContext context) {
+    dynamic obj = ModalRoute.of(context)?.settings.arguments;
+    if (obj != null) {
+      msgID = obj["msgID"];
+    }
+
+    print("===============" + msgID.toString());
+
     return Scaffold(
       appBar: AppBar(
         iconTheme: IconThemeData(
@@ -27,7 +38,18 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Text("功能开发中"),
+          Container(child: BlocBuilder<MessageBloc, MessageState>(
+            builder: (context, state) {
+              print("====listDatas====" + state.listDatas.length.toString());
+              state.listDatas
+                  .where((item) => item.id == msgID)
+                  .forEach((item) => message = item);
+
+              print(message?.esContent);
+
+              return Text("data");
+            },
+          ))
         ],
       ),
     );

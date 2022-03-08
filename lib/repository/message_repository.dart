@@ -12,4 +12,9 @@ class MessageRepository {
     var response = await _apiDataProvider.getMassage(pageNo, pageSize);
     return response;
   }
+
+  Future<MessageRecords> getMessageInfo(String id) async {
+    var response = await _apiDataProvider.getMassageInfo(id);
+    return response;
+  }
 }

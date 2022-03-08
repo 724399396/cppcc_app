@@ -103,4 +103,13 @@ class ApiDataProvider {
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }
+
+  Future<MessageRecords> getMassageInfo(String id) {
+    return _dio.get('/sys/message/sysMessage/list', queryParameters: {
+      'id': id
+    }).then((value) {
+      return MessageRecords.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
 }

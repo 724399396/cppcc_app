@@ -8,13 +8,13 @@ part of 'login_response.dart';
 
 LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
-      json['token'] as String,
+      json['token'] as String?,
       UserResponse.fromJson(json['userInfo'] as Map<String, dynamic>),
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
-      'token': instance.token,
+      'token': instance.token?.toString(),
       'userInfo': instance.userInfo,
     };
 
@@ -22,6 +22,10 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       json['username'] as String,
       json['realname'] as String,
       json['avatar'] as String?,
+      json['phone'] as String?,
+      json['post'] as String?,
+      json['company'] as String?,
+      json['idCard'] as String?,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>

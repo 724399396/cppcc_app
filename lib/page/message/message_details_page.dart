@@ -1,5 +1,5 @@
-import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:flutter/material.dart';
+import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -65,7 +65,7 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
                               BorderSide(width: 1, color: Color(0xfff4f4f4)),
                         ),
                       ),
-                      child: Text(message?.esTitle ?? "",
+                      child: Text(message?.titile ?? "",
                           style: TextStyle(
                             fontSize: 16.0,
                             color: Color(0xff333333),
@@ -73,11 +73,19 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
                     ),
                     Container(
                       padding: EdgeInsets.all(10),
-                      child: Text(message?.esContent ?? "",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xff333333),
-                          )),
+                      child: message?.msgContent != null
+                          ? Expanded(
+                              child: Text(
+                                message?.msgContent ?? "",
+                                maxLines: 100,
+                                style: TextStyle(
+                                  color: Color(0xff999999),
+                                  fontSize: 12.0,
+                                  fontWeight: FontWeight.bold,
+                                ),
+                              ),
+                            )
+                          : Container(),
                     ),
                     Container(
                       alignment: Alignment.topRight,
@@ -87,7 +95,7 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
                           top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
                         ),
                       ),
-                      child: Text(message?.createTime ?? "",
+                      child: Text(message?.sendTime ?? "",
                           textAlign: TextAlign.right,
                           style: TextStyle(
                             fontSize: 14.0,

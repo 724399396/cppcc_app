@@ -165,9 +165,9 @@ class VisitingCardMessage extends StatelessWidget {
                     (context, index) {
                       return MessageListItem(
                         icon: Icon(Icons.chevron_right, color: Colors.grey),
-                        title: state.listDatas[index].esTitle,
-                        createTime: state.listDatas[index].createTime,
-                        describe: state.listDatas[index].esContent,
+                        title: state.listDatas[index].titile,
+                        createTime: state.listDatas[index].sendTime,
+                        describe: state.listDatas[index].msgAbstract,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
                           Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
@@ -291,9 +291,9 @@ class SystemMessage extends StatelessWidget {
                     (context, index) {
                       return MessageListItem(
                         icon: Icon(Icons.chevron_right, color: Colors.grey),
-                        title: state.listDatas[index].esTitle,
-                        createTime: state.listDatas[index].createTime,
-                        describe: state.listDatas[index].esContent,
+                        title: state.listDatas[index].titile,
+                        createTime: state.listDatas[index].sendTime,
+                        describe: state.listDatas[index].msgAbstract,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
                           Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});

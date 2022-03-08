@@ -95,7 +95,7 @@ class ApiDataProvider {
    * 获取消息
    */
   Future<MessageEntity> getMassage(int pageNo, int pageSize) {
-    return _dio.get('/sys/message/sysMessage/list', queryParameters: {
+    return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend', queryParameters: {
       'pageNo': pageNo,
       'pageSize': pageSize
     }).then((value) {
@@ -105,7 +105,7 @@ class ApiDataProvider {
   }
 
   Future<MessageRecords> getMassageInfo(String id) {
-    return _dio.get('/sys/message/sysMessage/list', queryParameters: {
+    return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend', queryParameters: {
       'id': id
     }).then((value) {
       return MessageRecords.fromJson(

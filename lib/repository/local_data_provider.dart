@@ -7,6 +7,11 @@ class LocalDataProvider {
   final String _nickname = 'nickname';
   final String _avatar = 'avatar';
 
+  final String _phone = 'phone';
+  final String _post = 'post';
+  final String _company = 'company';
+  final String _idCard = 'idCard';
+
   late SharedPreferences _sharedPreferences;
 
   init() async {
@@ -19,12 +24,19 @@ class LocalDataProvider {
   String? nickname() => _sharedPreferences.getString(_nickname);
   String? avatar() => _sharedPreferences.getString(_avatar);
 
+  String? phone() => _sharedPreferences.getString(_phone);
+  String? post() => _sharedPreferences.getString(_post);
+  String? company() => _sharedPreferences.getString(_company);
+  String? idCard() => _sharedPreferences.getString(_idCard);
+
   setIsLogin(bool isLogin) async {
     await _sharedPreferences.setBool(_isUserLogin, isLogin);
   }
 
   setToken(String token) async {
-    await _sharedPreferences.setString(_userToken, token);
+    if (token != null) {
+      await _sharedPreferences.setString(_userToken, token);
+    }
   }
 
   setUserName(String username) async {
@@ -37,5 +49,21 @@ class LocalDataProvider {
 
   setAvatar(String avatar) async {
     await _sharedPreferences.setString(_avatar, avatar);
+  }
+
+  setPhone(String phone) async {
+    await _sharedPreferences.setString(_phone, phone);
+  }
+
+  setPost(String post) async {
+    await _sharedPreferences.setString(_post, post);
+  }
+
+  setCompany(String company) async {
+    await _sharedPreferences.setString(_company, company);
+  }
+
+  setIdCard(String idCard) async {
+    await _sharedPreferences.setString(_idCard, idCard);
   }
 }

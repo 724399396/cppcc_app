@@ -16,7 +16,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final UserRepository _userRepository;
 
   UserBloc(this._userRepository) : super(const UserState()) {
-    on<UserInitialed>((event, emit) {
+    on<UserInitialed>((event, emit) async {
       _userRepository.freshUserInfo().then((_) {
         emit(_populateUserData());
       });
@@ -40,7 +40,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             }));
     on<UserResetPasswordRequested>(
         ((event, emit) => _generateCallApi(event, emit, () async {
-              await _userRepository.resetPassword(event.phone, event.password, event.verifyCode);
+              await _userRepository.resetPassword(
+                  event.phone, event.password, event.verifyCode);
             })));
   }
 
@@ -58,6 +59,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
         isLogin: _userRepository.isLogin,
         username: _userRepository.username,
         nickname: _userRepository.nickname,
+        phone: _userRepository.phone,
+        post: _userRepository.post,
+        company: _userRepository.company,
+        idCard: _userRepository.idCard,
         avatar: _userRepository.avatar);
   }
 

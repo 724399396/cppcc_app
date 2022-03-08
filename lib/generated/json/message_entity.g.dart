@@ -63,95 +63,100 @@ Map<String, dynamic> $MessageEntityToJson(MessageEntity entity) {
 
 MessageRecords $MessageRecordsFromJson(Map<String, dynamic> json) {
 	final MessageRecords messageRecords = MessageRecords();
-	final String? esReceiver = jsonConvert.convert<String>(json['esReceiver']);
-	if (esReceiver != null) {
-		messageRecords.esReceiver = esReceiver;
+	final dynamic? busId = jsonConvert.convert<dynamic>(json['busId']);
+	if (busId != null) {
+		messageRecords.busId = busId;
 	}
-	final String? essendstatusDicttext = jsonConvert.convert<String>(json['esSendStatus_dictText']);
-	if (essendstatusDicttext != null) {
-		messageRecords.essendstatusDicttext = essendstatusDicttext;
+	final String? readFlag = jsonConvert.convert<String>(json['readFlag']);
+	if (readFlag != null) {
+		messageRecords.readFlag = readFlag;
 	}
-	final String? estypeDicttext = jsonConvert.convert<String>(json['esType_dictText']);
-	if (estypeDicttext != null) {
-		messageRecords.estypeDicttext = estypeDicttext;
+	final String? anntId = jsonConvert.convert<String>(json['anntId']);
+	if (anntId != null) {
+		messageRecords.anntId = anntId;
 	}
-	final String? esTitle = jsonConvert.convert<String>(json['esTitle']);
-	if (esTitle != null) {
-		messageRecords.esTitle = esTitle;
+	final dynamic? pageSize = jsonConvert.convert<dynamic>(json['pageSize']);
+	if (pageSize != null) {
+		messageRecords.pageSize = pageSize;
 	}
-	final String? updateTime = jsonConvert.convert<String>(json['updateTime']);
-	if (updateTime != null) {
-		messageRecords.updateTime = updateTime;
+	final String? msgAbstract = jsonConvert.convert<String>(json['msgAbstract']);
+	if (msgAbstract != null) {
+		messageRecords.msgAbstract = msgAbstract;
 	}
-	final String? remark = jsonConvert.convert<String>(json['remark']);
-	if (remark != null) {
-		messageRecords.remark = remark;
+	final String? priority = jsonConvert.convert<String>(json['priority']);
+	if (priority != null) {
+		messageRecords.priority = priority;
 	}
-	final String? esSendStatus = jsonConvert.convert<String>(json['esSendStatus']);
-	if (esSendStatus != null) {
-		messageRecords.esSendStatus = esSendStatus;
+	final String? userId = jsonConvert.convert<String>(json['userId']);
+	if (userId != null) {
+		messageRecords.userId = userId;
 	}
-	final String? esSendTime = jsonConvert.convert<String>(json['esSendTime']);
-	if (esSendTime != null) {
-		messageRecords.esSendTime = esSendTime;
+	final String? sendTime = jsonConvert.convert<String>(json['sendTime']);
+	if (sendTime != null) {
+		messageRecords.sendTime = sendTime;
 	}
-	final String? createBy = jsonConvert.convert<String>(json['createBy']);
-	if (createBy != null) {
-		messageRecords.createBy = createBy;
+	final dynamic? openType = jsonConvert.convert<dynamic>(json['openType']);
+	if (openType != null) {
+		messageRecords.openType = openType;
 	}
-	final dynamic? esSendNum = jsonConvert.convert<dynamic>(json['esSendNum']);
-	if (esSendNum != null) {
-		messageRecords.esSendNum = esSendNum;
+	final dynamic? openPage = jsonConvert.convert<dynamic>(json['openPage']);
+	if (openPage != null) {
+		messageRecords.openPage = openPage;
 	}
-	final String? createTime = jsonConvert.convert<String>(json['createTime']);
-	if (createTime != null) {
-		messageRecords.createTime = createTime;
+	final String? titile = jsonConvert.convert<String>(json['titile']);
+	if (titile != null) {
+		messageRecords.titile = titile;
 	}
-	final String? updateBy = jsonConvert.convert<String>(json['updateBy']);
-	if (updateBy != null) {
-		messageRecords.updateBy = updateBy;
+	final String? msgContent = jsonConvert.convert<String>(json['msgContent']);
+	if (msgContent != null) {
+		messageRecords.msgContent = msgContent;
 	}
-	final dynamic? esParam = jsonConvert.convert<dynamic>(json['esParam']);
-	if (esParam != null) {
-		messageRecords.esParam = esParam;
+	final String? sender = jsonConvert.convert<String>(json['sender']);
+	if (sender != null) {
+		messageRecords.sender = sender;
+	}
+	final dynamic? bizSource = jsonConvert.convert<dynamic>(json['bizSource']);
+	if (bizSource != null) {
+		messageRecords.bizSource = bizSource;
+	}
+	final dynamic? pageNo = jsonConvert.convert<dynamic>(json['pageNo']);
+	if (pageNo != null) {
+		messageRecords.pageNo = pageNo;
 	}
 	final String? id = jsonConvert.convert<String>(json['id']);
 	if (id != null) {
 		messageRecords.id = id;
 	}
-	final String? esContent = jsonConvert.convert<String>(json['esContent']);
-	if (esContent != null) {
-		messageRecords.esContent = esContent;
+	final String? msgCategory = jsonConvert.convert<String>(json['msgCategory']);
+	if (msgCategory != null) {
+		messageRecords.msgCategory = msgCategory;
 	}
-	final dynamic? esResult = jsonConvert.convert<dynamic>(json['esResult']);
-	if (esResult != null) {
-		messageRecords.esResult = esResult;
-	}
-	final String? esType = jsonConvert.convert<String>(json['esType']);
-	if (esType != null) {
-		messageRecords.esType = esType;
+	final dynamic? busType = jsonConvert.convert<dynamic>(json['busType']);
+	if (busType != null) {
+		messageRecords.busType = busType;
 	}
 	return messageRecords;
 }
 
 Map<String, dynamic> $MessageRecordsToJson(MessageRecords entity) {
 	final Map<String, dynamic> data = <String, dynamic>{};
-	data['esReceiver'] = entity.esReceiver;
-	data['esSendStatus_dictText'] = entity.essendstatusDicttext;
-	data['esType_dictText'] = entity.estypeDicttext;
-	data['esTitle'] = entity.esTitle;
-	data['updateTime'] = entity.updateTime;
-	data['remark'] = entity.remark;
-	data['esSendStatus'] = entity.esSendStatus;
-	data['esSendTime'] = entity.esSendTime;
-	data['createBy'] = entity.createBy;
-	data['esSendNum'] = entity.esSendNum;
-	data['createTime'] = entity.createTime;
-	data['updateBy'] = entity.updateBy;
-	data['esParam'] = entity.esParam;
+	data['busId'] = entity.busId;
+	data['readFlag'] = entity.readFlag;
+	data['anntId'] = entity.anntId;
+	data['pageSize'] = entity.pageSize;
+	data['msgAbstract'] = entity.msgAbstract;
+	data['priority'] = entity.priority;
+	data['userId'] = entity.userId;
+	data['sendTime'] = entity.sendTime;
+	data['openType'] = entity.openType;
+	data['openPage'] = entity.openPage;
+	data['titile'] = entity.titile;
+	data['msgContent'] = entity.msgContent;
+	data['sender'] = entity.sender;
+	data['bizSource'] = entity.bizSource;
+	data['pageNo'] = entity.pageNo;
 	data['id'] = entity.id;
-	data['esContent'] = entity.esContent;
-	data['esResult'] = entity.esResult;
-	data['esType'] = entity.esType;
+	data['msgCategory'] = entity.msgCategory;
+	data['busType'] = entity.busType;
 	return data;
 }

@@ -31,25 +31,24 @@ class MessageEntity {
 @JsonSerializable()
 class MessageRecords {
 
-	late String esReceiver;
-	@JSONField(name: "esSendStatus_dictText")
-	late String essendstatusDicttext;
-	@JSONField(name: "esType_dictText")
-	late String estypeDicttext;
-	late String esTitle;
-	late String updateTime;
-	late String remark;
-	late String esSendStatus;
-	late String esSendTime;
-	late String createBy;
-	late dynamic esSendNum;
-	late String createTime;
-	late String updateBy;
-	late dynamic esParam;
+	late dynamic busId;
+	late String readFlag;
+	late String anntId;
+	late dynamic pageSize;
+	late String msgAbstract;
+	late String priority;
+	late String userId;
+	late String sendTime;
+	late dynamic openType;
+	late dynamic openPage;
+	late String titile;
+	late String msgContent;
+	late String sender;
+	late dynamic bizSource;
+	late dynamic pageNo;
 	late String id;
-	late String esContent;
-	late dynamic esResult;
-	late String esType;
+	late String msgCategory;
+	late dynamic busType;
   
   MessageRecords();
 

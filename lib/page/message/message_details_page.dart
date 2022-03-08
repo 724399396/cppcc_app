@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class MessageDetailsPage extends StatefulWidget {
   const MessageDetailsPage({Key? key}) : super(key: key);
@@ -75,14 +76,10 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
                       padding: EdgeInsets.all(10),
                       child: message?.msgContent != null
                           ? Expanded(
-                              child: Text(
-                                message?.msgContent ?? "",
-                                maxLines: 100,
-                                style: TextStyle(
-                                  color: Color(0xff999999),
-                                  fontSize: 12.0,
-                                  fontWeight: FontWeight.bold,
-                                ),
+                              child: Html(
+                                data: message?.msgContent,
+                                tagsList: Html.tags
+                                  ..addAll(["bird", "flutter"]),
                               ),
                             )
                           : Container(),

@@ -16,10 +16,17 @@ class NewsTopicBloc extends Bloc<NewsTopicEvent, NewsTopicState> {
     });
 
     //请求获取列表数据
-    on<GetListData>((event, emit) async {
+    on<GetNewsTopicListData>((event, emit) async {
       await _newsRepository
           .getNewsTopocList(event.pageNo, event.pageSize)
           .then((result) {
+        emit(_populateMessageData(result));
+      });
+    });
+
+    //请求获取列表数据
+    on<NewsTopicInitialed>((event, emit) async {
+      await _newsRepository.getNewsTopocList(1, 100).then((result) {
         emit(_populateMessageData(result));
       });
     });

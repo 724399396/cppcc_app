@@ -80,9 +80,10 @@ Future<void> main() async {
             ),
           ),
           BlocProvider<NewsTopicBloc>(
+            lazy: true,
             create: (BuildContext context) => NewsTopicBloc(
               context.read<NewsRepository>(),
-            ),
+            )..add(const NewsTopicInitialed()),
           ),
           BlocProvider<NewsBloc>(
             create: (BuildContext context) => NewsBloc(

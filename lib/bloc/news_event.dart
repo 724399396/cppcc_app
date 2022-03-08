@@ -7,11 +7,11 @@ abstract class NewsEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetListData extends NewsEvent {
+class GetNewsListData extends NewsEvent {
   final int pageNo;
   final int pageSize;
 
-  const GetListData(this.pageNo, this.pageSize) : super();
+  const GetNewsListData(this.pageNo, this.pageSize) : super();
 
   @override
   List<Object> get props => [pageNo, pageSize];

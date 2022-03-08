@@ -7,31 +7,6 @@ class BottomTab {
   BottomTab({required this.image, required this.text});
 }
 
-class DictTitleValue extends Equatable {
-  final String title;
-  final String value;
-  const DictTitleValue({
-    this.title = '',
-    this.value = '',
-  });
-
-  DictTitleValue copyWith({
-    String? title,
-    String? value,
-  }) {
-    return DictTitleValue(
-      title: title ?? this.title,
-      value: value ?? this.value,
-    );
-  }
-
-  @override
-  bool get stringify => true;
-
-  @override
-  List<Object> get props => [title, value];
-}
-
 final List<BottomTab> notSelectedTabs = [
   BottomTab(
     image: 'assets/icons/ic_zhuye_normal.png',
@@ -76,4 +51,22 @@ final List<BottomTab> selectedTabs = [
     image: 'assets/icons/ic_wode_selected.png',
     text: '我的',
   ),
+];
+
+class HomeTab {
+  final String image;
+  final String text;
+
+  HomeTab({required this.image, required this.text});
+}
+
+final List<HomeTab> homeTabs = [
+  HomeTab(image: 'assets/icons/ic_lvzhidangan.png', text: '履职档案'),
+  HomeTab(image: 'assets/icons/ic_sheqingmyi.png', text: '社情民意'),
+  HomeTab(image: 'assets/icons/ic_tianbanli.png', text: '提案管理'),
+  HomeTab(image: 'assets/icons/ic_huiyihuod.png', text: '会议活动'),
+  HomeTab(image: 'assets/icons/ic_wenjiangonggao.png', text: '通知公告'),
+  HomeTab(image: 'assets/icons/ic_wangluoyiz.png', text: '网络议政'),
+  HomeTab(image: 'assets/icons/ic_weiyuanxuexi.png', text: '委员学习'),
+  HomeTab(image: 'assets/icons/ic_lingdaoyoux.png', text: '领导信箱'),
 ];

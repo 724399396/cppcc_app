@@ -1,4 +1,5 @@
 import 'package:cppcc_app/models/app_settings.dart';
+import 'package:cppcc_app/page/home_page.dart';
 import 'package:flutter/material.dart';
 
 import 'package:cppcc_app/page/home_news.dart';
@@ -54,7 +55,7 @@ class _PageContainerState extends State<PageContainer>
                       child: Image.asset(tab.image),
                     )
                   : Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: 20,
@@ -74,7 +75,7 @@ class _PageContainerState extends State<PageContainer>
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
         children: [
-          HomeMe(),
+          const HomePage(),
           HomeNews(),
           HomeContacts(),
           HomeMessage(),

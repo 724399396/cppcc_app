@@ -18,6 +18,16 @@ Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
       'userInfo': instance.userInfo,
     };
 
+UserInfoResponse _$UserInfoResponseFromJson(Map<String, dynamic> json) =>
+    UserInfoResponse(
+      UserResponse.fromJson(json['userInfo'] as Map<String, dynamic>),
+    );
+
+Map<String, dynamic> _$UserInfoResponseToJson(UserInfoResponse instance) =>
+    <String, dynamic>{
+      'userInfo': instance.userInfo,
+    };
+
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       json['username'] as String,
       json['realname'] as String,

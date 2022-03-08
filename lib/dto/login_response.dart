@@ -15,6 +15,17 @@ class LoginResponse {
 }
 
 @JsonSerializable()
+class UserInfoResponse {
+  final UserResponse userInfo;
+
+  UserInfoResponse(this.userInfo);
+
+  factory UserInfoResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserInfoResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$UserInfoResponseToJson(this);
+}
+
+@JsonSerializable()
 class UserResponse {
   late String username;
   late String realname;

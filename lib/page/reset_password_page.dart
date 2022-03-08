@@ -108,8 +108,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                             onTap: enbleResend
                                 ? () {
                                     BlocProvider.of<UserBloc>(context).add(
-                                        UserSendSmsVerifyCodeRequested(
-                                            _phone!, () {
+                                        UserSendSmsVerifyCodeRequested(_phone!,
+                                            () {
                                       showToast('验证码已发送，请注意查收');
                                     }));
                                   }
@@ -171,9 +171,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
                                       _formKey.currentState?.save();
                                       BlocProvider.of<UserBloc>(context).add(
                                           UserResetPasswordRequested(
-                                              _phone!,
-                                              _password!,
-                                              _verifyCode!, () {
+                                              _phone!, _password!, _verifyCode!,
+                                              () {
                                         showToast('重置密码成功');
                                         Navigator.of(context).pop();
                                       }));

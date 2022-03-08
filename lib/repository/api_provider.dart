@@ -86,7 +86,7 @@ class ApiDataProvider {
   }
 
   Future<UserResponse> getUserInfo() {
-    return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
+    return _dio.get('/app/user/info').then((value) => UserInfoResponse.fromJson(
             BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
         .userInfo);
   }

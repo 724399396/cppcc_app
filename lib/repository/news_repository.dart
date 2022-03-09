@@ -1,7 +1,6 @@
 import 'package:cppcc_app/dto/news/news_topic_entity.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 //资讯
-import 'package:cppcc_app/dto/news/news_topic_entity.dart';
 import 'package:cppcc_app/dto/news/news_entity.dart';
 
 class NewsRepository {

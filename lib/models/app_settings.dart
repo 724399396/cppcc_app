@@ -70,3 +70,6 @@ final List<HomeTab> homeTabs = [
   HomeTab(image: 'assets/icons/ic_weiyuanxuexi.png', text: '委员学习'),
   HomeTab(image: 'assets/icons/ic_lingdaoyoux.png', text: '领导信箱'),
 ];
+
+
+const int pageSize = 10;

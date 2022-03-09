@@ -23,9 +23,7 @@ class UserRepository {
   Future<UserResponse> login(String username, String password) async {
     var response = await _apiDataProvider.login(username, password);
     await _localDataProvider.setIsLogin(true);
-    if (response.token != null) {
-      await _localDataProvider.setToken(response.token ?? "");
-    }
+    await _localDataProvider.setToken(response.token);
     await _localDataProvider.setUserName(response.userInfo.username);
     await _localDataProvider.setNickname(response.userInfo.realname);
     await _localDataProvider.setAvatar(response.userInfo.avatar ?? "");

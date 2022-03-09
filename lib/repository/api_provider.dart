@@ -1,5 +1,8 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
+import 'package:cppcc_app/dto/posts_response.dart';
+import 'package:cppcc_app/models/posts.dart';
+import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
@@ -95,9 +98,7 @@ class ApiDataProvider {
     return _dio.post('/app/user/sendSmsVerifyCode', data: {'phone': phone});
   }
 
-  /**
-   * 获取消息
-   */
+  /// 获取消息
   Future<MessageEntity> getMassage(int pageNo, int pageSize) {
     return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
         queryParameters: {
@@ -109,9 +110,7 @@ class ApiDataProvider {
     });
   }
 
-  /**
-   * 获取消息详情
-   */
+  /// 获取消息详情
   Future<MessageRecords> getMassageInfo(String id) {
     return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
         queryParameters: {'id': id}).then((value) {
@@ -120,9 +119,7 @@ class ApiDataProvider {
     });
   }
 
-  /**
-   * 获取分类信息
-   */
+  /// 获取分类信息
   Future<NewsTopicEntity> getNewsTopocList(int pageNo, int pageSize) {
     return _dio.get('/app/newsTopic/list', queryParameters: {
       'pageNo': pageNo,
@@ -133,9 +130,7 @@ class ApiDataProvider {
     });
   }
 
-  /**
-   * 获取资讯信息
-   */
+  /// 获取资讯信息
   Future<NewsEntity> getNewsList(
       int pageNo, int pageSize, NewsRecords newsRecords) {
     return _dio.get('/app/news/list', queryParameters: {
@@ -145,5 +140,16 @@ class ApiDataProvider {
       return NewsEntity.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
+  }
+
+  Future<List<PostsResponse>> getPostList(
+      int page, int pageSize, PostType postType) {
+    return _dio.get('/app/posts/list', queryParameters: {
+      'pageNo': page,
+      'pageSize': pageSize,
+      'type': postType.code,
+    }).then((value) => PostsResponseWrapper.fromJson(
+            BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
+        .records);
   }
 }

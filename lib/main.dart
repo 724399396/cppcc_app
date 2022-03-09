@@ -1,10 +1,12 @@
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/news_bloc.dart';
 import 'package:cppcc_app/bloc/news_topic_bloc.dart';
+import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
+import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:dio/dio.dart';
@@ -60,6 +62,9 @@ Future<void> main() async {
         RepositoryProvider<NewsRepository>(
           create: (context) => NewsRepository(apiDataProvider),
         ),
+        RepositoryProvider<PostRepository>(
+          create: (context) => PostRepository(apiDataProvider),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -70,6 +75,7 @@ Future<void> main() async {
             lazy: false,
             create: (BuildContext context) => UserBloc(
               context.read<UserRepository>(),
+              context.read<TimerBloc>(),
             )..add(const UserInitialed()),
           ),
           BlocProvider<MessageBloc>(
@@ -88,6 +94,10 @@ Future<void> main() async {
               context.read<NewsRepository>(),
             ),
           ),
+          BlocProvider<PostsBloc>(
+              create: (BuildContext context) => PostsBloc(
+                    context.read<PostRepository>(),
+                  )..add(PostInitilized())),
         ],
         child: CppccApp(navigationService),
       ),

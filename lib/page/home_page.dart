@@ -1,9 +1,12 @@
-import 'package:cppcc_app/bloc/news_bloc.dart';
+import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/widget/general_search.dart';
+import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -12,6 +15,7 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     var deviceSize = MediaQuery.of(context).size;
     var moduleIconWidth = deviceSize.width / 8;
+    var _easyRefreshController = EasyRefreshController();
     return SafeArea(
         child: Stack(alignment: Alignment.center, children: [
       Positioned.fill(
@@ -87,8 +91,7 @@ class HomePage extends StatelessWidget {
                               ]),
                             );
                           }),
-                        )) // .map(
-                ),
+                        ))),
           ),
           Container(
             margin: const EdgeInsets.all(12),
@@ -116,19 +119,74 @@ class HomePage extends StatelessWidget {
               ],
             ),
           ),
-          // Expanded(
-          //   child: ListView(
-          //     padding: const EdgeInsets.all(12),
-          //     children: [
-          //       BlocBuilder<NewsBloc, NewsState>(
-          //           buildWhen: (previous, current) =>
-          //               previous.news != current.news,
-          //           builder: (context, state) => Column(
-          //                 children: [],
-          //               )),
-          //     ],
-          //   ),
-          // ),
+          // 文件公告和资讯
+          Expanded(
+            child: BlocConsumer<PostsBloc, PostsState>(
+              buildWhen: (previous, current) =>
+                  previous.news != current.news ||
+                  previous.fileAnnments != current.fileAnnments ||
+                  previous.status != current.status,
+              listenWhen: (previous, current) =>
+                  previous.news != current.news ||
+                  previous.fileAnnments != current.fileAnnments ||
+                  previous.status != current.status,
+              listener: (previous, current) {
+                // easy conller
+                switch (current.status) {
+                  case ListDataFetchStatus.normal:
+                    _easyRefreshController.finishRefresh(success: true);
+                    _easyRefreshController.finishLoad(success: true);
+                    break;
+                  case ListDataFetchStatus.refresh:
+                    break;
+                  case ListDataFetchStatus.loadMore:
+                    break;
+                  case ListDataFetchStatus.failure:
+                    _easyRefreshController.finishRefresh(success: false);
+                    _easyRefreshController.finishLoad(success: false);
+                    break;
+                }
+              },
+              builder: (context, state) => EasyRefresh.custom(
+                controller: _easyRefreshController,
+                enableControlFinishRefresh: true,
+                enableControlFinishLoad: true,
+                header: ClassicalHeader(
+                  refreshText: '下拉刷新',
+                  refreshReadyText: '释放刷新',
+                  refreshingText: '加载中',
+                  refreshedText: '加载完成',
+                  refreshFailedText: '加载失败',
+                  noMoreText: '没有更多数据',
+                  infoText: '更新于 %T',
+                  textColor: Colors.black,
+                ),
+                footer: ClassicalFooter(
+                  loadText: '上拉加载更多',
+                  loadReadyText: '释放刷新',
+                  loadingText: '加载中',
+                  loadedText: '加载完成',
+                  loadFailedText: '加载失败',
+                  noMoreText: '没有更多数据',
+                  infoText: '更新于 %T',
+                  textColor: Colors.black,
+                ),
+                onLoad: () async {
+                  BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
+                },
+                onRefresh: () async {
+                  BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
+                },
+                emptyWidget: (state.news + state.fileAnnments).isEmpty
+                    ? const Text('暂无数据')
+                    : null,
+                slivers: (state.news + state.fileAnnments)
+                    .map((p) => PostsItem(p))
+                    .toList(),
+              ),
+            ),
+            // ),
+          ),
         ],
       ),
     ]));

@@ -9,7 +9,6 @@ part 'message_event.dart';
 
 part 'message_state.dart';
 
-typedef GenericApiCall<T> = Future<T> Function();
 
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final MessageRepository _messageRepository;

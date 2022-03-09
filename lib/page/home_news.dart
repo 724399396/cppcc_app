@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cppcc_app/bloc/news_bloc.dart';
 import 'package:cppcc_app/dto/news/news_entity.dart';
+import 'package:cppcc_app/widget/news_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import '../widget/message_list_item.dart';
@@ -204,17 +205,16 @@ class NewsContentPage extends StatelessWidget {
               SliverList(
                 delegate: SliverChildBuilderDelegate(
                   (context, index) {
-                    return Text("data");
-                    // return MessageListItem(
-                    //   icon: Icon(Icons.chevron_right, color: Colors.grey),
-                    //   title: state.listDatas[index].title,
-                    //   createTime: state.listDatas[index].title,
-                    //   describe: state.listDatas[index].title,
-                    //   titleColor: Color(0xff5d5d5d),
-                    //   onPressed: () {
-                    //     Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
-                    //   },
-                    // );
+                    return NewsListItem(
+                      icon: Icon(Icons.chevron_right, color: Colors.grey),
+                      title: state.listDatas[index].title,
+                      createTime: state.listDatas[index].title,
+                      describe: state.listDatas[index].title,
+                      titleColor: Color(0xff5d5d5d),
+                      onPressed: () {
+                        Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
+                      },
+                    );
                   },
                   childCount: state.listDatas.length,
                 ),

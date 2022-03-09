@@ -9,6 +9,10 @@ class Routes {
 
   //消息页面
   static const messageDetailsPage = '/messageDetailsPage';
+  
+  //咨询详情页面
+  
+  static const newsDetailsPage = '/newsDetailsPage';
 
   //个人中心页面
   static const archivesPage = '/archivesPage';

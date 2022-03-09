@@ -1,0 +1,110 @@
+import 'package:cppcc_app/bloc/news_bloc.dart';
+import 'package:cppcc_app/dto/news/news_entity.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_html/flutter_html.dart';
+
+class NewsDetailsPage extends StatefulWidget {
+  const NewsDetailsPage({Key? key}) : super(key: key);
+
+  @override
+  _NewsDetailsPageState createState() => _NewsDetailsPageState();
+}
+
+class _NewsDetailsPageState extends State<NewsDetailsPage> {
+  String? id = null;
+  NewsRecords? message = null;
+  @override
+  Widget build(BuildContext context) {
+    dynamic obj = ModalRoute.of(context)?.settings.arguments;
+    if (obj != null) {
+      id = obj["id"];
+    }
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: IconThemeData(
+          color: Colors.white, //修改颜色
+        ),
+        title: Text(
+          "详情",
+          style: TextStyle(color: Colors.white),
+        ),
+        centerTitle: true,
+        backgroundColor: Color(0xfff27f56),
+        elevation: 0.0,
+      ),
+      backgroundColor: Color(0xfff4f4f4),
+      body: Stack(
+        alignment: Alignment.center,
+        children: [
+          Container(child: BlocBuilder<NewsBloc, NewsState>(
+            builder: (context, state) {
+              state.listDatas
+                  .where((item) => item.id == id)
+                  .forEach((item) => message = item);
+
+              return Container(
+                width: double.infinity,
+                height: double.maxFinite,
+                padding: new EdgeInsets.all(10),
+                margin: EdgeInsets.all(10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
+                  color: Color(0xffffffff),
+                ),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: <Widget>[
+                    Container(
+                      width: double.maxFinite,
+                      padding: EdgeInsets.only(bottom: 15),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          bottom:
+                              BorderSide(width: 1, color: Color(0xfff4f4f4)),
+                        ),
+                      ),
+                      child: Text(message?.title ?? "",
+                          style: TextStyle(
+                            fontSize: 16.0,
+                            color: Color(0xff333333),
+                          )),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(10),
+                      child: message?.content != null
+                          ? Expanded(
+                              child: Html(
+                                data: message?.content,
+                                tagsList: Html.tags
+                                  ..addAll(["bird", "flutter"]),
+                              ),
+                            )
+                          : Container(),
+                    ),
+                    Container(
+                      alignment: Alignment.topRight,
+                      padding: EdgeInsets.only(top: 10),
+                      decoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
+                        ),
+                      ),
+                      child: Text(message?.createTime ?? "",
+                          textAlign: TextAlign.right,
+                          style: TextStyle(
+                            fontSize: 14.0,
+                            color: Color(0xff999999),
+                          )),
+                    )
+                  ],
+                ),
+              );
+            },
+          ))
+        ],
+      ),
+    );
+  }
+}

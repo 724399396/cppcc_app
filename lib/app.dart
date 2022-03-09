@@ -16,6 +16,9 @@ import 'package:cppcc_app/page/settings/visiting_card_page.dart';
 
 import 'package:cppcc_app/page/message/message_details_page.dart';
 
+//资讯相关页面
+import 'package:cppcc_app/page/news/news_details_page.dart';
+
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
 final routesDef = {
@@ -32,6 +35,9 @@ final routesDef = {
 
   //消息相关功能
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
+
+  //资讯相关页面
+  Routes.newsDetailsPage: (context) => const NewsDetailsPage(),
 
 
 };

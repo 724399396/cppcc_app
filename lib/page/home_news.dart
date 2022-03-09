@@ -212,7 +212,7 @@ class NewsContentPage extends StatelessWidget {
                       describe: state.listDatas[index].title,
                       titleColor: Color(0xff5d5d5d),
                       onPressed: () {
-                        Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
+                        Navigator.of(context).pushNamed(Routes.newsDetailsPage, arguments: {"id": state.listDatas[index].id});
                       },
                     );
                   },

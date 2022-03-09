@@ -6,8 +6,6 @@ class MessageState extends Equatable {
   final int total;
   final List<MessageRecords> listDatas;
 
-  // final SuccessCallback? successCallback;
-
   MessageState({
     this.pageNo = 1,
     this.pageSize = 10,
@@ -19,7 +17,6 @@ class MessageState extends Equatable {
     int pageNo,
     MessageEntity result,
   ) {
-    print("pageNo===========================" + pageNo.toString());
     return MessageState(
       pageNo: pageNo,
       pageSize: result.size,
@@ -38,24 +35,3 @@ class MessageState extends Equatable {
     ];
   }
 }
-
-// class MessageEntityState extends Equatable {
-//   final MessageRecords? entity = MessageRecords();
-//
-//   MessageEntityState({
-//     this.entity,
-//   });
-//
-//   MessageEntityState copyWith(
-//     MessageRecords result,
-//   ) {
-//     return MessageEntityState(
-//       entity: result,
-//     );
-//   }
-//
-//   @override
-//   List<Object> get props {
-//     return [entity];
-//   }
-// }

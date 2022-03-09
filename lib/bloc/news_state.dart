@@ -6,8 +6,6 @@ class NewsState extends Equatable {
   final int total;
   final List<NewsRecords> listDatas;
 
-  // final SuccessCallback? successCallback;
-
   NewsState({
     this.pageNo = 1,
     this.pageSize = 10,
@@ -19,7 +17,6 @@ class NewsState extends Equatable {
     int pageNo,
     NewsEntity result,
   ) {
-    print("pageNo===========================" + pageNo.toString());
     return NewsState(
       pageNo: pageNo,
       pageSize: result.size,

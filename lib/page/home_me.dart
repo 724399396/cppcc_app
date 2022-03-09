@@ -32,7 +32,6 @@ class _HomeMeState extends State<HomeMe> {
               color: Color(0xfff4f4f4),
               child:
                   BlocBuilder<UserBloc, UserState>(builder: (context, state) {
-                // print("==username===" + state.username.toString());
                 return EasyRefresh.custom(
                   slivers: <Widget>[
                     SliverList(

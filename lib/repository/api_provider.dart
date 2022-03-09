@@ -138,10 +138,9 @@ class ApiDataProvider {
    */
   Future<NewsEntity> getNewsList(
       int pageNo, int pageSize, NewsRecords newsRecords) {
-    return _dio.get('/pp/news/list', queryParameters: {
+    return _dio.get('/app/news/list', queryParameters: {
       'pageNo': pageNo,
-      'pageSize': pageSize,
-      'category': newsRecords.category
+      'pageSize': pageSize
     }).then((value) {
       return NewsEntity.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);

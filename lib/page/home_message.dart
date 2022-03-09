@@ -78,8 +78,6 @@ class VisitingCardMessage extends StatelessWidget {
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
-            print("====listDatas====" + state.listDatas.length.toString());
-            print("====_msgList====" + _msgList.length.toString());
             return EasyRefresh.custom(
               emptyWidget: state.listDatas.length == 0
                   ? Container(
@@ -204,8 +202,6 @@ class SystemMessage extends StatelessWidget {
         child: BlocBuilder<MessageBloc, MessageState>(
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
-            // print("====listDatas====" + state.listDatas.length.toString());
-            // print("====_msgList====" + _msgList.length.toString());
             return EasyRefresh.custom(
               emptyWidget: state.listDatas.length == 0
                   ? Container(

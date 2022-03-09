@@ -27,7 +27,6 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
   @override
   void onChange(Change<NewsState> change) {
     super.onChange(change);
-    print("object");
   }
 
   _populateMessageData(NewsEntity result) {

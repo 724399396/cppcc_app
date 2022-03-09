@@ -39,7 +39,6 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
         children: [
           Container(child: BlocBuilder<MessageBloc, MessageState>(
             builder: (context, state) {
-              // print("====listDatas====" + state.listDatas.length.toString());
               state.listDatas
                   .where((item) => item.id == msgID)
                   .forEach((item) => message = item);

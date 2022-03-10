@@ -12,8 +12,8 @@ class NewsDetailsPage extends StatefulWidget {
 }
 
 class _NewsDetailsPageState extends State<NewsDetailsPage> {
-  String? id = null;
-  NewsRecords? message = null;
+  String? id;
+  NewsRecords? news;
   @override
   Widget build(BuildContext context) {
     dynamic obj = ModalRoute.of(context)?.settings.arguments;
@@ -22,10 +22,10 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, //修改颜色
         ),
-        title: Text(
+        title: const Text(
           "详情",
           style: TextStyle(color: Colors.white),
         ),
@@ -41,14 +41,14 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
             builder: (context, state) {
               state.listDatas
                   .where((item) => item.id == id)
-                  .forEach((item) => message = item);
+                  .forEach((item) => news = item);
 
               return Container(
                 width: double.infinity,
                 height: double.maxFinite,
-                padding: new EdgeInsets.all(10),
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                padding: const EdgeInsets.all(10),
+                margin: const EdgeInsets.all(10),
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   color: Color(0xffffffff),
                 ),
@@ -58,25 +58,55 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                   children: <Widget>[
                     Container(
                       width: double.maxFinite,
-                      padding: EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.only(bottom: 15),
+                      decoration: const BoxDecoration(
                         border: Border(
                           bottom:
                               BorderSide(width: 1, color: Color(0xfff4f4f4)),
                         ),
                       ),
-                      child: Text(message?.title ?? "",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Color(0xff333333),
-                          )),
+                      child: Container(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: <Widget>[
+                            Text(news?.title ?? "",
+                                style: const TextStyle(
+                                  fontSize: 16.0,
+                                  color: Color(0xff333333),
+                                )),
+                            Container(
+                              margin: const EdgeInsets.only(top: 10),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.center,
+                                children: <Widget>[
+                                  Text(news?.createTime ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 12.0,
+                                        color: Color(0xff999999),
+                                      )),
+                                  const SizedBox(
+                                    width: 10,
+                                  ),
+                                  Text(news?.author ?? "",
+                                      style: const TextStyle(
+                                        fontSize: 12.0,
+                                        color: Color(0xff999999),
+                                      )),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(10),
-                      child: message?.content != null
+                      padding: const EdgeInsets.all(10),
+                      child: news?.content != null
                           ? Expanded(
                               child: Html(
-                                data: message?.content,
+                                data: news?.content,
                                 tagsList: Html.tags
                                   ..addAll(["bird", "flutter"]),
                               ),
@@ -85,15 +115,15 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                     ),
                     Container(
                       alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
+                      padding: const EdgeInsets.only(top: 10),
+                      decoration: const BoxDecoration(
                         border: Border(
                           top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
                         ),
                       ),
-                      child: Text(message?.createTime ?? "",
+                      child: Text(news?.createTime ?? "",
                           textAlign: TextAlign.right,
-                          style: TextStyle(
+                          style: const TextStyle(
                             fontSize: 14.0,
                             color: Color(0xff999999),
                           )),

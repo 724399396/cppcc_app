@@ -9,11 +9,13 @@ import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
+import 'package:cppcc_app/utils/time_ago_format.dart';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 //用户登录
 import 'package:cppcc_app/repository/user_repository.dart';
@@ -46,6 +48,8 @@ Future<void> main() async {
       localDataProvider,
       navigationService);
   await localDataProvider.init();
+
+  timeago.setLocaleMessages('zh', ZhCustomMessages());
 
   // Don't allow landscape mode
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])

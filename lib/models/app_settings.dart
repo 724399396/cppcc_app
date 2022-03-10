@@ -1,5 +1,3 @@
-import 'package:equatable/equatable.dart';
-
 class BottomTab {
   late String image;
   late String text;

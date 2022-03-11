@@ -8,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 
+import '../utils/routes.dart';
+
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
@@ -80,16 +82,24 @@ class HomePage extends StatelessWidget {
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: List.generate(4, (add) {
                             var currentTab = homeTabs[4 * start + add];
-                            return Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 24),
-                              child: Column(children: [
-                                Image.asset(
-                                  currentTab.image,
-                                  width: moduleIconWidth,
-                                ),
-                                Text(currentTab.text),
-                              ]),
-                            );
+                            return Container(
+                                child: GestureDetector(
+                              onTap: () {
+                                Navigator.of(context)
+                                    .pushNamed(currentTab.path);
+                              },
+                              child: Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 24),
+                                child: Column(children: [
+                                  Image.asset(
+                                    currentTab.image,
+                                    width: moduleIconWidth,
+                                  ),
+                                  Text(currentTab.text),
+                                ]),
+                              ),
+                            ));
                           }),
                         ))),
           ),

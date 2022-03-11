@@ -6,6 +6,15 @@ import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/page_container.dart';
 import 'package:flutter/material.dart';
 
+// 首页相关页面
+import 'package:cppcc_app/page/home/leader_mailbox_page.dart';
+import 'package:cppcc_app/page/home/meeting_activities_page.dart';
+import 'package:cppcc_app/page/home/member_study_page.dart';
+import 'package:cppcc_app/page/home/network_political_page.dart';
+import 'package:cppcc_app/page/home/notice_page.dart';
+import 'package:cppcc_app/page/home/performance_file_page.dart';
+import 'package:cppcc_app/page/home/proposal_manage_page.dart';
+import 'package:cppcc_app/page/home/social_opinions_page.dart';
 
 //个人中心页面
 import 'package:cppcc_app/page/settings/archives_page.dart';
@@ -26,6 +35,16 @@ final routesDef = {
   Routes.home: (context) => const PageContainer(),
   Routes.resetPasswordPage: (context) => const ResetPasswordPage(),
 
+  //首页相关页面
+  Routes.leaderMailboxPage: (context) => const LeaderMailboxPage(),
+  Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
+  Routes.memberStudyPage: (context) => const MemberStudyPage(),
+  Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),
+  Routes.noticePage: (context) => const NoticePage(),
+  Routes.performanceFilePage: (context) => const PerformanceFilePage(),
+  Routes.proposalManagePage: (context) => const ProposalManagePage(),
+  Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
+
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),
   Routes.collectionPage: (context) => const CollectionPage(),
@@ -38,8 +57,6 @@ final routesDef = {
 
   //资讯相关页面
   Routes.newsDetailsPage: (context) => const NewsDetailsPage(),
-
-
 };
 
 class CppccApp extends StatelessWidget {

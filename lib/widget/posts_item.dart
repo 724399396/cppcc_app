@@ -5,6 +5,8 @@ import 'package:cppcc_app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
+import '../utils/routes.dart';
+
 class PostsItem extends StatelessWidget {
   final Posts _post;
   const PostsItem(this._post, {Key? key}) : super(key: key);
@@ -13,7 +15,10 @@ class PostsItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
         child: GestureDetector(
-      onTap: () {},
+      onTap: () {
+        Navigator.of(context)
+            .pushNamed(Routes.newsDetailsPage, arguments: {"id": _post.id});
+      },
       child: Container(
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),

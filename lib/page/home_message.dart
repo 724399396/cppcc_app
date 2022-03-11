@@ -44,6 +44,9 @@ class HomeMessage extends StatelessWidget {
                 labelStyle: TextStyle(fontWeight: FontWeight.bold),
                 unselectedLabelStyle: TextStyle(fontSize: 15),
                 unselectedLabelColor: Colors.white,
+                indicatorSize: TabBarIndicatorSize.label,
+                indicatorColor: Color(0xffffffff),
+                indicatorWeight: 1,
               ),
             ),
           ),
@@ -111,8 +114,9 @@ class VisitingCardMessage extends StatelessWidget {
               firstRefresh: true,
               header: _enableRefresh
                   ? ClassicalHeader(
-                      bgColor: Color(0xffbee0ff),
-                      infoColor: _headerFloat ? Colors.black87 : Colors.teal,
+                      textColor: Colors.black,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
                       float: _headerFloat,
                       refreshText: "拉动刷新",
                       refreshReadyText: "释放刷新",
@@ -125,8 +129,9 @@ class VisitingCardMessage extends StatelessWidget {
                   : null,
               footer: _enableLoad
                   ? ClassicalFooter(
-                      bgColor: Color(0xffbee0ff),
-                      infoColor: _headerFloat ? Colors.black87 : Colors.teal,
+                      textColor: Colors.black,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
                       float: _headerFloat,
                       loadText: "拉动加载",
                       loadReadyText: "释放加载",
@@ -167,7 +172,9 @@ class VisitingCardMessage extends StatelessWidget {
                         describe: state.listDatas[index].msgAbstract,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
+                          Navigator.of(context).pushNamed(
+                              Routes.messageDetailsPage,
+                              arguments: {"msgID": state.listDatas[index].id});
                         },
                       );
                     },
@@ -203,28 +210,23 @@ class SystemMessage extends StatelessWidget {
           builder: (context, state) {
             _msgList.addAll(state.listDatas.toList());
             return EasyRefresh.custom(
-              emptyWidget: state.listDatas.length == 0
-                  ? Container(
+              emptyWidget: state.listDatas.isEmpty
+                  ? SizedBox(
                       height: double.infinity,
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: <Widget>[
-                          Expanded(
+                          const Expanded(
                             child: SizedBox(),
                             flex: 2,
                           ),
-                          // SizedBox(
-                          //   width: 100.0,
-                          //   height: 100.0,
-                          //   child: new Image.asset('assets/icons/ic_wode_selected.png'),
-                          // ),
                           Text(
                             "未加载到数据",
                             style: TextStyle(
                                 fontSize: 16.0, color: Colors.grey[400]),
                           ),
-                          Expanded(
+                          const Expanded(
                             child: SizedBox(),
                             flex: 3,
                           ),
@@ -235,8 +237,8 @@ class SystemMessage extends StatelessWidget {
               firstRefresh: true,
               header: _enableRefresh
                   ? ClassicalHeader(
-                      bgColor: Color(0xffbee0ff),
-                      infoColor: _headerFloat ? Colors.black87 : Colors.teal,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
                       float: _headerFloat,
                       refreshText: "拉动刷新",
                       refreshReadyText: "释放刷新",
@@ -249,8 +251,8 @@ class SystemMessage extends StatelessWidget {
                   : null,
               footer: _enableLoad
                   ? ClassicalFooter(
-                      bgColor: Color(0xffbee0ff),
-                      infoColor: _headerFloat ? Colors.black87 : Colors.teal,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
                       float: _headerFloat,
                       loadText: "拉动加载",
                       loadReadyText: "释放加载",
@@ -291,7 +293,9 @@ class SystemMessage extends StatelessWidget {
                         describe: state.listDatas[index].msgAbstract,
                         titleColor: Color(0xff5d5d5d),
                         onPressed: () {
-                          Navigator.of(context).pushNamed(Routes.messageDetailsPage, arguments: {"msgID": state.listDatas[index].id});
+                          Navigator.of(context).pushNamed(
+                              Routes.messageDetailsPage,
+                              arguments: {"msgID": state.listDatas[index].id});
                         },
                       );
                     },

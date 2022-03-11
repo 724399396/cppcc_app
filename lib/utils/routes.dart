@@ -4,6 +4,14 @@ class Routes {
   static const resetPasswordPage = '/resetPassword';
 
   //首页页面
+  static const leaderMailboxPage = '/leaderMailboxPage';
+  static const meetingActivitiesPage = '/meetingActivitiesPage';
+  static const memberStudyPage = '/memberStudyPage';
+  static const networkPoliticalPage = '/networkPoliticalPage';
+  static const noticePage = '/noticePage';
+  static const performanceFilePage = '/performanceFilePage';
+  static const proposalManagePage = '/proposalManagePage';
+  static const socialOpinionsPage = '/socialOpinionsPage';
 
   //通讯录页面
 

@@ -11,27 +11,33 @@ class FeedbackPage extends StatefulWidget {
 }
 
 class _FeedbackPageState extends State<FeedbackPage> {
- 
-  String? msgID = null;
-  MessageRecords? message = null;
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute.of(context)?.settings.arguments;
-    if (obj != null) {
-      msgID = obj["msgID"];
-    }
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, //修改颜色
         ),
-        title: Text(
+        title: const Text(
           "建议反馈",
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
         backgroundColor: Color(0xfff27f56),
         elevation: 0.0,
+        actions: <Widget>[
+          Container(
+            width: 60,
+            padding: new EdgeInsets.all(5),
+            margin: EdgeInsets.all(10),
+            alignment: Alignment.center,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
+              color: Color(0xfff4f4f4),
+            ),
+            child: const Text("提交"),
+          ),
+        ],
       ),
       backgroundColor: Color(0xfff4f4f4),
       body: Stack(
@@ -40,16 +46,12 @@ class _FeedbackPageState extends State<FeedbackPage> {
           Container(child: BlocBuilder<MessageBloc, MessageState>(
             builder: (context, state) {
               // print("====listDatas====" + state.listDatas.length.toString());
-              state.listDatas
-                  .where((item) => item.id == msgID)
-                  .forEach((item) => message = item);
-
               return Container(
                 width: double.infinity,
                 height: double.maxFinite,
                 padding: new EdgeInsets.all(10),
                 margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(15.0)),
                   color: Color(0xffffffff),
                 ),
@@ -60,41 +62,53 @@ class _FeedbackPageState extends State<FeedbackPage> {
                     Container(
                       width: double.maxFinite,
                       padding: EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         border: Border(
                           bottom:
                               BorderSide(width: 1, color: Color(0xfff4f4f4)),
                         ),
                       ),
-                      child: Text(message?.titile ?? "",
+                      child: const Text("您的建议与反馈",
                           style: TextStyle(
                             fontSize: 16.0,
-                            color: Color(0xff333333),
+                            color: Color(0xff292828),
                           )),
                     ),
                     Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(message?.msgContent ?? "",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xff333333),
-                          )),
-                    ),
-                    Container(
-                      alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
+                      child: TextField(
+                        key: const ValueKey('keyword'),
+                        maxLines: 15,
+                        decoration: InputDecoration(
+                          enabledBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 0.0,
+                                style: BorderStyle.solid),
+                          ),
+                          focusedBorder: const OutlineInputBorder(
+                            borderRadius:
+                                BorderRadius.all(Radius.circular(30.0)),
+                            borderSide: BorderSide(
+                                color: Colors.white,
+                                width: 0.0,
+                                style: BorderStyle.solid),
+                          ),
+                          isDense: true,
+                          contentPadding: const EdgeInsets.all(8),
+                          hintStyle:
+                              Theme.of(context).textTheme.bodyText1?.copyWith(
+                                    color: Color(0xffaaaaaa),
+                                  ),
+                          hintText: '请输入关键词',
                         ),
+                        onSubmitted: (value) {
+                          print("object");
+                        },
+                        textInputAction: TextInputAction.search,
                       ),
-                      child: Text(message?.sendTime ?? "",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xff999999),
-                          )),
-                    )
+                    ),
                   ],
                 ),
               );

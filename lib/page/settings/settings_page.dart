@@ -1,7 +1,8 @@
+import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:flutter/material.dart';
-import 'package:cppcc_app/dto/message/message_entity.dart';
-import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../utils/routes.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({Key? key}) : super(key: key);
@@ -11,21 +12,14 @@ class SettingsPage extends StatefulWidget {
 }
 
 class _SettingsPageState extends State<SettingsPage> {
- 
-  String? msgID = null;
-  MessageRecords? message = null;
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute.of(context)?.settings.arguments;
-    if (obj != null) {
-      msgID = obj["msgID"];
-    }
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
+        iconTheme: const IconThemeData(
           color: Colors.white, //修改颜色
         ),
-        title: Text(
+        title: const Text(
           "设置",
           style: TextStyle(color: Colors.white),
         ),
@@ -37,64 +31,118 @@ class _SettingsPageState extends State<SettingsPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Container(child: BlocBuilder<MessageBloc, MessageState>(
+          Container(child: BlocBuilder<UserBloc, UserState>(
             builder: (context, state) {
               // print("====listDatas====" + state.listDatas.length.toString());
-              state.listDatas
-                  .where((item) => item.id == msgID)
-                  .forEach((item) => message = item);
-
               return Container(
-                width: double.infinity,
-                height: double.maxFinite,
-                padding: new EdgeInsets.all(10),
-                margin: EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(15.0)),
-                  color: Color(0xffffffff),
-                ),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: <Widget>[
                     Container(
-                      width: double.maxFinite,
-                      padding: EdgeInsets.only(bottom: 15),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          bottom:
-                              BorderSide(width: 1, color: Color(0xfff4f4f4)),
-                        ),
+                      width: double.infinity,
+                      height: 48,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      margin: EdgeInsets.only(top: 10),
+                      decoration: const BoxDecoration(
+                        color: Color(0xffffffff),
                       ),
-                      child: Text(message?.titile ?? "",
-                          style: TextStyle(
-                            fontSize: 16.0,
-                            color: Color(0xff333333),
-                          )),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const Text("修改密码",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color(0xff000033),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            child: const SizedBox(
+                              height: 16.0,
+                              width: 16.0,
+                              child:
+                                  Icon(Icons.chevron_right, color: Colors.grey),
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
                     Container(
-                      padding: EdgeInsets.all(10),
-                      child: Text(message?.msgContent ?? "",
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xff333333),
-                          )),
-                    ),
-                    Container(
-                      alignment: Alignment.topRight,
-                      padding: EdgeInsets.only(top: 10),
-                      decoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(width: 1, color: Color(0xfff4f4f4)),
-                        ),
+                      width: double.infinity,
+                      height: 48,
+                      alignment: Alignment.centerLeft,
+                      padding: EdgeInsets.only(left: 10, right: 10),
+                      margin: EdgeInsets.only(top: 10),
+                      decoration: const BoxDecoration(
+                        color: Color(0xffffffff),
                       ),
-                      child: Text(message?.sendTime ?? "",
-                          textAlign: TextAlign.right,
-                          style: TextStyle(
-                            fontSize: 14.0,
-                            color: Color(0xff999999),
-                          )),
-                    )
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          const Text("系统通知",
+                              style: TextStyle(
+                                fontSize: 16.0,
+                                color: Color(0xff000033),
+                              )),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Container(
+                            child: const SizedBox(
+                              height: 16.0,
+                              width: 16.0,
+                              child:
+                                  Icon(Icons.chevron_right, color: Colors.grey),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('提示'),
+                                content: Text('确认要退出登录吗？'),
+                                actions: <Widget>[
+                                  TextButton(
+                                    child: Text('取消'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop('cancel');
+                                    },
+                                  ),
+                                  TextButton(
+                                    child: Text('确认'),
+                                    onPressed: () {
+                                      BlocProvider.of<UserBloc>(context)
+                                          .add(UserLogoutRequested());
+                                      Navigator.of(context).pop('ok');
+                                      Navigator.of(context).pushNamed(Routes.loginPage);
+                                    },
+                                  ),
+                                ],
+                              );
+                            });
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 48,
+                        alignment: Alignment.center,
+                        padding: EdgeInsets.only(left: 10, right: 10),
+                        margin: EdgeInsets.only(top: 10),
+                        decoration: const BoxDecoration(
+                          color: Color(0xffffffff),
+                        ),
+                        child: Text("退出登录"),
+                      ),
+                    ),
                   ],
                 ),
               );

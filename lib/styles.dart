@@ -5,6 +5,8 @@ class AppColors {
 
   static const textColor = Color.fromRGBO(35, 35, 50, .7);
 
+  static const greyTextColor = Color(0xFF9A9A9A);
+
   static const displayTextColor = Colors.black;
 
   static const primaryBlue = Colors.blue;

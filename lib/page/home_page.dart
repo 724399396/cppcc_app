@@ -178,7 +178,7 @@ class HomePage extends StatelessWidget {
                   BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
                 },
                 emptyWidget: (state.news + state.fileAnnments).isEmpty
-                    ? const Text('暂无数据')
+                    ? const Center(child: Text('暂无数据'))
                     : null,
                 slivers: (state.news + state.fileAnnments)
                     .map((p) => PostsItem(p))

@@ -9,7 +9,7 @@ enum PostType {
 }
 
 extension TaskStatusExtension on PostType {
-  String get name {
+  String get description {
     switch (this) {
       case PostType.news:
         return '资讯';

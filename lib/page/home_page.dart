@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/posts_bloc.dart';
+import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
@@ -86,7 +87,7 @@ class HomePage extends StatelessWidget {
                                 child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
-                                    .pushNamed(currentTab.path);
+                                .pushNamed(currentTab.path);
                               },
                               child: Padding(
                                 padding:

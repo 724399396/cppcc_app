@@ -10,12 +10,16 @@ LoginResponse _$LoginResponseFromJson(Map<String, dynamic> json) =>
     LoginResponse(
       json['token'] as String,
       UserResponse.fromJson(json['userInfo'] as Map<String, dynamic>),
+      (json['dictData'] as List<dynamic>)
+          .map((e) => DictItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$LoginResponseToJson(LoginResponse instance) =>
     <String, dynamic>{
       'token': instance.token,
       'userInfo': instance.userInfo,
+      'dictData': instance.dictData,
     };
 
 UserInfoResponse _$UserInfoResponseFromJson(Map<String, dynamic> json) =>
@@ -47,4 +51,31 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'post': instance.post,
       'company': instance.company,
       'idCard': instance.idCard,
+    };
+
+DictItem _$DictItemFromJson(Map<String, dynamic> json) => DictItem()
+  ..id = json['id'] as String
+  ..dictCode = json['dictCode'] as String
+  ..itemValue = json['itemValue'] as String
+  ..dictName = json['dictName'] as String
+  ..itemText = json['itemText'] as String;
+
+Map<String, dynamic> _$DictItemToJson(DictItem instance) => <String, dynamic>{
+      'id': instance.id,
+      'dictCode': instance.dictCode,
+      'itemValue': instance.itemValue,
+      'dictName': instance.dictName,
+      'itemText': instance.itemText,
+    };
+
+DictItemEntity _$DictItemEntityFromJson(Map<String, dynamic> json) =>
+    DictItemEntity(
+      (json['dictData'] as List<dynamic>)
+          .map((e) => DictItem.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
+
+Map<String, dynamic> _$DictItemEntityToJson(DictItemEntity instance) =>
+    <String, dynamic>{
+      'dictData': instance.dictData,
     };

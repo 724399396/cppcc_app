@@ -1,4 +1,9 @@
+import 'dart:convert' as convert;
+
 import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/repository/local_data_provider.dart';
+
+import '../dto/login_response.dart';
 
 class BottomTab {
   late String image;
@@ -62,14 +67,58 @@ class HomeTab {
 }
 
 final List<HomeTab> homeTabs = [
-  HomeTab(image: 'assets/icons/ic_lvzhidangan.png', text: '履职档案', path: Routes.performanceFilePage),
-  HomeTab(image: 'assets/icons/ic_sheqingmyi.png', text: '社情民意', path: Routes.socialOpinionsPage),
-  HomeTab(image: 'assets/icons/ic_tianbanli.png', text: '提案管理', path: Routes.proposalManagePage),
-  HomeTab(image: 'assets/icons/ic_huiyihuod.png', text: '会议活动', path: Routes.meetingActivitiesPage),
-  HomeTab(image: 'assets/icons/ic_wenjiangonggao.png', text: '通知公告', path: Routes.noticePage),
-  HomeTab(image: 'assets/icons/ic_wangluoyiz.png', text: '网络议政', path: Routes.networkPoliticalPage),
-  HomeTab(image: 'assets/icons/ic_weiyuanxuexi.png', text: '委员学习', path: Routes.memberStudyPage),
-  HomeTab(image: 'assets/icons/ic_lingdaoyoux.png', text: '领导信箱', path: Routes.leaderMailboxPage),
+  HomeTab(
+      image: 'assets/icons/ic_lvzhidangan.png',
+      text: '履职档案',
+      path: Routes.performanceFilePage),
+  HomeTab(
+      image: 'assets/icons/ic_sheqingmyi.png',
+      text: '社情民意',
+      path: Routes.socialOpinionsPage),
+  HomeTab(
+      image: 'assets/icons/ic_tianbanli.png',
+      text: '提案管理',
+      path: Routes.proposalManagePage),
+  HomeTab(
+      image: 'assets/icons/ic_huiyihuod.png',
+      text: '会议活动',
+      path: Routes.meetingActivitiesPage),
+  HomeTab(
+      image: 'assets/icons/ic_wenjiangonggao.png',
+      text: '通知公告',
+      path: Routes.noticePage),
+  HomeTab(
+      image: 'assets/icons/ic_wangluoyiz.png',
+      text: '网络议政',
+      path: Routes.networkPoliticalPage),
+  HomeTab(
+      image: 'assets/icons/ic_weiyuanxuexi.png',
+      text: '委员学习',
+      path: Routes.memberStudyPage),
+  HomeTab(
+      image: 'assets/icons/ic_lingdaoyoux.png',
+      text: '领导信箱',
+      path: Routes.leaderMailboxPage),
 ];
 
 const int pageSize = 10;
+
+///根据字典类型获取字典列表
+///DictService().getDictItemByCode("msg_category").then((value) => print(value.length));
+class DictService {
+  var localDataProvider = LocalDataProvider();
+
+  Future<List<DictItem>> getDictItemByCode(String dictCode) async {
+    await localDataProvider.init();
+
+    String? dataStr = localDataProvider.dictData();
+    if (dataStr != null) {
+      DictItemEntity dictItemEntity = DictItemEntity.fromJson(
+          convert.jsonDecode(dataStr) as Map<String, dynamic>);
+      return dictItemEntity.dictData
+          .where((item) => item.dictCode == dictCode)
+          .toList();
+    }
+    return [];
+  }
+}

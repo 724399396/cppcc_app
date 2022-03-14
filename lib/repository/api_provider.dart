@@ -1,7 +1,6 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
-import 'package:cppcc_app/models/posts.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -88,11 +87,11 @@ class ApiDataProvider {
         data: {'phone': phone, 'password': password, 'verifyCode': verifyCode});
   }
 
-  Future<UserResponse> getUserInfo() {
-    return _dio.get('/app/user/info').then((value) => UserInfoResponse.fromJson(
-            BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
-        .userInfo);
+  Future<LoginResponse> getUserInfo() {
+    return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
+            BaseResponse.fromJson(value.data).result as Map<String, dynamic>) );
   }
+  
 
   Future<Response<void>> sendSmsVerifyCode(String phone) {
     return _dio.post('/app/user/sendSmsVerifyCode', data: {'phone': phone});

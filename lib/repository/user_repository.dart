@@ -1,3 +1,5 @@
+import 'dart:convert' as convert;
+
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
@@ -32,6 +34,8 @@ class UserRepository {
     await _localDataProvider.setPost(response.userInfo.post ?? "");
     await _localDataProvider.setCompany(response.userInfo.company ?? "");
     await _localDataProvider.setIdCard(response.userInfo.idCard ?? "");
+    
+    await _localDataProvider.setDictData(convert.jsonEncode(DictItemEntity(response.dictData)));
     return response.userInfo;
   }
 
@@ -45,10 +49,14 @@ class UserRepository {
     await _localDataProvider.setPost('');
     await _localDataProvider.setCompany('');
     await _localDataProvider.setIdCard('');
+    await _localDataProvider.setDictData('');
   }
 
   Future<void> freshUserInfo() async {
-    var userInfo = await _apiDataProvider.getUserInfo();
+    var loginResponse = await _apiDataProvider.getUserInfo();
+    var userInfo = loginResponse.userInfo;
+
+
     await _localDataProvider.setUserName(userInfo.username);
     await _localDataProvider.setNickname(userInfo.realname);
     await _localDataProvider.setAvatar(userInfo.avatar ?? "");
@@ -57,6 +65,8 @@ class UserRepository {
     await _localDataProvider.setPost(userInfo.post ?? "");
     await _localDataProvider.setCompany(userInfo.company ?? "");
     await _localDataProvider.setIdCard(userInfo.idCard ?? "");
+
+    await _localDataProvider.setDictData(convert.jsonEncode(DictItemEntity(loginResponse.dictData)));
   }
 
   Future<Response<void>> updatePassword(

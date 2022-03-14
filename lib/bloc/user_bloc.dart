@@ -21,6 +21,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       _userRepository.freshUserInfo().then((_) {
         emit(_populateUserData());
       }).catchError((err) {
+        print("获取用户信息错误!");
         // 获取用户信息错误，可忽略
       });
     });

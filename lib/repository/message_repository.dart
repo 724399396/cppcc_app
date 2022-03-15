@@ -7,8 +7,10 @@ class MessageRepository {
 
   MessageRepository(this._apiDataProvider);
 
-  Future<MessageEntity> getMessageList(int pageNo, int pageSize) async {
-    var response = await _apiDataProvider.getMassage(pageNo, pageSize);
+  Future<MessageEntity> getMessageList(
+      int pageNo, int pageSize, String msgCategory) async {
+    var response =
+        await _apiDataProvider.getMassage(pageNo, pageSize, msgCategory);
     return response;
   }
 

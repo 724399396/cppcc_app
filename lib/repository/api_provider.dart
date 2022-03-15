@@ -1,5 +1,6 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
+import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -89,20 +90,21 @@ class ApiDataProvider {
 
   Future<LoginResponse> getUserInfo() {
     return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
-            BaseResponse.fromJson(value.data).result as Map<String, dynamic>) );
+        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
-  
 
   Future<Response<void>> sendSmsVerifyCode(String phone) {
     return _dio.post('/app/user/sendSmsVerifyCode', data: {'phone': phone});
   }
 
   /// 获取消息
-  Future<MessageEntity> getMassage(int pageNo, int pageSize) {
+  Future<MessageEntity> getMassage(
+      int pageNo, int pageSize, String msgCategory) {
     return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
         queryParameters: {
           'pageNo': pageNo,
-          'pageSize': pageSize
+          'pageSize': pageSize,
+          'msgCategory': msgCategory
         }).then((value) {
       return MessageEntity.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
@@ -141,6 +143,19 @@ class ApiDataProvider {
     });
   }
 
+  /// 获取领导信箱
+  Future<MailboxResponseWrapper> getMailBoxList(
+      int pageNo, int pageSize, String mailboxType) {
+    return _dio.get('/app/mailbox/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      "type": mailboxType
+    }).then((value) {
+      return MailboxResponseWrapper.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
   Future<PostsResponseWrapper> getPostList(
       int page, int pageSize, PostType postType) {
     return _dio.get('/app/posts/list', queryParameters: {
@@ -148,6 +163,6 @@ class ApiDataProvider {
       'pageSize': pageSize,
       'type': postType.code,
     }).then((value) => PostsResponseWrapper.fromJson(
-            BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
 }

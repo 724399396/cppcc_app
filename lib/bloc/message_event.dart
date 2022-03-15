@@ -12,11 +12,12 @@ abstract class MessageEvent extends Equatable {
 class GetListData extends MessageEvent {
   final int pageNo;
   final int pageSize;
+  final String msgType;
 
-  const GetListData(this.pageNo, this.pageSize) : super();
+  const GetListData(this.pageNo, this.pageSize, this.msgType) : super();
 
   @override
-  List<Object> get props => [pageNo, pageSize];
+  List<Object> get props => [pageNo, pageSize, msgType];
 }
 
 class GetDetailsData extends MessageEvent {

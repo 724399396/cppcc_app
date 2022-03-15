@@ -9,13 +9,12 @@ part 'message_event.dart';
 
 part 'message_state.dart';
 
-
 class MessageBloc extends Bloc<MessageEvent, MessageState> {
   final MessageRepository _messageRepository;
 
   MessageBloc(this._messageRepository) : super(MessageState()) {
     on<MessageInitialed>((event, emit) async {
-      await _messageRepository.getMessageList(1, 3).then((result) {
+      await _messageRepository.getMessageList(1, 10, "").then((result) {
         emit(_populateMessageData(result));
       });
     });
@@ -23,7 +22,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     //请求获取列表数据
     on<GetListData>((event, emit) async {
       await _messageRepository
-          .getMessageList(event.pageNo, event.pageSize)
+          .getMessageList(event.pageNo, event.pageSize, event.msgType)
           .then((result) {
         emit(_populateMessageData(result));
       });

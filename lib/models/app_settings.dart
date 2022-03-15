@@ -112,6 +112,18 @@ class DictService {
   /// 	领导信箱类型
   String mailboxType = "mailbox_type";
 
+  /// 	网络议政
+  String discussNetworkStatus = "discuss_network_status";
+
+  /// 	会议活动
+  String meetingActivityType = "meeting_activity_type";
+
+  /// 	社情民意
+  String opinionType = "opinion_type";
+  
+  /// 	通告类型
+  String msgCategory = "msg_category";
+  
   /// 	提案类型
   String proposalType = "proposal_type";
 

@@ -8,6 +8,7 @@ import 'package:flutter/material.dart';
 
 // 首页相关页面
 import 'package:cppcc_app/page/home/leader_mailbox_page.dart';
+import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_page.dart';
 import 'package:cppcc_app/page/home/member_study_page.dart';
 import 'package:cppcc_app/page/home/network_political_page.dart';
@@ -37,6 +38,7 @@ final routesDef = {
 
   //首页相关页面
   Routes.leaderMailboxPage: (context) => const LeaderMailboxPage(),
+  Routes.leaderMailboxDetailsPage: (context) => const LeaderMailboxDetailsPage(),
   Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
   Routes.memberStudyPage: (context) => const MemberStudyPage(),
   Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),

@@ -5,6 +5,7 @@ class Routes {
 
   //首页页面
   static const leaderMailboxPage = '/leaderMailboxPage';
+  static const leaderMailboxDetailsPage = '/leaderMailboxDetailsPage';
   static const meetingActivitiesPage = '/meetingActivitiesPage';
   static const memberStudyPage = '/memberStudyPage';
   static const networkPoliticalPage = '/networkPoliticalPage';

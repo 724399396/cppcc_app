@@ -17,12 +17,15 @@ class NewsDetailsPage extends StatefulWidget {
 
 class _NewsDetailsPageState extends State<NewsDetailsPage> {
   String? id;
+  int? postCode;
+
   late Posts _post;
   @override
   Widget build(BuildContext context) {
     dynamic obj = ModalRoute.of(context)?.settings.arguments;
     if (obj != null) {
       id = obj["id"];
+      postCode = obj["postCode"];
     }
     return Scaffold(
       appBar: AppBar(
@@ -43,9 +46,37 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
         children: [
           Container(child: BlocBuilder<PostsBloc, PostsState>(
             builder: (context, state) {
-              state.news
-                  .where((item) => item.id == id)
-                  .forEach((item) => _post = item);
+              ///switch
+              if (postCode == PostType.news.code) {
+                state.news
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
+              if (postCode == PostType.broadcast.code) {
+                state.broadcasts
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
+              if (postCode == PostType.twoSessionsTopic.code) {
+                state.twoSessionsTopics
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
+              if (postCode == PostType.discussPoliticsFile.code) {
+                state.discussPoliticsFiles
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
+              if (postCode == PostType.learning.code) {
+                state.learnings
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
+              if (postCode == PostType.fileAnnment.code) {
+                state.fileAnnments
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
 
               return EasyRefresh.custom(
                 slivers: <Widget>[
@@ -116,7 +147,7 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text(_post.author,
+                                          Text(_post.author!,
                                               style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Color(0xff999999),

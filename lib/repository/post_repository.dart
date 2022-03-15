@@ -13,10 +13,10 @@ class PostRepository {
     return _apiDataProvider
         .getPostList(page, pageSize, postType)
         .then((response) {
-      return response
+      return response.records
           .map((PostsResponse p) => Posts(
                 id: p.id,
-                postType: convertToPostTypeFromCode(p.type),
+                postType: convertToPostTypeFromCode(p.type!),
                 title: p.title,
                 author: p.author,
                 content: p.content,

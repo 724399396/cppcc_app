@@ -104,8 +104,17 @@ final List<HomeTab> homeTabs = [
 const int pageSize = 10;
 
 ///根据字典类型获取字典列表
-///DictService().getDictItemByCode("msg_category").then((value) => print(value.length));
+///DictService().getDictItemByCode("msg_category").then((datas) => print(datas.length));
 class DictService {
+  /// 	委员学习专题
+  String learningCategories = "learning_categories";
+
+  /// 	领导信箱类型
+  String mailboxType = "mailbox_type";
+
+  /// 	提案类型
+  String proposalType = "proposal_type";
+
   var localDataProvider = LocalDataProvider();
 
   Future<List<DictItem>> getDictItemByCode(String dictCode) async {

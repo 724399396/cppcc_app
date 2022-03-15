@@ -15,13 +15,29 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   PostsBloc(this._postRepository) : super(const PostsState()) {
     on<PostInitilized>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        emit(state.copyWith(homeCurrentPage: 1, news: [], fileAnnments: [],));
+        emit(state.copyWith(
+          homeCurrentPage: 1,
+          news: [],
+          broadcasts: [],
+          twoSessionsTopics: [],
+          discussPoliticsFiles: [],
+          learnings: [],
+          fileAnnments: [],
+        ));
         await _homeDataLoad(emit);
       });
     });
     on<HomePostRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        emit(state.copyWith(homeCurrentPage: 1, news: [], fileAnnments: [],));
+        emit(state.copyWith(
+          homeCurrentPage: 1,
+          news: [],
+          broadcasts: [],
+          twoSessionsTopics: [],
+          discussPoliticsFiles: [],
+          learnings: [],
+          fileAnnments: [],
+        ));
         await _homeDataLoad(emit);
       });
     });
@@ -37,11 +53,25 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       _postRepository.getPostList(
           state.homeCurrentPage, pageSize, PostType.news),
       _postRepository.getPostList(
+          state.homeCurrentPage, pageSize, PostType.broadcast),
+      _postRepository.getPostList(
+          state.homeCurrentPage, pageSize, PostType.twoSessionsTopic),
+      _postRepository.getPostList(
+          state.homeCurrentPage, pageSize, PostType.discussPoliticsFile),
+      _postRepository.getPostList(
+          state.homeCurrentPage, pageSize, PostType.learning),
+      _postRepository.getPostList(
           state.homeCurrentPage, pageSize, PostType.fileAnnment)
     ]);
+    print("object" + values.length.toString());
+
     emit(state.copyWith(
         news: state.news + values[0],
-        fileAnnments: state.fileAnnments + values[1],
+        broadcasts: state.broadcasts + values[1],
+        twoSessionsTopics: state.twoSessionsTopics + values[2],
+        discussPoliticsFiles: state.discussPoliticsFiles + values[3],
+        learnings: state.learnings + values[4],
+        fileAnnments: state.fileAnnments + values[5],
         homeCurrentPage: state.homeCurrentPage + 1));
   }
 
@@ -54,6 +84,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       await call(emit);
       emit(state.copyWith(status: ListDataFetchStatus.normal));
     } catch (err) {
+      print("err:" + err.toString());
       emit(state.copyWith(status: ListDataFetchStatus.failure));
     }
   }

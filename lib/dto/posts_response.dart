@@ -18,12 +18,12 @@ class PostsResponse {
   final String id;
   final String title;
   final String? cover;
-  final String content;
-  final int hits;
+  final String? content;
+  final int? hits;
   final String? appendix;
-  final String author;
-  final int category;
-  final int type;
+  final String? author;
+  final int? category;
+  final int? type;
   final String createBy;
   final String createTime;
 

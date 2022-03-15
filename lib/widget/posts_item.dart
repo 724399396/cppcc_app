@@ -16,8 +16,8 @@ class PostsItem extends StatelessWidget {
     return SliverToBoxAdapter(
         child: GestureDetector(
       onTap: () {
-        Navigator.of(context)
-            .pushNamed(Routes.newsDetailsPage, arguments: {"id": _post.id});
+        Navigator.of(context).pushNamed(Routes.newsDetailsPage,
+            arguments: {"id": _post.id, "postCode": _post.postType.code});
       },
       child: Container(
         height: 120,

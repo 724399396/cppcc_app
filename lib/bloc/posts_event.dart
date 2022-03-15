@@ -12,3 +12,4 @@ class PostInitilized extends PostsEvent {}
 class HomePostRefresh extends PostsEvent {}
 
 class HomePostLoadMore extends PostsEvent {}
+

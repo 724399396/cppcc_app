@@ -6,11 +6,11 @@ class Posts extends Equatable {
   final String id;
   final PostType postType;
   final String title;
-  final String author;
-  final String content;
-  final int category;
+  final String? author;
+  final String? content;
+  final int? category;
   final String? cover;
-  final int hits;
+  final int? hits;
   final String? appendix;
   final String createBy;
   final DateTime createTime;
@@ -68,10 +68,10 @@ class Posts extends Equatable {
       id,
       postType,
       title,
-      author,
-      content,
-      category,
-      hits,
+      author!,
+      content!,
+      category!,
+      hits!,
       createBy,
       createTime,
     ];

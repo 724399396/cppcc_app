@@ -141,14 +141,13 @@ class ApiDataProvider {
     });
   }
 
-  Future<List<PostsResponse>> getPostList(
+  Future<PostsResponseWrapper> getPostList(
       int page, int pageSize, PostType postType) {
     return _dio.get('/app/posts/list', queryParameters: {
       'pageNo': page,
       'pageSize': pageSize,
       'type': postType.code,
     }).then((value) => PostsResponseWrapper.fromJson(
-            BaseResponse.fromJson(value.data).result as Map<String, dynamic>)
-        .records);
+            BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
 }

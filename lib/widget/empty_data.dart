@@ -27,10 +27,10 @@ class _EmptyDataState extends State<EmptyData> {
           SizedBox(
             width: 100.0,
             height: 100.0,
-            child: new Image.asset('assets/icons/ic_logo.png'),
+            child: new Image.asset('assets/icons/empty_data.png'),
           ),
           Text(
-            "未加载到数据",
+            "当前数据为空！",
             style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
           ),
           Expanded(

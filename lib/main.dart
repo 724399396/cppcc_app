@@ -1,3 +1,4 @@
+import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/news_bloc.dart';
@@ -6,6 +7,7 @@ import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
+import 'package:cppcc_app/repository/discuss_network_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
@@ -74,6 +76,9 @@ Future<void> main() async {
         RepositoryProvider<MailboxRepository>(
           create: (context) => MailboxRepository(apiDataProvider),
         ),
+        RepositoryProvider<DiscussNetworkRepository>(
+          create: (context) => DiscussNetworkRepository(apiDataProvider),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -106,6 +111,11 @@ Future<void> main() async {
           BlocProvider<MailboxBloc>(
             create: (BuildContext context) => MailboxBloc(
               context.read<MailboxRepository>(),
+            ),
+          ),
+          BlocProvider<DiscussNetworkBloc>(
+            create: (BuildContext context) => DiscussNetworkBloc(
+              context.read<DiscussNetworkRepository>(),
             ),
           ),
           BlocProvider<PostsBloc>(

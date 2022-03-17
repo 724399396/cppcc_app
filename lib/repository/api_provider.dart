@@ -1,4 +1,5 @@
 import 'package:cppcc_app/dto/base_response.dart';
+import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
@@ -152,6 +153,19 @@ class ApiDataProvider {
       "type": mailboxType
     }).then((value) {
       return MailboxResponseWrapper.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
+  /// 获取网络议政列表
+  Future<DiscussNetworkResponseWrapper> getDiscussNetworkList(
+      int pageNo, int pageSize, String status) {
+    return _dio.get('/app/discussNetwork/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      "status": status
+    }).then((value) {
+      return DiscussNetworkResponseWrapper.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }

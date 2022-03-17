@@ -9,6 +9,7 @@ class Routes {
   static const meetingActivitiesPage = '/meetingActivitiesPage';
   static const memberStudyPage = '/memberStudyPage';
   static const networkPoliticalPage = '/networkPoliticalPage';
+  static const networkPoliticalDetailsPage = '/networkPoliticalDetailsPage';
   static const noticePage = '/noticePage';
   static const performanceFilePage = '/performanceFilePage';
   static const proposalManagePage = '/proposalManagePage';

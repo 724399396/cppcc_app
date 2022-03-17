@@ -12,6 +12,7 @@ import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_page.dart';
 import 'package:cppcc_app/page/home/member_study_page.dart';
 import 'package:cppcc_app/page/home/network_political_page.dart';
+import 'package:cppcc_app/page/home/network_political_details_page.dart';
 import 'package:cppcc_app/page/home/notice_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
@@ -42,6 +43,7 @@ final routesDef = {
   Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
   Routes.memberStudyPage: (context) => const MemberStudyPage(),
   Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),
+  Routes.networkPoliticalDetailsPage: (context) => const NetworkPoliticalDetailsPage(),
   Routes.noticePage: (context) => const NoticePage(),
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),

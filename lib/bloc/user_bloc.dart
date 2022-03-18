@@ -17,6 +17,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   final TimerBloc _timerBloc;
 
   UserBloc(this._userRepository, this._timerBloc) : super(const UserState()) {
+
     on<UserInitialed>((event, emit) async {
       _userRepository.freshUserInfo().then((_) {
         emit(_populateUserData());

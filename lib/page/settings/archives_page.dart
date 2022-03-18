@@ -26,7 +26,7 @@ class _ArchivesPageState extends State<ArchivesPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Text("功能开发中"),
+          Text("功能开发中-当前页面舍弃"),
         ],
       ),
     );

@@ -37,12 +37,12 @@ class _HomeMeState extends State<HomeMe> {
                     SliverList(
                       delegate: SliverChildListDelegate([
                         // 顶部栏
-                        new Stack(
+                        Stack(
                           children: <Widget>[
                             Container(
                               width: double.infinity,
                               height: 280.0,
-                              decoration: BoxDecoration(
+                              decoration: const BoxDecoration(
                                 borderRadius: BorderRadius.only(
                                   topLeft: Radius.circular(0.0),
                                   topRight: Radius.circular(0.0),
@@ -53,7 +53,7 @@ class _HomeMeState extends State<HomeMe> {
                               ),
                             ),
                             Container(
-                              margin: new EdgeInsets.only(top: 10.0),
+                              margin: EdgeInsets.only(top: 10.0),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 mainAxisAlignment: MainAxisAlignment.start,
@@ -62,18 +62,18 @@ class _HomeMeState extends State<HomeMe> {
                                 verticalDirection: VerticalDirection.down,
                                 children: <Widget>[
                                   Container(
-                                    margin: new EdgeInsets.only(left: 10.0),
+                                    margin: EdgeInsets.only(left: 10.0),
                                     width: 112.0,
                                     height: 112.0,
-                                    child: new PreferredSize(
-                                      child: new Container(
-                                        child: new ClipOval(
-                                          child: new Container(
+                                    child: PreferredSize(
+                                      child: Container(
+                                        child: ClipOval(
+                                          child: Container(
                                             color: Colors.white,
                                             child: state.avatar == null
-                                                ? new Image.asset(
+                                                ? Image.asset(
                                                     'assets/icons/ic_wode_selected.png')
-                                                : new Image.network(
+                                                : Image.network(
                                                     state.avatar.toString()),
                                           ),
                                         ),
@@ -82,7 +82,7 @@ class _HomeMeState extends State<HomeMe> {
                                     ),
                                   ),
                                   Container(
-                                      margin: new EdgeInsets.only(left: 10.0),
+                                      margin: EdgeInsets.only(left: 10.0),
                                       child: Column(
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
@@ -94,51 +94,46 @@ class _HomeMeState extends State<HomeMe> {
                                             VerticalDirection.down,
                                         children: <Widget>[
                                           Container(
-                                            margin:
-                                                new EdgeInsets.only(top: 10.0),
-                                            child: new Text(
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Text(
                                               state.username.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12.0),
                                             ),
                                           ),
                                           Container(
-                                            margin:
-                                                new EdgeInsets.only(top: 10.0),
-                                            child: new Text(
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Text(
                                               "手机：" + state.phone.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12.0),
                                             ),
                                           ),
                                           Container(
-                                            margin:
-                                                new EdgeInsets.only(top: 10.0),
-                                            child: new Text(
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Text(
                                               "身份证：" + state.idCard.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12.0),
                                             ),
                                           ),
                                           Container(
-                                            margin:
-                                                new EdgeInsets.only(top: 10.0),
-                                            child: new Text(
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Text(
                                               "职务：" + state.post.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12.0),
                                             ),
                                           ),
                                           Container(
-                                            margin:
-                                                new EdgeInsets.only(top: 10.0),
-                                            child: new Text(
+                                            margin: EdgeInsets.only(top: 10.0),
+                                            child: Text(
                                               "单位：" + state.company.toString(),
-                                              style: TextStyle(
+                                              style: const TextStyle(
                                                   color: Colors.white,
                                                   fontSize: 12.0),
                                             ),
@@ -156,22 +151,20 @@ class _HomeMeState extends State<HomeMe> {
                                       verticalDirection: VerticalDirection.down,
                                       children: <Widget>[
                                         Container(
-                                          margin:
-                                              new EdgeInsets.only(left: 10.0),
+                                          margin: EdgeInsets.only(left: 10.0),
                                           width: 24.0,
                                           height: 24.0,
-                                          child: new Container(
-                                            child: new Image.asset(
+                                          child: Container(
+                                            child: Image.asset(
                                                 'assets/icons/ic_bianji.png'),
                                           ),
                                         ),
                                         Container(
-                                          margin:
-                                              new EdgeInsets.only(left: 10.0),
+                                          margin: EdgeInsets.only(left: 10.0),
                                           width: 24.0,
                                           height: 24.0,
-                                          child: new Container(
-                                            child: new Image.asset(
+                                          child: Container(
+                                            child: Image.asset(
                                                 'assets/icons/ic_erweima.png'),
                                           ),
                                         ),
@@ -183,15 +176,15 @@ class _HomeMeState extends State<HomeMe> {
                             ),
                             // 履职编号部分
                             Container(
-                              margin: new EdgeInsets.only(
+                              margin: const EdgeInsets.only(
                                   top: 200.0, left: 15, right: 15),
                               width: double.infinity,
                               padding: EdgeInsets.all(10.0),
                               // opacity: 0.5,
                               decoration: BoxDecoration(
                                 color: Color(0xffffe0be),
-                                borderRadius:
-                                    BorderRadius.all(Radius.circular(15.0)),
+                                borderRadius: const BorderRadius.all(
+                                    Radius.circular(15.0)),
                                 gradient: LinearGradient(
                                     begin: Alignment.centerLeft,
                                     end: Alignment.centerRight,
@@ -237,7 +230,7 @@ class DutiesNumber extends StatelessWidget {
   Widget build(BuildContext context) {
     return FlatButton(
       onPressed: () {
-        Navigator.of(context).pushNamed(Routes.archivesPage);
+        Navigator.of(context).pushNamed(Routes.performanceFilePage);
       },
       padding: EdgeInsets.all(0.0),
       shape: Border.all(

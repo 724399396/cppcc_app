@@ -157,6 +157,20 @@ class ApiDataProvider {
     });
   }
 
+  /// 添加领导信箱
+  Future<BaseResponse> addMailbox(
+      String type, String userId, String phone, String title, String content) {
+    return _dio.post('/app/mailbox/add', data: {
+      "type": type,
+      "userId": userId,
+      "phone": phone,
+      "title": title,
+      "content": content
+    }).then((value) {
+      return BaseResponse.fromJson(value.data);
+    });
+  }
+
   /// 获取网络议政列表
   Future<DiscussNetworkResponseWrapper> getDiscussNetworkList(
       int pageNo, int pageSize, String status) {

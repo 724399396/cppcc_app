@@ -74,25 +74,25 @@ class _FeedbackPageState extends State<FeedbackPage> {
                             color: Color(0xff292828),
                           )),
                     ),
-                    Container(
+                    Expanded(
                       child: TextField(
                         key: const ValueKey('keyword'),
                         maxLines: 15,
                         decoration: InputDecoration(
                           enabledBorder: const OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide: BorderSide(
-                                color: Colors.white,
-                                width: 0.0,
+                                color: Color(0xfff4f4f4),
+                                width: 1,
                                 style: BorderStyle.solid),
                           ),
                           focusedBorder: const OutlineInputBorder(
                             borderRadius:
-                                BorderRadius.all(Radius.circular(30.0)),
+                                BorderRadius.all(Radius.circular(5.0)),
                             borderSide: BorderSide(
-                                color: Colors.white,
-                                width: 0.0,
+                                color: Color(0xfff4f4f4),
+                                width: 1.2,
                                 style: BorderStyle.solid),
                           ),
                           isDense: true,

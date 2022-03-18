@@ -118,7 +118,7 @@ class _NetworkPoliticalDetailsPageState
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text(_bean.createBy!,
+                                          Text(_bean.createBy,
                                               style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Color(0xff999999),

@@ -81,6 +81,15 @@ class _LeaderMailboxPageState extends State<LeaderMailboxPage>
           ),
         ),
       ),
+      floatingActionButton: FloatingActionButton.extended(
+        icon: const Icon(Icons.add),
+        backgroundColor: const Color(0xfff27f56),
+        foregroundColor: Colors.white,
+        label: const Text("我要写信"),
+        onPressed: () {
+          Navigator.of(context).pushNamed(Routes.leaderMailboxAddPage);
+        },
+      ),
       body: TabBarView(
         controller: _tabController,
         children: _tabs.isEmpty

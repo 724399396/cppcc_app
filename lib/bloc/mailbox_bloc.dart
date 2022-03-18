@@ -22,6 +22,20 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
         emit(_populateMessageData(result));
       });
     });
+
+    //添加领导信箱
+    on<AddMailbox>((event, emit) async {
+      await _mailboxRepository
+          .addMailbox(event.type, event.userName, event.phone, event.title,
+              event.content)
+          .then((result) {
+        if (result.success) {
+          event.successCallback!();
+        } else {
+          event.failCallback!();
+        }
+      });
+    });
   }
 
   @override

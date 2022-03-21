@@ -74,7 +74,7 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
                     Container(
                       padding: EdgeInsets.all(10),
                       child: message?.msgContent != null
-                          ? Expanded(
+                          ? Container(
                               child: Html(
                                 data: message?.msgContent,
                                 tagsList: Html.tags

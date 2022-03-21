@@ -1,3 +1,4 @@
+import 'package:cppcc_app/page/home/gd_history_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/reset_password_page.dart';
 import 'package:cppcc_app/styles.dart';
@@ -50,6 +51,7 @@ final routesDef = {
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
+  Routes.gdHistoryPage: (context) => const GdHistoryPage(),
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),

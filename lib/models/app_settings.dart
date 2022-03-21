@@ -99,6 +99,10 @@ final List<HomeTab> homeTabs = [
       image: 'assets/icons/ic_lingdaoyoux.png',
       text: '领导信箱',
       path: Routes.leaderMailboxPage),
+  HomeTab(
+      image: 'assets/icons/ic_guanduwenshi.png',
+      text: '官渡文史',
+      path: Routes.gdHistoryPage),
 ];
 
 const int pageSize = 10;
@@ -126,6 +130,10 @@ class DictService {
   
   /// 	提案类型
   String proposalType = "proposal_type";
+
+  /// 	官渡文史类型
+  String gdHistoryDict = "gd_history_dict";
+  		
 
   var localDataProvider = LocalDataProvider();
 

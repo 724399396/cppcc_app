@@ -15,6 +15,7 @@ class Routes {
   static const performanceFilePage = '/performanceFilePage';
   static const proposalManagePage = '/proposalManagePage';
   static const socialOpinionsPage = '/socialOpinionsPage';
+  static const gdHistoryPage = '/gdHistoryPage';
 
   //通讯录页面
 

@@ -134,7 +134,7 @@ class _LeaderMailboxDetailsPageState extends State<LeaderMailboxDetailsPage> {
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
                               child: _bean.content != ""
-                                  ? Expanded(
+                                  ? Container(
                                       child: Html(
                                         data: _bean.content,
                                         tagsList: Html.tags

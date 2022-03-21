@@ -166,7 +166,7 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                                     const Radius.circular(10.0)),
                               ),
                               child: _post.content != ""
-                                  ? Expanded(
+                                  ? Container(
                                       child: Html(
                                         data: _post.content,
                                         tagsList: Html.tags

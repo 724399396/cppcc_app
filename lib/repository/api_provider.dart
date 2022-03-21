@@ -2,6 +2,7 @@ import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
+import 'package:cppcc_app/dto/meeting_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -168,6 +169,19 @@ class ApiDataProvider {
       "content": content
     }).then((value) {
       return BaseResponse.fromJson(value.data);
+    });
+  }
+  
+  /// 获取会议列表
+  Future<MeetingWrapper> getMeetingList(
+      int pageNo, int pageSize, String type) {
+    return _dio.get('/app/meetingActivity/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      "type": type
+    }).then((value) {
+      return MeetingWrapper.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }
 

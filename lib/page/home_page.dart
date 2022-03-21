@@ -1,5 +1,4 @@
 import 'package:cppcc_app/bloc/posts_bloc.dart';
-import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
@@ -8,8 +7,6 @@ import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import '../utils/routes.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -78,20 +75,20 @@ class HomePage extends StatelessWidget {
             margin: const EdgeInsets.only(top: 8),
             child: Column(
                 children: List.generate(
-                    homeTabs.length ~/ 4,
+                    homeTabs.length ~/ 3,
                     (start) => Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(4, (add) {
-                            var currentTab = homeTabs[4 * start + add];
+                          children: List.generate(3, (add) {
+                            var currentTab = homeTabs[3 * start + add];
                             return Container(
                                 child: GestureDetector(
                               onTap: () {
                                 Navigator.of(context)
-                                .pushNamed(currentTab.path);
+                                    .pushNamed(currentTab.path);
                               },
                               child: Padding(
                                 padding:
-                                    const EdgeInsets.symmetric(vertical: 24),
+                                    const EdgeInsets.symmetric(vertical: 12),
                                 child: Column(children: [
                                   Image.asset(
                                     currentTab.image,

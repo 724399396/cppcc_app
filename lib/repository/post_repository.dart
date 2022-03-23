@@ -26,6 +26,7 @@ class PostRepository {
                 appendix: p.appendix,
                 createBy: p.createBy,
                 createTime: DateTime.parse(p.createTime),
+                categoryDictText: p.categoryDictText,
               ))
           .toList();
     });

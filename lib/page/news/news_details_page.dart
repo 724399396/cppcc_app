@@ -147,7 +147,7 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text(_post.author!,
+                                          Text(_post.createBy,
                                               style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Color(0xff999999),

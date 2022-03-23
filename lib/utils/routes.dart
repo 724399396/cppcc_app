@@ -8,6 +8,7 @@ class Routes {
   static const leaderMailboxDetailsPage = '/leaderMailboxDetailsPage';
   static const leaderMailboxAddPage = '/leaderMailboxAddPage';
   static const meetingActivitiesPage = '/meetingActivitiesPage';
+  static const meetingActivitiesDetailsPage = '/meetingActivitiesDetailsPage';
   static const memberStudyPage = '/memberStudyPage';
   static const networkPoliticalPage = '/networkPoliticalPage';
   static const networkPoliticalDetailsPage = '/networkPoliticalDetailsPage';

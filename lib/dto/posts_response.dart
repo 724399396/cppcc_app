@@ -27,19 +27,22 @@ class PostsResponse {
   final String createBy;
   final String createTime;
 
+  @JsonKey(name: "categoryDictText")
+  final String? categoryDictText;
+
   PostsResponse(
-    this.id,
-    this.title,
-    this.cover,
-    this.content,
-    this.hits,
-    this.appendix,
-    this.author,
-    this.category,
-    this.type,
-    this.createBy,
-    this.createTime,
-  );
+      this.id,
+      this.title,
+      this.cover,
+      this.content,
+      this.hits,
+      this.appendix,
+      this.author,
+      this.category,
+      this.type,
+      this.createBy,
+      this.createTime,
+      this.categoryDictText);
 
   factory PostsResponse.fromJson(Map<String, dynamic> json) =>
       _$PostsResponseFromJson(json);

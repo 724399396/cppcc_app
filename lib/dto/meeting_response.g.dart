@@ -28,37 +28,51 @@ Map<String, dynamic> _$MeetingWrapperToJson(MeetingWrapper instance) =>
 
 MeetingResponse _$MeetingResponseFromJson(Map<String, dynamic> json) =>
     MeetingResponse()
+      ..address = json['address'] as String?
       ..appendix = json['appendix']
+      ..beginDate = json['beginDate'] as String?
+      ..broadcasts = json['broadcasts'] as String?
+      ..content = json['content'] as String?
+      ..createBy = json['createBy'] as String?
+      ..createTime = json['createTime'] as String?
+      ..endTime = json['endTime'] as String?
+      ..id = json['id'] as String
+      ..updateBy = json['updateBy'] as String?
+      ..updateTime = json['updateTime'] as String?
+      ..partakeUserIds = json['partakeUserIds'] as String?
+      ..signQrcode = json['signQrcode'] as String?
+      ..startTime = json['startTime'] as String?
+      ..status = json['status'] as int?
+      ..statusDictText = json['status_dictText'] as String?
+      ..title = json['title'] as String?
       ..categoryDictText = json['categoryDictText']
       ..author = json['author'] as String?
       ..typeDicttext = json['type_dictText'] as String?
-      ..updateTime = json['updateTime'] as String?
       ..type = json['type'] as int?
-      ..title = json['title'] as String?
-      ..content = json['content'] as String?
-      ..cover = json['cover'] as String?
-      ..hits = json['hits'] as int?
-      ..createBy = json['createBy'] as String?
-      ..createTime = json['createTime'] as String?
-      ..updateBy = json['updateBy'] as String?
-      ..id = json['id'] as String
-      ..category = json['category'] as int?;
+      ..hits = json['hits'] as int?;
 
 Map<String, dynamic> _$MeetingResponseToJson(MeetingResponse instance) =>
     <String, dynamic>{
+      'address': instance.address,
       'appendix': instance.appendix,
+      'beginDate': instance.beginDate,
+      'broadcasts': instance.broadcasts,
+      'content': instance.content,
+      'createBy': instance.createBy,
+      'createTime': instance.createTime,
+      'endTime': instance.endTime,
+      'id': instance.id,
+      'updateBy': instance.updateBy,
+      'updateTime': instance.updateTime,
+      'partakeUserIds': instance.partakeUserIds,
+      'signQrcode': instance.signQrcode,
+      'startTime': instance.startTime,
+      'status': instance.status,
+      'status_dictText': instance.statusDictText,
+      'title': instance.title,
       'categoryDictText': instance.categoryDictText,
       'author': instance.author,
       'type_dictText': instance.typeDicttext,
-      'updateTime': instance.updateTime,
       'type': instance.type,
-      'title': instance.title,
-      'content': instance.content,
-      'cover': instance.cover,
       'hits': instance.hits,
-      'createBy': instance.createBy,
-      'createTime': instance.createTime,
-      'updateBy': instance.updateBy,
-      'id': instance.id,
-      'category': instance.category,
     };

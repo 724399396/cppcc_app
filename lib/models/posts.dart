@@ -14,6 +14,7 @@ class Posts extends Equatable {
   final String? appendix;
   final String createBy;
   final DateTime createTime;
+  final String? categoryDictText;
 
   const Posts({
     required this.id,
@@ -27,6 +28,7 @@ class Posts extends Equatable {
     required this.appendix,
     required this.createBy,
     required this.createTime,
+    required this.categoryDictText,
   });
 
   Posts copyWith({
@@ -41,6 +43,7 @@ class Posts extends Equatable {
     String? appendix,
     String? createBy,
     DateTime? createTime,
+    String? categoryDictText,
   }) {
     return Posts(
       id: id ?? this.id,
@@ -54,12 +57,13 @@ class Posts extends Equatable {
       appendix: appendix ?? this.appendix,
       createBy: createBy ?? this.createBy,
       createTime: createTime ?? this.createTime,
+      categoryDictText: categoryDictText ?? this.categoryDictText,
     );
   }
 
   @override
   String toString() {
-    return 'Posts(id: $id, postType: $postType, title: $title, author: $author, content: $content, category: $category, cover: $cover, hits: $hits, appendix: $appendix, createBy: $createBy, createTime: $createTime)';
+    return 'Posts(id: $id, postType: $postType, title: $title, author: $author, content: $content, category: $category, cover: $cover, hits: $hits, appendix: $appendix, createBy: $createBy, createTime: $createTime, categoryDictText: $categoryDictText)';
   }
 
   @override
@@ -74,6 +78,7 @@ class Posts extends Equatable {
       hits!,
       createBy,
       createTime,
+      categoryDictText!,
     ];
   }
 }

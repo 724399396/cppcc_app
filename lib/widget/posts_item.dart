@@ -56,7 +56,9 @@ class PostsItem extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 4),
                         child: Text(
-                          _post.postType.description,
+                          _post.categoryDictText != null
+                              ? _post.categoryDictText!
+                              : _post.postType.description,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall

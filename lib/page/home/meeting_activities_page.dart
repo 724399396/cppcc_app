@@ -1,13 +1,12 @@
 import 'dart:async';
 
+import 'package:cppcc_app/bloc/meeting_bloc.dart';
+import 'package:cppcc_app/widget/empty_data.dart';
+import 'package:cppcc_app/widget/meeting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cppcc_app/models/app_settings.dart';
-
-import '../../bloc/posts_bloc.dart';
-import '../../utils/list_data_fetch_status.dart';
-import '../../widget/posts_item.dart';
 
 class MeetingActivitiesPage extends StatefulWidget {
   const MeetingActivitiesPage({Key? key}) : super(key: key);
@@ -87,7 +86,7 @@ class _MeetingActivitiesPageState extends State<MeetingActivitiesPage>
         children: _tabs.isEmpty
             ? []
             : _tabs.map((item) {
-                return MemberContentPage(codeType: item["code"]);
+                return MeetingContentPage(codeType: item["code"]);
               }).toList(),
       ),
     );
@@ -96,81 +95,87 @@ class _MeetingActivitiesPageState extends State<MeetingActivitiesPage>
 
 // 列表信息
 // ignore: must_be_immutable
-class MemberContentPage extends StatelessWidget {
-  final _easyRefreshController = EasyRefreshController();
+class MeetingContentPage extends StatelessWidget {
   String codeType;
-  MemberContentPage({Key? key, required this.codeType}) : super(key: key);
+  MeetingContentPage({Key? key, required this.codeType}) : super(key: key);
+
+  late final EasyRefreshController _controller = EasyRefreshController();
+  late final ScrollController _scrollController = ScrollController();
+  // Header浮动
+  final bool _headerFloat = false;
+  // 是否开启刷新
+  final bool _enableRefresh = true;
+  // 是否开启加载
+  final bool _enableLoad = true;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: const Color(0xffffffff),
-      child: BlocConsumer<PostsBloc, PostsState>(
-        buildWhen: (previous, current) =>
-            previous.learnings != current.learnings ||
-            previous.status != current.status,
-        listenWhen: (previous, current) =>
-            previous.learnings != current.learnings ||
-            previous.status != current.status,
-        listener: (previous, current) {
-          // easy conller
-          switch (current.status) {
-            case ListDataFetchStatus.normal:
-              _easyRefreshController.finishRefresh(success: true);
-              _easyRefreshController.finishLoad(success: true);
-              break;
-            case ListDataFetchStatus.refresh:
-              break;
-            case ListDataFetchStatus.loadMore:
-              break;
-            case ListDataFetchStatus.failure:
-              _easyRefreshController.finishRefresh(success: false);
-              _easyRefreshController.finishLoad(success: false);
-              break;
-          }
-        },
-        builder: (context, state) => EasyRefresh.custom(
-          controller: _easyRefreshController,
-          enableControlFinishRefresh: true,
-          enableControlFinishLoad: true,
-          header: ClassicalHeader(
-            refreshText: '下拉刷新',
-            refreshReadyText: '释放刷新',
-            refreshingText: '加载中',
-            refreshedText: '加载完成',
-            refreshFailedText: '加载失败',
-            noMoreText: '没有更多数据',
-            infoText: '更新于 %T',
-            textColor: Colors.black,
-          ),
-          footer: ClassicalFooter(
-            loadText: '上拉加载更多',
-            loadReadyText: '释放刷新',
-            loadingText: '加载中',
-            loadedText: '加载完成',
-            loadFailedText: '加载失败',
-            noMoreText: '没有更多数据',
-            infoText: '更新于 %T',
-            textColor: Colors.black,
-          ),
-          onLoad: () async {
-            BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
+    return Card(
+        color: Color(0xffffffff),
+        child: BlocBuilder<MeetingBloc, MeetingState>(
+          builder: (context, state) {
+            return EasyRefresh.custom(
+              emptyWidget: state.listDatas.isEmpty ? EmptyData() : null,
+              firstRefresh: true,
+              header: _enableRefresh
+                  ? ClassicalHeader(
+                      textColor: Colors.black,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
+                      float: _headerFloat,
+                      refreshText: "拉动刷新",
+                      refreshReadyText: "释放刷新",
+                      refreshingText: "正在刷新...",
+                      refreshedText: "刷新完成",
+                      refreshFailedText: "刷新失败",
+                      noMoreText: "没有更多数据",
+                      infoText: "更新于 %T",
+                    )
+                  : null,
+              footer: _enableLoad
+                  ? ClassicalFooter(
+                      textColor: Colors.black,
+                      infoColor:
+                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
+                      float: _headerFloat,
+                      loadText: "拉动加载",
+                      loadReadyText: "释放加载",
+                      loadingText: "正在加载...",
+                      loadedText: "加载完成",
+                      loadFailedText: "加载失败",
+                      noMoreText: "没有更多数据",
+                      infoText: "更新于 %T",
+                    )
+                  : null,
+              onRefresh: _enableRefresh
+                  ? () async {
+                      BlocProvider.of<MeetingBloc>(context)
+                          .add(GetMeetingListData(1, state.pageSize, codeType));
+                      _controller.resetLoadState();
+                      _controller.finishRefresh();
+                    }
+                  : null,
+              onLoad: _enableLoad
+                  ? () async {
+                      BlocProvider.of<MeetingBloc>(context).add(
+                          GetMeetingListData(
+                              state.pageNo + 1, state.pageSize, codeType));
+                      _controller.resetLoadState();
+                      _controller.finishLoad();
+                    }
+                  : null,
+              slivers: <Widget>[
+                SliverList(
+                  delegate: SliverChildBuilderDelegate(
+                    (context, index) {
+                      return MeetingItem(state.listDatas[index]);
+                    },
+                    childCount: state.listDatas.length,
+                  ),
+                ),
+              ],
+            );
           },
-          onRefresh: () async {
-            BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
-          },
-          emptyWidget: (state.learnings
-                      .where((item) => item.category == int.parse(codeType)))
-                  .isEmpty
-              ? const Center(child: Text('暂无数据'))
-              : null,
-          slivers: (state.learnings
-                  .where((item) => item.category == int.parse(codeType)))
-              .map((p) => PostsItem(p))
-              .toList(),
-        ),
-      ),
-      // ),
-    );
+        ));
   }
 }

@@ -33,6 +33,7 @@ PostsResponse _$PostsResponseFromJson(Map<String, dynamic> json) =>
       json['type'] as int?,
       json['createBy'] as String,
       json['createTime'] as String,
+      json['categoryDictText'] as String?,
     );
 
 Map<String, dynamic> _$PostsResponseToJson(PostsResponse instance) =>
@@ -48,4 +49,5 @@ Map<String, dynamic> _$PostsResponseToJson(PostsResponse instance) =>
       'type': instance.type,
       'createBy': instance.createBy,
       'createTime': instance.createTime,
+      'categoryDictText': instance.categoryDictText,
     };

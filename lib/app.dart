@@ -1,4 +1,5 @@
 import 'package:cppcc_app/page/home/gd_history_page.dart';
+import 'package:cppcc_app/page/home/meeting_activities_details_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/reset_password_page.dart';
 import 'package:cppcc_app/styles.dart';
@@ -44,6 +45,7 @@ final routesDef = {
   Routes.leaderMailboxDetailsPage: (context) => const LeaderMailboxDetailsPage(),
   Routes.leaderMailboxAddPage: (context) => const LeaderMailboxAddPage(),
   Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
+  Routes.meetingActivitiesDetailsPage: (context) => const MeetingActivitiesDetailsPage(),
   Routes.memberStudyPage: (context) => const MemberStudyPage(),
   Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),
   Routes.networkPoliticalDetailsPage: (context) => const NetworkPoliticalDetailsPage(),

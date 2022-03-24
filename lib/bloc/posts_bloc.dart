@@ -23,6 +23,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
           discussPoliticsFiles: [],
           learnings: [],
           fileAnnments: [],
+          gdHistory: [],
         ));
         await _homeDataLoad(emit);
       });
@@ -37,6 +38,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
           discussPoliticsFiles: [],
           learnings: [],
           fileAnnments: [],
+          gdHistory: [],
         ));
         await _homeDataLoad(emit);
       });
@@ -61,7 +63,9 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       _postRepository.getPostList(
           state.homeCurrentPage, pageSize, PostType.learning),
       _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.fileAnnment)
+          state.homeCurrentPage, pageSize, PostType.fileAnnment),
+      _postRepository.getPostList(
+          state.homeCurrentPage, pageSize, PostType.gdHistory)
     ]);
     print("object" + values.length.toString());
 
@@ -72,6 +76,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         discussPoliticsFiles: state.discussPoliticsFiles + values[3],
         learnings: state.learnings + values[4],
         fileAnnments: state.fileAnnments + values[5],
+        gdHistory: state.gdHistory + values[6],
         homeCurrentPage: state.homeCurrentPage + 1));
   }
 

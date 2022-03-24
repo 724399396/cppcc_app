@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -162,7 +163,7 @@ class MemberContentPage extends StatelessWidget {
           emptyWidget: (state.learnings
                       .where((item) => item.category == int.parse(codeType)))
                   .isEmpty
-              ? const Center(child: Text('暂无数据'))
+              ? EmptyData()
               : null,
           slivers: (state.learnings
                   .where((item) => item.category == int.parse(codeType)))

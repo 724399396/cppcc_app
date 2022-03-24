@@ -24,6 +24,7 @@ class DiscussNetworkListItem extends StatelessWidget {
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(8),
+          
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,

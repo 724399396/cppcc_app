@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
+import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
@@ -9,6 +10,7 @@ import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/discuss_network_repository.dart';
+import 'package:cppcc_app/repository/historical_clue_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
@@ -84,6 +86,9 @@ Future<void> main() async {
         RepositoryProvider<MeetingRepository>(
           create: (context) => MeetingRepository(apiDataProvider),
         ),
+        RepositoryProvider<HistoricalClueRepository>(
+          create: (context) => HistoricalClueRepository(apiDataProvider),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -126,6 +131,11 @@ Future<void> main() async {
           BlocProvider<MeetingBloc>(
             create: (BuildContext context) => MeetingBloc(
               context.read<MeetingRepository>(),
+            ),
+          ),
+          BlocProvider<HistoricalClueBloc>(
+            create: (BuildContext context) => HistoricalClueBloc(
+              context.read<HistoricalClueRepository>(),
             ),
           ),
           BlocProvider<PostsBloc>(

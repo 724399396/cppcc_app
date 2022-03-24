@@ -133,6 +133,9 @@ class DictService {
 
   /// 	官渡文史类型
   String gdHistoryDict = "gd_history_dict";
+
+  /// 	线索征集
+  String gdHistoryClue = "3";
   		
 
   var localDataProvider = LocalDataProvider();

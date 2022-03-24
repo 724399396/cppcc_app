@@ -1,37 +1,37 @@
+import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
+import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
 import 'package:cppcc_app/page/home/gd_history_page.dart';
-import 'package:cppcc_app/page/home/meeting_activities_details_page.dart';
-import 'package:cppcc_app/page/login_page.dart';
-import 'package:cppcc_app/page/reset_password_page.dart';
-import 'package:cppcc_app/styles.dart';
-import 'package:cppcc_app/utils/navigation_service.dart';
-import 'package:cppcc_app/utils/routes.dart';
-import 'package:cppcc_app/widget/page_container.dart';
-import 'package:flutter/material.dart';
-
+import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
+import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 // 首页相关页面
 import 'package:cppcc_app/page/home/leader_mailbox_page.dart';
-import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
-import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
+import 'package:cppcc_app/page/home/meeting_activities_details_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_page.dart';
 import 'package:cppcc_app/page/home/member_study_page.dart';
-import 'package:cppcc_app/page/home/network_political_page.dart';
 import 'package:cppcc_app/page/home/network_political_details_page.dart';
+import 'package:cppcc_app/page/home/network_political_page.dart';
 import 'package:cppcc_app/page/home/notice_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
-
+import 'package:cppcc_app/page/login_page.dart';
+import 'package:cppcc_app/page/message/message_details_page.dart';
+//资讯相关页面
+import 'package:cppcc_app/page/news/news_details_page.dart';
+import 'package:cppcc_app/page/reset_password_page.dart';
 //个人中心页面
 import 'package:cppcc_app/page/settings/archives_page.dart';
 import 'package:cppcc_app/page/settings/collection_page.dart';
 import 'package:cppcc_app/page/settings/feedback_page.dart';
 import 'package:cppcc_app/page/settings/settings_page.dart';
 import 'package:cppcc_app/page/settings/visiting_card_page.dart';
+import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/navigation_service.dart';
+import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/widget/page_container.dart';
+import 'package:flutter/material.dart';
 
-import 'package:cppcc_app/page/message/message_details_page.dart';
-
-//资讯相关页面
-import 'package:cppcc_app/page/news/news_details_page.dart';
+import 'page/home/gd_historical_add_page.dart';
 
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
@@ -54,6 +54,10 @@ final routesDef = {
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
   Routes.gdHistoryPage: (context) => const GdHistoryPage(),
+  Routes.gdHistoricalAddPage: (context) => const GdHistoricalAddPage(),
+  Routes.gdHistoricalClueMePage: (context) => const GdHistoricalClueMePage(),
+  Routes.gdHistoricalDetailsPage: (context) => const GdHistoricalDetailsPage(),
+  
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),

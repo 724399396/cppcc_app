@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:cppcc_app/bloc/mailbox_bloc.dart';
+import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
-import 'package:cppcc_app/widget/mailbox_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -33,16 +32,18 @@ class _GdHistoryPageState extends State<GdHistoryPage>
   void initState() {
     super.initState();
     //初始化标题头
-    DictService().getDictItemByCode(DictService().gdHistoryDict).then((datas) => {
-          setState(() {
-            for (var item in datas) {
-              _tabs.add({"title": item.itemText, "code": item.itemValue});
-            }
-            _tabController = TabController(
-                initialIndex: 1, length: _tabs.length, vsync: this);
-            _tabController.animateTo(0);
-          })
-        });
+    DictService()
+        .getDictItemByCode(DictService().gdHistoryDict)
+        .then((datas) => {
+              setState(() {
+                for (var item in datas) {
+                  _tabs.add({"title": item.itemText, "code": item.itemValue});
+                }
+                _tabController = TabController(
+                    initialIndex: 1, length: _tabs.length, vsync: this);
+                _tabController.animateTo(0);
+              })
+            });
   }
 
   @override
@@ -53,14 +54,14 @@ class _GdHistoryPageState extends State<GdHistoryPage>
           color: Colors.white, //修改颜色
         ),
         title: const Text(
-          "会议活动",
+          "官渡文史",
           style: TextStyle(
               color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
+        backgroundColor: const Color(0xfff27f56),
         bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48),
+          preferredSize: const Size.fromHeight(48),
           child: Theme(
             data: ThemeData(
                 splashColor: Colors.transparent,
@@ -69,7 +70,7 @@ class _GdHistoryPageState extends State<GdHistoryPage>
               controller: _tabController,
               isScrollable: true,
               unselectedLabelColor: Colors.white,
-              indicatorColor: Color(0xffffffff),
+              indicatorColor: const Color(0xffffffff),
               indicatorWeight: 1,
               tabs: _tabs.map((item) {
                 return Container(
@@ -84,120 +85,125 @@ class _GdHistoryPageState extends State<GdHistoryPage>
           ),
         ),
       ),
-      floatingActionButton: FloatingActionButton.extended(
-        icon: const Icon(Icons.add),
-        backgroundColor: const Color(0xfff27f56),
-        foregroundColor: Colors.white,
-        label: const Text("我要"),
-        onPressed: () {
-          Navigator.of(context).pushNamed(Routes.leaderMailboxAddPage);
-        },
-      ),
+      floatingActionButton: Builder(builder: (BuildContext context) {
+        return Stack(
+          children: [
+            Container(
+                child: FloatingActionButton.extended(
+              icon: const Icon(Icons.my_library_books_outlined),
+              backgroundColor: const Color(0xfff27f56),
+              foregroundColor: Colors.white,
+              label: const Text("我的"),
+              onPressed: () {
+                Navigator.of(context).pushNamed(Routes.gdHistoricalClueMePage);
+              },
+            )),
+            Container(
+                margin: const EdgeInsets.only(top: 52, bottom: 5),
+                child: FloatingActionButton.extended(
+                  icon: const Icon(Icons.add),
+                  backgroundColor: const Color(0xfff33333),
+                  foregroundColor: Colors.white,
+                  label: const Text("新增"),
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(Routes.gdHistoricalAddPage);
+                  },
+                )),
+          ],
+        );
+      }),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
       body: TabBarView(
         controller: _tabController,
         children: _tabs.isEmpty
             ? []
             : _tabs.map((item) {
-                return GdHistoryContentPage(codeType: item["code"]);
+                return item["code"] == DictService().gdHistoryClue
+                    ? 
+                    GdHistoricalClueContentPage()
+                    : GdHistoryContentPage(codeType: item["code"]);
               }).toList(),
       ),
     );
   }
 }
 
-// 列表信息
 // ignore: must_be_immutable
 class GdHistoryContentPage extends StatelessWidget {
+  final _easyRefreshController = EasyRefreshController();
   String codeType;
   GdHistoryContentPage({Key? key, required this.codeType}) : super(key: key);
 
-  late final EasyRefreshController _controller = EasyRefreshController();
-  late final ScrollController _scrollController = ScrollController();
-  // Header浮动
-  final bool _headerFloat = false;
-  // 是否开启刷新
-  final bool _enableRefresh = true;
-  // 是否开启加载
-  final bool _enableLoad = true;
-
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Color(0xffffffff),
-        child: BlocBuilder<MailboxBloc, MailboxState>(
-          builder: (context, state) {
-            return EasyRefresh.custom(
-              emptyWidget: state.listDatas.isEmpty ? EmptyData() : null,
-              firstRefresh: true,
-              header: _enableRefresh
-                  ? ClassicalHeader(
-                      textColor: Colors.black,
-                      infoColor:
-                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
-                      float: _headerFloat,
-                      refreshText: "拉动刷新",
-                      refreshReadyText: "释放刷新",
-                      refreshingText: "正在刷新...",
-                      refreshedText: "刷新完成",
-                      refreshFailedText: "刷新失败",
-                      noMoreText: "没有更多数据",
-                      infoText: "更新于 %T",
-                    )
-                  : null,
-              footer: _enableLoad
-                  ? ClassicalFooter(
-                      textColor: Colors.black,
-                      infoColor:
-                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
-                      float: _headerFloat,
-                      loadText: "拉动加载",
-                      loadReadyText: "释放加载",
-                      loadingText: "正在加载...",
-                      loadedText: "加载完成",
-                      loadFailedText: "加载失败",
-                      noMoreText: "没有更多数据",
-                      infoText: "更新于 %T",
-                    )
-                  : null,
-              onRefresh: _enableRefresh
-                  ? () async {
-                      BlocProvider.of<MailboxBloc>(context)
-                          .add(GetMailboxListData(1, state.pageSize, codeType));
-                      _controller.resetLoadState();
-                      _controller.finishRefresh();
-                    }
-                  : null,
-              onLoad: _enableLoad
-                  ? () async {
-                      BlocProvider.of<MailboxBloc>(context).add(
-                          GetMailboxListData(
-                              state.pageNo + 1, state.pageSize, codeType));
-                      _controller.resetLoadState();
-                      _controller.finishLoad();
-                    }
-                  : null,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return MailboxListItem(
-                        icon: const Icon(Icons.mail, color: Color(0xfffa8638)),
-                        title: state.listDatas[index].title,
-                        createTime: state.listDatas[index].createTime,
-                        titleColor: Color(0xff5d5d5d),
-                        onPressed: () {
-                          Navigator.of(context).pushNamed(
-                              Routes.leaderMailboxDetailsPage,
-                              arguments: {"id": state.listDatas[index].id});
-                        },
-                      );
-                    },
-                    childCount: state.listDatas.length,
-                  ),
-                ),
-              ],
-            );
+    return Container(
+      color: const Color(0xffffffff),
+      child: BlocConsumer<PostsBloc, PostsState>(
+        buildWhen: (previous, current) =>
+            previous.gdHistory != current.gdHistory ||
+            previous.status != current.status,
+        listenWhen: (previous, current) =>
+            previous.gdHistory != current.gdHistory ||
+            previous.status != current.status,
+        listener: (previous, current) {
+          // easy conller
+          switch (current.status) {
+            case ListDataFetchStatus.normal:
+              _easyRefreshController.finishRefresh(success: true);
+              _easyRefreshController.finishLoad(success: true);
+              break;
+            case ListDataFetchStatus.refresh:
+              break;
+            case ListDataFetchStatus.loadMore:
+              break;
+            case ListDataFetchStatus.failure:
+              _easyRefreshController.finishRefresh(success: false);
+              _easyRefreshController.finishLoad(success: false);
+              break;
+          }
+        },
+        builder: (context, state) => EasyRefresh.custom(
+          controller: _easyRefreshController,
+          enableControlFinishRefresh: true,
+          enableControlFinishLoad: true,
+          header: ClassicalHeader(
+            refreshText: '下拉刷新',
+            refreshReadyText: '释放刷新',
+            refreshingText: '加载中',
+            refreshedText: '加载完成',
+            refreshFailedText: '加载失败',
+            noMoreText: '没有更多数据',
+            infoText: '更新于 %T',
+            textColor: Colors.black,
+          ),
+          footer: ClassicalFooter(
+            loadText: '上拉加载更多',
+            loadReadyText: '释放刷新',
+            loadingText: '加载中',
+            loadedText: '加载完成',
+            loadFailedText: '加载失败',
+            noMoreText: '没有更多数据',
+            infoText: '更新于 %T',
+            textColor: Colors.black,
+          ),
+          onLoad: () async {
+            BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
           },
-        ));
+          onRefresh: () async {
+            BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
+          },
+          emptyWidget: (state.gdHistory
+                      .where((item) => item.category == int.parse(codeType)))
+                  .isEmpty
+              ? EmptyData()
+              : null,
+          slivers: (state.gdHistory
+                  .where((item) => item.category == int.parse(codeType)))
+              .map((p) => PostsItem(p))
+              .toList(),
+        ),
+      ),
+      // ),
+    );
   }
 }

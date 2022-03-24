@@ -15,6 +15,9 @@ class PostsState extends Equatable {
   ///委员学习
   final List<Posts> learnings;
 
+  ///官渡文史
+  final List<Posts> gdHistory;
+
   final List<Posts> fileAnnments;
   final ListDataFetchStatus status;
   final int homeCurrentPage;
@@ -26,6 +29,7 @@ class PostsState extends Equatable {
     this.discussPoliticsFiles = const [],
     this.learnings = const [],
     this.fileAnnments = const [],
+    this.gdHistory = const [],
     this.status = ListDataFetchStatus.normal,
     this.homeCurrentPage = 1,
   });
@@ -38,6 +42,7 @@ class PostsState extends Equatable {
         discussPoliticsFiles,
         learnings,
         fileAnnments,
+        gdHistory,
         status,
         homeCurrentPage
       ];
@@ -49,6 +54,7 @@ class PostsState extends Equatable {
     List<Posts>? discussPoliticsFiles,
     List<Posts>? learnings,
     List<Posts>? fileAnnments,
+    List<Posts>? gdHistory,
     ListDataFetchStatus? status,
     int? homeCurrentPage,
   }) {
@@ -59,6 +65,7 @@ class PostsState extends Equatable {
       discussPoliticsFiles: discussPoliticsFiles ?? this.discussPoliticsFiles,
       learnings: learnings ?? this.learnings,
       fileAnnments: fileAnnments ?? this.fileAnnments,
+      gdHistory: gdHistory ?? this.gdHistory,
       status: status ?? this.status,
       homeCurrentPage: homeCurrentPage ?? this.homeCurrentPage,
     );
@@ -66,6 +73,6 @@ class PostsState extends Equatable {
 
   @override
   String toString() {
-    return 'PostsState(news: $news, broadcasts: $broadcasts, twoSessionsTopics: $twoSessionsTopics, discussPoliticsFiles: $discussPoliticsFiles, learnings: $learnings, fileAnnments: $fileAnnments, status: $status, homeCurrentPage: $homeCurrentPage)';
+    return 'PostsState(news: $news, broadcasts: $broadcasts, twoSessionsTopics: $twoSessionsTopics, discussPoliticsFiles: $discussPoliticsFiles, learnings: $learnings, fileAnnments: $fileAnnments, gdHistory: $gdHistory, status: $status, homeCurrentPage: $homeCurrentPage)';
   }
 }

@@ -17,6 +17,10 @@ class Routes {
   static const proposalManagePage = '/proposalManagePage';
   static const socialOpinionsPage = '/socialOpinionsPage';
   static const gdHistoryPage = '/gdHistoryPage';
+  static const gdHistoricalAddPage = '/gdHistoricalAddPage';
+  static const gdHistoricalClueMePage = '/gdHistoricalClueMePage';
+  static const gdHistoricalDetailsPage = '/gdHistoricalDetailsPage';
+
 
   //通讯录页面
 

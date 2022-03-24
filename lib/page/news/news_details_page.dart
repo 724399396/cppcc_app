@@ -77,6 +77,11 @@ class _NewsDetailsPageState extends State<NewsDetailsPage> {
                     .where((item) => item.id == id)
                     .forEach((item) => _post = item);
               }
+              if (postCode == PostType.gdHistory.code) {
+                state.gdHistory
+                    .where((item) => item.id == id)
+                    .forEach((item) => _post = item);
+              }
 
               return EasyRefresh.custom(
                 slivers: <Widget>[

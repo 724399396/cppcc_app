@@ -23,9 +23,11 @@ class PostsItem extends StatelessWidget {
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
+          border: Border(
+            bottom: const BorderSide(width: 1, color: Color(0xfff4f4f4)),
+          ),
         ),
         child: Row(
           crossAxisAlignment: CrossAxisAlignment.stretch,

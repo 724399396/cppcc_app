@@ -1,8 +1,5 @@
-import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
-import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/meeting_response.dart';
-import 'package:cppcc_app/widget/chat_input.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -206,11 +203,7 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: _bean.address != ""
-                                  ? Expanded(
-                                      child: Text("内容"),
-                                    )
-                                  : Container(),
+                              child: BroadcastPage(_bean),
                             ),
                           ],
                         ),
@@ -243,11 +236,7 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: _bean.address != ""
-                                  ? Expanded(
-                                      child: Text("内容"),
-                                    )
-                                  : Container(),
+                              child: JoinUsersPage(_bean),
                             ),
                           ],
                         ),
@@ -297,6 +286,86 @@ class _MeetingActivitiesDetailsPageState
             },
           ))
         ],
+      ),
+    );
+  }
+}
+
+// 播报
+// ignore: must_be_immutable
+class BroadcastPage extends StatelessWidget {
+  MeetingResponse _bean;
+  BroadcastPage(this._bean, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      margin: const EdgeInsets.only(top: 8),
+      child: Column(
+        children: List.generate(
+          _bean.userRecords!.length ~/ 4,
+          (start) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(4, (add) {
+              var us = _bean.userRecords![4 * start + add];
+              return Container(
+                  child: GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(children: [
+                    const Icon(Icons.person, color: Color(0xfffca555)),
+                    Text(us.userIdDictText!),
+                  ]),
+                ),
+              ));
+            }),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// 参会人员
+// ignore: must_be_immutable
+class JoinUsersPage extends StatelessWidget {
+  MeetingResponse _bean;
+  JoinUsersPage(this._bean, {Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: const BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+      ),
+      margin: const EdgeInsets.only(top: 8),
+      child: Column(
+        children: List.generate(
+          _bean.userRecords!.length ~/ 4,
+          (start) => Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: List.generate(4, (add) {
+              var us = _bean.userRecords![4 * start + add];
+              return Container(
+                  child: GestureDetector(
+                onTap: () {},
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 12),
+                  child: Row(children: [
+                    const Icon(Icons.person, color: Color(0xfffca555)),
+                    Text(us.userIdDictText!),
+                  ]),
+                ),
+              ));
+            }),
+          ),
+        ),
       ),
     );
   }

@@ -12,8 +12,6 @@ class LocalDataProvider {
   final String _company = 'company';
   final String _idCard = 'idCard';
 
-  final String _dictData = 'dictData';
-
   late SharedPreferences _sharedPreferences;
 
   init() async {
@@ -30,7 +28,6 @@ class LocalDataProvider {
   String? post() => _sharedPreferences.getString(_post);
   String? company() => _sharedPreferences.getString(_company);
   String? idCard() => _sharedPreferences.getString(_idCard);
-  String? dictData() => _sharedPreferences.getString(_dictData);
 
   setIsLogin(bool isLogin) async {
     await _sharedPreferences.setBool(_isUserLogin, isLogin);
@@ -68,9 +65,5 @@ class LocalDataProvider {
 
   setIdCard(String idCard) async {
     await _sharedPreferences.setString(_idCard, idCard);
-  }
-
-  setDictData(String dictData) async {
-    await _sharedPreferences.setString(_dictData, dictData);
   }
 }

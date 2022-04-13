@@ -76,9 +76,9 @@ class _PageContainerState extends State<PageContainer>
         physics: const NeverScrollableScrollPhysics(),
         children: [
           const HomePage(),
-          HomeNews(),
-          HomeContacts(),
-          HomeMessage(),
+          const HomeNews(),
+          const HomeContacts(),
+          const HomeMessage(),
           HomeMe(),
         ],
         controller: _tabController,

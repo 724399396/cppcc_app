@@ -1,7 +1,9 @@
+import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
-import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,47 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
+  Widget buildTabItem(title, image, path, unreadCount, context) {
+    var deviceSize = MediaQuery.of(context).size;
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).pushNamed(path);
+      },
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        child: Stack(
+          clipBehavior: Clip.none,
+          children: [
+            Column(children: [
+              Image.asset(
+                image,
+                width: deviceSize.width / 8,
+              ),
+              Text(title),
+            ]),
+            unreadCount > 0
+                ? Positioned(
+                    top: 0,
+                    right: -12,
+                    child: Container(
+                      width: 18,
+                      alignment: Alignment.center,
+                      decoration: const BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Color(0xFFfa7c2f),
+                      ),
+                      child: Text(unreadCount.toString()),
+                    ),
+                  )
+                : Container(),
+          ],
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    var deviceSize = MediaQuery.of(context).size;
-    var moduleIconWidth = deviceSize.width / 8;
     var _easyRefreshController = EasyRefreshController();
     return SafeArea(
         child: Stack(alignment: Alignment.center, children: [
@@ -73,33 +112,46 @@ class HomePage extends StatelessWidget {
               borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
             ),
             margin: const EdgeInsets.only(top: 8),
-            child: Column(
-                children: List.generate(
-                    homeTabs.length ~/ 3,
-                    (start) => Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: List.generate(3, (add) {
-                            var currentTab = homeTabs[3 * start + add];
-                            return Container(
-                                child: GestureDetector(
-                              onTap: () {
-                                Navigator.of(context)
-                                    .pushNamed(currentTab.path);
-                              },
-                              child: Padding(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 12),
-                                child: Column(children: [
-                                  Image.asset(
-                                    currentTab.image,
-                                    width: moduleIconWidth,
-                                  ),
-                                  Text(currentTab.text),
-                                ]),
-                              ),
-                            ));
-                          }),
-                        ))),
+            child: Column(children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  buildTabItem('履职档案', 'assets/icons/ic_lvzhidangan.png',
+                      Routes.performanceFilePage, 0, context),
+                  BlocBuilder<OpinionBloc, OpinionState>(
+                      builder: (context, state) => buildTabItem(
+                          '社情民意',
+                          'assets/icons/ic_sheqingmyi.png',
+                          Routes.socialOpinionsPage,
+                          state.unreadCount,
+                          context)),
+                  buildTabItem('提案管理', 'assets/icons/ic_tianbanli.png',
+                      Routes.proposalManagePage, 0, context)
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  buildTabItem('会议活动', 'assets/icons/ic_huiyihuod.png',
+                      Routes.meetingActivitiesPage, 0, context),
+                  buildTabItem('通知公告', 'assets/icons/ic_wenjiangonggao.png',
+                      Routes.noticePage, 0, context),
+                  buildTabItem('网络议政', 'assets/icons/ic_wangluoyiz.png',
+                      Routes.networkPoliticalPage, 0, context),
+                ],
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                children: [
+                  buildTabItem('委员学习', 'assets/icons/ic_weiyuanxuexi.png',
+                      Routes.memberStudyPage, 0, context),
+                  buildTabItem('领导信箱', 'assets/icons/ic_lingdaoyoux.png',
+                      Routes.leaderMailboxPage, 0, context),
+                  buildTabItem('官渡文史', 'assets/icons/ic_guanduwenshi.png',
+                      Routes.gdHistoryPage, 0, context),
+                ],
+              ),
+            ]),
           ),
           Container(
             margin: const EdgeInsets.all(12),
@@ -159,26 +211,8 @@ class HomePage extends StatelessWidget {
                 controller: _easyRefreshController,
                 enableControlFinishRefresh: true,
                 enableControlFinishLoad: true,
-                header: ClassicalHeader(
-                  refreshText: '下拉刷新',
-                  refreshReadyText: '释放刷新',
-                  refreshingText: '加载中',
-                  refreshedText: '加载完成',
-                  refreshFailedText: '加载失败',
-                  noMoreText: '没有更多数据',
-                  infoText: '更新于 %T',
-                  textColor: Colors.black,
-                ),
-                footer: ClassicalFooter(
-                  loadText: '上拉加载更多',
-                  loadReadyText: '释放刷新',
-                  loadingText: '加载中',
-                  loadedText: '加载完成',
-                  loadFailedText: '加载失败',
-                  noMoreText: '没有更多数据',
-                  infoText: '更新于 %T',
-                  textColor: Colors.black,
-                ),
+                header: easyRefreshHeader,
+                footer: easyRefreshFooter,
                 onLoad: () async {
                   BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
                 },

@@ -1,9 +1,11 @@
 import 'package:cppcc_app/dto/base_response.dart';
+import 'package:cppcc_app/dto/dict_response.dart';
 import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/historical_clue_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/meeting_response.dart';
+import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -232,5 +234,27 @@ class ApiDataProvider {
       'type': postType.code,
     }).then((value) => PostsResponseWrapper.fromJson(
         BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+  }
+
+  Future<List<DictResponse>> getDict() {
+    return _dio.get('/sys/dict/getDictForApp').then((value) =>
+        DictResponse.fromJsonList(
+            BaseResponse.fromJson(value.data).result as List<dynamic>));
+  }
+
+  Future<OpinionResponseWrapper> getOpinionsList(
+      int page, int pageSize, int status) {
+    return _dio.get('/app/opinion/list', queryParameters: {
+      'pageNo': page,
+      'pageSize': pageSize,
+      'status': status,
+    }).then((value) => OpinionResponseWrapper.fromJson(
+        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+  }
+
+  Future<int> getUnreadCount() {
+    return _dio
+        .get('/app/opinion/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
 }

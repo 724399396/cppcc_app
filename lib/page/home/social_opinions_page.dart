@@ -1,13 +1,12 @@
-import 'dart:async';
-
+import 'package:cppcc_app/bloc/app_setting_bloc.dart';
+import 'package:cppcc_app/models/dict.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cppcc_app/models/app_settings.dart';
 
-import '../../bloc/posts_bloc.dart';
-import '../../utils/list_data_fetch_status.dart';
-import '../../widget/posts_item.dart';
+import 'package:cppcc_app/bloc/posts_bloc.dart';
+import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/widget/posts_item.dart';
 
 class SocialOpinionsPage extends StatefulWidget {
   const SocialOpinionsPage({Key? key}) : super(key: key);
@@ -18,8 +17,8 @@ class SocialOpinionsPage extends StatefulWidget {
 
 class _SocialOpinionsPageState extends State<SocialOpinionsPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  final List _tabs = [];
   late TabController _tabController;
+  List<Dict> _tabs = [];
 
   @override
   @protected
@@ -28,77 +27,78 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
   @override
   void initState() {
     super.initState();
-    //初始化标题头
-    DictService()
-        .getDictItemByCode(DictService().opinionType)
-        .then((datas) => {
-              setState(() {
-                for (var item in datas) {
-                  _tabs.add({"title": item.itemText, "code": item.itemValue});
-                }
-                _tabController = TabController(
-                    initialIndex: 1, length: _tabs.length, vsync: this);
-                _tabController.animateTo(0);
-              })
-            });
+    var dictMap =
+        BlocProvider.of<AppSettingBloc>(context, listen: false).state.dictMap;
+    var opinionTypes = dictMap["opinion_type"];
+    _tabController = TabController(
+        initialIndex: 1, length: opinionTypes?.length ?? 0, vsync: this);
+    _tabs = opinionTypes ?? [];
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "社情民意",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: Theme(
-            data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: Color(0xffffffff),
-              indicatorWeight: 1,
-              tabs: _tabs.map((item) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                  child: Text(
-                    item["title"],
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                );
-              }).toList(),
+    super.build(context);
+    return BlocListener<AppSettingBloc, AppSettingState>(
+      listener: (context, state) {
+        var opinionTypes = state.dictMap["opinion_type"];
+        setState(() {
+          _tabController = TabController(
+              initialIndex: 0, length: opinionTypes!.length, vsync: this);
+          _tabs = opinionTypes;
+        });
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.white, //修改颜色
+          ),
+          title: const Text(
+            "社情民意",
+            style: TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: const Color(0xfff27f56),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: Theme(
+              data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                unselectedLabelColor: Colors.white,
+                indicatorColor: const Color(0xffffffff),
+                indicatorWeight: 1,
+                tabs: _tabs.map((item) {
+                  return Container(
+                    padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                    child: Text(
+                      item.itemText,
+                      style: const TextStyle(color: Colors.white, fontSize: 16),
+                    ),
+                  );
+                }).toList(),
+              ),
             ),
           ),
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: _tabs.isEmpty
-            ? []
-            : _tabs.map((item) {
-                return MemberContentPage(codeType: item["code"]);
-              }).toList(),
+        body: TabBarView(
+          controller: _tabController,
+          children: _tabs.map((item) {
+            return MemberContentPage(codeType: item.itemValue);
+          }).toList(),
+        ),
       ),
     );
   }
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class MemberContentPage extends StatelessWidget {
   final _easyRefreshController = EasyRefreshController();
-  String codeType;
+  final String codeType;
   MemberContentPage({Key? key, required this.codeType}) : super(key: key);
 
   @override

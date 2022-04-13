@@ -1,5 +1,4 @@
 import 'package:cppcc_app/repository/api_provider.dart';
-import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/dto/message/message_entity.dart';
 
 class MessageRepository {

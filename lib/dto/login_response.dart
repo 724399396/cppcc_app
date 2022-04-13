@@ -6,9 +6,8 @@ part 'login_response.g.dart';
 class LoginResponse {
   final String token;
   final UserResponse userInfo;
-  final List<DictItem> dictData;
 
-  LoginResponse(this.token, this.userInfo, this.dictData);
+  LoginResponse(this.token, this.userInfo);
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) =>
       _$LoginResponseFromJson(json);

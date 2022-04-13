@@ -1,3 +1,5 @@
+import 'package:cppcc_app/bloc/app_setting_bloc.dart';
+import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/styles.dart';
@@ -157,8 +159,12 @@ class _LoginPageState extends State<LoginPage> {
                                               .add(UserLoginRequested(
                                                   _username!, _password!, () {
                                             // 初始化首页需要数据
+                                            BlocProvider.of<AppSettingBloc>(context)
+                                                .add(AppSettingInitlized());
                                             BlocProvider.of<PostsBloc>(context)
                                                 .add(PostInitilized());
+                                            BlocProvider.of<OpinionBloc>(context)
+                                                .add(OpinionInitilized());
                                             Navigator.of(context).canPop()
                                                 ? Navigator.pop(context)
                                                 : Navigator.of(context)

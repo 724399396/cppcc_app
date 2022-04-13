@@ -1,6 +1,7 @@
 part of 'posts_bloc.dart';
 
 class PostsState extends Equatable {
+  /// 资讯
   final List<Posts> news;
 
   ///会议播报
@@ -18,7 +19,9 @@ class PostsState extends Equatable {
   ///官渡文史
   final List<Posts> gdHistory;
 
+  /// 文件公告
   final List<Posts> fileAnnments;
+
   final ListDataFetchStatus status;
   final int homeCurrentPage;
 

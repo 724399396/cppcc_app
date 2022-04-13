@@ -226,6 +226,8 @@ class _HomeMeState extends State<HomeMe> {
 
 // 履职编号部分
 class DutiesNumber extends StatelessWidget {
+  const DutiesNumber({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return FlatButton(

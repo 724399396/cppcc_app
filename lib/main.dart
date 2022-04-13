@@ -1,3 +1,4 @@
+import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
@@ -5,15 +6,18 @@ import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/news_bloc.dart';
 import 'package:cppcc_app/bloc/news_topic_bloc.dart';
+import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
+import 'package:cppcc_app/repository/app_setting_repository.dart';
 import 'package:cppcc_app/repository/discuss_network_repository.dart';
 import 'package:cppcc_app/repository/historical_clue_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
+import 'package:cppcc_app/repository/opinion_repository.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -49,7 +53,8 @@ Future<void> main() async {
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
         // TODO replace
-        baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
+        // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
+        baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -67,6 +72,9 @@ Future<void> main() async {
         RepositoryProvider<UserRepository>(
           create: (context) =>
               UserRepository(localDataProvider, apiDataProvider),
+        ),
+        RepositoryProvider<AppSettingRepository>(
+          create: (context) => AppSettingRepository(apiDataProvider),
         ),
         RepositoryProvider<MessageRepository>(
           create: (context) => MessageRepository(apiDataProvider),
@@ -88,6 +96,9 @@ Future<void> main() async {
         ),
         RepositoryProvider<HistoricalClueRepository>(
           create: (context) => HistoricalClueRepository(apiDataProvider),
+        ),
+        RepositoryProvider<OpinionRepository>(
+          create: (context) => OpinionRepository(apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(
@@ -142,6 +153,15 @@ Future<void> main() async {
               create: (BuildContext context) => PostsBloc(
                     context.read<PostRepository>(),
                   )..add(PostInitilized())),
+          BlocProvider<OpinionBloc>(
+              create: (BuildContext context) =>
+                  OpinionBloc(context.read<OpinionRepository>())
+                    ..add(OpinionInitilized())),
+          BlocProvider<AppSettingBloc>(
+            create: (BuildContext context) =>
+                AppSettingBloc(context.read<AppSettingRepository>())
+                  ..add(AppSettingInitlized()),
+          ),
         ],
         child: CppccApp(navigationService),
       ),

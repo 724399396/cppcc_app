@@ -3,28 +3,22 @@ import 'package:json_annotation/json_annotation.dart';
 part 'opinion_response.g.dart';
 
 @JsonSerializable()
-class OpinionResponseWrapper {
-  final List<OpinionResponse> records;
-
-  OpinionResponseWrapper(this.records);
-
-  factory OpinionResponseWrapper.fromJson(Map<String, dynamic> json) =>
-      _$OpinionResponseWrapperFromJson(json);
-  Map<String, dynamic> toJson() => _$OpinionResponseWrapperToJson(this);
-}
-
-@JsonSerializable()
 class OpinionResponse {
   final String id;
   final String title;
   final String? content;
+  @JsonKey(name: "authorUser_dictText")
   final String? authorUserDictText;
   final int? status;
+  @JsonKey(name: "status_dictText")
+  final String? statusDictText;
+  @JsonKey(name: "type_dictText")
   final String? typeDictText;
   final String createTime;
+  final bool read;
 
   OpinionResponse(this.id, this.title, this.content, this.authorUserDictText,
-      this.status, this.typeDictText, this.createTime);
+      this.status, this.statusDictText, this.typeDictText, this.createTime, this.read);
 
   factory OpinionResponse.fromJson(Map<String, dynamic> json) =>
       _$OpinionResponseFromJson(json);

@@ -21,15 +21,16 @@ class Routes {
   static const gdHistoricalClueMePage = '/gdHistoricalClueMePage';
   static const gdHistoricalDetailsPage = '/gdHistoricalDetailsPage';
 
-
   //通讯录页面
 
   //消息页面
   static const messageDetailsPage = '/messageDetailsPage';
-  
+
   //咨询详情页面
-  
+
   static const newsDetailsPage = '/newsDetailsPage';
+
+  static const opinionDetailPage = '/opinionDetailPage';
 
   //个人中心页面
   static const archivesPage = '/archivesPage';
@@ -37,5 +38,4 @@ class Routes {
   static const feedbackPage = '/feedbackPage';
   static const settingsPage = '/settingsPage';
   static const visitingCardPage = '/visitingCardPage';
-
 }

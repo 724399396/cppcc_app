@@ -8,3 +8,15 @@ abstract class OpinionEvent extends Equatable {
 }
 
 class OpinionInitilized extends OpinionEvent {}
+
+class OpinionLoadMore extends OpinionEvent {
+  final OpinionListType type;
+
+  const OpinionLoadMore(this.type);
+}
+
+class OpinionRefresh extends OpinionEvent {
+  final OpinionListType type;
+
+  const OpinionRefresh(this.type);
+}

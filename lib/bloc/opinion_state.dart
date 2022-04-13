@@ -3,35 +3,35 @@ part of 'opinion_bloc.dart';
 class OpinionState extends Equatable {
   final int unreadCount;
   final ListDataFetchStatus status;
-  final List<Opinion> notDoneOpinions;
-  final List<Opinion> doneOpinions;
+  final Map<OpinionListType, List<Opinion>> opitions;
+  final Map<OpinionListType, int> currentPage;
 
   const OpinionState({
     this.unreadCount = 0,
     this.status = ListDataFetchStatus.normal,
-    this.notDoneOpinions = const [],
-    this.doneOpinions = const [],
+    this.opitions = const {},
+    this.currentPage = const {},
   });
 
   @override
-  List<Object> get props =>
-      [unreadCount, status, notDoneOpinions, doneOpinions];
+  List<Object> get props => [unreadCount, status, opitions, currentPage];
 
   OpinionState copyWith({
     int? unreadCount,
     ListDataFetchStatus? status,
-    List<Opinion>? notDoneOpinions,
-    List<Opinion>? doneOpinions,
+    Map<OpinionListType, List<Opinion>>? opitions,
+    Map<OpinionListType, int>? currentPage,
   }) {
     return OpinionState(
       unreadCount: unreadCount ?? this.unreadCount,
       status: status ?? this.status,
-      notDoneOpinions: notDoneOpinions ?? this.notDoneOpinions,
-      doneOpinions: doneOpinions ?? this.doneOpinions,
+      opitions: opitions ?? this.opitions,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  String toString() =>
-      'OpinionState(unreadCount: $unreadCount, status: $status)';
+  String toString() {
+    return 'OpinionState(unreadCount: $unreadCount, status: $status, opitions: $opitions, currentPage: $currentPage)';
+  }
 }

@@ -67,7 +67,6 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       _postRepository.getPostList(
           state.homeCurrentPage, pageSize, PostType.gdHistory)
     ]);
-    print("object" + values.length.toString());
 
     emit(state.copyWith(
         news: state.news + values[0],
@@ -80,8 +79,6 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         homeCurrentPage: state.homeCurrentPage + 1));
   }
 
-  Future<void> newMethod(Emitter<PostsState> emit) async {}
-
   Future<void> _generateCallApi(PostsEvent event, Emitter<PostsState> emit,
       GenericApiCall<PostsState> call) async {
     emit(state.copyWith(status: ListDataFetchStatus.refresh));
@@ -89,14 +86,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       await call(emit);
       emit(state.copyWith(status: ListDataFetchStatus.normal));
     } catch (err) {
-      print("err:" + err.toString());
       emit(state.copyWith(status: ListDataFetchStatus.failure));
     }
-  }
-
-  @override
-  void onChange(Change<PostsState> change) {
-    print(change.nextState);
-    super.onChange(change);
   }
 }

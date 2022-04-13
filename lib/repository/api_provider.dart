@@ -242,14 +242,14 @@ class ApiDataProvider {
             BaseResponse.fromJson(value.data).result as List<dynamic>));
   }
 
-  Future<OpinionResponseWrapper> getOpinionsList(
-      int page, int pageSize, int status) {
-    return _dio.get('/app/opinion/list', queryParameters: {
+  Future<List<OpinionResponse>> getOpinionsList(
+      int page, int pageSize, List<int> status) {
+    return _dio.post('/app/opinion/appGetList', data: {
       'pageNo': page,
       'pageSize': pageSize,
       'status': status,
-    }).then((value) => OpinionResponseWrapper.fromJson(
-        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+    }).then((value) => OpinionResponse.fromJsonList(
+        BaseResponse.fromJson(value.data).result as List<dynamic>));
   }
 
   Future<int> getUnreadCount() {

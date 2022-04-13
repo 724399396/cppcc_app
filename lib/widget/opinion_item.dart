@@ -20,7 +20,7 @@ class OpinionItem extends StatelessWidget {
       child: Container(
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           color: Colors.white,

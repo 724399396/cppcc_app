@@ -1,5 +1,6 @@
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/models/opinions.dart';
+import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/opinion_item.dart';
 import 'package:flutter/material.dart';
@@ -84,17 +85,25 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
 }
 
 // 列表信息
-class OpinionList extends StatelessWidget {
-  final _easyRefreshController = EasyRefreshController();
+class OpinionList extends StatefulWidget {
   final OpinionListType _listType;
-  OpinionList({Key? key, required tabData})
+  const OpinionList({Key? key, required tabData})
       : _listType = tabData,
         super(key: key);
 
   @override
+  State<OpinionList> createState() => _OpinionListState();
+}
+
+class _OpinionListState extends State<OpinionList> {
+  final _easyRefreshController = EasyRefreshController();
+  String _searchKeyWord = "";
+
+  @override
   Widget build(BuildContext context) {
     return Container(
-      color: const Color(0xfff4f4f4),
+      color: AppColors.background,
+      padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: BlocConsumer<OpinionBloc, OpinionState>(
         buildWhen: (previous, current) =>
             previous.opitions != current.opitions ||
@@ -120,24 +129,76 @@ class OpinionList extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          var data = state.opitions[_listType] ?? [];
-          return EasyRefresh.custom(
-            controller: _easyRefreshController,
-            enableControlFinishRefresh: true,
-            enableControlFinishLoad: true,
-            header: easyRefreshHeader,
-            footer: easyRefreshFooter,
-            onLoad: () async {
-              BlocProvider.of<OpinionBloc>(context)
-                  .add(OpinionLoadMore(_listType));
-            },
-            onRefresh: () async {
-              BlocProvider.of<OpinionBloc>(context)
-                  .add(OpinionRefresh(_listType));
-            },
-            emptyWidget:
-                data.isEmpty ? const Center(child: Text('暂无数据')) : null,
-            slivers: data.map((p) => OpinionItem(p)).toList(),
+          var data = state.opitions[widget._listType] ?? [];
+          var filterData = _searchKeyWord.isEmpty
+              ? data
+              : data.where((d) => d.title.contains(_searchKeyWord)).toList();
+          return Column(
+            children: [
+              TextField(
+                key: const ValueKey('keyword'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.white,
+                  enabledBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    borderSide: BorderSide(
+                        color: AppColors.greyTextColor,
+                        width: 0.0,
+                        style: BorderStyle.solid),
+                  ),
+                  focusedBorder: const OutlineInputBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
+                    borderSide: BorderSide(
+                        color: AppColors.greyTextColor,
+                        width: 0.0,
+                        style: BorderStyle.solid),
+                  ),
+                  isDense: true,
+                  contentPadding: const EdgeInsets.all(8),
+                  hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
+                        color: AppColors.greyTextColor,
+                      ),
+                  prefixIcon: Container(
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                    child: Image.asset(
+                      'assets/icons/ic_search.png',
+                      color: AppColors.greyTextColor,
+                    ),
+                    width: 28,
+                    height: 28,
+                  ),
+                  hintText: '请输入关键词',
+                ),
+                onSubmitted: (value) {
+                  setState(() {
+                    _searchKeyWord = value;
+                  });
+                },
+                textInputAction: TextInputAction.search,
+              ),
+              Expanded(
+                  child: EasyRefresh.custom(
+                controller: _easyRefreshController,
+                enableControlFinishRefresh: true,
+                enableControlFinishLoad: true,
+                header: easyRefreshHeader,
+                footer: easyRefreshFooter,
+                onLoad: () async {
+                  BlocProvider.of<OpinionBloc>(context)
+                      .add(OpinionLoadMore(widget._listType));
+                },
+                onRefresh: () async {
+                  BlocProvider.of<OpinionBloc>(context)
+                      .add(OpinionRefresh(widget._listType));
+                },
+                emptyWidget: filterData.isEmpty
+                    ? const Center(child: Text('暂无数据'))
+                    : null,
+                slivers: filterData.map((p) => OpinionItem(p)).toList(),
+              ))
+            ],
           );
         },
       ),

@@ -1,37 +1,36 @@
 part of 'discuss_network_bloc.dart';
 
 class DiscussNetworkState extends Equatable {
-  final int pageNo;
-  final int pageSize;
-  final int total;
-  final List<DiscussNetworkResponse> listDatas;
-
+  final int unreadCount;
+  final ListDataFetchStatus status;
+  final Map<DiscussNetworkListType, List<DiscussNetwork>> data;
+  final Map<DiscussNetworkListType, int> currentPage;
   const DiscussNetworkState({
-    this.pageNo = 1,
-    this.pageSize = 10,
-    this.total = 0,
-    this.listDatas = const [],
+    this.unreadCount = 0,
+    this.status = ListDataFetchStatus.normal,
+    this.data = const {},
+    this.currentPage = const {},
   });
 
-  DiscussNetworkState copyWith(
-    int pageNo,
-    DiscussNetworkResponseWrapper result,
-  ) {
+  DiscussNetworkState copyWith({
+    int? unreadCount,
+    ListDataFetchStatus? status,
+    Map<DiscussNetworkListType, List<DiscussNetwork>>? data,
+    Map<DiscussNetworkListType, int>? currentPage,
+  }) {
     return DiscussNetworkState(
-      pageNo: pageNo,
-      pageSize: result.size,
-      total: result.total,
-      listDatas: result.records,
+      unreadCount: unreadCount ?? this.unreadCount,
+      status: status ?? this.status,
+      data: data ?? this.data,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  List<Object> get props {
-    return [
-      pageNo,
-      pageSize,
-      total,
-      listDatas,
-    ];
+  String toString() {
+    return 'DiscussNetworkState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage)';
   }
+
+  @override
+  List<Object> get props => [unreadCount, status, data, currentPage];
 }

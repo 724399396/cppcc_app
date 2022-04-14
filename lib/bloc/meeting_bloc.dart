@@ -78,9 +78,4 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       meetings: newMeetings,
     ));
   }
-
-  @override
-  void onChange(Change<MeetingState> change) {
-    super.onChange(change);
-  }
 }

@@ -56,54 +56,63 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
     super.build(context);
     var argument =
         ModalRoute.of(context)?.settings.arguments as GeneralTabArgument;
-    return Scaffold(
-      floatingActionButton: argument.floatingActionButton,
-      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: Text(
-          argument.title,
-          style: const TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(48),
-          child: Theme(
-            data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: const Color(0xffffffff),
-              indicatorWeight: 1,
-              tabs: _tabs?.map((item) {
-                    return Container(
-                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                      child: Text(
-                        item.itemText,
-                        style:
-                            const TextStyle(color: Colors.white, fontSize: 16),
-                      ),
-                    );
-                  }).toList() ??
-                  [],
+    return BlocListener<AppSettingBloc, AppSettingState>(
+      listener: (context, state) {
+        setState(() {
+          updateTab(state.dictMap, argument.dictKey);
+        });
+      },
+      child: Scaffold(
+        floatingActionButton: argument.floatingActionButton,
+        floatingActionButtonLocation:
+            FloatingActionButtonLocation.miniEndDocked,
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.white, //修改颜色
+          ),
+          title: Text(
+            argument.title,
+            style: const TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: const Color(0xfff27f56),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: Theme(
+              data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                unselectedLabelColor: Colors.white,
+                indicatorColor: const Color(0xffffffff),
+                indicatorWeight: 1,
+                tabs: _tabs?.map((item) {
+                      return Container(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                        child: Text(
+                          item.itemText,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                        ),
+                      );
+                    }).toList() ??
+                    [],
+              ),
             ),
           ),
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: _tabs?.map<Widget>((item) {
-              return PostsListContainer(
-                  PostKey(argument.postType, int.parse(item.itemValue)));
-            }).toList() ??
-            [],
+        body: TabBarView(
+          controller: _tabController,
+          children: _tabs?.map<Widget>((item) {
+                return PostsListContainer(
+                    PostKey(argument.postType, int.parse(item.itemValue)));
+              }).toList() ??
+              [],
+        ),
       ),
     );
   }

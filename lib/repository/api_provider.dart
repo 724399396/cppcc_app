@@ -214,15 +214,15 @@ class ApiDataProvider {
   }
 
   /// 获取网络议政列表
-  Future<DiscussNetworkResponseWrapper> getDiscussNetworkList(
-      int pageNo, int pageSize, String status) {
-    return _dio.get('/app/discussNetwork/list', queryParameters: {
+  Future<List<DiscussNetworkResponse>> getDiscussNetworkList(
+      int pageNo, int pageSize, List<int> status) {
+    return _dio.post('/app/discussNetwork/appGetList', data: {
       'pageNo': pageNo,
       'pageSize': pageSize,
       "status": status
     }).then((value) {
-      return DiscussNetworkResponseWrapper.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+      return DiscussNetworkResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
     });
   }
 
@@ -280,6 +280,12 @@ class ApiDataProvider {
   Future<int> getFileAnnounmentUnreadCount() {
     return _dio
         .get('/app/fileAnnment/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getDiscussNetworkUnreadCount() {
+    return _dio
+        .get('/app/discussNetwork/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
 }

@@ -1,3 +1,4 @@
+import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
@@ -177,8 +178,16 @@ class HomePage extends StatelessWidget {
                               '文件公告'));
                     },
                   ),
-                  buildTabItem('网络议政', 'assets/icons/ic_wangluoyiz.png',
-                      Routes.networkPoliticalPage, 0, context),
+                  BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                          '网络议政',
+                          'assets/icons/ic_wangluoyiz.png',
+                          Routes.discussNetworkPage,
+                          state.unreadCount,
+                          context);
+                    },
+                  ),
                 ],
               ),
               Row(

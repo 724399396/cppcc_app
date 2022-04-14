@@ -6,8 +6,8 @@ import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_details_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_page.dart';
-import 'package:cppcc_app/page/home/network_political_details_page.dart';
-import 'package:cppcc_app/page/home/network_political_page.dart';
+import 'package:cppcc_app/page/home/disccuss_network_details_page.dart';
+import 'package:cppcc_app/page/home/discuss_network_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
 import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
@@ -48,9 +48,9 @@ final routesDef = {
   Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
   Routes.meetingActivitiesDetailsPage: (context) =>
       const MeetingActivitiesDetailsPage(),
-  Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),
-  Routes.networkPoliticalDetailsPage: (context) =>
-      const NetworkPoliticalDetailsPage(),
+  Routes.discussNetworkPage: (context) => const DicusssNetworkPage(),
+  Routes.discussNetworkDetailsPage: (context) =>
+      const DiscussNetworkDetailsPage(),
   Routes.postListWithFilterPage: (context) => const PostsListWithFilterPage(),
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),

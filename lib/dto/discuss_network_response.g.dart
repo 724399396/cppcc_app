@@ -6,29 +6,6 @@ part of 'discuss_network_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-DiscussNetworkResponseWrapper _$DiscussNetworkResponseWrapperFromJson(
-        Map<String, dynamic> json) =>
-    DiscussNetworkResponseWrapper(
-      (json['records'] as List<dynamic>)
-          .map(
-              (e) => DiscussNetworkResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    )
-      ..total = json['total'] as int
-      ..size = json['size'] as int
-      ..current = json['current'] as int
-      ..pages = json['pages'] as int;
-
-Map<String, dynamic> _$DiscussNetworkResponseWrapperToJson(
-        DiscussNetworkResponseWrapper instance) =>
-    <String, dynamic>{
-      'records': instance.records,
-      'total': instance.total,
-      'size': instance.size,
-      'current': instance.current,
-      'pages': instance.pages,
-    };
-
 DiscussNetworkResponse _$DiscussNetworkResponseFromJson(
         Map<String, dynamic> json) =>
     DiscussNetworkResponse(
@@ -53,6 +30,7 @@ DiscussNetworkResponse _$DiscussNetworkResponseFromJson(
           ?.map((e) =>
               DiscussMessagesResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
+      json['read'] as bool?,
     );
 
 Map<String, dynamic> _$DiscussNetworkResponseToJson(
@@ -72,6 +50,7 @@ Map<String, dynamic> _$DiscussNetworkResponseToJson(
       'updateBy': instance.updateBy,
       'updateTime': instance.updateTime,
       'cover': instance.cover,
+      'read': instance.read,
       'partInUsers': instance.users,
       'discussMessages': instance.discussMessages,
     };
@@ -82,6 +61,7 @@ DiscussMessagesResponse _$DiscussMessagesResponseFromJson(
       json['id'] as String,
       json['message'] as String?,
       json['ownerName'] as String?,
+      json['ownerAvatar'] as String?,
       json['parentMsgId'] as String?,
       json['praiseCount'] as int?,
       json['userId'] as String?,
@@ -97,6 +77,7 @@ Map<String, dynamic> _$DiscussMessagesResponseToJson(
       'id': instance.id,
       'message': instance.message,
       'ownerName': instance.ownerName,
+      'ownerAvatar': instance.ownerAvatar,
       'parentMsgId': instance.parentMsgId,
       'praiseCount': instance.praiseCount,
       'userId': instance.userId,

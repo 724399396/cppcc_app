@@ -7,14 +7,17 @@ abstract class DiscussNetworkEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetDiscussNetworkData extends DiscussNetworkEvent {
-  final int pageNo;
-  final int pageSize;
-  final String status;
+class DiscussNetworkInitilized extends DiscussNetworkEvent {}
 
-  const GetDiscussNetworkData(this.pageNo, this.pageSize, this.status)
-      : super();
 
-  @override
-  List<Object> get props => [pageNo, pageSize, status];
+class DiscussNetworkLoadMore extends DiscussNetworkEvent {
+  final DiscussNetworkListType type;
+
+  const DiscussNetworkLoadMore(this.type);
+}
+
+class DiscussNetworkRefresh extends DiscussNetworkEvent {
+  final DiscussNetworkListType type;
+
+  const DiscussNetworkRefresh(this.type);
 }

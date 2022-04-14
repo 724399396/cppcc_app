@@ -3,21 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'discuss_network_response.g.dart';
 
 @JsonSerializable()
-class DiscussNetworkResponseWrapper {
-  final List<DiscussNetworkResponse> records;
-  late int total;
-  late int size;
-  late int current;
-  late int pages;
-
-  DiscussNetworkResponseWrapper(this.records);
-
-  factory DiscussNetworkResponseWrapper.fromJson(Map<String, dynamic> json) =>
-      _$DiscussNetworkResponseWrapperFromJson(json);
-  Map<String, dynamic> toJson() => _$DiscussNetworkResponseWrapperToJson(this);
-}
-
-@JsonSerializable()
 class DiscussNetworkResponse {
   final String id;
   final String title;
@@ -34,6 +19,7 @@ class DiscussNetworkResponse {
   final String? updateBy;
   final String? updateTime;
   final String? cover;
+  final bool? read;
 
   @JsonKey(name: 'partInUsers')
   final List<PartUsersResponse>? users;
@@ -55,11 +41,15 @@ class DiscussNetworkResponse {
       this.updateTime,
       this.cover,
       this.users,
-      this.discussMessages);
+      this.discussMessages,
+      this.read);
 
   factory DiscussNetworkResponse.fromJson(Map<String, dynamic> json) =>
       _$DiscussNetworkResponseFromJson(json);
   Map<String, dynamic> toJson() => _$DiscussNetworkResponseToJson(this);
+
+  static List<DiscussNetworkResponse> fromJsonList(List<dynamic> json) =>
+      json.map((e) => DiscussNetworkResponse.fromJson(e)).toList();
 }
 
 @JsonSerializable()
@@ -67,6 +57,7 @@ class DiscussMessagesResponse {
   final String id; // "1504641203290071042"
   final String? message; // "<p>测试留言</p>"
   final String? ownerName; // "符佳羽"
+  final String? ownerAvatar; // "符佳羽"
   final String? parentMsgId; // "0"
   final int? praiseCount; // 0
   final String? userId; // "1501143094266204161"
@@ -76,16 +67,18 @@ class DiscussMessagesResponse {
   final String? updateTime;
 
   DiscussMessagesResponse(
-      this.id,
-      this.message,
-      this.ownerName,
-      this.parentMsgId,
-      this.praiseCount,
-      this.userId,
-      this.createBy,
-      this.createTime,
-      this.updateBy,
-      this.updateTime);
+    this.id,
+    this.message,
+    this.ownerName,
+    this.ownerAvatar,
+    this.parentMsgId,
+    this.praiseCount,
+    this.userId,
+    this.createBy,
+    this.createTime,
+    this.updateBy,
+    this.updateTime,
+  );
 
   factory DiscussMessagesResponse.fromJson(Map<String, dynamic> json) =>
       _$DiscussMessagesResponseFromJson(json);

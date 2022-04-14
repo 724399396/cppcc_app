@@ -61,26 +61,12 @@ const int pageSize = 10;
 ///DictService().getDictItemByCode("msg_category").then((datas) => print(datas.length));
 // TODO delete
 class DictService {
-  /// 	委员学习专题
-  String learningCategories = "learning_categories";
 
   /// 	领导信箱类型
   String mailboxType = "mailbox_type";
 
-  /// 	网络议政
-  String discussNetworkStatus = "discuss_network_status";
-
   /// 	通告类型
   String msgCategory = "msg_category";
-
-  /// 	提案类型
-  String proposalType = "proposal_type";
-
-  /// 	官渡文史类型
-  String gdHistoryDict = "gd_history_dict";
-
-  /// 	线索征集
-  String gdHistoryClue = "3";
 
   var localDataProvider = LocalDataProvider();
 

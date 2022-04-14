@@ -4,7 +4,6 @@ import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
-import 'package:cppcc_app/bloc/news_bloc.dart';
 import 'package:cppcc_app/bloc/news_topic_bloc.dart';
 import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
@@ -133,11 +132,6 @@ Future<void> main() async {
               context.read<NewsRepository>(),
             )..add(const NewsTopicInitialed()),
           ),
-          BlocProvider<NewsBloc>(
-            create: (BuildContext context) => NewsBloc(
-              context.read<NewsRepository>(),
-            ),
-          ),
           BlocProvider<MailboxBloc>(
             create: (BuildContext context) => MailboxBloc(
               context.read<MailboxRepository>(),
@@ -146,7 +140,7 @@ Future<void> main() async {
           BlocProvider<DiscussNetworkBloc>(
             create: (BuildContext context) => DiscussNetworkBloc(
               context.read<DiscussNetworkRepository>(),
-            ),
+            )..add(DiscussNetworkInitilized()),
           ),
           BlocProvider<MeetingBloc>(
             create: (BuildContext context) => MeetingBloc(

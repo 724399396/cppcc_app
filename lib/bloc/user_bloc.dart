@@ -1,11 +1,10 @@
-import 'dart:async';
-
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/repository/user_repository.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 part 'user_event.dart';
@@ -22,7 +21,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       _userRepository.freshUserInfo().then((_) {
         emit(_populateUserData());
       }).catchError((err) {
-        print("获取用户信息错误!");
+        debugPrint("获取用户信息错误!");
         // 获取用户信息错误，可忽略
       });
     });

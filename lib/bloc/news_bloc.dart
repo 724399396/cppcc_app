@@ -17,7 +17,7 @@ class NewsBloc extends Bloc<NewsEvent, NewsState> {
     //请求获取列表数据
     on<GetNewsListData>((event, emit) async {
       await _newsRepository
-          .getNewsList(event.pageNo, event.pageSize, new NewsRecords())
+          .getNewsList(event.pageNo, event.pageSize, NewsRecords())
           .then((result) {
         emit(_populateMessageData(result));
       });

@@ -33,6 +33,7 @@ class Routes {
   static const opinionDetailPage = '/opinionDetailPage';
 
   static const searchPage = '/searchPage';
+  static const scanQRCode = '/scanQRCode';
 
   //个人中心页面
   static const archivesPage = '/archivesPage';

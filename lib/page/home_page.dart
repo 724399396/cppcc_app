@@ -100,7 +100,11 @@ class HomePage extends StatelessWidget {
               const SizedBox(width: 8),
               Expanded(
                   flex: 1,
-                  child: Padding(
+                  child: GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(Routes.scanQRCode);
+                    },
+                    child: Padding(
                       padding: const EdgeInsets.all(8),
                       child: CircleAvatar(
                         backgroundColor: const Color(0x88FFFFFF),
@@ -108,7 +112,9 @@ class HomePage extends StatelessWidget {
                           'assets/icons/ic_saom.png',
                           width: 24,
                         ),
-                      ))),
+                      )),
+                  )
+                  ),
               const SizedBox(width: 8),
             ],
           ),

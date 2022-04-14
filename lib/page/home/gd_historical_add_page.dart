@@ -1,5 +1,3 @@
-// ignore_for_file: camel_case_types
-
 import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';

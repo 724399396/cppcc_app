@@ -1,81 +1,63 @@
 part of 'posts_bloc.dart';
 
+class PostKey extends Equatable {
+  final PostType type;
+  final int? category;
+
+  const PostKey(
+    this.type,
+    this.category,
+  );
+
+  PostKey copyWith({
+    PostType? type,
+    int? category,
+  }) {
+    return PostKey(
+      type ?? this.type,
+      category ?? this.category,
+    );
+  }
+
+  @override
+  String toString() => 'PostKey(type: $type, category: $category)';
+
+  @override
+  List<Object> get props => [type, category ?? -1];
+}
+
 class PostsState extends Equatable {
-  /// 资讯
-  final List<Posts> news;
-
-  ///会议播报
-  final List<Posts> broadcasts;
-
-  ///两会专题
-  final List<Posts> twoSessionsTopics;
-
-  ///议政文件
-  final List<Posts> discussPoliticsFiles;
-
-  ///委员学习
-  final List<Posts> learnings;
-
-  ///官渡文史
-  final List<Posts> gdHistory;
-
-  /// 文件公告
-  final List<Posts> fileAnnments;
-
   final ListDataFetchStatus status;
-  final int homeCurrentPage;
+  final Map<PostKey, List<Posts>> posts;
+  final Map<PostKey, int> currentPage;
+  final Map<PostType, int> unreadCount;
 
   const PostsState({
-    this.news = const [],
-    this.broadcasts = const [],
-    this.twoSessionsTopics = const [],
-    this.discussPoliticsFiles = const [],
-    this.learnings = const [],
-    this.fileAnnments = const [],
-    this.gdHistory = const [],
     this.status = ListDataFetchStatus.normal,
-    this.homeCurrentPage = 1,
+    this.posts = const {},
+    this.currentPage = const {},
+    this.unreadCount = const {},
   });
 
   @override
-  List<Object> get props => [
-        news,
-        broadcasts,
-        twoSessionsTopics,
-        discussPoliticsFiles,
-        learnings,
-        fileAnnments,
-        gdHistory,
-        status,
-        homeCurrentPage
-      ];
+  List<Object> get props => [status, posts, currentPage, unreadCount];
 
   PostsState copyWith({
-    List<Posts>? news,
-    List<Posts>? broadcasts,
-    List<Posts>? twoSessionsTopics,
-    List<Posts>? discussPoliticsFiles,
-    List<Posts>? learnings,
-    List<Posts>? fileAnnments,
-    List<Posts>? gdHistory,
     ListDataFetchStatus? status,
-    int? homeCurrentPage,
+    Map<PostKey, List<Posts>>? posts,
+    Map<PostKey, int>? currentPage,
+    Map<PostType, int>? unreadCount,
   }) {
     return PostsState(
-      news: news ?? this.news,
-      broadcasts: broadcasts ?? this.broadcasts,
-      twoSessionsTopics: twoSessionsTopics ?? this.twoSessionsTopics,
-      discussPoliticsFiles: discussPoliticsFiles ?? this.discussPoliticsFiles,
-      learnings: learnings ?? this.learnings,
-      fileAnnments: fileAnnments ?? this.fileAnnments,
-      gdHistory: gdHistory ?? this.gdHistory,
       status: status ?? this.status,
-      homeCurrentPage: homeCurrentPage ?? this.homeCurrentPage,
+      posts: posts ?? this.posts,
+      currentPage: currentPage ?? this.currentPage,
+      unreadCount: unreadCount ?? this.unreadCount,
     );
   }
 
   @override
   String toString() {
-    return 'PostsState(news: $news, broadcasts: $broadcasts, twoSessionsTopics: $twoSessionsTopics, discussPoliticsFiles: $discussPoliticsFiles, learnings: $learnings, fileAnnments: $fileAnnments, gdHistory: $gdHistory, status: $status, homeCurrentPage: $homeCurrentPage)';
+    return 'PostsState(status: $status, posts: $posts, currentPage: $currentPage, unreadCount: $unreadCount)';
   }
 }

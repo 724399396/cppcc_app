@@ -106,10 +106,10 @@ class _OpinionListState extends State<OpinionList> {
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
       child: BlocConsumer<OpinionBloc, OpinionState>(
         buildWhen: (previous, current) =>
-            previous.opitions != current.opitions ||
+            previous.opinions != current.opinions ||
             previous.status != current.status,
         listenWhen: (previous, current) =>
-            previous.opitions != current.opitions ||
+            previous.opinions != current.opinions ||
             previous.status != current.status,
         listener: (previous, current) {
           // easy conller
@@ -128,8 +128,9 @@ class _OpinionListState extends State<OpinionList> {
               break;
           }
         },
+        // TODO refactor to general search
         builder: (context, state) {
-          var data = state.opitions[widget._listType] ?? [];
+          var data = state.opinions[widget._listType] ?? [];
           var filterData = _searchKeyWord.isEmpty
               ? data
               : data.where((d) => d.title.contains(_searchKeyWord)).toList();

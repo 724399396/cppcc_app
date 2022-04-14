@@ -1,17 +1,10 @@
-// class NetworkPoliticalPage extends StatefulWidget {
-import 'dart:async';
-
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
-import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/widget/discuss_network_list_item.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
-import 'package:cppcc_app/widget/mailbox_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cppcc_app/models/app_settings.dart';
-
-import '../../utils/routes.dart';
 
 class NetworkPoliticalPage extends StatefulWidget {
   const NetworkPoliticalPage({Key? key}) : super(key: key);
@@ -49,6 +42,7 @@ class _NetworkPoliticalPageState extends State<NetworkPoliticalPage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(

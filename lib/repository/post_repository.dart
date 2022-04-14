@@ -9,9 +9,9 @@ class PostRepository {
   PostRepository(this._apiDataProvider);
 
   Future<List<Posts>> getPostList(
-      int page, int pageSize, PostType postType) async {
+      int page, int pageSize, PostType postType, int? category) async {
     return _apiDataProvider
-        .getPostList(page, pageSize, postType)
+        .getPostList(page, pageSize, postType, category)
         .then((response) {
       return response.records
           .map((PostsResponse p) => Posts(
@@ -30,5 +30,9 @@ class PostRepository {
               ))
           .toList();
     });
+  }
+
+  Future<int> getFileAnnounmentUnreadCount() {
+    return _apiDataProvider.getFileAnnounmentUnreadCount();
   }
 }

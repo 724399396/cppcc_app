@@ -1,14 +1,13 @@
 import 'package:cppcc_app/bloc/posts_bloc.dart';
-import 'package:cppcc_app/models/app_settings.dart';
-import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
-
-import '../bloc/news_topic_bloc.dart';
+import 'package:cppcc_app/bloc/news_topic_bloc.dart';
 
 class HomeNews extends StatefulWidget {
   const HomeNews({Key? key}) : super(key: key);
@@ -20,13 +19,11 @@ class HomeNews extends StatefulWidget {
 class _HomeNewsState extends State<HomeNews> {
   @override
   Widget build(BuildContext context) {
-    var deviceSize = MediaQuery.of(context).size;
-    var moduleIconWidth = deviceSize.width / 8;
     var _easyRefreshController = EasyRefreshController();
     return SafeArea(
         child: Stack(alignment: Alignment.center, children: [
       Positioned.fill(
-        child: Container(
+        child: SizedBox(
           height: 1,
           child: Image.asset(
             'assets/bg/bg_news.png',
@@ -41,10 +38,9 @@ class _HomeNewsState extends State<HomeNews> {
           Container(
             margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
             // TODO
-            child:
-                GeneralSearch(Colors.white, ((context, keyword) => {})),
+            child: GeneralSearch(Colors.white, ((context, keyword) => {})),
           ),
-          Container(
+          SizedBox(
               height: 48,
               child: BlocBuilder<NewsTopicBloc, NewsTopicState>(
                 builder: (context, state) {
@@ -56,7 +52,7 @@ class _HomeNewsState extends State<HomeNews> {
                           (context, index) {
                             return TextButton(
                               onPressed: () {
-                                print("click");
+                                // TODO
                               },
                               child: Container(
                                 decoration: const BoxDecoration(
@@ -72,7 +68,7 @@ class _HomeNewsState extends State<HomeNews> {
                                       state.listDatas[index].itemText,
                                       style: const TextStyle(
                                           fontSize: 16.0,
-                                          color: const Color(0xffffffff)),
+                                          color: Color(0xffffffff)),
                                     ),
                                   ],
                                 ),
@@ -86,16 +82,13 @@ class _HomeNewsState extends State<HomeNews> {
                   );
                 },
               )),
-          // 文件公告和资讯
           Expanded(
             child: BlocConsumer<PostsBloc, PostsState>(
               buildWhen: (previous, current) =>
-                  previous.news != current.news ||
-                  previous.fileAnnments != current.fileAnnments ||
+                  previous.posts != current.posts ||
                   previous.status != current.status,
               listenWhen: (previous, current) =>
-                  previous.news != current.news ||
-                  previous.fileAnnments != current.fileAnnments ||
+                  previous.posts != current.posts ||
                   previous.status != current.status,
               listener: (previous, current) {
                 // easy conller
@@ -114,43 +107,28 @@ class _HomeNewsState extends State<HomeNews> {
                     break;
                 }
               },
-              builder: (context, state) => EasyRefresh.custom(
-                controller: _easyRefreshController,
-                enableControlFinishRefresh: true,
-                enableControlFinishLoad: true,
-                header: ClassicalHeader(
-                  refreshText: '下拉刷新',
-                  refreshReadyText: '释放刷新',
-                  refreshingText: '加载中',
-                  refreshedText: '加载完成',
-                  refreshFailedText: '加载失败',
-                  noMoreText: '没有更多数据',
-                  infoText: '更新于 %T',
-                  textColor: Colors.black,
-                ),
-                footer: ClassicalFooter(
-                  loadText: '上拉加载更多',
-                  loadReadyText: '释放刷新',
-                  loadingText: '加载中',
-                  loadedText: '加载完成',
-                  loadFailedText: '加载失败',
-                  noMoreText: '没有更多数据',
-                  infoText: '更新于 %T',
-                  textColor: Colors.black,
-                ),
-                onLoad: () async {
-                  BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
-                },
-                onRefresh: () async {
-                  BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
-                },
-                emptyWidget: (state.news + state.fileAnnments).isEmpty
-                    ? const Center(child: Text('暂无数据'))
-                    : null,
-                slivers: (state.news + state.fileAnnments)
-                    .map((p) => PostsItem(p))
-                    .toList(),
-              ),
+              builder: (context, state) {
+                var data = state.posts[const PostKey(PostType.news, null)];
+                return EasyRefresh.custom(
+                  controller: _easyRefreshController,
+                  enableControlFinishRefresh: true,
+                  enableControlFinishLoad: true,
+                  header: easyRefreshHeader,
+                  footer: easyRefreshFooter,
+                  onLoad: () async {
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostLoadMore(PostKey(PostType.news, null)));
+                  },
+                  onRefresh: () async {
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostRefresh(PostKey(PostType.news, null)));
+                  },
+                  emptyWidget: (data?.isEmpty ?? true)
+                      ? const Center(child: Text('暂无数据'))
+                      : null,
+                  slivers: data?.map((p) => PostsItem(p)).toList() ?? [],
+                );
+              },
             ),
             // ),
           ),

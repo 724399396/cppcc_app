@@ -15,69 +15,44 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final PostRepository _postRepository;
   PostsBloc(this._postRepository) : super(const PostsState()) {
     on<PostInitilized>((event, emit) async {
-      await _generateCallApi(event, emit, (emit) async {
-        emit(state.copyWith(
-          homeCurrentPage: 1,
-          news: [],
-          broadcasts: [],
-          twoSessionsTopics: [],
-          discussPoliticsFiles: [],
-          learnings: [],
-          fileAnnments: [],
-          gdHistory: [],
-        ));
-        await _homeDataLoad(emit);
-      });
-    });
-    on<HomePostRefresh>((event, emit) async {
-      await _generateCallApi(event, emit, (emit) async {
-        emit(state.copyWith(
-          homeCurrentPage: 1,
-          news: [],
-          broadcasts: [],
-          twoSessionsTopics: [],
-          discussPoliticsFiles: [],
-          learnings: [],
-          fileAnnments: [],
-          gdHistory: [],
-        ));
-        await _homeDataLoad(emit);
-      });
-    });
-    on<HomePostLoadMore>((event, emit) async {
-      await _generateCallApi(event, emit, (emit) async {
-        await _homeDataLoad(emit);
-      });
-    });
-  }
 
-  Future<void> _homeDataLoad(Emitter<PostsState> emit) async {
-    var values = await Future.wait([
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.news),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.broadcast),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.twoSessionsTopic),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.discussPoliticsFile),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.learning),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.fileAnnment),
-      _postRepository.getPostList(
-          state.homeCurrentPage, pageSize, PostType.gdHistory)
-    ]);
+      await _postRepository.getFileAnnounmentUnreadCount().then((count) {
+        Map<PostType, int> newData = Map.from(state.unreadCount);
+        newData[PostType.fileAnnment] = count;
+        emit(state.copyWith(unreadCount: newData));
+      });
 
-    emit(state.copyWith(
-        news: state.news + values[0],
-        broadcasts: state.broadcasts + values[1],
-        twoSessionsTopics: state.twoSessionsTopics + values[2],
-        discussPoliticsFiles: state.discussPoliticsFiles + values[3],
-        learnings: state.learnings + values[4],
-        fileAnnments: state.fileAnnments + values[5],
-        gdHistory: state.gdHistory + values[6],
-        homeCurrentPage: state.homeCurrentPage + 1));
+      for (var type in [PostType.fileAnnment, PostType.news]) {
+        Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
+        newPosts[PostKey(type, null)] = [];
+        Map<PostKey, int> newCurrentPage = Map.from(state.currentPage);
+        newCurrentPage[PostKey(type, null)] = 1;
+        emit(state.copyWith(
+          currentPage: newCurrentPage,
+          posts: newPosts,
+        ));
+        await _dataLoad(emit, PostKey(type, null));
+      }
+    });
+
+    on<PostRefresh>((event, emit) async {
+      await _generateCallApi(event, emit, (emit) async {
+        await _dataLoad(emit, event.key);
+      });
+    });
+    on<PostLoadMore>((event, emit) async {
+      await _generateCallApi(event, emit, (emit) async {
+        Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
+        newPosts[event.key] = [];
+        Map<PostKey, int> newCurrentPage = Map.from(state.currentPage);
+        newCurrentPage[event.key] = 1;
+        emit(state.copyWith(
+          currentPage: newCurrentPage,
+          posts: newPosts,
+        ));
+        await _dataLoad(emit, event.key);
+      });
+    });
   }
 
   Future<void> _generateCallApi(PostsEvent event, Emitter<PostsState> emit,
@@ -90,5 +65,24 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       debugPrint('get posts error: $err');
       emit(state.copyWith(status: ListDataFetchStatus.failure));
     }
+  }
+
+  Future<void> _dataLoad(Emitter<PostsState> emit, PostKey key) async {
+    var datas = await _postRepository.getPostList(
+        state.currentPage[key] ?? 1, pageSize, key.type, key.category);
+    Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
+    newPosts[key] = (newPosts[key] ?? []) + datas;
+    Map<PostKey, int> newCurrentPage = Map.from(state.currentPage);
+    newCurrentPage[key] = (newCurrentPage[key] ?? 1) + 1;
+
+    emit(state.copyWith(
+      currentPage: newCurrentPage,
+      posts: newPosts,
+    ));
+  }
+
+  @override
+  void onChange(Change<PostsState> change) {
+    super.onChange(change);
   }
 }

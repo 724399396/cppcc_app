@@ -16,20 +16,20 @@ class MeetingState extends Equatable {
   MeetingState copyWith({
     int? unreadCount,
     ListDataFetchStatus? status,
-    Map<String, List<Meeting>>? opitions,
+    Map<String, List<Meeting>>? meetings,
     Map<String, int>? currentPage,
   }) {
     return MeetingState(
       unreadCount: unreadCount ?? this.unreadCount,
       status: status ?? this.status,
-      meetings: opitions ?? this.meetings,
+      meetings: meetings ?? this.meetings,
       currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
   String toString() {
-    return 'MeetingState(unreadCount: $unreadCount, status: $status, opitions: $meetings, currentPage: $currentPage)';
+    return 'MeetingState(unreadCount: $unreadCount, status: $status, meetings: $meetings, currentPage: $currentPage)';
   }
 
   @override

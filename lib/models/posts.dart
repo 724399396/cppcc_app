@@ -78,7 +78,7 @@ class Posts extends Equatable {
       hits!,
       createBy,
       createTime,
-      categoryDictText!,
+      categoryDictText ?? '',
     ];
   }
 }

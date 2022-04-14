@@ -1,17 +1,15 @@
 import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
 import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
-import 'package:cppcc_app/page/home/gd_history_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 // 首页相关页面
 import 'package:cppcc_app/page/home/leader_mailbox_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_details_page.dart';
 import 'package:cppcc_app/page/home/meeting_activities_page.dart';
-import 'package:cppcc_app/page/home/member_study_page.dart';
 import 'package:cppcc_app/page/home/network_political_details_page.dart';
 import 'package:cppcc_app/page/home/network_political_page.dart';
-import 'package:cppcc_app/page/home/notice_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
+import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
@@ -44,24 +42,24 @@ final routesDef = {
 
   //首页相关页面
   Routes.leaderMailboxPage: (context) => const LeaderMailboxPage(),
-  Routes.leaderMailboxDetailsPage: (context) => const LeaderMailboxDetailsPage(),
+  Routes.leaderMailboxDetailsPage: (context) =>
+      const LeaderMailboxDetailsPage(),
   Routes.leaderMailboxAddPage: (context) => const LeaderMailboxAddPage(),
   Routes.meetingActivitiesPage: (context) => const MeetingActivitiesPage(),
-  Routes.meetingActivitiesDetailsPage: (context) => const MeetingActivitiesDetailsPage(),
-  Routes.memberStudyPage: (context) => const MemberStudyPage(),
+  Routes.meetingActivitiesDetailsPage: (context) =>
+      const MeetingActivitiesDetailsPage(),
   Routes.networkPoliticalPage: (context) => const NetworkPoliticalPage(),
-  Routes.networkPoliticalDetailsPage: (context) => const NetworkPoliticalDetailsPage(),
-  Routes.noticePage: (context) => const NoticePage(),
+  Routes.networkPoliticalDetailsPage: (context) =>
+      const NetworkPoliticalDetailsPage(),
+  Routes.postListWithFilterPage: (context) => const PostsListWithFilterPage(),
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
-  Routes.gdHistoryPage: (context) => const GdHistoryPage(),
   Routes.gdHistoricalAddPage: (context) => const GdHistoricalAddPage(),
   Routes.gdHistoricalClueMePage: (context) => const GdHistoricalClueMePage(),
   Routes.gdHistoricalDetailsPage: (context) => const GdHistoricalDetailsPage(),
   Routes.searchPage: (context) => const SearchPage(),
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
-  
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),
@@ -74,7 +72,7 @@ final routesDef = {
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
 
   //资讯相关页面
-  Routes.newsDetailsPage: (context) => const NewsDetailsPage(),
+  Routes.newsDetailsPage: (context) => const NewsDetailPage(),
 };
 
 class CppccApp extends StatelessWidget {

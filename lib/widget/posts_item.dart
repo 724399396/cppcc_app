@@ -16,8 +16,33 @@ class PostsItem extends StatelessWidget {
     return SliverToBoxAdapter(
         child: GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.newsDetailsPage,
-            arguments: {"id": _post.id, "postCode": _post.postType.code});
+        switch (_post.postType) {
+          case PostType.news:
+            Navigator.of(context)
+                .pushNamed(Routes.newsDetailsPage, arguments: _post);
+            break;
+          case PostType.broadcast:
+            // TODO: Handle this case.
+            break;
+          case PostType.twoSessionsTopic:
+            // TODO: Handle this case.
+            break;
+          case PostType.discussPoliticsFile:
+            // TODO: Handle this case.
+            break;
+          case PostType.learning:
+            // TODO: Handle this case.
+            break;
+          case PostType.fileAnnment:
+            // TODO: Handle this case.
+            break;
+          case PostType.gdHistory:
+            // TODO: Handle this case.
+            break;
+          case PostType.unknown:
+            // TODO: Handle this case.
+            break;
+        }
       },
       child: Container(
         height: 120,

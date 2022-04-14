@@ -70,9 +70,6 @@ class DictService {
   /// 	网络议政
   String discussNetworkStatus = "discuss_network_status";
 
-  /// 	会议活动
-  String meetingActivityType = "meeting_activity_type";
-
   /// 	通告类型
   String msgCategory = "msg_category";
 

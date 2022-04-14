@@ -3,6 +3,9 @@ import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
+import 'package:cppcc_app/dto/post_type.dart';
+import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
+import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -16,11 +19,12 @@ import 'package:flutter_easyrefresh/easy_refresh.dart';
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
 
-  Widget buildTabItem(title, image, path, unreadCount, context) {
+  Widget buildTabItem(title, image, path, unreadCount, context,
+      {routeArguments}) {
     var deviceSize = MediaQuery.of(context).size;
     return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(path);
+        Navigator.of(context).pushNamed(path, arguments: routeArguments);
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 12),
@@ -160,14 +164,17 @@ class HomePage extends StatelessWidget {
                           context);
                     },
                   ),
-                  BlocBuilder<NoticeBloc, NoticeState>(
+                  BlocBuilder<PostsBloc, PostsState>(
                     builder: (context, state) {
                       return buildTabItem(
-                          '通知公告',
+                          '文件公告',
                           'assets/icons/ic_wenjiangonggao.png',
-                          Routes.noticePage,
-                          state.unreadCount,
-                          context);
+                          Routes.postListWithFilterPage,
+                          state.unreadCount[PostType.fileAnnment] ?? 0,
+                          context,
+                          routeArguments: PostsWithFilterArgument(
+                              const PostKey(PostType.fileAnnment, null),
+                              '文件公告'));
                     },
                   ),
                   buildTabItem('网络议政', 'assets/icons/ic_wangluoyiz.png',
@@ -178,11 +185,58 @@ class HomePage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   buildTabItem('委员学习', 'assets/icons/ic_weiyuanxuexi.png',
-                      Routes.memberStudyPage, 0, context),
+                      Routes.generalTabSwitchPostsListPage, 0, context,
+                      routeArguments: GeneralTabArgument(
+                        '委员学习',
+                        'learning_categories',
+                        PostType.learning,
+                        Builder(
+                          builder: ((context) {
+                            return Container();
+                          }),
+                        ),
+                      )),
                   buildTabItem('领导信箱', 'assets/icons/ic_lingdaoyoux.png',
                       Routes.leaderMailboxPage, 0, context),
-                  buildTabItem('官渡文史', 'assets/icons/ic_guanduwenshi.png',
-                      Routes.gdHistoryPage, 0, context),
+                  buildTabItem(
+                    '官渡文史',
+                    'assets/icons/ic_guanduwenshi.png',
+                    Routes.generalTabSwitchPostsListPage,
+                    0,
+                    context,
+                    routeArguments: GeneralTabArgument(
+                        '官渡文史', '	gd_history_dict', PostType.gdHistory, Builder(
+                      builder: ((context) {
+                        return Stack(
+                          children: [
+                            FloatingActionButton.extended(
+                              icon: const Icon(Icons.my_library_books_outlined),
+                              backgroundColor: const Color(0xfff27f56),
+                              foregroundColor: Colors.white,
+                              label: const Text("我的"),
+                              onPressed: () {
+                                Navigator.of(context)
+                                    .pushNamed(Routes.gdHistoricalClueMePage);
+                              },
+                            ),
+                            Container(
+                                margin:
+                                    const EdgeInsets.only(top: 52, bottom: 5),
+                                child: FloatingActionButton.extended(
+                                  icon: const Icon(Icons.add),
+                                  backgroundColor: const Color(0xfff33333),
+                                  foregroundColor: Colors.white,
+                                  label: const Text("新增"),
+                                  onPressed: () {
+                                    Navigator.of(context)
+                                        .pushNamed(Routes.gdHistoricalAddPage);
+                                  },
+                                )),
+                          ],
+                        );
+                      }),
+                    )),
+                  ),
                 ],
               ),
             ]),
@@ -217,12 +271,10 @@ class HomePage extends StatelessWidget {
           Expanded(
             child: BlocConsumer<PostsBloc, PostsState>(
               buildWhen: (previous, current) =>
-                  previous.news != current.news ||
-                  previous.fileAnnments != current.fileAnnments ||
+                  previous.posts != current.posts ||
                   previous.status != current.status,
               listenWhen: (previous, current) =>
-                  previous.news != current.news ||
-                  previous.fileAnnments != current.fileAnnments ||
+                  previous.posts != current.posts ||
                   previous.status != current.status,
               listener: (previous, current) {
                 // easy conller
@@ -241,28 +293,38 @@ class HomePage extends StatelessWidget {
                     break;
                 }
               },
-              builder: (context, state) => Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                child: EasyRefresh.custom(
-                  controller: _easyRefreshController,
-                  enableControlFinishRefresh: true,
-                  enableControlFinishLoad: true,
-                  header: easyRefreshHeader,
-                  footer: easyRefreshFooter,
-                  onLoad: () async {
-                    BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
-                  },
-                  onRefresh: () async {
-                    BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
-                  },
-                  emptyWidget: (state.news + state.fileAnnments).isEmpty
-                      ? const Center(child: Text('暂无数据'))
-                      : null,
-                  slivers: (state.news + state.fileAnnments)
-                      .map((p) => PostsItem(p))
-                      .toList(),
-                ),
-              ),
+              builder: (context, state) {
+                var data = (state.posts[const PostKey(PostType.news, null)] ??
+                        []) +
+                    (state.posts[const PostKey(PostType.fileAnnment, null)] ??
+                        []);
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
+                  child: EasyRefresh.custom(
+                    controller: _easyRefreshController,
+                    enableControlFinishRefresh: true,
+                    enableControlFinishLoad: true,
+                    header: easyRefreshHeader,
+                    footer: easyRefreshFooter,
+                    onLoad: () async {
+                      BlocProvider.of<PostsBloc>(context).add(
+                          const PostLoadMore(PostKey(PostType.news, null)));
+                      BlocProvider.of<PostsBloc>(context).add(
+                          const PostLoadMore(
+                              PostKey(PostType.fileAnnment, null)));
+                    },
+                    onRefresh: () async {
+                      BlocProvider.of<PostsBloc>(context)
+                          .add(const PostRefresh(PostKey(PostType.news, null)));
+                      BlocProvider.of<PostsBloc>(context).add(const PostRefresh(
+                          PostKey(PostType.fileAnnment, null)));
+                    },
+                    emptyWidget:
+                        data.isEmpty ? const Center(child: Text('暂无数据')) : null,
+                    slivers: data.map((p) => PostsItem(p)).toList(),
+                  ),
+                );
+              },
             ),
             // ),
           ),

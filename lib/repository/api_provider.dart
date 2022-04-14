@@ -227,11 +227,12 @@ class ApiDataProvider {
   }
 
   Future<PostsResponseWrapper> getPostList(
-      int page, int pageSize, PostType postType) {
+      int page, int pageSize, PostType postType, int? category) {
     return _dio.get('/app/posts/list', queryParameters: {
       'pageNo': page,
       'pageSize': pageSize,
       'type': postType.code,
+      'category': category
     }).then((value) => PostsResponseWrapper.fromJson(
         BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
@@ -273,6 +274,12 @@ class ApiDataProvider {
   Future<int> getNoticeUnreadCount() {
     return _dio
         .get('/sys/sysAnnouncementSend/count/num')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getFileAnnounmentUnreadCount() {
+    return _dio
+        .get('/app/fileAnnment/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
 }

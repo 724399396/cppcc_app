@@ -20,13 +20,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         emit(state.copyWith(unreadCount: count));
       });
       await _generateCallApi(event, emit, (emit) async {
-        Map<String, List<Meeting>> newOpitions = Map.from(state.meetings);
-        newOpitions["1"] = [];
+        Map<String, List<Meeting>> newData = Map.from(state.meetings);
+        newData["1"] = [];
         Map<String, int> newCurrentPage = Map.from(state.currentPage);
         newCurrentPage["1"] = 1;
         emit(state.copyWith(
           currentPage: newCurrentPage,
-          opitions: newOpitions,
+          meetings: newData,
         ));
         await _dataLoad(emit, "1");
       });
@@ -40,13 +40,13 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     on<MeetingRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        Map<String, List<Meeting>> newOpitions = Map.from(state.meetings);
-        newOpitions[event.type] = [];
+        Map<String, List<Meeting>> newData = Map.from(state.meetings);
+        newData[event.type] = [];
         Map<String, int> newCurrentPage = Map.from(state.currentPage);
         newCurrentPage[event.type] = 1;
         emit(state.copyWith(
           currentPage: newCurrentPage,
-          opitions: newOpitions,
+          meetings: newData,
         ));
         await _dataLoad(emit, event.type);
       });
@@ -75,7 +75,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
 
     emit(state.copyWith(
       currentPage: newCurrentPage,
-      opitions: newMeetings,
+      meetings: newMeetings,
     ));
   }
 

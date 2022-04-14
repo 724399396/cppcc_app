@@ -20,15 +20,15 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
       });
       await _generateCallApi(event, emit, (emit) async {
         for (var type in OpinionListType.values) {
-          Map<OpinionListType, List<Opinion>> newOpitions =
-              Map.from(state.opitions);
-          newOpitions[type] = [];
+          Map<OpinionListType, List<Opinion>> newOpinions =
+              Map.from(state.opinions);
+          newOpinions[type] = [];
           Map<OpinionListType, int> newCurrentPage =
               Map.from(state.currentPage);
           newCurrentPage[type] = 1;
           emit(state.copyWith(
             currentPage: newCurrentPage,
-            opitions: newOpitions,
+            opinions: newOpinions,
           ));
           await _dataLoad(emit, type);
         }
@@ -43,14 +43,14 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
 
     on<OpinionRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        Map<OpinionListType, List<Opinion>> newOpitions =
-            Map.from(state.opitions);
-        newOpitions[event.type] = [];
+        Map<OpinionListType, List<Opinion>> newData =
+            Map.from(state.opinions);
+        newData[event.type] = [];
         Map<OpinionListType, int> newCurrentPage = Map.from(state.currentPage);
         newCurrentPage[event.type] = 1;
         emit(state.copyWith(
           currentPage: newCurrentPage,
-          opitions: newOpitions,
+          opinions: newData,
         ));
         await _dataLoad(emit, event.type);
       });
@@ -73,19 +73,14 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
       Emitter<OpinionState> emit, OpinionListType type) async {
     var opinions = await _opinionRepository.getOpnionsList(
         state.currentPage[type] ?? 1, pageSize, type.refStatus);
-    Map<OpinionListType, List<Opinion>> newOpitions = Map.from(state.opitions);
-    newOpitions[type] = (newOpitions[type] ?? []) + opinions;
+    Map<OpinionListType, List<Opinion>> newData = Map.from(state.opinions);
+    newData[type] = (newData[type] ?? []) + opinions;
     Map<OpinionListType, int> newCurrentPage = Map.from(state.currentPage);
     newCurrentPage[type] = (newCurrentPage[type] ?? 1) + 1;
 
     emit(state.copyWith(
       currentPage: newCurrentPage,
-      opitions: newOpitions,
+      opinions: newData,
     ));
-  }
-
-  @override
-  void onChange(Change<OpinionState> change) {
-    super.onChange(change);
   }
 }

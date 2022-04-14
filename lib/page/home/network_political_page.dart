@@ -99,7 +99,6 @@ class _NetworkPoliticalPageState extends State<NetworkPoliticalPage>
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class NetworkPoliticalContentPage extends StatelessWidget {
   String codeType;
   NetworkPoliticalContentPage({Key? key, required this.codeType})

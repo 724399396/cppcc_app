@@ -1,3 +1,4 @@
+import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
@@ -105,16 +106,15 @@ class HomePage extends StatelessWidget {
                       Navigator.of(context).pushNamed(Routes.scanQRCode);
                     },
                     child: Padding(
-                      padding: const EdgeInsets.all(8),
-                      child: CircleAvatar(
-                        backgroundColor: const Color(0x88FFFFFF),
-                        child: Image.asset(
-                          'assets/icons/ic_saom.png',
-                          width: 24,
-                        ),
-                      )),
-                  )
-                  ),
+                        padding: const EdgeInsets.all(8),
+                        child: CircleAvatar(
+                          backgroundColor: const Color(0x88FFFFFF),
+                          child: Image.asset(
+                            'assets/icons/ic_saom.png',
+                            width: 24,
+                          ),
+                        )),
+                  )),
               const SizedBox(width: 8),
             ],
           ),
@@ -149,8 +149,16 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  buildTabItem('会议活动', 'assets/icons/ic_huiyihuod.png',
-                      Routes.meetingActivitiesPage, 0, context),
+                  BlocBuilder<MeetingBloc, MeetingState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                          '会议活动',
+                          'assets/icons/ic_huiyihuod.png',
+                          Routes.meetingActivitiesPage,
+                          state.unreadCount,
+                          context);
+                    },
+                  ),
                   buildTabItem('通知公告', 'assets/icons/ic_wenjiangonggao.png',
                       Routes.noticePage, 0, context),
                   buildTabItem('网络议政', 'assets/icons/ic_wangluoyiz.png',
@@ -225,8 +233,7 @@ class HomePage extends StatelessWidget {
                 }
               },
               builder: (context, state) => Container(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 16.0),
+                padding: const EdgeInsets.symmetric(horizontal: 16.0),
                 child: EasyRefresh.custom(
                   controller: _easyRefreshController,
                   enableControlFinishRefresh: true,

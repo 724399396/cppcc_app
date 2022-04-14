@@ -1,6 +1,8 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
+import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
+import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
@@ -165,6 +167,10 @@ class _LoginPageState extends State<LoginPage> {
                                                 .add(PostInitilized());
                                             BlocProvider.of<OpinionBloc>(context)
                                                 .add(OpinionInitilized());
+                                            BlocProvider.of<ProposalBloc>(context)
+                                                .add(ProposalInitialied());
+                                            BlocProvider.of<MeetingBloc>(context)
+                                                .add(MeetingInitilized());
                                             Navigator.of(context).canPop()
                                                 ? Navigator.pop(context)
                                                 : Navigator.of(context)

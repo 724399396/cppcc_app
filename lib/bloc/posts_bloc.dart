@@ -6,6 +6,7 @@ import 'package:cppcc_app/models/posts.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 part 'posts_event.dart';
 part 'posts_state.dart';
@@ -86,6 +87,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       await call(emit);
       emit(state.copyWith(status: ListDataFetchStatus.normal));
     } catch (err) {
+      debugPrint('get posts error: $err');
       emit(state.copyWith(status: ListDataFetchStatus.failure));
     }
   }

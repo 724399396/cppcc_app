@@ -1,37 +1,37 @@
 part of 'meeting_bloc.dart';
 
 class MeetingState extends Equatable {
-  final int pageNo;
-  final int pageSize;
-  final int total;
-  final List<MeetingResponse> listDatas;
+  final int unreadCount;
+  final ListDataFetchStatus status;
+  final Map<String, List<Meeting>> meetings;
+  final Map<String, int> currentPage;
 
   const MeetingState({
-    this.pageNo = 1,
-    this.pageSize = 10,
-    this.total = 0,
-    this.listDatas = const [],
+    this.unreadCount = 0,
+    this.status = ListDataFetchStatus.normal,
+    this.meetings = const {},
+    this.currentPage = const {},
   });
 
-  MeetingState copyWith(
-    int pageNo,
-    MeetingWrapper result,
-  ) {
+  MeetingState copyWith({
+    int? unreadCount,
+    ListDataFetchStatus? status,
+    Map<String, List<Meeting>>? opitions,
+    Map<String, int>? currentPage,
+  }) {
     return MeetingState(
-      pageNo: pageNo,
-      pageSize: result.size,
-      total: result.total,
-      listDatas: result.records,
+      unreadCount: unreadCount ?? this.unreadCount,
+      status: status ?? this.status,
+      meetings: opitions ?? this.meetings,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  List<Object> get props {
-    return [
-      pageNo,
-      pageSize,
-      total,
-      listDatas,
-    ];
+  String toString() {
+    return 'MeetingState(unreadCount: $unreadCount, status: $status, opitions: $meetings, currentPage: $currentPage)';
   }
+
+  @override
+  List<Object> get props => [unreadCount, status, meetings, currentPage];
 }

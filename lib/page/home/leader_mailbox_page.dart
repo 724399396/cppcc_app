@@ -103,7 +103,6 @@ class _LeaderMailboxPageState extends State<LeaderMailboxPage>
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class MailboxContentPage extends StatelessWidget {
   String codeType;
   MailboxContentPage({Key? key, required this.codeType}) : super(key: key);

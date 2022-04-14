@@ -18,11 +18,10 @@ class UserBloc extends Bloc<UserEvent, UserState> {
   UserBloc(this._userRepository, this._timerBloc) : super(const UserState()) {
 
     on<UserInitialed>((event, emit) async {
-      _userRepository.freshUserInfo().then((_) {
+      await _userRepository.freshUserInfo().then((_) {
         emit(_populateUserData());
       }).catchError((err) {
-        debugPrint("获取用户信息错误!");
-        // 获取用户信息错误，可忽略
+        debugPrint("获取用户信息错误!" + err.toString());
       });
     });
     on<UserLoginRequested>(
@@ -80,6 +79,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
           status: FormStatus.submissionSuccess,
           successCallback: event.successCallback));
     } catch (err) {
+      debugPrint('user api error: $err');
       emit(state.copyWith(status: FormStatus.submissionFailure));
     }
   }

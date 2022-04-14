@@ -146,7 +146,7 @@ Future<void> main() async {
           BlocProvider<MeetingBloc>(
             create: (BuildContext context) => MeetingBloc(
               context.read<MeetingRepository>(),
-            ),
+            )..add(MeetingInitilized()),
           ),
           BlocProvider<HistoricalClueBloc>(
             create: (BuildContext context) => HistoricalClueBloc(
@@ -162,6 +162,7 @@ Future<void> main() async {
                   OpinionBloc(context.read<OpinionRepository>())
                     ..add(OpinionInitilized())),
           BlocProvider<AppSettingBloc>(
+            lazy: false,
             create: (BuildContext context) =>
                 AppSettingBloc(context.read<AppSettingRepository>())
                   ..add(AppSettingInitlized()),

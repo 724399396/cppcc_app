@@ -30,8 +30,8 @@ class ApiDataProvider {
 
   ApiDataProvider(this._dio, this._localDataProvider, this._navigationService) {
     // TODO remove on production
-    _dio.interceptors
-        .add(LogInterceptor(responseBody: true, requestBody: true));
+    // _dio.interceptors
+    //     .add(LogInterceptor(responseBody: true, requestBody: true));
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       options.headers['X-Access-Token'] = _localDataProvider.token();
       return handler.next(options);
@@ -93,9 +93,9 @@ class ApiDataProvider {
         data: {'phone': phone, 'password': password, 'verifyCode': verifyCode});
   }
 
-  Future<LoginResponse> getUserInfo() {
-    return _dio.get('/app/user/info').then((value) => LoginResponse.fromJson(
-        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+  Future<UserInfoResponse> getUserInfo() {
+    return _dio.get('/app/user/info').then((value) => UserInfoResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
 
   Future<Response<void>> sendSmsVerifyCode(String phone) {
@@ -261,6 +261,12 @@ class ApiDataProvider {
   Future<int> getProposalUnreadCount() {
     return _dio
         .get('/app/proposal/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getMeetingUnreadCount() {
+    return _dio
+        .get('/app/meetingActivity/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
 }

@@ -128,7 +128,6 @@ class _GdHistoryPageState extends State<GdHistoryPage>
   }
 }
 
-// ignore: must_be_immutable
 class GdHistoryContentPage extends StatelessWidget {
   final _easyRefreshController = EasyRefreshController();
   String codeType;

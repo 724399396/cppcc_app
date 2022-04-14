@@ -5,6 +5,7 @@ import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/repository/opinion_repository.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 
 part 'opinion_event.dart';
 part 'opinion_state.dart';
@@ -63,6 +64,7 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
       await call(emit);
       emit(state.copyWith(status: ListDataFetchStatus.normal));
     } catch (err) {
+      debugPrint('get opinion error: $err');
       emit(state.copyWith(status: ListDataFetchStatus.failure));
     }
   }

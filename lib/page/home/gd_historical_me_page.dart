@@ -49,7 +49,6 @@ class _GdHistoricalClueMePageState extends State<GdHistoricalClueMePage>
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class GdHistoricalClueContentPage extends StatelessWidget {
   GdHistoricalClueContentPage({Key? key}) : super(key: key);
 

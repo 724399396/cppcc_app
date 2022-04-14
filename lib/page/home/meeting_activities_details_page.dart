@@ -1,5 +1,5 @@
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
-import 'package:cppcc_app/dto/meeting_response.dart';
+import 'package:cppcc_app/models/meeting.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -17,13 +17,9 @@ class _MeetingActivitiesDetailsPageState
     extends State<MeetingActivitiesDetailsPage> {
   String? id;
 
-  late MeetingResponse _bean;
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute.of(context)?.settings.arguments;
-    if (obj != null) {
-      id = obj["id"];
-    }
+    String id = ModalRoute.of(context)?.settings.arguments as String;
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -41,11 +37,12 @@ class _MeetingActivitiesDetailsPageState
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Container(child: BlocBuilder<MeetingBloc, MeetingState>(
+          BlocBuilder<MeetingBloc, MeetingState>(
             builder: (context, state) {
-              state.listDatas
+              Meeting _meeting = state.meetings.values
+                  .expand((e) => e)
                   .where((item) => item.id == id)
-                  .forEach((item) => _bean = item);
+                  .first;
 
               return EasyRefresh.custom(
                 slivers: <Widget>[
@@ -80,7 +77,7 @@ class _MeetingActivitiesDetailsPageState
                                       padding: const EdgeInsets.only(
                                           left: 5, right: 5),
                                       decoration: const BoxDecoration(),
-                                      child: Text(_bean.title!,
+                                      child: Text(_meeting.title,
                                           style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(0xff333333),
@@ -97,7 +94,7 @@ class _MeetingActivitiesDetailsPageState
                                         children: <Widget>[
                                           Container(
                                             decoration: BoxDecoration(
-                                              color: _bean.status == 1
+                                              color: _meeting.status == 1
                                                   ? const Color(0xFFc6c3bc)
                                                   : const Color(0xFF75e287),
                                               borderRadius:
@@ -106,7 +103,7 @@ class _MeetingActivitiesDetailsPageState
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 2, horizontal: 4),
                                             child: Text(
-                                              _bean.statusDictText!,
+                                              _meeting.statusDictText,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall
@@ -117,7 +114,7 @@ class _MeetingActivitiesDetailsPageState
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text(_bean.createBy!,
+                                          Text(_meeting.createBy,
                                               style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Color(0xff999999),
@@ -136,11 +133,11 @@ class _MeetingActivitiesDetailsPageState
                               decoration: const BoxDecoration(),
                               child: Text(
                                   "时间:" +
-                                      _bean.beginDate! +
+                                      _meeting.beginDate +
                                       " " +
-                                      _bean.startTime! +
+                                      _meeting.startTime +
                                       "-" +
-                                      _bean.endTime!,
+                                      _meeting.endTime,
                                   style: const TextStyle(
                                     fontSize: 16.0,
                                     color: Color(0xff333333),
@@ -150,7 +147,7 @@ class _MeetingActivitiesDetailsPageState
                               padding: const EdgeInsets.only(left: 10),
                               width: double.maxFinite,
                               decoration: const BoxDecoration(),
-                              child: Text("地点:" + _bean.address!,
+                              child: Text("地点:" + _meeting.address,
                                   style: const TextStyle(
                                     fontSize: 16.0,
                                     color: Color(0xff333333),
@@ -162,13 +159,11 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: _bean.content! != ""
-                                  ? Container(
-                                      child: Html(
-                                        data: _bean.content,
-                                        tagsList: Html.tags
-                                          ..addAll(["bird", "flutter"]),
-                                      ),
+                              child: _meeting.content != ""
+                                  ? Html(
+                                      data: _meeting.content,
+                                      tagsList: Html.tags
+                                        ..addAll(["bird", "flutter"]),
                                     )
                                   : Container(),
                             ),
@@ -203,7 +198,7 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: BroadcastPage(_bean),
+                              child: BroadcastPage(_meeting),
                             ),
                           ],
                         ),
@@ -236,7 +231,7 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: JoinUsersPage(_bean),
+                              child: JoinUsersPage(_meeting),
                             ),
                           ],
                         ),
@@ -269,10 +264,10 @@ class _MeetingActivitiesDetailsPageState
                                 borderRadius:
                                     BorderRadius.all(Radius.circular(10.0)),
                               ),
-                              child: _bean.signQrcode != ""
+                              child: _meeting.signQrcode != ""
                                   ? Expanded(
                                       child: Image.network(
-                                          _bean.signQrcode.toString()),
+                                          _meeting.signQrcode.toString()),
                                     )
                                   : Container(),
                             ),
@@ -284,7 +279,7 @@ class _MeetingActivitiesDetailsPageState
                 ],
               );
             },
-          ))
+          )
         ],
       ),
     );
@@ -292,10 +287,9 @@ class _MeetingActivitiesDetailsPageState
 }
 
 // 播报
-// ignore: must_be_immutable
 class BroadcastPage extends StatelessWidget {
-  MeetingResponse _bean;
-  BroadcastPage(this._bean, {Key? key}) : super(key: key);
+  final Meeting _meeting;
+  const BroadcastPage(this._meeting, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -307,22 +301,21 @@ class BroadcastPage extends StatelessWidget {
       margin: const EdgeInsets.only(top: 8),
       child: Column(
         children: List.generate(
-          _bean.userRecords!.length ~/ 4,
+          _meeting.userRecords.length ~/ 4,
           (start) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(4, (add) {
-              var us = _bean.userRecords![4 * start + add];
-              return Container(
-                  child: GestureDetector(
+              var us = _meeting.userRecords[4 * start + add];
+              return GestureDetector(
                 onTap: () {},
                 child: Padding(
                   padding: const EdgeInsets.symmetric(vertical: 12),
                   child: Row(children: [
                     const Icon(Icons.person, color: Color(0xfffca555)),
-                    Text(us.userIdDictText!),
+                    Text(us.userIdDictText),
                   ]),
                 ),
-              ));
+              );
             }),
           ),
         ),
@@ -332,10 +325,9 @@ class BroadcastPage extends StatelessWidget {
 }
 
 // 参会人员
-// ignore: must_be_immutable
 class JoinUsersPage extends StatelessWidget {
-  MeetingResponse _bean;
-  JoinUsersPage(this._bean, {Key? key}) : super(key: key);
+  final Meeting _meeting;
+  const JoinUsersPage(this._meeting, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -347,22 +339,21 @@ class JoinUsersPage extends StatelessWidget {
       margin: const EdgeInsets.only(top: 8),
       child: Column(
         children: List.generate(
-          _bean.userRecords!.length ~/ 4,
+          _meeting.userRecords.length ~/ 4,
           (start) => Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: List.generate(4, (add) {
-              var us = _bean.userRecords![4 * start + add];
-              return Container(
-                  child: GestureDetector(
+              var us = _meeting.userRecords[4 * start + add];
+              return GestureDetector(
                 onTap: () {},
                 child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(children: [
-                    const Icon(Icons.person, color: Color(0xfffca555)),
-                    Text(us.userIdDictText!),
-                  ]),
+              padding: const EdgeInsets.symmetric(vertical: 12),
+              child: Row(children: [
+                const Icon(Icons.person, color: Color(0xfffca555)),
+                Text(us.userIdDictText),
+              ]),
                 ),
-              ));
+              );
             }),
           ),
         ),

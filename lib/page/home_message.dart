@@ -94,9 +94,8 @@ class _HomeMessageState extends State<HomeMessage>
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class MessageContentPage extends StatelessWidget {
-  String codeType;
+  final String codeType;
   MessageContentPage({Key? key, required this.codeType}) : super(key: key);
 
   late final EasyRefreshController _controller = EasyRefreshController();

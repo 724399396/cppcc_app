@@ -8,7 +8,6 @@ part 'discuss_network_state.dart';
 
 class DiscussNetworkBloc
     extends Bloc<DiscussNetworkEvent, DiscussNetworkState> {
-  // ignore: unused_field
   final DiscussNetworkRepository _discussNetworkRepository;
 
   DiscussNetworkBloc(this._discussNetworkRepository)

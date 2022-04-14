@@ -1,12 +1,13 @@
-import 'dart:async';
-
+import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
+import 'package:cppcc_app/models/dict.dart';
+import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/meeting_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:cppcc_app/models/app_settings.dart';
 
 class MeetingActivitiesPage extends StatefulWidget {
   const MeetingActivitiesPage({Key? key}) : super(key: key);
@@ -17,165 +18,142 @@ class MeetingActivitiesPage extends StatefulWidget {
 
 class _MeetingActivitiesPageState extends State<MeetingActivitiesPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
-  final List _tabs = [];
+  late List<Dict>? _tabs;
   late TabController _tabController;
 
   @override
   @protected
   bool get wantKeepAlive => true;
 
+  void updateTab(dictMap) {
+    _tabs = dictMap['meeting_activity_type'];
+    _tabController =
+        TabController(initialIndex: 0, length: _tabs?.length ?? 0, vsync: this);
+  }
+
   @override
   void initState() {
     super.initState();
-    //初始化标题头
-    DictService()
-        .getDictItemByCode(DictService().meetingActivityType)
-        .then((datas) => {
-              setState(() {
-                for (var item in datas) {
-                  _tabs.add({"title": item.itemText, "code": item.itemValue});
-                }
-                _tabController = TabController(
-                    initialIndex: 1, length: _tabs.length, vsync: this);
-                _tabController.animateTo(0);
-              })
-            });
+    var dictMap =
+        BlocProvider.of<AppSettingBloc>(context, listen: false).state.dictMap;
+    updateTab(dictMap);
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "会议活动",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        bottom: PreferredSize(
-          preferredSize: Size.fromHeight(48),
-          child: Theme(
-            data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: Color(0xffffffff),
-              indicatorWeight: 1,
-              tabs: _tabs.map((item) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                  child: Text(
-                    item["title"],
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                );
-              }).toList(),
+    super.build(context);
+    return BlocListener<AppSettingBloc, AppSettingState>(
+      listener: (context, state) {
+        setState(() {
+          updateTab(state.dictMap);
+        });
+      },
+      child: Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.white, //修改颜色
+          ),
+          title: const Text(
+            "会议活动",
+            style: TextStyle(
+                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          ),
+          centerTitle: true,
+          backgroundColor: const Color(0xfff27f56),
+          bottom: PreferredSize(
+            preferredSize: const Size.fromHeight(48),
+            child: Theme(
+              data: ThemeData(
+                  splashColor: Colors.transparent,
+                  highlightColor: Colors.transparent),
+              child: TabBar(
+                controller: _tabController,
+                isScrollable: true,
+                unselectedLabelColor: Colors.white,
+                indicatorColor: const Color(0xffffffff),
+                indicatorWeight: 1,
+                tabs: _tabs?.map((item) {
+                      return Container(
+                        padding:
+                            const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                        child: Text(
+                          item.itemText,
+                          style: const TextStyle(
+                              color: Colors.white, fontSize: 16),
+                        ),
+                      );
+                    }).toList() ??
+                    [],
+              ),
             ),
           ),
         ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: _tabs.isEmpty
-            ? []
-            : _tabs.map((item) {
-                return MeetingContentPage(codeType: item["code"]);
-              }).toList(),
+        body: TabBarView(
+          controller: _tabController,
+          children: _tabs?.map((item) {
+                return MeetingContentPage(type: item.itemValue);
+              }).toList() ??
+              [],
+        ),
       ),
     );
   }
 }
 
 // 列表信息
-// ignore: must_be_immutable
 class MeetingContentPage extends StatelessWidget {
-  String codeType;
-  MeetingContentPage({Key? key, required this.codeType}) : super(key: key);
-
-  late final EasyRefreshController _controller = EasyRefreshController();
-  late final ScrollController _scrollController = ScrollController();
-  // Header浮动
-  final bool _headerFloat = false;
-  // 是否开启刷新
-  final bool _enableRefresh = true;
-  // 是否开启加载
-  final bool _enableLoad = true;
+  final String type;
+  const MeetingContentPage({Key? key, required this.type}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-        color: Color(0xffffffff),
-        child: BlocBuilder<MeetingBloc, MeetingState>(
-          builder: (context, state) {
-            return EasyRefresh.custom(
-              emptyWidget: state.listDatas.isEmpty ? EmptyData() : null,
-              firstRefresh: true,
-              header: _enableRefresh
-                  ? ClassicalHeader(
-                      textColor: Colors.black,
-                      infoColor:
-                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
-                      float: _headerFloat,
-                      refreshText: "拉动刷新",
-                      refreshReadyText: "释放刷新",
-                      refreshingText: "正在刷新...",
-                      refreshedText: "刷新完成",
-                      refreshFailedText: "刷新失败",
-                      noMoreText: "没有更多数据",
-                      infoText: "更新于 %T",
-                    )
-                  : null,
-              footer: _enableLoad
-                  ? ClassicalFooter(
-                      textColor: Colors.black,
-                      infoColor:
-                          _headerFloat ? Colors.black87 : Color(0xffbee0ff),
-                      float: _headerFloat,
-                      loadText: "拉动加载",
-                      loadReadyText: "释放加载",
-                      loadingText: "正在加载...",
-                      loadedText: "加载完成",
-                      loadFailedText: "加载失败",
-                      noMoreText: "没有更多数据",
-                      infoText: "更新于 %T",
-                    )
-                  : null,
-              onRefresh: _enableRefresh
-                  ? () async {
-                      BlocProvider.of<MeetingBloc>(context)
-                          .add(GetMeetingListData(1, state.pageSize, codeType));
-                      _controller.resetLoadState();
-                      _controller.finishRefresh();
-                    }
-                  : null,
-              onLoad: _enableLoad
-                  ? () async {
-                      BlocProvider.of<MeetingBloc>(context).add(
-                          GetMeetingListData(
-                              state.pageNo + 1, state.pageSize, codeType));
-                      _controller.resetLoadState();
-                      _controller.finishLoad();
-                    }
-                  : null,
-              slivers: <Widget>[
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return MeetingItem(state.listDatas[index]);
-                    },
-                    childCount: state.listDatas.length,
-                  ),
-                ),
-              ],
-            );
-          },
-        ));
+    final EasyRefreshController _easyRefreshController =
+        EasyRefreshController();
+    return BlocConsumer<MeetingBloc, MeetingState>(
+      buildWhen: (previous, current) =>
+          previous.meetings != current.meetings ||
+          previous.status != current.status,
+      listenWhen: (previous, current) =>
+          previous.meetings != current.meetings ||
+          previous.status != current.status,
+      listener: (previous, current) {
+        // easy conller
+        switch (current.status) {
+          case ListDataFetchStatus.normal:
+            _easyRefreshController.finishRefresh(success: true);
+            _easyRefreshController.finishLoad(success: true);
+            break;
+          case ListDataFetchStatus.refresh:
+            break;
+          case ListDataFetchStatus.loadMore:
+            break;
+          case ListDataFetchStatus.failure:
+            _easyRefreshController.finishRefresh(success: false);
+            _easyRefreshController.finishLoad(success: false);
+            break;
+        }
+      },
+      builder: (context, state) {
+        var data = state.meetings[type] ?? [];
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0),
+          child: EasyRefresh.custom(
+            controller: _easyRefreshController,
+            enableControlFinishRefresh: true,
+            enableControlFinishLoad: true,
+            header: easyRefreshHeader,
+            footer: easyRefreshFooter,
+            onLoad: () async {
+              BlocProvider.of<MeetingBloc>(context).add(MeetingLoadMore(type));
+            },
+            onRefresh: () async {
+              BlocProvider.of<MeetingBloc>(context).add(MeetingRefresh(type));
+            },
+            emptyWidget: data.isEmpty ? const EmptyData() : null,
+            slivers: data.map((p) => MeetingItem(p)).toList(),
+          ),
+        );
+      },
+    );
   }
 }

@@ -1,54 +1,40 @@
 import 'package:flutter/material.dart';
 
 /// 空数据内容
-class EmptyData extends StatefulWidget {
+class EmptyData extends StatelessWidget {
   // 构造函数
-  EmptyData({
+  const EmptyData({
     Key? key,
   }) : super(key: key);
 
   @override
-  _EmptyDataState createState() => _EmptyDataState();
-}
-
-class _EmptyDataState extends State<EmptyData> {
-  @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       height: double.infinity,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          Expanded(
+          const Expanded(
             child: SizedBox(),
             flex: 2,
           ),
           SizedBox(
             width: 100.0,
             height: 100.0,
-            child: new Image.asset('assets/icons/empty_data.png'),
+            child: Image.asset('assets/icons/empty_data.png'),
           ),
+          const SizedBox(height: 8),
           Text(
-            "当前数据为空！",
+            "暂无数据！",
             style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
           ),
-          Expanded(
+          const Expanded(
             child: SizedBox(),
             flex: 3,
           ),
         ],
       ),
     );
-  }
-}
-
-/// 空图标
-class EmptyIcon extends Icon {
-  const EmptyIcon() : super(Icons.hourglass_empty);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

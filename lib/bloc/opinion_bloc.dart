@@ -85,6 +85,5 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
   @override
   void onChange(Change<OpinionState> change) {
     super.onChange(change);
-    print(change);
   }
 }

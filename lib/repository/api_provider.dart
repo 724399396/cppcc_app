@@ -252,9 +252,15 @@ class ApiDataProvider {
         BaseResponse.fromJson(value.data).result as List<dynamic>));
   }
 
-  Future<int> getUnreadCount() {
+  Future<int> getOpinionUnreadCount() {
     return _dio
         .get('/app/opinion/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getProposalUnreadCount() {
+    return _dio
+        .get('/app/proposal/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
 }

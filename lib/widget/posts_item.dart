@@ -5,7 +5,7 @@ import 'package:cppcc_app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
-import '../utils/routes.dart';
+import 'package:cppcc_app/utils/routes.dart';
 
 class PostsItem extends StatelessWidget {
   final Posts _post;
@@ -22,11 +22,11 @@ class PostsItem extends StatelessWidget {
       child: Container(
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-        margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         decoration: const BoxDecoration(
           color: Colors.white,
           border: Border(
-            bottom: const BorderSide(width: 1, color: Color(0xfff4f4f4)),
+            bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
           ),
         ),
         child: Row(

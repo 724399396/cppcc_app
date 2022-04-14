@@ -7,7 +7,7 @@ class OpinionRepository {
   OpinionRepository(this._apiDataProvider);
 
   Future<int> getUnreadCount() {
-    return _apiDataProvider.getUnreadCount();
+    return _apiDataProvider.getOpinionUnreadCount();
   }
 
   Future<List<Opinion>> getOpnionsList(

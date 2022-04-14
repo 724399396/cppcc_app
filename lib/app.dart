@@ -19,6 +19,7 @@ import 'package:cppcc_app/page/message/message_details_page.dart';
 //资讯相关页面
 import 'package:cppcc_app/page/news/news_details_page.dart';
 import 'package:cppcc_app/page/reset_password_page.dart';
+import 'package:cppcc_app/page/search_page.dart';
 //个人中心页面
 import 'package:cppcc_app/page/settings/archives_page.dart';
 import 'package:cppcc_app/page/settings/collection_page.dart';
@@ -57,6 +58,7 @@ final routesDef = {
   Routes.gdHistoricalAddPage: (context) => const GdHistoricalAddPage(),
   Routes.gdHistoricalClueMePage: (context) => const GdHistoricalClueMePage(),
   Routes.gdHistoricalDetailsPage: (context) => const GdHistoricalDetailsPage(),
+  Routes.searchPage: (context) => const SearchPage(),
   
 
   //个人中心相关功能

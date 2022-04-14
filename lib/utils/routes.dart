@@ -32,6 +32,8 @@ class Routes {
 
   static const opinionDetailPage = '/opinionDetailPage';
 
+  static const searchPage = '/searchPage';
+
   //个人中心页面
   static const archivesPage = '/archivesPage';
   static const collectionPage = '/collectionPage';

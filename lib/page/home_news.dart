@@ -40,7 +40,9 @@ class _HomeNewsState extends State<HomeNews> {
         children: [
           Container(
             margin: const EdgeInsets.only(top: 15, left: 15, right: 15),
-            child: const GeneralSearch(),
+            // TODO
+            child:
+                GeneralSearch(Colors.white, ((context, keyword) => {})),
           ),
           Container(
               height: 48,

@@ -1,5 +1,6 @@
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
+import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -90,7 +91,12 @@ class HomePage extends StatelessWidget {
                 ),
               ),
               const SizedBox(width: 8),
-              const Expanded(flex: 4, child: GeneralSearch()),
+              Expanded(
+                  flex: 4,
+                  child: GeneralSearch(Colors.white, (context, keyword) {
+                    Navigator.of(context)
+                        .pushNamed(Routes.searchPage, arguments: keyword);
+                  })),
               const SizedBox(width: 8),
               Expanded(
                   flex: 1,
@@ -125,8 +131,13 @@ class HomePage extends StatelessWidget {
                           Routes.socialOpinionsPage,
                           state.unreadCount,
                           context)),
-                  buildTabItem('提案管理', 'assets/icons/ic_tianbanli.png',
-                      Routes.proposalManagePage, 0, context)
+                  BlocBuilder<ProposalBloc, ProposalState>(
+                      builder: (contxst, state) => buildTabItem(
+                          '提案管理',
+                          'assets/icons/ic_tianbanli.png',
+                          Routes.proposalManagePage,
+                          state.unreadCount,
+                          context)),
                 ],
               ),
               Row(
@@ -207,24 +218,28 @@ class HomePage extends StatelessWidget {
                     break;
                 }
               },
-              builder: (context, state) => EasyRefresh.custom(
-                controller: _easyRefreshController,
-                enableControlFinishRefresh: true,
-                enableControlFinishLoad: true,
-                header: easyRefreshHeader,
-                footer: easyRefreshFooter,
-                onLoad: () async {
-                  BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
-                },
-                onRefresh: () async {
-                  BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
-                },
-                emptyWidget: (state.news + state.fileAnnments).isEmpty
-                    ? const Center(child: Text('暂无数据'))
-                    : null,
-                slivers: (state.news + state.fileAnnments)
-                    .map((p) => PostsItem(p))
-                    .toList(),
+              builder: (context, state) => Container(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 16.0),
+                child: EasyRefresh.custom(
+                  controller: _easyRefreshController,
+                  enableControlFinishRefresh: true,
+                  enableControlFinishLoad: true,
+                  header: easyRefreshHeader,
+                  footer: easyRefreshFooter,
+                  onLoad: () async {
+                    BlocProvider.of<PostsBloc>(context).add(HomePostLoadMore());
+                  },
+                  onRefresh: () async {
+                    BlocProvider.of<PostsBloc>(context).add(HomePostRefresh());
+                  },
+                  emptyWidget: (state.news + state.fileAnnments).isEmpty
+                      ? const Center(child: Text('暂无数据'))
+                      : null,
+                  slivers: (state.news + state.fileAnnments)
+                      .map((p) => PostsItem(p))
+                      .toList(),
+                ),
               ),
             ),
             // ),

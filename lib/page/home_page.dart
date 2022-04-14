@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
+import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
@@ -159,8 +160,16 @@ class HomePage extends StatelessWidget {
                           context);
                     },
                   ),
-                  buildTabItem('通知公告', 'assets/icons/ic_wenjiangonggao.png',
-                      Routes.noticePage, 0, context),
+                  BlocBuilder<NoticeBloc, NoticeState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                          '通知公告',
+                          'assets/icons/ic_wenjiangonggao.png',
+                          Routes.noticePage,
+                          state.unreadCount,
+                          context);
+                    },
+                  ),
                   buildTabItem('网络议政', 'assets/icons/ic_wangluoyiz.png',
                       Routes.networkPoliticalPage, 0, context),
                 ],

@@ -6,6 +6,7 @@ import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/news_bloc.dart';
 import 'package:cppcc_app/bloc/news_topic_bloc.dart';
+import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
@@ -18,6 +19,7 @@ import 'package:cppcc_app/repository/historical_clue_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
+import 'package:cppcc_app/repository/notice_repository.dart';
 import 'package:cppcc_app/repository/opinion_repository.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/repository/proposal_repository.dart';
@@ -104,6 +106,9 @@ Future<void> main() async {
         RepositoryProvider<ProposalRepository>(
           create: (context) => ProposalRepository(apiDataProvider),
         ),
+        RepositoryProvider<NoticeRepository>(
+          create: (context) => NoticeRepository(apiDataProvider),
+        ),
       ],
       child: MultiBlocProvider(
         providers: [
@@ -171,6 +176,11 @@ Future<void> main() async {
             create: (BuildContext context) =>
                 ProposalBloc(context.read<ProposalRepository>())
                   ..add(ProposalInitialied()),
+          ),
+          BlocProvider<NoticeBloc>(
+            create: (BuildContext context) =>
+                NoticeBloc(context.read<NoticeRepository>())
+                  ..add(NoticeInitialized()),
           ),
         ],
         child: CppccApp(navigationService),

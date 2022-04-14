@@ -269,4 +269,10 @@ class ApiDataProvider {
         .get('/app/meetingActivity/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
+
+  Future<int> getNoticeUnreadCount() {
+    return _dio
+        .get('/sys/sysAnnouncementSend/count/num')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
 }

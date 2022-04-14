@@ -12,6 +12,6 @@ class NoticePage extends StatefulWidget {
 class _NoticePageState extends State<NoticePage> {
   @override
   Widget build(BuildContext context) {
-    return HomeMessage();
+    return const HomeMessage();
   }
 }

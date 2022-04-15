@@ -41,6 +41,7 @@ MailboxResponse _$MailboxResponseFromJson(Map<String, dynamic> json) =>
       json['type_dictText'] as String?,
       json['createBy'] as String,
       json['createTime'] as String,
+      json['read'] as bool?,
     );
 
 Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
@@ -56,4 +57,5 @@ Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
       'type_dictText': instance.typeDictText,
       'createBy': instance.createBy,
       'createTime': instance.createTime,
+      'read': instance.read,
     };

@@ -1,5 +1,6 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
+import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
@@ -174,6 +175,8 @@ class _LoginPageState extends State<LoginPage> {
                                                 .add(MeetingInitilized());
                                             BlocProvider.of<DiscussNetworkBloc>(context)
                                                 .add(DiscussNetworkInitilized());
+                                            BlocProvider.of<MailboxBloc>(context)
+                                                .add(MailboxInitilized());
                                             Navigator.of(context).canPop()
                                                 ? Navigator.pop(context)
                                                 : Navigator.of(context)

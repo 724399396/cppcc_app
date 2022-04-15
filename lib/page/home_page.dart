@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
+import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
@@ -193,20 +194,36 @@ class HomePage extends StatelessWidget {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  buildTabItem('委员学习', 'assets/icons/ic_weiyuanxuexi.png',
-                      Routes.generalTabSwitchPostsListPage, 0, context,
-                      routeArguments: GeneralTabArgument(
-                        '委员学习',
-                        'learning_categories',
-                        PostType.learning,
-                        Builder(
-                          builder: ((context) {
-                            return Container();
-                          }),
-                        ),
-                      )),
-                  buildTabItem('领导信箱', 'assets/icons/ic_lingdaoyoux.png',
-                      Routes.leaderMailboxPage, 0, context),
+                  BlocBuilder<PostsBloc, PostsState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                          '委员学习',
+                          'assets/icons/ic_weiyuanxuexi.png',
+                          Routes.generalTabSwitchPostsListPage,
+                          state.unreadCount[PostType.learning] ?? 0,
+                          context,
+                          routeArguments: GeneralTabArgument(
+                            '委员学习',
+                            'learning_categories',
+                            PostType.learning,
+                            Builder(
+                              builder: ((context) {
+                                return Container();
+                              }),
+                            ),
+                          ));
+                    },
+                  ),
+                  BlocBuilder<MailboxBloc, MailboxState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                          '领导信箱',
+                          'assets/icons/ic_lingdaoyoux.png',
+                          Routes.leaderMailboxPage,
+                          state.unreadCount,
+                          context);
+                    },
+                  ),
                   buildTabItem(
                     '官渡文史',
                     'assets/icons/ic_guanduwenshi.png',

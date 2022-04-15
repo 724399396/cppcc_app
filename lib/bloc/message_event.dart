@@ -1,7 +1,5 @@
 part of 'message_bloc.dart';
 
-typedef SuccessCallback = void Function();
-
 abstract class MessageEvent extends Equatable {
   const MessageEvent();
 

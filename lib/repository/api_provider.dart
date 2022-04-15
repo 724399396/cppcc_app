@@ -288,4 +288,16 @@ class ApiDataProvider {
         .get('/app/discussNetwork/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
+
+  Future<int> getLearningUnreadCount() {
+    return _dio
+        .get('/app/learning/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getMailboxUnreadCount() {
+    return _dio
+        .get('/app/mailbox/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
 }

@@ -1,7 +1,5 @@
 part of 'user_bloc.dart';
 
-typedef SuccessCallback = void Function();
-
 abstract class UserEvent extends Equatable {
   final SuccessCallback? successCallback;
 

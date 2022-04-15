@@ -15,6 +15,7 @@ class PostsListContainer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _easyRefreshController = EasyRefreshController();
+    BlocProvider.of<PostsBloc>(context).add(PostFirstFetch(postKey));
     return SafeArea(
       child: BlocConsumer<PostsBloc, PostsState>(
         buildWhen: (previous, current) =>

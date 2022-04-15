@@ -35,4 +35,8 @@ class PostRepository {
   Future<int> getFileAnnounmentUnreadCount() {
     return _apiDataProvider.getFileAnnounmentUnreadCount();
   }
+
+  Future<int> getLearningUnreadCount() {
+    return _apiDataProvider.getLearningUnreadCount();
+  }
 }

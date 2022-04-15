@@ -32,6 +32,7 @@ class MailboxResponse {
   final String? typeDictText;
   final String createBy;
   final String createTime;
+  final bool? read;
 
   MailboxResponse(
     this.id,
@@ -45,6 +46,7 @@ class MailboxResponse {
     this.typeDictText,
     this.createBy,
     this.createTime,
+    this.read,
   );
 
   factory MailboxResponse.fromJson(Map<String, dynamic> json) =>

@@ -1,37 +1,36 @@
 part of 'mailbox_bloc.dart';
 
 class MailboxState extends Equatable {
-  final int pageNo;
-  final int pageSize;
-  final int total;
-  final List<MailboxResponse> listDatas;
-
+  final int unreadCount;
+  final ListDataFetchStatus status;
+  final Map<String, List<Mail>> data;
+  final Map<String, int> currentPage;
   const MailboxState({
-    this.pageNo = 1,
-    this.pageSize = 10,
-    this.total = 0,
-    this.listDatas = const [],
+    this.unreadCount = 0,
+    this.status = ListDataFetchStatus.normal,
+    this.data = const {},
+    this.currentPage = const {},
   });
 
-  MailboxState copyWith(
-    int pageNo,
-    MailboxResponseWrapper result,
-  ) {
+  MailboxState copyWith({
+    int? unreadCount,
+    ListDataFetchStatus? status,
+    Map<String, List<Mail>>? data,
+    Map<String, int>? currentPage,
+  }) {
     return MailboxState(
-      pageNo: pageNo,
-      pageSize: result.size,
-      total: result.total,
-      listDatas: result.records,
+      unreadCount: unreadCount ?? this.unreadCount,
+      status: status ?? this.status,
+      data: data ?? this.data,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  List<Object> get props {
-    return [
-      pageNo,
-      pageSize,
-      total,
-      listDatas,
-    ];
+  String toString() {
+    return 'MailboxState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage)';
   }
+
+  @override
+  List<Object> get props => [unreadCount, status, data, currentPage];
 }

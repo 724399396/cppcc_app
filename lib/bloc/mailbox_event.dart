@@ -1,29 +1,30 @@
 part of 'mailbox_bloc.dart';
 
-typedef SuccessCallback = void Function();
-
-typedef FailCallback = void Function();
-
 abstract class MailboxEvent extends Equatable {
-  final SuccessCallback? successCallback;
-  final FailCallback? failCallback;
-
-  const MailboxEvent(this.successCallback, this.failCallback);
+  const MailboxEvent();
 
   @override
   List<Object> get props => [];
 }
 
-class GetMailboxListData extends MailboxEvent {
-  final int pageNo;
-  final int pageSize;
-  final String mailBoxType;
+class MailboxInitilized extends MailboxEvent {}
 
-  const GetMailboxListData(this.pageNo, this.pageSize, this.mailBoxType)
-      : super(null, null);
+class MailboxFirstFetch extends MailboxEvent {
+  final String type;
 
-  @override
-  List<Object> get props => [pageNo, pageSize, mailBoxType];
+  const MailboxFirstFetch(this.type);
+}
+
+class MailboxRefresh extends MailboxEvent {
+  final String type;
+
+  const MailboxRefresh(this.type);
+}
+
+class MailboxLoadMore extends MailboxEvent {
+  final String type;
+
+  const MailboxLoadMore(this.type);
 }
 
 class AddMailbox extends MailboxEvent {
@@ -32,10 +33,11 @@ class AddMailbox extends MailboxEvent {
   final String content;
   final String userName;
   final String phone;
+  final SuccessCallback? successCallback;
+  final FailCallback? failCallback;
 
   const AddMailbox(this.type, this.title, this.content, this.userName,
-      this.phone, successCallback, failCallback)
-      : super(successCallback, failCallback);
+      this.phone, this.successCallback, this.failCallback);
 
   @override
   List<Object> get props => [type, title, content, userName, phone];

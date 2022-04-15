@@ -42,20 +42,16 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
   @override
   void initState() {
     super.initState();
-    Future.delayed(Duration.zero, () {
-      var dictMap =
-          BlocProvider.of<AppSettingBloc>(context, listen: false).state.dictMap;
-      var argument =
-          ModalRoute.of(context)?.settings.arguments as GeneralTabArgument;
-      updateTab(dictMap, argument.dictKey);
-    });
   }
 
   @override
   Widget build(BuildContext context) {
     super.build(context);
+    var dictMap =
+        BlocProvider.of<AppSettingBloc>(context, listen: false).state.dictMap;
     var argument =
         ModalRoute.of(context)?.settings.arguments as GeneralTabArgument;
+    updateTab(dictMap, argument.dictKey);
     return BlocListener<AppSettingBloc, AppSettingState>(
       listener: (context, state) {
         setState(() {

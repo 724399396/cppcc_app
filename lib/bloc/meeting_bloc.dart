@@ -1,6 +1,5 @@
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
-import 'package:cppcc_app/dto/meeting_response.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';

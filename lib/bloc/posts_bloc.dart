@@ -15,10 +15,15 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
   final PostRepository _postRepository;
   PostsBloc(this._postRepository) : super(const PostsState()) {
     on<PostInitilized>((event, emit) async {
-
       await _postRepository.getFileAnnounmentUnreadCount().then((count) {
         Map<PostType, int> newData = Map.from(state.unreadCount);
         newData[PostType.fileAnnment] = count;
+        emit(state.copyWith(unreadCount: newData));
+      });
+
+      await _postRepository.getLearningUnreadCount().then((count) {
+        Map<PostType, int> newData = Map.from(state.unreadCount);
+        newData[PostType.learning] = count;
         emit(state.copyWith(unreadCount: newData));
       });
 
@@ -35,11 +40,20 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       }
     });
 
+    on<PostFirstFetch>((event, emit) async {
+      if (!state.currentPage.containsKey(event.key)) {
+        await _generateCallApi(event, emit, (emit) async {
+          await _dataLoad(emit, event.key);
+        });
+      }
+    });
+
     on<PostRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
         await _dataLoad(emit, event.key);
       });
     });
+
     on<PostLoadMore>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
         Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);

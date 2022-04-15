@@ -1,5 +1,6 @@
 import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
 import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
+import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 // 首页相关页面
@@ -60,6 +61,8 @@ final routesDef = {
   Routes.gdHistoricalDetailsPage: (context) => const GdHistoricalDetailsPage(),
   Routes.searchPage: (context) => const SearchPage(),
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
+  Routes.generalTabSwitchPostsListPage: (context) =>
+      const GeneralTabSwitchListPage(),
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),

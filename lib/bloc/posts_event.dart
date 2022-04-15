@@ -9,6 +9,13 @@ abstract class PostsEvent extends Equatable {
 
 class PostInitilized extends PostsEvent {}
 
+class PostFirstFetch extends PostsEvent {
+  final PostKey key;
+
+  const PostFirstFetch(this.key);
+
+}
+
 class PostRefresh extends PostsEvent {
   final PostKey key;
 

@@ -1,9 +1,5 @@
 part of 'historical_clue_bloc.dart';
 
-typedef SuccessCallback = void Function();
-
-typedef FailCallback = void Function();
-
 abstract class HistoricalClueEvent extends Equatable {
   final SuccessCallback? successCallback;
   final FailCallback? failCallback;

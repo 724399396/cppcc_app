@@ -27,6 +27,12 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         emit(state.copyWith(unreadCount: newData));
       });
 
+      await _postRepository.getGdHistoryUnreadCount().then((count) {
+        Map<PostType, int> newData = Map.from(state.unreadCount);
+        newData[PostType.gdHistory] = count;
+        emit(state.copyWith(unreadCount: newData));
+      });
+
       for (var type in [PostType.fileAnnment, PostType.news]) {
         Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
         newPosts[PostKey(type, null)] = [];

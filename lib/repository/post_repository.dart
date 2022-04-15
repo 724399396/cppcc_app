@@ -39,4 +39,8 @@ class PostRepository {
   Future<int> getLearningUnreadCount() {
     return _apiDataProvider.getLearningUnreadCount();
   }
+
+  Future<int> getGdHistoryUnreadCount() {
+    return _apiDataProvider.getGdHistoryUnreadCount();
+  }
 }

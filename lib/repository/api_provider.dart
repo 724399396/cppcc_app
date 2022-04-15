@@ -300,4 +300,10 @@ class ApiDataProvider {
         .get('/app/mailbox/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
   }
+
+  Future<int> getGdHistoryUnreadCount() {
+    return _dio
+        .get('/app/historicalDatum/count/read/app')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
 }

@@ -224,44 +224,52 @@ class HomePage extends StatelessWidget {
                           context);
                     },
                   ),
-                  buildTabItem(
-                    '官渡文史',
-                    'assets/icons/ic_guanduwenshi.png',
-                    Routes.generalTabSwitchPostsListPage,
-                    0,
-                    context,
-                    routeArguments: GeneralTabArgument(
-                        '官渡文史', '	gd_history_dict', PostType.gdHistory, Builder(
-                      builder: ((context) {
-                        return Stack(
-                          children: [
-                            FloatingActionButton.extended(
-                              icon: const Icon(Icons.my_library_books_outlined),
-                              backgroundColor: const Color(0xfff27f56),
-                              foregroundColor: Colors.white,
-                              label: const Text("我的"),
-                              onPressed: () {
-                                Navigator.of(context)
-                                    .pushNamed(Routes.gdHistoricalClueMePage);
-                              },
-                            ),
-                            Container(
-                                margin:
-                                    const EdgeInsets.only(top: 52, bottom: 5),
-                                child: FloatingActionButton.extended(
-                                  icon: const Icon(Icons.add),
-                                  backgroundColor: const Color(0xfff33333),
+                  BlocBuilder<PostsBloc, PostsState>(
+                    builder: (context, state) {
+                      return buildTabItem(
+                        '官渡文史',
+                        'assets/icons/ic_guanduwenshi.png',
+                        Routes.generalTabSwitchPostsListPage,
+                        state.unreadCount[PostType.gdHistory] ?? 0,
+                        context,
+                        routeArguments: GeneralTabArgument(
+                            '官渡文史', '	gd_history_dict', PostType.gdHistory,
+                            Builder(
+                          builder: ((context) {
+                            return Stack(
+                              children: [
+                                FloatingActionButton.extended(
+                                  heroTag: 'mine',
+                                  icon: const Icon(
+                                      Icons.my_library_books_outlined),
+                                  backgroundColor: const Color(0xfff27f56),
                                   foregroundColor: Colors.white,
-                                  label: const Text("新增"),
+                                  label: const Text("我的"),
                                   onPressed: () {
-                                    Navigator.of(context)
-                                        .pushNamed(Routes.gdHistoricalAddPage);
+                                    Navigator.of(context).pushNamed(
+                                        Routes.gdHistoricalClueMePage);
                                   },
-                                )),
-                          ],
-                        );
-                      }),
-                    )),
+                                ),
+                                Container(
+                                    margin: const EdgeInsets.only(
+                                        top: 52, bottom: 5),
+                                    child: FloatingActionButton.extended(
+                                      heroTag: 'add',
+                                      icon: const Icon(Icons.add),
+                                      backgroundColor: const Color(0xfff33333),
+                                      foregroundColor: Colors.white,
+                                      label: const Text("新增"),
+                                      onPressed: () {
+                                        Navigator.of(context).pushNamed(
+                                            Routes.gdHistoricalAddPage);
+                                      },
+                                    )),
+                              ],
+                            );
+                          }),
+                        )),
+                      );
+                    },
                   ),
                 ],
               ),

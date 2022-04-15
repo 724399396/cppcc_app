@@ -46,6 +46,7 @@ class _HomeContactsState extends State<HomeContacts> {
               }),
               initValue: _keyword,
               hint: '请输入查找姓名',
+              fillColor: Colors.white,
             ),
           ),
           Expanded(child: BlocBuilder<UserBloc, UserState>(

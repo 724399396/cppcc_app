@@ -7,8 +7,9 @@ class GeneralSearch extends StatelessWidget {
   final SearchCallback _callback;
   final String? initValue;
   final String hint;
+  final Color? fillColor;
   const GeneralSearch(this._color, this._callback,
-      {Key? key, this.initValue, this.hint = '请输入关键字'})
+      {Key? key, this.initValue, this.hint = '请输入关键字', this.fillColor})
       : super(key: key);
 
   @override
@@ -17,6 +18,8 @@ class GeneralSearch extends StatelessWidget {
       key: const ValueKey('keyword'),
       controller: TextEditingController(text: initValue ?? ''),
       decoration: InputDecoration(
+        filled: fillColor != null,
+        fillColor: fillColor,
         enabledBorder: OutlineInputBorder(
           borderRadius: const BorderRadius.all(Radius.circular(30.0)),
           borderSide:

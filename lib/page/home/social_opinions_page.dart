@@ -2,6 +2,7 @@ import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
+import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/opinion_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -128,7 +129,6 @@ class _OpinionListState extends State<OpinionList> {
               break;
           }
         },
-        // TODO refactor to general search
         builder: (context, state) {
           var data = state.opinions[widget._listType] ?? [];
           var filterData = _searchKeyWord.isEmpty
@@ -136,48 +136,15 @@ class _OpinionListState extends State<OpinionList> {
               : data.where((d) => d.title.contains(_searchKeyWord)).toList();
           return Column(
             children: [
-              TextField(
-                key: const ValueKey('keyword'),
-                decoration: InputDecoration(
-                  filled: true,
-                  fillColor: Colors.white,
-                  enabledBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    borderSide: BorderSide(
-                        color: AppColors.greyTextColor,
-                        width: 0.0,
-                        style: BorderStyle.solid),
-                  ),
-                  focusedBorder: const OutlineInputBorder(
-                    borderRadius: BorderRadius.all(Radius.circular(30.0)),
-                    borderSide: BorderSide(
-                        color: AppColors.greyTextColor,
-                        width: 0.0,
-                        style: BorderStyle.solid),
-                  ),
-                  isDense: true,
-                  contentPadding: const EdgeInsets.all(8),
-                  hintStyle: Theme.of(context).textTheme.bodyText1?.copyWith(
-                        color: AppColors.greyTextColor,
-                      ),
-                  prefixIcon: Container(
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-                    child: Image.asset(
-                      'assets/icons/ic_search.png',
-                      color: AppColors.greyTextColor,
-                    ),
-                    width: 28,
-                    height: 28,
-                  ),
-                  hintText: '请输入关键词',
-                ),
-                onSubmitted: (value) {
+              GeneralSearch(
+                AppColors.greyTextColor,
+                (context, keyword) {
                   setState(() {
-                    _searchKeyWord = value;
+                    _searchKeyWord = keyword;
                   });
                 },
-                textInputAction: TextInputAction.search,
+                initValue: _searchKeyWord,
+                fillColor: Colors.white,
               ),
               Expanded(
                   child: EasyRefresh.custom(

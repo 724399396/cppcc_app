@@ -67,63 +67,61 @@ class _MeetingActivitiesDetailsPageState
                                       width: 1, color: Color(0xfff4f4f4)),
                                 ),
                               ),
-                              child: Container(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    Container(
-                                      width: double.maxFinite,
-                                      padding: const EdgeInsets.only(
-                                          left: 5, right: 5),
-                                      decoration: const BoxDecoration(),
-                                      child: Text(_meeting.title,
-                                          style: const TextStyle(
-                                            fontSize: 16.0,
-                                            color: Color(0xff333333),
-                                          )),
-                                    ),
-                                    Container(
-                                      margin: const EdgeInsets.only(top: 10),
-                                      padding: const EdgeInsets.all(5),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.center,
-                                        children: <Widget>[
-                                          Container(
-                                            decoration: BoxDecoration(
-                                              color: _meeting.status == 1
-                                                  ? const Color(0xFFc6c3bc)
-                                                  : const Color(0xFF75e287),
-                                              borderRadius:
-                                                  BorderRadius.circular(4),
-                                            ),
-                                            padding: const EdgeInsets.symmetric(
-                                                vertical: 2, horizontal: 4),
-                                            child: Text(
-                                              _meeting.statusDictText,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodySmall
-                                                  ?.copyWith(
-                                                      color: Colors.white),
-                                            ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    width: double.maxFinite,
+                                    padding: const EdgeInsets.only(
+                                        left: 5, right: 5),
+                                    decoration: const BoxDecoration(),
+                                    child: Text(_meeting.title,
+                                        style: const TextStyle(
+                                          fontSize: 16.0,
+                                          color: Color(0xff333333),
+                                        )),
+                                  ),
+                                  Container(
+                                    margin: const EdgeInsets.only(top: 10),
+                                    padding: const EdgeInsets.all(5),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: <Widget>[
+                                        Container(
+                                          decoration: BoxDecoration(
+                                            color: _meeting.status == 1
+                                                ? const Color(0xFFc6c3bc)
+                                                : const Color(0xFF75e287),
+                                            borderRadius:
+                                                BorderRadius.circular(4),
                                           ),
-                                          const SizedBox(
-                                            width: 10,
+                                          padding: const EdgeInsets.symmetric(
+                                              vertical: 2, horizontal: 4),
+                                          child: Text(
+                                            _meeting.statusDictText,
+                                            style: Theme.of(context)
+                                                .textTheme
+                                                .bodySmall
+                                                ?.copyWith(
+                                                    color: Colors.white),
                                           ),
-                                          Text(_meeting.createBy,
-                                              style: const TextStyle(
-                                                fontSize: 12.0,
-                                                color: Color(0xff999999),
-                                              )),
-                                        ],
-                                      ),
+                                        ),
+                                        const SizedBox(
+                                          width: 10,
+                                        ),
+                                        Text(_meeting.createBy,
+                                            style: const TextStyle(
+                                              fontSize: 12.0,
+                                              color: Color(0xff999999),
+                                            )),
+                                      ],
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                ],
                               ),
                             ),
                             Container(

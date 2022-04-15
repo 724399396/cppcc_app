@@ -6,7 +6,6 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/message/message_entity.dart';
-import 'package:cppcc_app/generated/json/message_entity.g.dart';
 
 JsonConvert jsonConvert = JsonConvert();
 

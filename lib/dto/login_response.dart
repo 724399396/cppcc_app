@@ -27,19 +27,23 @@ class UserInfoResponse {
 
 @JsonSerializable()
 class UserResponse {
-  late String username;
-  late String realname;
-  late String? avatar;
-  late String? phone = "";
-  late String? post = "";
-  late String? company = "";
-  late String? idCard = "";
+  final String username;
+  final String realname;
+  final String? avatar;
+  final String? phone;
+  final String? post;
+  final String? postDictText;
+  final String? company;
+  final String? idCard;
 
   UserResponse(this.username, this.realname, this.avatar, this.phone, this.post,
-      this.company, this.idCard);
+      this.company, this.idCard, this.postDictText);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);
+
+  static List<UserResponse> fromJsonList(List<dynamic> json) =>
+      json.map((e) => UserResponse.fromJson(e)).toList();
 
   Map<String, dynamic> toJson() => _$UserResponseToJson(this);
 }

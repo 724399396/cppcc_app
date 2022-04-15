@@ -6,7 +6,9 @@ class GeneralSearch extends StatelessWidget {
   final Color _color;
   final SearchCallback _callback;
   final String? initValue;
-  const GeneralSearch(this._color, this._callback, {Key? key, this.initValue})
+  final String hint;
+  const GeneralSearch(this._color, this._callback,
+      {Key? key, this.initValue, this.hint = '请输入关键字'})
       : super(key: key);
 
   @override
@@ -39,7 +41,7 @@ class GeneralSearch extends StatelessWidget {
           width: 28,
           height: 28,
         ),
-        hintText: '请输入关键词',
+        hintText: hint,
       ),
       style: TextStyle(color: _color),
       onSubmitted: (value) {

@@ -1,4 +1,5 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
+import 'package:cppcc_app/bloc/contact_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
@@ -12,6 +13,7 @@ import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/app_setting_repository.dart';
+import 'package:cppcc_app/repository/contact_repository.dart';
 import 'package:cppcc_app/repository/discuss_network_repository.dart';
 import 'package:cppcc_app/repository/historical_clue_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
@@ -48,8 +50,8 @@ Future<void> main() async {
   var navigationService = NavigationService();
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
-        baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
-        // baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
+        // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
+        baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -97,6 +99,9 @@ Future<void> main() async {
         ),
         RepositoryProvider<NoticeRepository>(
           create: (context) => NoticeRepository(apiDataProvider),
+        ),
+        RepositoryProvider<ContactRepository>(
+          create: (context) => ContactRepository(apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(
@@ -159,6 +164,11 @@ Future<void> main() async {
             create: (BuildContext context) =>
                 NoticeBloc(context.read<NoticeRepository>())
                   ..add(NoticeInitialized()),
+          ),
+          BlocProvider<ContactBloc>(
+            create: (BuildContext context) =>
+                ContactBloc(context.read<ContactRepository>())
+                  ..add(ContactInitialized()),
           ),
         ],
         child: CppccApp(navigationService),

@@ -49,10 +49,10 @@ class _PageContainerState extends State<PageContainer>
                 selected ? selectedTabs[index] : notSelectedTabs[index];
             return Tab(
               child: selected
-                  ? SizedBox(
-                      height: 40,
-                      width: 40,
-                      child: Image.asset(tab.image),
+                  ? CircleAvatar(
+                      radius: 20,
+                      backgroundColor: Colors.white,
+                      backgroundImage: Image.asset(tab.image).image,
                     )
                   : Column(
                       mainAxisAlignment: MainAxisAlignment.center,

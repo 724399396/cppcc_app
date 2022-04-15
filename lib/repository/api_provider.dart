@@ -93,7 +93,7 @@ class ApiDataProvider {
 
   Future<UserInfoResponse> getUserInfo() {
     return _dio.get('/app/user/info').then((value) => UserInfoResponse.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
 
   Future<Response<void>> sendSmsVerifyCode(String phone) {
@@ -280,5 +280,10 @@ class ApiDataProvider {
     return _dio
         .get('/app/historicalDatum/count/read/app')
         .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<List<UserResponse>> getAllContact() {
+    return _dio.get('/app/user/all').then((value) => UserResponse.fromJsonList(
+        BaseResponse.fromJson(value.data).result as List<dynamic>));
   }
 }

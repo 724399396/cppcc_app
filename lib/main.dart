@@ -4,7 +4,6 @@ import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
-import 'package:cppcc_app/bloc/news_topic_bloc.dart';
 import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
@@ -31,15 +30,9 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:timeago/timeago.dart' as timeago;
-
-//用户登录
 import 'package:cppcc_app/repository/user_repository.dart';
-
 //消息
 import 'package:cppcc_app/repository/message_repository.dart';
-
-//资讯
-import 'package:cppcc_app/repository/news_repository.dart';
 
 import 'app.dart';
 
@@ -80,9 +73,6 @@ Future<void> main() async {
         ),
         RepositoryProvider<MessageRepository>(
           create: (context) => MessageRepository(apiDataProvider),
-        ),
-        RepositoryProvider<NewsRepository>(
-          create: (context) => NewsRepository(apiDataProvider),
         ),
         RepositoryProvider<PostRepository>(
           create: (context) => PostRepository(apiDataProvider),
@@ -125,12 +115,6 @@ Future<void> main() async {
             create: (BuildContext context) => MessageBloc(
               context.read<MessageRepository>(),
             ),
-          ),
-          BlocProvider<NewsTopicBloc>(
-            lazy: true,
-            create: (BuildContext context) => NewsTopicBloc(
-              context.read<NewsRepository>(),
-            )..add(const NewsTopicInitialed()),
           ),
           BlocProvider<MailboxBloc>(
             create: (BuildContext context) => MailboxBloc(

@@ -19,8 +19,6 @@ import 'local_data_provider.dart';
 import 'package:cppcc_app/dto/message/message_entity.dart';
 
 //资讯
-import 'package:cppcc_app/dto/news/news_topic_entity.dart';
-import 'package:cppcc_app/dto/news/news_entity.dart';
 
 class ApiDataProvider {
   final Dio _dio;
@@ -121,29 +119,6 @@ class ApiDataProvider {
     return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
         queryParameters: {'id': id}).then((value) {
       return MessageRecords.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
-    });
-  }
-
-  /// 获取分类信息
-  Future<NewsTopicEntity> getNewsTopocList(int pageNo, int pageSize) {
-    return _dio.get('/app/newsTopic/list', queryParameters: {
-      'pageNo': pageNo,
-      'pageSize': pageSize
-    }).then((value) {
-      return NewsTopicEntity.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
-    });
-  }
-
-  /// 获取资讯信息
-  Future<NewsEntity> getNewsList(
-      int pageNo, int pageSize, NewsRecords newsRecords) {
-    return _dio.get('/app/news/list', queryParameters: {
-      'pageNo': pageNo,
-      'pageSize': pageSize
-    }).then((value) {
-      return NewsEntity.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }

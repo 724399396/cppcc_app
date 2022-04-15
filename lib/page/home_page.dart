@@ -1,7 +1,6 @@
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
-import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';

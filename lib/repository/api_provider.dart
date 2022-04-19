@@ -47,19 +47,16 @@ class ApiDataProvider {
       return handler.next(response);
     }, onError: (e, handler) {
       var currentTimestamp = DateTime.now().millisecondsSinceEpoch;
-      if (e.response != null && e.response?.data['message'] != null) {
-        if (e.response?.data['code'] == 401) {
-          if (!e.requestOptions.extra.containsKey('dontRedirectLogin') ||
-              !e.requestOptions.extra['dontRedirectLogin']) {
+      if (currentTimestamp - _lastErrorTimestamp > 1000 * 5) {
+        if (e.response != null && e.response?.data['code'] != null) {
+          if (e.response?.data['code'] == 401) {
             showToast(e.response?.data['message']);
             _localDataProvider.setIsLogin(false);
             _navigationService.pushNamedAndRemoveUntil(Routes.loginPage);
+          } else {
+            showToast(e.response?.data['message']);
           }
         } else {
-          showToast(e.response?.data['message']);
-        }
-      } else {
-        if (currentTimestamp - _lastErrorTimestamp > 1000 * 5) {
           showToast('网络错误');
         }
       }
@@ -285,5 +282,14 @@ class ApiDataProvider {
   Future<List<UserResponse>> getAllContact() {
     return _dio.get('/app/user/all').then((value) => UserResponse.fromJsonList(
         BaseResponse.fromJson(value.data).result as List<dynamic>));
+  }
+
+  Future sendBusinessCard(String receiverUsername, String message) {
+    return _dio.post('/app/buscardApply/appApply', data: {
+      'receiveUsername': receiverUsername,
+      'message': message
+    }).then((value) {
+      return BaseResponse.fromJson(value.data);
+    });
   }
 }

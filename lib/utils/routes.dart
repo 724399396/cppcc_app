@@ -21,6 +21,8 @@ class Routes {
   static const generalTabSwitchPostsListPage = '/generalTabSwitchPostsListPage';
 
   //通讯录页面
+  static const contactDetailPage = '/contactDetailPage';
+  static const sendBusinessCardPage = '/sendBusinessCardPage';
 
   //消息页面
   static const messageDetailsPage = '/messageDetailsPage';

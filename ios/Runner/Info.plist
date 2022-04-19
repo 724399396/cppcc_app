@@ -45,5 +45,7 @@
 		<false/>
 		<key>UIStatusBarHidden</key>
 		<false/>
+    <key>NSPhotoLibraryAddUsageDescription</key>
+    <string>请添加相册权限用于保存二维码</string>
 	</dict>
 </plist>

@@ -17,8 +17,13 @@ class ContactRepository {
             realname: e.realname,
             avatar: e.avatar,
             username: e.username,
+            wxQrCode: e.wxQrCode,
           ),
         )
         .toList();
+  }
+
+  Future sendBusinessCard(String receiverUsername, String message) {
+    return _apiDataProvider.sendBusinessCard(receiverUsername, message);
   }
 }

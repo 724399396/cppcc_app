@@ -7,6 +7,7 @@ class Contact extends Equatable {
   final String phone;
   final String company;
   final String? avatar;
+  final String? wxQrCode;
   const Contact({
     required this.username,
     required this.realname,
@@ -14,6 +15,7 @@ class Contact extends Equatable {
     required this.phone,
     required this.company,
     required this.avatar,
+    required this.wxQrCode,
   });
 
   Contact copyWith({
@@ -23,6 +25,7 @@ class Contact extends Equatable {
     String? phone,
     String? company,
     String? avatar,
+    String? wxQrCode,
   }) {
     return Contact(
       username: username ?? this.username,
@@ -31,12 +34,13 @@ class Contact extends Equatable {
       phone: phone ?? this.phone,
       company: company ?? this.company,
       avatar: avatar ?? this.avatar,
+      wxQrCode: wxQrCode ?? this.wxQrCode,
     );
   }
 
   @override
   String toString() {
-    return 'Contact(username: $username, realname: $realname, postDictText: $postDictText, phone: $phone, company: $company, avatar: $avatar)';
+    return 'Contact(username: $username, realname: $realname, postDictText: $postDictText, phone: $phone, company: $company, avatar: $avatar, wxQrCode: $wxQrCode)';
   }
 
   @override
@@ -46,8 +50,7 @@ class Contact extends Equatable {
       realname,
       postDictText,
       phone,
-      company,
-      avatar ?? '',
+      company
     ];
   }
 }

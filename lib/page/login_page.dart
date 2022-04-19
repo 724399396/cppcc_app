@@ -86,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                           BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) => TextFormField(
                               key: const ValueKey('username'),
-                              initialValue: state.username,
+                              initialValue: state.phone,
                               readOnly: state.username?.isNotEmpty ?? false,
                               onSaved: (String? val) => _username = val,
                               decoration: InputDecoration(

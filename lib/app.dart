@@ -1,3 +1,5 @@
+import 'package:cppcc_app/page/contacts/contact_detail.dart';
+import 'package:cppcc_app/page/contacts/send_business_card_page.dart';
 import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
 import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
@@ -63,6 +65,8 @@ final routesDef = {
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
   Routes.generalTabSwitchPostsListPage: (context) =>
       const GeneralTabSwitchListPage(),
+  Routes.contactDetailPage: (context) => const ContactDetailPage(),
+  Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),

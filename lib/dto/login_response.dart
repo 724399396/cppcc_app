@@ -32,12 +32,15 @@ class UserResponse {
   final String? avatar;
   final String? phone;
   final String? post;
+  @JsonKey(name: "post_dictText")
   final String? postDictText;
   final String? company;
   final String? idCard;
+  @JsonKey(name: "wxQrcode")
+  final String? wxQrCode;
 
   UserResponse(this.username, this.realname, this.avatar, this.phone, this.post,
-      this.company, this.idCard, this.postDictText);
+      this.company, this.idCard, this.postDictText, this.wxQrCode);
 
   factory UserResponse.fromJson(Map<String, dynamic> json) =>
       _$UserResponseFromJson(json);

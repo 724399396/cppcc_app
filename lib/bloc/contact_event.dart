@@ -8,3 +8,11 @@ abstract class ContactEvent extends Equatable {
 }
 
 class ContactInitialized extends ContactEvent {}
+
+class ContactSendBusinessCard extends ContactEvent {
+  final String receiverUsername;
+  final String message;
+  final SuccessCallback successCallback;
+
+  const ContactSendBusinessCard(this.receiverUsername, this.message, this.successCallback);
+}

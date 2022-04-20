@@ -18,17 +18,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       await _meetingRepository.getUnreadCount().then((count) {
         emit(state.copyWith(unreadCount: count));
       });
-      await _generateCallApi(event, emit, (emit) async {
-        Map<String, List<Meeting>> newData = Map.from(state.meetings);
-        newData["1"] = [];
-        Map<String, int> newCurrentPage = Map.from(state.currentPage);
-        newCurrentPage["1"] = 1;
-        emit(state.copyWith(
-          currentPage: newCurrentPage,
-          meetings: newData,
-        ));
-        await _dataLoad(emit, "1");
-      });
+    });
+
+    on<MeetingFirstFetch>((event, emit) async {
+      if (!state.currentPage.containsKey(event.type)) {
+        await _generateCallApi(event, emit, (emit) async {
+          await _dataLoad(emit, event.type);
+        });
+      }
     });
 
     on<MeetingLoadMore>((event, emit) async {
@@ -48,6 +45,14 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           meetings: newData,
         ));
         await _dataLoad(emit, event.type);
+      });
+    });
+
+    on<GetMeetingDetail>((event, emit) async {
+      await _generateCallApi(event, emit, (emit) async {
+        await _meetingRepository.getMeetingDetail(event.id).then((meeting) {
+          emit(state.copyWith(currentMetting: meeting));
+        });
       });
     });
   }

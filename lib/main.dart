@@ -10,6 +10,7 @@ import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
+import 'package:cppcc_app/bloc/two_meetings_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/app_setting_repository.dart';
@@ -23,6 +24,7 @@ import 'package:cppcc_app/repository/notice_repository.dart';
 import 'package:cppcc_app/repository/opinion_repository.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/repository/proposal_repository.dart';
+import 'package:cppcc_app/repository/two_meetings_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/time_ago_format.dart';
@@ -50,8 +52,8 @@ Future<void> main() async {
   var navigationService = NavigationService();
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
-        baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
-        // baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
+        // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
+        baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -102,6 +104,9 @@ Future<void> main() async {
         ),
         RepositoryProvider<ContactRepository>(
           create: (context) => ContactRepository(apiDataProvider),
+        ),
+        RepositoryProvider<TwoMeetingsRepository>(
+          create: (context) => TwoMeetingsRepository(apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(
@@ -169,6 +174,11 @@ Future<void> main() async {
             create: (BuildContext context) =>
                 ContactBloc(context.read<ContactRepository>())
                   ..add(ContactInitialized()),
+          ),
+          BlocProvider<TwoMeetingsBloc>(
+            create: (BuildContext context) =>
+                TwoMeetingsBloc(context.read<TwoMeetingsRepository>())
+                  ..add(TwoMeetingsInitilized()),
           ),
         ],
         child: CppccApp(navigationService),

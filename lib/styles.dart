@@ -9,7 +9,11 @@ class AppColors {
 
   static const displayTextColor = Colors.black;
 
-  static const primaryBlue = Colors.blue;
+  static const appOrange = Color(0xFFFB7D30);
+
+  static const appBlue = Color(0xFF75aae2);
+
+  static const appGren = Color(0xFF75e287);
 
   static MaterialColor primary = MaterialColor(0xFFFB7D30, _primarySwatch);
 }

@@ -95,6 +95,16 @@ class HomeMe extends StatelessWidget {
                                             ?.copyWith(
                                                 color: const Color(0xFFf68266)),
                                       ),
+                                    ),
+                                    Expanded(child: Container()),
+                                    Image.asset(
+                                      'assets/icons/ic_bianji.png',
+                                      width: 36,
+                                    ),
+                                    const SizedBox(width: 4),
+                                    Image.asset(
+                                      'assets/icons/ic_erweima.png',
+                                      width: 36,
                                     )
                                   ],
                                 ),

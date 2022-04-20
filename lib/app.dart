@@ -16,6 +16,7 @@ import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
+import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
 //资讯相关页面
 import 'package:cppcc_app/page/news/news_details_page.dart';
@@ -67,6 +68,7 @@ final routesDef = {
       const GeneralTabSwitchListPage(),
   Routes.contactDetailPage: (context) => const ContactDetailPage(),
   Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
+  Routes.twoMeetingPage: (context) => const TwoMeetingsPage(),
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),

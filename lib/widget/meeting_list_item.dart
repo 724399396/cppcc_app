@@ -1,6 +1,9 @@
 import 'package:cppcc_app/models/meeting.dart';
+import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/widget/badge_decoration.dart';
 import 'package:flutter/material.dart';
+import 'dart:math' as math;
 
 /// 列表项
 class MeetingItem extends StatelessWidget {
@@ -9,6 +12,9 @@ class MeetingItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var readingColor =
+        (_meeting.read ?? false) ? AppColors.greyTextColor : AppColors.appBlue;
+    var themeData = Theme.of(context);
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
@@ -16,80 +22,89 @@ class MeetingItem extends StatelessWidget {
               arguments: _meeting.id);
         },
         child: Container(
-          padding: const EdgeInsets.all(5.0),
-          width: double.infinity,
-          decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
-            ),
+          margin: const EdgeInsets.symmetric(vertical: 8),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
-              Text(
-                _meeting.title,
-                style: const TextStyle(
-                  color: Color(0xff333333),
-                  fontSize: 16.0,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
+          child: Stack(
+            children: [
               Container(
-                padding: const EdgeInsets.only(top: 10.0),
-                child: Row(
-                  children: <Widget>[
+                padding:
+                    const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                            child: Text(
+                          _meeting.title,
+                          style: themeData.textTheme.titleLarge,
+                        )),
+                        // 为右上角的标记流出空间避免重叠
+                        const SizedBox(width: 40),
+                      ],
+                    ),
+                    const SizedBox(height: 8),
                     Text(
-                      "时间:" +
+                      "活动时间: " +
                           _meeting.beginDate +
                           " " +
-                          _meeting.startTime +
+                          _meeting.startTime.substring(0, 5) +
                           "-" +
-                          _meeting.endTime,
-                      style: const TextStyle(
-                        color: Color(0xff999999),
-                      ),
+                          _meeting.endTime.substring(0, 5),
+                      style: themeData.textTheme.bodyText2
+                          ?.copyWith(color: AppColors.greyTextColor),
                     ),
+                    const SizedBox(height: 8),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          "活动地点: " + _meeting.address,
+                          style: themeData.textTheme.bodyText2
+                              ?.copyWith(color: AppColors.greyTextColor),
+                        ),
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: readingColor),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 2, horizontal: 4),
+                          child: Text(
+                            (_meeting.read ?? false) ? "已阅读" : "未阅读",
+                            style: TextStyle(
+                              color: readingColor,
+                            ),
+                          ),
+                        ),
+                      ],
+                    )
                   ],
                 ),
               ),
-              Container(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  textDirection: TextDirection.ltr,
-                  verticalDirection: VerticalDirection.down,
-                  children: <Widget>[
-                    Text(
-                      "地点:" + _meeting.address,
-                      style: const TextStyle(
-                        color: Color(0xff999999),
-                        fontSize: 12.0,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                    Container(
-                      decoration: BoxDecoration(
-                        color: _meeting.status == 2
-                            ? const Color(0xFF75e287)
-                            : const Color(0xFFc6c3bc),
-                        borderRadius: BorderRadius.circular(4),
-                      ),
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 2, horizontal: 4),
-                      child: Text(
-                        _meeting.statusDictText,
-                        style: const TextStyle(
-                          color: Color(0xffffffff),
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
+              Align(
+                alignment: Alignment.topRight,
+                child: Container(
+                    foregroundDecoration: BadgeDecoration(
+                  badgeColor: _meeting.status == 1
+                      ? AppColors.appBlue
+                      : (_meeting.status == 2
+                          ? AppColors.appGren
+                          : const Color(0xFFbdc7d0)),
+                  badgeSize: 60,
+                  textSpan: TextSpan(
+                    text: _meeting.status == 1
+                        ? '未开始'
+                        : (_meeting.status == 2 ? '进行中' : '已结束'),
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 12,
+                        fontWeight: FontWeight.bold),
+                  ),
+                )),
               )
             ],
           ),

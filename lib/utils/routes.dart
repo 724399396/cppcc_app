@@ -19,6 +19,7 @@ class Routes {
   static const gdHistoricalDetailsPage = '/gdHistoricalDetailsPage';
   static const postListWithFilterPage = '/postListWithFilterPage';
   static const generalTabSwitchPostsListPage = '/generalTabSwitchPostsListPage';
+  static const twoMeetingPage = '/twoMeetingPage';
 
   //通讯录页面
   static const contactDetailPage = '/contactDetailPage';

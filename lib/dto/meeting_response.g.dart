@@ -6,28 +6,69 @@ part of 'meeting_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MeetingWrapper _$MeetingWrapperFromJson(Map<String, dynamic> json) =>
-    MeetingWrapper(
-      (json['records'] as List<dynamic>)
-          .map((e) => MeetingResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
+MeetingResponse _$MeetingResponseFromJson(Map<String, dynamic> json) =>
+    MeetingResponse(
+      json['address'] as String?,
+      json['appendix'],
+      json['beginDate'] as String?,
+      json['content'] as String?,
+      json['createBy'] as String?,
+      json['createTime'] as String?,
+      json['endTime'] as String?,
+      json['id'] as String,
+      json['updateBy'] as String?,
+      json['updateTime'] as String?,
+      json['partakeUserIds'] as String?,
+      json['signQrcode'] as String?,
+      json['startTime'] as String?,
+      json['status'] as int?,
+      json['status_dictText'] as String?,
+      json['title'] as String?,
+      json['categoryDictText'],
+      json['author'] as String?,
+      json['type_dictText'] as String?,
+      json['type'] as int?,
+      json['hits'] as int?,
+      json['read'] as bool?,
     )
-      ..total = json['total'] as int
-      ..size = json['size'] as int
-      ..current = json['current'] as int
-      ..pages = json['pages'] as int;
+      ..broadcastData = (json['broadcasts'] as List<dynamic>?)
+          ?.map((e) => BroadcastsResponse.fromJson(e as Map<String, dynamic>))
+          .toList()
+      ..userRecords = (json['userRecords'] as List<dynamic>?)
+          ?.map((e) => UserRecordsResponse.fromJson(e as Map<String, dynamic>))
+          .toList();
 
-Map<String, dynamic> _$MeetingWrapperToJson(MeetingWrapper instance) =>
+Map<String, dynamic> _$MeetingResponseToJson(MeetingResponse instance) =>
     <String, dynamic>{
-      'records': instance.records,
-      'total': instance.total,
-      'size': instance.size,
-      'current': instance.current,
-      'pages': instance.pages,
+      'address': instance.address,
+      'appendix': instance.appendix,
+      'beginDate': instance.beginDate,
+      'content': instance.content,
+      'createBy': instance.createBy,
+      'createTime': instance.createTime,
+      'endTime': instance.endTime,
+      'id': instance.id,
+      'updateBy': instance.updateBy,
+      'updateTime': instance.updateTime,
+      'partakeUserIds': instance.partakeUserIds,
+      'signQrcode': instance.signQrcode,
+      'startTime': instance.startTime,
+      'status': instance.status,
+      'status_dictText': instance.statusDictText,
+      'title': instance.title,
+      'categoryDictText': instance.categoryDictText,
+      'author': instance.author,
+      'type_dictText': instance.typeDicttext,
+      'type': instance.type,
+      'hits': instance.hits,
+      'read': instance.read,
+      'broadcasts': instance.broadcastData,
+      'userRecords': instance.userRecords,
     };
 
-MeetingResponse _$MeetingResponseFromJson(Map<String, dynamic> json) =>
-    MeetingResponse()
+MeetingDetailResponse _$MeetingDetailResponseFromJson(
+        Map<String, dynamic> json) =>
+    MeetingDetailResponse()
       ..address = json['address'] as String?
       ..appendix = json['appendix']
       ..beginDate = json['beginDate'] as String?
@@ -56,7 +97,8 @@ MeetingResponse _$MeetingResponseFromJson(Map<String, dynamic> json) =>
           ?.map((e) => UserRecordsResponse.fromJson(e as Map<String, dynamic>))
           .toList();
 
-Map<String, dynamic> _$MeetingResponseToJson(MeetingResponse instance) =>
+Map<String, dynamic> _$MeetingDetailResponseToJson(
+        MeetingDetailResponse instance) =>
     <String, dynamic>{
       'address': instance.address,
       'appendix': instance.appendix,

@@ -8,6 +8,7 @@ import 'package:cppcc_app/dto/meeting_response.dart';
 import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
+import 'package:cppcc_app/dto/two_meetings_response.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
@@ -28,8 +29,8 @@ class ApiDataProvider {
 
   ApiDataProvider(this._dio, this._localDataProvider, this._navigationService) {
     // TODO remove on production
-    // _dio.interceptors
-    //     .add(LogInterceptor(responseBody: true, requestBody: true));
+    _dio.interceptors
+        .add(LogInterceptor(responseBody: true, requestBody: true));
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       options.headers['X-Access-Token'] = _localDataProvider.token();
       return handler.next(options);
@@ -174,14 +175,15 @@ class ApiDataProvider {
   }
 
   /// 获取会议列表
-  Future<MeetingWrapper> getMeetingList(int pageNo, int pageSize, String type) {
-    return _dio.get('/app/meetingActivity/list', queryParameters: {
+  Future<List<MeetingResponse>> getMeetingList(
+      int pageNo, int pageSize, String type) {
+    return _dio.post('/app/meetingActivity/appGetList', data: {
       'pageNo': pageNo,
       'pageSize': pageSize,
       "type": type
     }).then((value) {
-      return MeetingWrapper.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+      return MeetingResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
     });
   }
 
@@ -290,6 +292,25 @@ class ApiDataProvider {
       'message': message
     }).then((value) {
       return BaseResponse.fromJson(value.data);
+    });
+  }
+
+  Future<TwoMeetingsWrapper> getTwoMeetingsList(int pageNo, int pageSize) {
+    return _dio.get('/app/commonFile/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+    }).then((value) {
+      return TwoMeetingsWrapper.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
+  Future<MeetingDetailResponse> getMeetingDetail(String id) {
+    return _dio.get('/app/meetingActivity/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return MeetingDetailResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }
 }

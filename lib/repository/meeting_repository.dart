@@ -13,7 +13,7 @@ class MeetingRepository {
   Future<List<Meeting>> getList(int pageNo, int pageSize, String type) async {
     var response =
         await _apiDataProvider.getMeetingList(pageNo, pageSize, type);
-    return response.records
+    return response
         .map(
           (e) => Meeting(
               id: e.id,
@@ -25,16 +25,39 @@ class MeetingRepository {
               content: e.content ?? '',
               status: e.status ?? 0,
               statusDictText: e.statusDictText ?? '',
-              type: e.type ?? 1,
-              typeDicttext: e.typeDicttext ?? '',
-              createBy: e.createBy ?? '',
-              signQrcode: e.signQrcode,
-              userRecords: e.userRecords
-                      ?.map<MeetingActiveRecord>((r) => MeetingActiveRecord(
-                          userIdDictText: r.userIdDictText ?? ''))
-                      .toList() ??
-                  []),
+              read: e.read),
         )
         .toList();
+  }
+
+  Future<MeetingDetail> getMeetingDetail(String id) async {
+    var detail = await _apiDataProvider.getMeetingDetail(id);
+    return MeetingDetail(
+      id: detail.id,
+      title: detail.title ?? '',
+      address: detail.address ?? '',
+      beginDate: detail.beginDate ?? '',
+      startTime: detail.startTime ?? '',
+      endTime: detail.endTime ?? '',
+      content: detail.content ?? '',
+      status: detail.status ?? 0,
+      statusDictText: detail.statusDictText ?? '',
+      type: detail.type ?? 1,
+      typeDicttext: detail.typeDicttext ?? '',
+      createBy: detail.createBy ?? '',
+      signQrcode: detail.signQrcode ?? '',
+      userRecords: detail.userRecords
+              ?.map<MeetingActiveRecord>((r) =>
+                  MeetingActiveRecord(userIdDictText: r.userIdDictText ?? ''))
+              .toList() ??
+          [],
+      broadcasts: detail.broadcastData
+              ?.map((b) => Broadcast(
+                  title: b.title ?? '',
+                  content: b.content ?? '',
+                  createTime: b.createTime ?? ''))
+              .toList() ??
+          [],
+    );
   }
 }

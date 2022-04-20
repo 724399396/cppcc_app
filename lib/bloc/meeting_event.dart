@@ -9,6 +9,12 @@ abstract class MeetingEvent extends Equatable {
 
 class MeetingInitilized extends MeetingEvent {}
 
+class MeetingFirstFetch extends MeetingEvent {
+  final String type;
+
+  const MeetingFirstFetch(this.type);
+}
+
 class MeetingLoadMore extends MeetingEvent {
   final String type;
 
@@ -19,4 +25,10 @@ class MeetingRefresh extends MeetingEvent {
   final String type;
 
   const MeetingRefresh(this.type);
+}
+
+class GetMeetingDetail extends MeetingEvent {
+  final String id;
+
+  const GetMeetingDetail(this.id);
 }

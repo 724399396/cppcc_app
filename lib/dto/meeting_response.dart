@@ -3,22 +3,72 @@ import 'package:json_annotation/json_annotation.dart';
 part 'meeting_response.g.dart';
 
 @JsonSerializable()
-class MeetingWrapper {
-  final List<MeetingResponse> records;
-  late int total;
-  late int size;
-  late int current;
-  late int pages;
+class MeetingResponse {
+  final String? address;
+  final dynamic appendix;
+  final String? beginDate;
+  final String? content;
+  final String? createBy;
+  final String? createTime;
+  final String? endTime;
+  final String id;
+  final String? updateBy;
+  final String? updateTime;
+  final String? partakeUserIds;
+  final String? signQrcode;
+  final String? startTime;
+  final int? status;
+  @JsonKey(name: "status_dictText")
+  final String? statusDictText;
+  final String? title;
+  final dynamic categoryDictText;
+  final String? author;
+  @JsonKey(name: "type_dictText")
+  final String? typeDicttext;
+  final int? type;
+  final int? hits;
+  final bool? read;
 
-  MeetingWrapper(this.records);
+  @JsonKey(name: 'broadcasts')
+  late List<BroadcastsResponse>? broadcastData;
 
-  factory MeetingWrapper.fromJson(Map<String, dynamic> json) =>
-      _$MeetingWrapperFromJson(json);
-  Map<String, dynamic> toJson() => _$MeetingWrapperToJson(this);
+  @JsonKey(name: 'userRecords')
+  late List<UserRecordsResponse>? userRecords;
+
+  MeetingResponse(
+      this.address,
+      this.appendix,
+      this.beginDate,
+      this.content,
+      this.createBy,
+      this.createTime,
+      this.endTime,
+      this.id,
+      this.updateBy,
+      this.updateTime,
+      this.partakeUserIds,
+      this.signQrcode,
+      this.startTime,
+      this.status,
+      this.statusDictText,
+      this.title,
+      this.categoryDictText,
+      this.author,
+      this.typeDicttext,
+      this.type,
+      this.hits,
+      this.read);
+
+  factory MeetingResponse.fromJson(Map<String, dynamic> json) =>
+      _$MeetingResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetingResponseToJson(this);
+
+  static List<MeetingResponse> fromJsonList(List<dynamic> json) =>
+      json.map((e) => MeetingResponse.fromJson(e)).toList();
 }
 
 @JsonSerializable()
-class MeetingResponse {
+class MeetingDetailResponse {
   late String? address;
   late dynamic appendix;
   late String? beginDate;
@@ -49,11 +99,11 @@ class MeetingResponse {
   @JsonKey(name: 'userRecords')
   late List<UserRecordsResponse>? userRecords;
 
-  MeetingResponse();
+  MeetingDetailResponse();
 
-  factory MeetingResponse.fromJson(Map<String, dynamic> json) =>
-      _$MeetingResponseFromJson(json);
-  Map<String, dynamic> toJson() => _$MeetingResponseToJson(this);
+  factory MeetingDetailResponse.fromJson(Map<String, dynamic> json) =>
+      _$MeetingDetailResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$MeetingDetailResponseToJson(this);
 }
 
 @JsonSerializable()

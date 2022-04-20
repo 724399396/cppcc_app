@@ -56,7 +56,7 @@ class _HomeContactsState extends State<HomeContacts> {
                 builder: (context, state) {
                   var data = state.contacts
                       .where((element) =>
-                          element.username != userState.username &&
+                          element.username != userState.userInfo?.username &&
                           (_keyword.isEmpty ||
                               element.realname.contains(_keyword)))
                       .toList();

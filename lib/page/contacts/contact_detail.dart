@@ -69,7 +69,9 @@ class ContactDetailPage extends StatelessWidget {
                               padding: const EdgeInsets.symmetric(
                                   vertical: 2, horizontal: 12),
                               child: Text(
-                                contact.postDictText,
+                                contact.postDictText.isEmpty
+                                    ? '政协委员'
+                                    : contact.postDictText,
                                 style: Theme.of(context)
                                     .textTheme
                                     .bodyMedium
@@ -80,10 +82,11 @@ class ContactDetailPage extends StatelessWidget {
                         ),
                         const SizedBox(height: 8),
                         Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             const Text('职务:'),
                             const SizedBox(width: 6),
-                            Text(contact.postDictText),
+                            Expanded(child: Text(contact.position ?? '')),
                           ],
                         ),
                         const SizedBox(height: 8),
@@ -91,9 +94,11 @@ class ContactDetailPage extends StatelessWidget {
                           const Text('电话:'),
                           const SizedBox(width: 6),
                           Text(
-                            contact.phone.substring(0, 3) +
-                                '****' +
-                                contact.phone.substring(7),
+                            contact.phone.length == 11
+                                ? contact.phone.substring(0, 3) +
+                                    '****' +
+                                    contact.phone.substring(7)
+                                : contact.phone,
                             style: themeData.textTheme.bodyText1
                                 ?.copyWith(color: const Color(0xFF2c7afb)),
                           ),

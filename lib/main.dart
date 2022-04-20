@@ -50,8 +50,8 @@ Future<void> main() async {
   var navigationService = NavigationService();
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
-        // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
-        baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
+        baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
+        // baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),

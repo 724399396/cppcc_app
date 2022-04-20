@@ -38,6 +38,7 @@ UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
       json['idCard'] as String?,
       json['post_dictText'] as String?,
       json['wxQrcode'] as String?,
+      json['position'] as String,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
@@ -51,6 +52,7 @@ Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
       'company': instance.company,
       'idCard': instance.idCard,
       'wxQrcode': instance.wxQrCode,
+      'position': instance.position,
     };
 
 DictItem _$DictItemFromJson(Map<String, dynamic> json) => DictItem()

@@ -11,14 +11,15 @@ class ContactRepository {
     return response
         .map(
           (e) => Contact(
-            company: e.company ?? '',
-            postDictText: e.postDictText ?? '',
-            phone: e.phone ?? '',
-            realname: e.realname,
-            avatar: e.avatar,
-            username: e.username,
-            wxQrCode: e.wxQrCode,
-          ),
+              company: e.company ?? '',
+              postDictText: e.postDictText ?? '',
+              phone: e.phone ?? '',
+              realname: e.realname,
+              avatar: e.avatar,
+              username: e.username,
+              wxQrCode: e.wxQrCode,
+              position: e.position,
+              idCard: e.idCard ?? ''),
         )
         .toList();
   }

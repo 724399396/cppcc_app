@@ -86,8 +86,9 @@ class _LoginPageState extends State<LoginPage> {
                           BlocBuilder<UserBloc, UserState>(
                             builder: (context, state) => TextFormField(
                               key: const ValueKey('username'),
-                              initialValue: state.phone,
-                              readOnly: state.username?.isNotEmpty ?? false,
+                              initialValue: state.userInfo?.phone,
+                              readOnly:
+                                  state.userInfo?.username.isNotEmpty ?? false,
                               onSaved: (String? val) => _username = val,
                               decoration: InputDecoration(
                                   prefixIconConstraints: const BoxConstraints(
@@ -163,19 +164,26 @@ class _LoginPageState extends State<LoginPage> {
                                               .add(UserLoginRequested(
                                                   _username!, _password!, () {
                                             // 初始化首页需要数据
-                                            BlocProvider.of<AppSettingBloc>(context)
+                                            BlocProvider.of<AppSettingBloc>(
+                                                    context)
                                                 .add(AppSettingInitlized());
                                             BlocProvider.of<PostsBloc>(context)
                                                 .add(PostInitilized());
-                                            BlocProvider.of<OpinionBloc>(context)
+                                            BlocProvider.of<OpinionBloc>(
+                                                    context)
                                                 .add(OpinionInitilized());
-                                            BlocProvider.of<ProposalBloc>(context)
+                                            BlocProvider.of<ProposalBloc>(
+                                                    context)
                                                 .add(ProposalInitialied());
-                                            BlocProvider.of<MeetingBloc>(context)
+                                            BlocProvider.of<MeetingBloc>(
+                                                    context)
                                                 .add(MeetingInitilized());
-                                            BlocProvider.of<DiscussNetworkBloc>(context)
-                                                .add(DiscussNetworkInitilized());
-                                            BlocProvider.of<MailboxBloc>(context)
+                                            BlocProvider.of<DiscussNetworkBloc>(
+                                                    context)
+                                                .add(
+                                                    DiscussNetworkInitilized());
+                                            BlocProvider.of<MailboxBloc>(
+                                                    context)
                                                 .add(MailboxInitilized());
                                             Navigator.of(context).canPop()
                                                 ? Navigator.pop(context)

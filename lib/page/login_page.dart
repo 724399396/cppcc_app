@@ -88,8 +88,6 @@ class _LoginPageState extends State<LoginPage> {
                             builder: (context, state) => TextFormField(
                               key: const ValueKey('username'),
                               initialValue: state.userInfo?.phone,
-                              readOnly:
-                                  state.userInfo?.username.isNotEmpty ?? false,
                               onSaved: (String? val) => _username = val,
                               decoration: InputDecoration(
                                   prefixIconConstraints: const BoxConstraints(

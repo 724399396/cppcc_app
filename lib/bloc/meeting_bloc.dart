@@ -3,6 +3,7 @@ import 'package:cppcc_app/bloc/helper.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
+import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -54,6 +55,26 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
           emit(state.copyWith(currentMetting: meeting));
         });
       });
+    });
+
+    on<ApplyLeaveMeeting>((event, emit) async {
+      emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
+      try {
+        await _meetingRepository.applyLeaveMeeting(
+            event.meetingId, event.userId);
+        emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
+        event.successCallback();
+        await _generateCallApi(event, emit, (emit) async {
+          await _meetingRepository
+              .getMeetingDetail(event.meetingId)
+              .then((meeting) {
+            emit(state.copyWith(currentMetting: meeting));
+          });
+        });
+      } catch (err) {
+        debugPrint('meeting api error: $err');
+        emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
+      }
     });
   }
 

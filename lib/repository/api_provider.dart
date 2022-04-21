@@ -29,8 +29,8 @@ class ApiDataProvider {
 
   ApiDataProvider(this._dio, this._localDataProvider, this._navigationService) {
     // TODO remove on production
-    _dio.interceptors
-        .add(LogInterceptor(responseBody: true, requestBody: true));
+    // _dio.interceptors
+    //     .add(LogInterceptor(responseBody: true, requestBody: true));
     _dio.interceptors.add(InterceptorsWrapper(onRequest: (options, handler) {
       options.headers['X-Access-Token'] = _localDataProvider.token();
       return handler.next(options);
@@ -311,6 +311,15 @@ class ApiDataProvider {
     }).then((value) {
       return MeetingDetailResponse.fromJson(
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
+  Future<BaseResponse> applyLeaveMeeting(String meetingId, String userId) {
+    return _dio.post('/app/meetingActivityRecord/leaveMeetActivity', data: {
+      'mettingActivityId': meetingId,
+      'userId': userId,
+    }).then((value) {
+      return BaseResponse.fromJson(value.data);
     });
   }
 }

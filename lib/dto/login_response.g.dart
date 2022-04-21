@@ -29,20 +29,22 @@ Map<String, dynamic> _$UserInfoResponseToJson(UserInfoResponse instance) =>
     };
 
 UserResponse _$UserResponseFromJson(Map<String, dynamic> json) => UserResponse(
+      json['id'] as String,
       json['username'] as String,
       json['realname'] as String,
       json['avatar'] as String?,
       json['phone'] as String?,
       json['post'] as String?,
+      json['post_dictText'] as String?,
       json['company'] as String?,
       json['idCard'] as String?,
-      json['post_dictText'] as String?,
       json['wxQrcode'] as String?,
       json['position'] as String,
     );
 
 Map<String, dynamic> _$UserResponseToJson(UserResponse instance) =>
     <String, dynamic>{
+      'id': instance.id,
       'username': instance.username,
       'realname': instance.realname,
       'avatar': instance.avatar,

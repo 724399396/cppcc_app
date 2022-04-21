@@ -19,7 +19,8 @@ class ContactRepository {
               username: e.username,
               wxQrCode: e.wxQrCode,
               position: e.position,
-              idCard: e.idCard ?? ''),
+              idCard: e.idCard ?? '',
+              userId: null),
         )
         .toList();
   }

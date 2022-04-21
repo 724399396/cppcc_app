@@ -47,8 +47,11 @@ class MeetingRepository {
       createBy: detail.createBy ?? '',
       signQrcode: detail.signQrcode ?? '',
       userRecords: detail.userRecords
-              ?.map<MeetingActiveRecord>((r) =>
-                  MeetingActiveRecord(userIdDictText: r.userIdDictText ?? ''))
+              ?.map<MeetingActiveRecord>((r) => MeetingActiveRecord(
+                    userId: r.userId ?? '',
+                    userIdDictText: r.userIdDictText ?? '',
+                    status: r.status ?? 0,
+                  ))
               .toList() ??
           [],
       broadcasts: detail.broadcastData
@@ -59,5 +62,9 @@ class MeetingRepository {
               .toList() ??
           [],
     );
+  }
+
+  Future applyLeaveMeeting(String meetingId, String userId) {
+    return _apiDataProvider.applyLeaveMeeting(meetingId, userId);
   }
 }

@@ -1,9 +1,16 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
+import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/form_status.dart';
+import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:timelines/timelines.dart';
+import 'package:collection/collection.dart';
 
 class MeetingActivitiesDetailsPage extends StatelessWidget {
   const MeetingActivitiesDetailsPage({Key? key}) : super(key: key);
@@ -13,158 +20,163 @@ class MeetingActivitiesDetailsPage extends StatelessWidget {
     String id = ModalRoute.of(context)?.settings.arguments as String;
     BlocProvider.of<MeetingBloc>(context).add(GetMeetingDetail(id));
     var themeData = Theme.of(context);
-    return Scaffold(
-      appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
+    return BlocBuilder<MeetingBloc, MeetingState>(builder: (context, state) {
+      MeetingDetail? meeting = state.currentMetting;
+      MeetingActiveRecord? currentUserJoinState = meeting?.userRecords
+          .firstWhereOrNull((element) =>
+              element.userId ==
+              BlocProvider.of<UserBloc>(context).state.userInfo?.userId);
+      return Scaffold(
+        appBar: AppBar(
+          iconTheme: const IconThemeData(
+            color: Colors.white, //修改颜色
+          ),
+          title: const Text(
+            "会议详情",
+            style: TextStyle(color: Colors.white),
+          ),
+          centerTitle: true,
+          backgroundColor: AppColors.appOrange,
+          elevation: 0.0,
         ),
-        title: const Text(
-          "会议详情",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: AppColors.appOrange,
-        elevation: 0.0,
-      ),
-      backgroundColor: const Color(0xfff4f4f4),
-      body: BlocBuilder<MeetingBloc, MeetingState>(
-        builder: (context, state) {
-          MeetingDetail? meeting = state.currentMetting;
-          return meeting == null
-              ? Container()
-              : ListView(
-                  children: [
-                    const SizedBox(height: 4),
-                    Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      child: Text(meeting.title,
-                          style: themeData.textTheme.titleLarge),
+        backgroundColor: const Color(0xfff4f4f4),
+        floatingActionButton: (currentUserJoinState?.status == 1 &&
+                meeting != null)
+            ? FloatingActionButton.extended(
+                backgroundColor: AppColors.appOrange,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8)),
+                extendedPadding: const EdgeInsets.symmetric(horizontal: 4),
+                label: const Text("我要请假"),
+                onPressed: () {
+                  if (state.submitStatus != FormStatus.submissionInProgress) {
+                    BlocProvider.of<MeetingBloc>(context).add(
+                      ApplyLeaveMeeting(
+                          meeting.id, currentUserJoinState!.userId, () {
+                        showToast('请假成功!');
+                      }),
+                    );
+                  }
+                },
+              )
+            : Container(),
+        body: meeting == null
+            ? Container()
+            : ListView(
+                children: [
+                  const SizedBox(height: 4),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    child: Text(meeting.title,
+                        style: themeData.textTheme.titleLarge),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                            "会议时间: " +
+                                meeting.beginDate +
+                                " " +
+                                meeting.startTime.substring(0, 5) +
+                                "-" +
+                                meeting.endTime.substring(0, 5),
+                            style: themeData.textTheme.bodyText2),
+                        Text("会议地点: " + meeting.address,
+                            style: themeData.textTheme.bodyText2),
+                      ],
                     ),
-                    const SizedBox(height: 8),
-                    Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                              "会议时间: " +
-                                  meeting.beginDate +
-                                  " " +
-                                  meeting.startTime.substring(0, 5) +
-                                  "-" +
-                                  meeting.endTime.substring(0, 5),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("会议内容: ", style: themeData.textTheme.bodyText2),
+                        meeting.content != ""
+                            ? Html(
+                                data: meeting.content,
+                                tagsList: Html.tags
+                                  ..addAll(["bird", "flutter"]),
+                              )
+                            : Container()
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    height: 300,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("实时播报: ", style: themeData.textTheme.bodyText2),
+                        Expanded(child: BroadcastPage(meeting)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    height: 100,
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("参与人: ", style: themeData.textTheme.bodyText2),
+                        Expanded(child: JoinUsersPage(meeting)),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  Container(
+                    color: Colors.white,
+                    padding: const EdgeInsets.all(8),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text("签到二维码: ", style: themeData.textTheme.bodyText2),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                              currentUserJoinState?.status == 1
+                                  ? "未签到"
+                                  : (currentUserJoinState?.status == 2
+                                      ? "已签到"
+                                      : ""),
                               style: themeData.textTheme.bodyText2),
-                          Text("会议地点: " + meeting.address,
-                              style: themeData.textTheme.bodyText2),
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("会议内容: ", style: themeData.textTheme.bodyText2),
-                          meeting.content != ""
-                              ? Html(
-                                  data: meeting.content,
-                                  tagsList: Html.tags
-                                    ..addAll(["bird", "flutter"]),
-                                )
-                              : Container()
-                        ],
-                      ),
-                    ),
-                    const SizedBox(height: 8),
-                    Container(
-                      color: Colors.white,
-                      padding: const EdgeInsets.all(8),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text("实时播报: ", style: themeData.textTheme.bodyText2),
-                          BroadcastPage(meeting),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 10),
-                      decoration: const BoxDecoration(
-                        color: Color(0xffffffff),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: double.maxFinite,
-                            padding: const EdgeInsets.only(left: 5, right: 5),
-                            decoration: const BoxDecoration(),
-                            child: const Text("参与人：",
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Color(0xff333333),
-                                )),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: meeting.signQrcode != ""
+                              ? CachedNetworkImage(
+                                  width: 200,
+                                  imageUrl: meeting.signQrcode.toString())
+                              : Container(),
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '请出示二维码进行签到',
+                            style: themeData.textTheme.bodyLarge
+                                ?.copyWith(color: AppColors.greyTextColor),
                           ),
-                          Container(
-                            margin: const EdgeInsets.only(top: 10),
-                            padding: const EdgeInsets.all(10),
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: JoinUsersPage(meeting),
-                          ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
-                    Container(
-                      width: double.infinity,
-                      margin: const EdgeInsets.only(top: 10),
-                      decoration: const BoxDecoration(
-                        color: Color(0xffffffff),
-                      ),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: <Widget>[
-                          Container(
-                            width: double.maxFinite,
-                            padding: const EdgeInsets.only(
-                                left: 5, right: 5, top: 10),
-                            decoration: const BoxDecoration(),
-                            child: const Text("签到二维码：",
-                                style: TextStyle(
-                                  fontSize: 16.0,
-                                  color: Color(0xff333333),
-                                )),
-                          ),
-                          Container(
-                            padding: const EdgeInsets.all(10),
-                            alignment: Alignment.center,
-                            decoration: const BoxDecoration(
-                              borderRadius:
-                                  BorderRadius.all(Radius.circular(10.0)),
-                            ),
-                            child: meeting.signQrcode != ""
-                                ? Image.network(
-                                    meeting.signQrcode.toString(),
-                                  )
-                                : Container(),
-                          ),
-                        ],
-                      ),
-                    ),
-                  ],
-                );
-        },
-      ),
-    );
+                  ),
+                ],
+              ),
+      );
+    });
   }
 }
 
@@ -175,7 +187,45 @@ class BroadcastPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Timeline.tileBuilder(
+      shrinkWrap: true,
+      theme: TimelineThemeData(
+          indicatorTheme:
+              const IndicatorThemeData(color: AppColors.greyTextColor),
+          connectorTheme: const ConnectorThemeData(
+              color: AppColors.greyTextColor, thickness: 1)),
+      builder: TimelineTileBuilder.fromStyle(
+        nodePositionBuilder: (context, index) => 0,
+        indicatorPositionBuilder: (context, index) => 0,
+        indicatorStyle: IndicatorStyle.outlined,
+        contentsAlign: ContentsAlign.basic,
+        contentsBuilder: (context, index) {
+          Broadcast broadcast = _meeting.broadcasts[index];
+          return Container(
+            padding: const EdgeInsets.only(left: 8),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(broadcast.createTime,
+                    style: Theme.of(context)
+                        .textTheme
+                        .bodyText2
+                        ?.copyWith(color: AppColors.greyTextColor)),
+                Text(broadcast.title,
+                    style: Theme.of(context).textTheme.bodyText1),
+                broadcast.content != ''
+                    ? Html(
+                        data: broadcast.content,
+                        tagsList: Html.tags..addAll(["bird", "flutter"]),
+                      )
+                    : Container(),
+              ],
+            ),
+          );
+        },
+        itemCount: _meeting.broadcasts.length,
+      ),
+    );
   }
 }
 
@@ -187,31 +237,43 @@ class JoinUsersPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      decoration: const BoxDecoration(
-        color: Colors.white,
-        borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-      ),
-      margin: const EdgeInsets.only(top: 8),
-      child: Column(
-        children: List.generate(
-          _meeting.userRecords.length ~/ 4,
-          (start) => Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: List.generate(4, (add) {
-              var us = _meeting.userRecords[4 * start + add];
-              return GestureDetector(
-                onTap: () {},
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 12),
-                  child: Row(children: [
-                    const Icon(Icons.person, color: Color(0xfffca555)),
-                    Text(us.userIdDictText),
-                  ]),
+      color: Colors.white,
+      child: GridView.count(
+        crossAxisCount: 4,
+        children: List.generate(_meeting.userRecords.length, (index) {
+          var us = _meeting.userRecords[index];
+          return GestureDetector(
+            onTap: () {},
+            child: SizedBox(
+              height: 24,
+              child: Row(children: [
+                Stack(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 6),
+                      child: Image.asset(
+                        us.status == 2
+                            ? 'assets/icons/ic_online.png'
+                            : 'assets/icons/ic_offline.png',
+                        width: 28,
+                      ),
+                    ),
+                    Positioned(
+                      right: 0,
+                      top: 0,
+                      // TODO use read status replace image
+                      child: Image.asset(
+                        'assets/icons/ic_yiyuedu.png',
+                        width: 14,
+                      ),
+                    ),
+                  ],
                 ),
-              );
-            }),
-          ),
-        ),
+                Text(us.userIdDictText),
+              ]),
+            ),
+          );
+        }),
       ),
     );
   }

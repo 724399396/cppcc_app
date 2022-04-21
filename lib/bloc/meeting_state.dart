@@ -7,12 +7,15 @@ class MeetingState extends Equatable {
   final Map<String, int> currentPage;
   final MeetingDetail? currentMetting;
 
+  final FormStatus? submitStatus;
+
   const MeetingState({
     this.unreadCount = 0,
     this.status = ListDataFetchStatus.normal,
     this.meetings = const {},
     this.currentPage = const {},
     this.currentMetting,
+    this.submitStatus,
   });
 
   MeetingState copyWith({
@@ -21,6 +24,7 @@ class MeetingState extends Equatable {
     Map<String, List<Meeting>>? meetings,
     Map<String, int>? currentPage,
     MeetingDetail? currentMetting,
+    FormStatus? submitStatus,
   }) {
     return MeetingState(
       unreadCount: unreadCount ?? this.unreadCount,
@@ -28,12 +32,13 @@ class MeetingState extends Equatable {
       meetings: meetings ?? this.meetings,
       currentPage: currentPage ?? this.currentPage,
       currentMetting: currentMetting ?? this.currentMetting,
+      submitStatus: submitStatus ?? this.submitStatus,
     );
   }
 
   @override
   String toString() {
-    return 'MeetingState(unreadCount: $unreadCount, status: $status, meetings: $meetings, currentPage: $currentPage, currentMetting: $currentMetting)';
+    return 'MeetingState(unreadCount: $unreadCount, status: $status, meetings: $meetings, currentPage: $currentPage, currentMetting: $currentMetting, submitStatus: $submitStatus)';
   }
 
   @override
@@ -44,6 +49,7 @@ class MeetingState extends Equatable {
       meetings,
       currentPage,
       currentMetting ?? '',
+      submitStatus ?? '',
     ];
   }
 }

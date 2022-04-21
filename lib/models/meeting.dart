@@ -1,24 +1,33 @@
 import 'package:equatable/equatable.dart';
 
 class MeetingActiveRecord extends Equatable {
+  final String userId;
   final String userIdDictText;
+  final int status;
   const MeetingActiveRecord({
+    required this.userId,
     required this.userIdDictText,
+    required this.status,
   });
 
   MeetingActiveRecord copyWith({
+    String? userId,
     String? userIdDictText,
+    int? status,
   }) {
     return MeetingActiveRecord(
+      userId: userId ?? this.userId,
       userIdDictText: userIdDictText ?? this.userIdDictText,
+      status: status ?? this.status,
     );
   }
 
   @override
-  String toString() => 'MeetingActiveRecord(userIdDictText: $userIdDictText)';
+  String toString() =>
+      'MeetingActiveRecord(userId: $userId, userIdDictText: $userIdDictText, status: $status)';
 
   @override
-  List<Object> get props => [userIdDictText];
+  List<Object> get props => [userId, userIdDictText, status];
 }
 
 class Broadcast extends Equatable {

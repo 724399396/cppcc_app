@@ -32,3 +32,11 @@ class GetMeetingDetail extends MeetingEvent {
 
   const GetMeetingDetail(this.id);
 }
+
+class ApplyLeaveMeeting extends MeetingEvent {
+  final String meetingId;
+  final String userId;
+  final SuccessCallback successCallback;
+
+  const ApplyLeaveMeeting(this.meetingId, this.userId, this.successCallback);
+}

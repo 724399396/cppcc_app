@@ -77,7 +77,8 @@ class UserBloc extends Bloc<UserEvent, UserState> {
       username: e.username,
       wxQrCode: e.wxQrCode,
       position: e.position,
-      idCard: e.idCard ?? ''
+      idCard: e.idCard ?? '',
+      userId: e.id
     );
   }
 

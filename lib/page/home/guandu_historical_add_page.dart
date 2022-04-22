@@ -63,6 +63,10 @@ class _GuanduHistoricalAddPageState extends State<GuanduHistoricalAddPage> {
                           )
                         : GestureDetector(
                             onTap: () {
+                              if (state.submitStatus ==
+                                  FormStatus.submissionInProgress) {
+                                return;
+                              }
                               if (_formKey.currentState?.validate() ?? false) {
                                 _formKey.currentState?.save();
                                 BlocProvider.of<GuanduHistoricalClueBloc>(

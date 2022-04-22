@@ -38,16 +38,25 @@ class MeetingActivitiesDetailsPage extends StatelessWidget {
                 shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(8)),
                 extendedPadding: const EdgeInsets.symmetric(horizontal: 4),
-                label: const Text("我要请假"),
+                label: state.submitStatus == FormStatus.submissionInProgress
+                    ? const SizedBox(
+                        width: 32,
+                        height: 32,
+                        child: CircularProgressIndicator(
+                          color: Colors.white,
+                        ),
+                      )
+                    : const Text("我要请假"),
                 onPressed: () {
-                  if (state.submitStatus != FormStatus.submissionInProgress) {
-                    BlocProvider.of<MeetingBloc>(context).add(
-                      ApplyLeaveMeeting(
-                          meeting.id, currentUserJoinState!.userId, () {
-                        showToast('请假成功!');
-                      }),
-                    );
+                  if (state.submitStatus == FormStatus.submissionInProgress) {
+                    return;
                   }
+                  BlocProvider.of<MeetingBloc>(context).add(
+                    ApplyLeaveMeeting(meeting.id, currentUserJoinState!.userId,
+                        () {
+                      showToast('请假成功!');
+                    }),
+                  );
                 },
               )
             : Container(),

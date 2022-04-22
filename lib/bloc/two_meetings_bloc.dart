@@ -1,7 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
 import 'package:cppcc_app/models/app_settings.dart';
-import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/models/two_meetings.dart';
 import 'package:cppcc_app/repository/two_meetings_repository.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';

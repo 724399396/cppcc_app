@@ -18,15 +18,15 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
       emit(state.copyWith(contacts: contacts));
     });
     on<ContactSendBusinessCard>((event, emit) async {
-      emit(state.copyWith(status: FormStatus.submissionInProgress));
+      emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
       try {
         await _contactRepository.sendBusinessCard(event.receiverUsername, event.message);
         emit(state.copyWith(
-            status: FormStatus.submissionSuccess,
+            submitStatus: FormStatus.submissionSuccess,
             successCallback: event.successCallback));
       } catch (err) {
         debugPrint('contact api error: $err');
-        emit(state.copyWith(status: FormStatus.submissionFailure));
+        emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
       }
     });
   }
@@ -34,7 +34,7 @@ class ContactBloc extends Bloc<ContactEvent, ContactState> {
   @override
   void onChange(Change<ContactState> change) {
     super.onChange(change);
-    if (change.nextState.status == FormStatus.submissionSuccess &&
+    if (change.nextState.submitStatus == FormStatus.submissionSuccess &&
         change.nextState.successCallback != null) {
       change.nextState.successCallback!();
     }

@@ -3,31 +3,30 @@ part of 'contact_bloc.dart';
 class ContactState extends Equatable {
   final List<Contact> contacts;
 
-  final FormStatus? status;
+  final FormStatus? submitStatus;
   final SuccessCallback? successCallback;
 
   const ContactState({
     this.contacts = const [],
-    this.status,
+    this.submitStatus,
     this.successCallback,
   });
 
   ContactState copyWith({
     List<Contact>? contacts,
-    FormStatus? status,
+    FormStatus? submitStatus,
     SuccessCallback? successCallback,
   }) {
     return ContactState(
       contacts: contacts ?? this.contacts,
-      status: status ?? this.status,
+      submitStatus: submitStatus ?? this.submitStatus,
       successCallback: successCallback ?? this.successCallback,
     );
   }
 
   @override
-  String toString() =>
-      'ContactState(contacts: $contacts, status: $status, successCallback: $successCallback)';
+  String toString() => 'ContactState(contacts: $contacts, submitStatus: $submitStatus, successCallback: $successCallback)';
 
   @override
-  List<Object> get props => [contacts, status ?? 0, successCallback ?? 0];
+  List<Object> get props => [contacts, submitStatus ?? '', successCallback ?? ''];
 }

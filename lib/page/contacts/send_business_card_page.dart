@@ -70,7 +70,7 @@ class SendBusinessCardPage extends StatelessWidget {
               const SizedBox(height: 12),
               BlocBuilder<ContactBloc, ContactState>(
                 builder: (context, state) {
-                  return state.status == FormStatus.submissionInProgress
+                  return state.submitStatus == FormStatus.submissionInProgress
                       ? const CircularProgressIndicator()
                       : ElevatedButton(
                           style: ButtonStyle(
@@ -81,16 +81,27 @@ class SendBusinessCardPage extends StatelessWidget {
                               ),
                             ),
                           ),
-                          child: Container(
-                            padding: const EdgeInsets.symmetric(
-                                vertical: 12, horizontal: 60),
-                            child: Text(
-                              '发送',
-                              style: themeData.textTheme.bodyLarge
-                                  ?.copyWith(color: Colors.white),
-                            ),
-                          ),
+                          child: state.submitStatus ==
+                                  FormStatus.submissionInProgress
+                              ? const SizedBox(
+                                  width: 16,
+                                  height: 16,
+                                  child: CircularProgressIndicator(),
+                                )
+                              : Container(
+                                  padding: const EdgeInsets.symmetric(
+                                      vertical: 12, horizontal: 60),
+                                  child: Text(
+                                    '发送',
+                                    style: themeData.textTheme.bodyLarge
+                                        ?.copyWith(color: Colors.white),
+                                  ),
+                                ),
                           onPressed: () {
+                            if (state.submitStatus ==
+                                FormStatus.submissionInProgress) {
+                              return;
+                            }
                             if (messageController.text.isEmpty) {
                               showToast('请输入申请内容');
                               return;

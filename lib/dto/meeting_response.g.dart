@@ -177,6 +177,7 @@ UserRecordsResponse _$UserRecordsResponseFromJson(Map<String, dynamic> json) =>
       json['updateTime'] as String?,
       json['userId'] as String?,
       json['userId_dictText'] as String?,
+      json['read'] as bool?,
     );
 
 Map<String, dynamic> _$UserRecordsResponseToJson(
@@ -196,4 +197,5 @@ Map<String, dynamic> _$UserRecordsResponseToJson(
       'updateTime': instance.updateTime,
       'userId': instance.userId,
       'userId_dictText': instance.userIdDictText,
+      'read': instance.read,
     };

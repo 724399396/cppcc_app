@@ -4,30 +4,35 @@ class MeetingActiveRecord extends Equatable {
   final String userId;
   final String userIdDictText;
   final int status;
+  final bool read;
   const MeetingActiveRecord({
     required this.userId,
     required this.userIdDictText,
     required this.status,
+    required this.read,
   });
 
   MeetingActiveRecord copyWith({
     String? userId,
     String? userIdDictText,
     int? status,
+    bool? read,
   }) {
     return MeetingActiveRecord(
       userId: userId ?? this.userId,
       userIdDictText: userIdDictText ?? this.userIdDictText,
       status: status ?? this.status,
+      read: read ?? this.read,
     );
   }
 
   @override
-  String toString() =>
-      'MeetingActiveRecord(userId: $userId, userIdDictText: $userIdDictText, status: $status)';
+  String toString() {
+    return 'MeetingActiveRecord(userId: $userId, userIdDictText: $userIdDictText, status: $status, read: $read)';
+  }
 
   @override
-  List<Object> get props => [userId, userIdDictText, status];
+  List<Object> get props => [userId, userIdDictText, status, read];
 }
 
 class Broadcast extends Equatable {

@@ -2,7 +2,6 @@ import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/dict.dart';
-import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/widget/posts_list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';

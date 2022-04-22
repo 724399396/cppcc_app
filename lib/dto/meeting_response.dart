@@ -166,6 +166,7 @@ class UserRecordsResponse {
   final String? userId;
   @JsonKey(name: "userId_dictText")
   final String? userIdDictText;
+  final bool? read;
 
   UserRecordsResponse(
       this.createBy,
@@ -181,7 +182,8 @@ class UserRecordsResponse {
       this.updateBy,
       this.updateTime,
       this.userId,
-      this.userIdDictText);
+      this.userIdDictText,
+      this.read);
 
   factory UserRecordsResponse.fromJson(Map<String, dynamic> json) =>
       _$UserRecordsResponseFromJson(json);

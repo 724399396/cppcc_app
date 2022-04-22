@@ -51,6 +51,7 @@ class MeetingRepository {
                     userId: r.userId ?? '',
                     userIdDictText: r.userIdDictText ?? '',
                     status: r.status ?? 0,
+                    read: r.read ?? false,
                   ))
               .toList() ??
           [],

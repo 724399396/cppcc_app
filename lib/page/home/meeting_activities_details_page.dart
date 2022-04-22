@@ -4,7 +4,6 @@ import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
-import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -260,9 +259,10 @@ class JoinUsersPage extends StatelessWidget {
                     Positioned(
                       right: 0,
                       top: 0,
-                      // TODO use read status replace image
                       child: Image.asset(
-                        'assets/icons/ic_yiyuedu.png',
+                        us.read
+                            ? 'assets/icons/ic_yiyuedu.png'
+                            : 'assets/icons/ic_weiyuedu.png',
                         width: 14,
                       ),
                     ),

@@ -32,16 +32,7 @@ class _LeaderMailboxAddPageState extends State<LeaderMailboxAddPage> {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "我要写信",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text( "我要写信"),
         actions: <Widget>[
           Container(
             width: 60,
@@ -67,7 +58,6 @@ class _LeaderMailboxAddPageState extends State<LeaderMailboxAddPage> {
           ),
         ],
       ),
-      backgroundColor: const Color(0xfff4f4f4),
       body: Stack(
         alignment: Alignment.center,
         children: [

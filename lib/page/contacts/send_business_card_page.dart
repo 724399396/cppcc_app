@@ -17,16 +17,7 @@ class SendBusinessCardPage extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //修改颜色
-          ),
-          title: const Text(
-            "发送名片",
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color(0xfff27f56),
-          elevation: 0.0,
+          title: const Text("发送名片"),
         ),
         body: Container(
           padding: const EdgeInsets.all(12),

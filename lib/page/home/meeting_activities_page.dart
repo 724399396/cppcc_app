@@ -1,7 +1,6 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/models/dict.dart';
-import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
@@ -52,16 +51,7 @@ class _MeetingActivitiesPageState extends State<MeetingActivitiesPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //修改颜色
-          ),
-          title: const Text(
-            "会议活动",
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.appOrange,
+          title: const Text("会议活动"),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
             child: Theme(
@@ -138,41 +128,39 @@ class MeetingContentPage extends StatelessWidget {
       },
       builder: (context, state) {
         var data = state.meetings[type] ?? [];
-        return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          child: EasyRefresh.custom(
-            controller: _easyRefreshController,
-            enableControlFinishRefresh: true,
-            enableControlFinishLoad: true,
-            header: easyRefreshHeader,
-            footer: easyRefreshFooter,
-            onLoad: () async {
-              BlocProvider.of<MeetingBloc>(context).add(MeetingLoadMore(type));
-            },
-            onRefresh: () async {
-              BlocProvider.of<MeetingBloc>(context).add(MeetingRefresh(type));
-            },
-            emptyWidget: data.isEmpty ? const EmptyData() : null,
-            slivers: type == '1'
-                ? [
-                    SliverToBoxAdapter(
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.pushNamed(context, Routes.twoMeetingPage);
-                        },
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(vertical: 8),
-                          child: Image.asset(
-                            'assets/bg/bg_two_meetings.png',
-                            width: double.infinity,
-                          ),
+        return EasyRefresh.custom(
+          controller: _easyRefreshController,
+          enableControlFinishRefresh: true,
+          enableControlFinishLoad: true,
+          header: easyRefreshHeader,
+          footer: easyRefreshFooter,
+          onLoad: () async {
+            BlocProvider.of<MeetingBloc>(context).add(MeetingLoadMore(type));
+          },
+          onRefresh: () async {
+            BlocProvider.of<MeetingBloc>(context).add(MeetingRefresh(type));
+          },
+          emptyWidget: data.isEmpty ? const EmptyData() : null,
+          slivers: type == '1'
+              ? [
+                  SliverToBoxAdapter(
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.pushNamed(context, Routes.twoMeetingPage);
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        child: Image.asset(
+                          'assets/bg/bg_two_meetings.png',
+                          width: double.infinity,
                         ),
                       ),
                     ),
-                    ...data.map((p) => MeetingItem(p)).toList()
-                  ]
-                : data.map((p) => MeetingItem(p)).toList(),
-          ),
+                  ),
+                  ...data.map((p) => MeetingItem(p)).toList()
+                ]
+              : data.map((p) => MeetingItem(p)).toList(),
         );
       },
     );

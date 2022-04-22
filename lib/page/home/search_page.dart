@@ -12,16 +12,7 @@ class SearchPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "搜索结果",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
+        title: const Text("搜索结果"),
       ),
       body: Container(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),

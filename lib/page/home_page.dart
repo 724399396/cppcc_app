@@ -292,31 +292,28 @@ class HomePage extends StatelessWidget {
                         []) +
                     (state.posts[const PostKey(PostType.fileAnnment, null)] ??
                         []);
-                return Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 16.0),
-                  child: EasyRefresh.custom(
-                    controller: _easyRefreshController,
-                    enableControlFinishRefresh: true,
-                    enableControlFinishLoad: true,
-                    header: easyRefreshHeader,
-                    footer: easyRefreshFooter,
-                    onLoad: () async {
-                      BlocProvider.of<PostsBloc>(context).add(
-                          const PostLoadMore(PostKey(PostType.news, null)));
-                      BlocProvider.of<PostsBloc>(context).add(
-                          const PostLoadMore(
-                              PostKey(PostType.fileAnnment, null)));
-                    },
-                    onRefresh: () async {
-                      BlocProvider.of<PostsBloc>(context)
-                          .add(const PostRefresh(PostKey(PostType.news, null)));
-                      BlocProvider.of<PostsBloc>(context).add(const PostRefresh(
-                          PostKey(PostType.fileAnnment, null)));
-                    },
-                    emptyWidget:
-                        data.isEmpty ? const Center(child: Text('暂无数据')) : null,
-                    slivers: data.map((p) => PostsItem(p)).toList(),
-                  ),
+                return EasyRefresh.custom(
+                  controller: _easyRefreshController,
+                  enableControlFinishRefresh: true,
+                  enableControlFinishLoad: true,
+                  header: easyRefreshHeader,
+                  footer: easyRefreshFooter,
+                  onLoad: () async {
+                    BlocProvider.of<PostsBloc>(context).add(
+                        const PostLoadMore(PostKey(PostType.news, null)));
+                    BlocProvider.of<PostsBloc>(context).add(
+                        const PostLoadMore(
+                            PostKey(PostType.fileAnnment, null)));
+                  },
+                  onRefresh: () async {
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostRefresh(PostKey(PostType.news, null)));
+                    BlocProvider.of<PostsBloc>(context).add(const PostRefresh(
+                        PostKey(PostType.fileAnnment, null)));
+                  },
+                  emptyWidget:
+                      data.isEmpty ? const Center(child: Text('暂无数据')) : null,
+                  slivers: data.map((p) => PostsItem(p)).toList(),
                 );
               },
             ),

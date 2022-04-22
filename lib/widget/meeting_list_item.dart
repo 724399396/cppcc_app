@@ -3,7 +3,6 @@ import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/badge_decoration.dart';
 import 'package:flutter/material.dart';
-import 'dart:math' as math;
 
 /// 列表项
 class MeetingItem extends StatelessWidget {
@@ -22,7 +21,7 @@ class MeetingItem extends StatelessWidget {
               arguments: _meeting.id);
         },
         child: Container(
-          margin: const EdgeInsets.symmetric(vertical: 8),
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
           decoration: BoxDecoration(
             color: Colors.white,
             borderRadius: BorderRadius.circular(12),

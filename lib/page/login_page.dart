@@ -32,7 +32,6 @@ class _LoginPageState extends State<LoginPage> {
     const itemSpace = SizedBox(height: 32);
     const formItemSpace = SizedBox(height: 16);
     return Scaffold(
-      backgroundColor: AppColors.background,
       resizeToAvoidBottomInset: false,
       body: Stack(
         alignment: Alignment.center,

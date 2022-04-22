@@ -5,16 +5,16 @@ import 'package:flutter/material.dart';
 import 'package:cppcc_app/utils/routes.dart';
 
 class DiscussNetworkItem extends StatelessWidget {
-  final DiscussNetwork _response;
-  const DiscussNetworkItem(this._response, {Key? key}) : super(key: key);
+  final DiscussNetwork _bean;
+  const DiscussNetworkItem(this._bean, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context).pushNamed(Routes.discussNetworkDetailsPage,
-              arguments: {"id": _response.id});
+          Navigator.of(context)
+              .pushNamed(Routes.discussNetworkDetailsPage, arguments: _bean);
         },
         child: Container(
           height: 120,
@@ -35,7 +35,7 @@ class DiscussNetworkItem extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        _response.read
+                        _bean.read
                             ? Container()
                             : Container(
                                 width: 8,
@@ -48,7 +48,7 @@ class DiscussNetworkItem extends StatelessWidget {
                                 )),
                         Expanded(
                             child: Text(
-                          _response.title,
+                          _bean.title,
                           maxLines: 2,
                           overflow: TextOverflow.ellipsis,
                           style: Theme.of(context)
@@ -63,7 +63,7 @@ class DiscussNetworkItem extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: _response.status == 1
+                            color: _bean.status == 1
                                 ? const Color(0xFFc6c3bc)
                                 : const Color(0xff3c6dea),
                             borderRadius: BorderRadius.circular(4),
@@ -71,7 +71,7 @@ class DiscussNetworkItem extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               vertical: 2, horizontal: 4),
                           child: Text(
-                            _response.statusDictText.toString(),
+                            _bean.statusDictText.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
@@ -80,7 +80,7 @@ class DiscussNetworkItem extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          _response.praiseCount.toString() + '点赞',
+                          _bean.praiseCount.toString() + '点赞',
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
@@ -95,10 +95,10 @@ class DiscussNetworkItem extends StatelessWidget {
                 width: 120,
                 child: ClipRRect(
                     borderRadius: BorderRadius.circular(32),
-                    child: _response.cover == null
+                    child: _bean.cover == null
                         ? Image.asset('assets/icons/ic_news.png')
                         : CachedNetworkImage(
-                            imageUrl: _response.cover!,
+                            imageUrl: _bean.cover!,
                             fit: BoxFit.cover,
                           )),
               ),

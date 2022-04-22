@@ -12,20 +12,11 @@ class _CollectionPageState extends State<CollectionPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: Text(
-          "我的收藏",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("我的收藏"),
       ),
       body: Stack(
         alignment: Alignment.center,
-        children: [
+        children: const [
           Text("功能开发中"),
         ],
       ),

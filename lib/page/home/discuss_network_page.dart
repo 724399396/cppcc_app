@@ -39,16 +39,7 @@ class _DicusssNetworkPageState extends State<DicusssNetworkPage>
     super.build(context);
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "网络议政",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
+        title: const Text("网络议政"),
         bottom: PreferredSize(
           preferredSize: const Size.fromHeight(48),
           child: Theme(

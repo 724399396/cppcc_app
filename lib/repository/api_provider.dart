@@ -9,6 +9,7 @@ import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
+import 'package:cppcc_app/models/guandu_historical_clue.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
@@ -161,14 +162,13 @@ class ApiDataProvider {
   }
 
   /// 添加线索征集
-  Future<BaseResponse> addHistoricalClue(String title, String unit,
-      String provider, String phone, String content) {
+  Future<BaseResponse> addHistoricalClue(GuanduHistoricalClue clue) {
     return _dio.post('/app/historicalClue/add', data: {
-      "title": title,
-      "unit": unit,
-      "provider": provider,
-      "phone": phone,
-      "content": content
+      "title": clue.title,
+      "unit": clue.unit,
+      "provider": clue.provider,
+      "phone": clue.phone,
+      "content": clue.content
     }).then((value) {
       return BaseResponse.fromJson(value.data);
     });

@@ -42,16 +42,23 @@ class GuanduHistoricalClueBloc
       });
     });
 
-    //添加领导信箱
-    on<AddHistoricalClue>((event, emit) async {
+    on<GuanduHistoricalClueAdd>((event, emit) async {
       emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
       try {
-        await _historicalClueRepository.addHistoricalClue(event.title,
-            event.unit, event.provider, event.phone, event.content);
+        await _historicalClueRepository.addHistoricalClue(event.clue);
         emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
         event.successCallback();
+
+        // reload data
+        await _generateCallApi(event, emit, (emit) async {
+          emit(state.copyWith(
+            currentPage: 1,
+            data: [],
+          ));
+          await _dataLoad(emit);
+        });
       } catch (err) {
-        debugPrint('meeting api error: $err');
+        debugPrint('guandu historical clue api error: $err');
         emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
       }
     });

@@ -1,7 +1,4 @@
-import 'dart:async';
-
 import 'package:cppcc_app/bloc/message_bloc.dart';
-import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/message_list_item.dart';
@@ -44,18 +41,10 @@ class _HomeMessageState extends State<HomeMessage>
 
   @override
   Widget build(BuildContext context) {
+    super.build(context);
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "消息",
-          style: TextStyle(
-              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
+        title: const Text("消息"),
         bottom: PreferredSize(
           preferredSize: Size.fromHeight(48),
           child: Theme(

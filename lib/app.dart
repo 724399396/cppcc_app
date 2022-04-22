@@ -1,8 +1,7 @@
 import 'package:cppcc_app/page/contacts/contact_detail.dart';
 import 'package:cppcc_app/page/contacts/send_business_card_page.dart';
-import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
+import 'package:cppcc_app/page/home/guandu_historical_details_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_clue_list_page.dart';
-import 'package:cppcc_app/page/home/guandu_historical_clue_me_page.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
 import 'package:cppcc_app/page/home/guandu_history_list_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
@@ -37,7 +36,7 @@ import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/page_container.dart';
 import 'package:flutter/material.dart';
 
-import 'page/home/gd_historical_add_page.dart';
+import 'page/home/guandu_historical_add_page.dart';
 
 final RouteObserver<Route> routeObserver = RouteObserver<Route>();
 
@@ -61,13 +60,11 @@ final routesDef = {
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
-  Routes.gdHistoricalAddPage: (context) => const GdHistoricalAddPage(),
-  Routes.guanduHistoricalClueMePage: (context) =>
-      const GuanduHistoricalClueMePage(),
+  Routes.gdHistoricalAddPage: (context) => const GuanduHistoricalAddPage(),
   Routes.guanduHistoricalClueListPage: (context) =>
-      const GuanduHistoricalClueListPage(),
+      const GuanduHistoralcalClueContainer(),
   Routes.guanduHistoricalDetailsPage: (context) =>
-      const GdHistoricalDetailsPage(),
+      const GuanduHistoricalDetailsPage(),
   Routes.searchPage: (context) => const SearchPage(),
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
   Routes.generalTabSwitchPostsListPage: (context) =>
@@ -98,6 +95,16 @@ class CppccApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var _theme = ThemeData(
+      appBarTheme: const AppBarTheme(
+        iconTheme: IconThemeData(
+          color: Colors.white, //修改颜色
+        ),
+        centerTitle: true,
+        titleTextStyle: TextStyle(
+            color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+        elevation: 0.0,
+        backgroundColor: AppColors.appOrange
+      ),
       primarySwatch: AppColors.primary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       // content

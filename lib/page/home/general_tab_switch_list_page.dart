@@ -59,16 +59,7 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //修改颜色
-          ),
-          title: Text(
-            argument.title,
-            style: const TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.appOrange,
+          title: Text( argument.title),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
             child: Theme(

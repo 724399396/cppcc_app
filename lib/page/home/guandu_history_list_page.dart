@@ -2,7 +2,6 @@ import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/dict.dart';
-import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/posts_list_container.dart';
 import 'package:flutter/material.dart';
@@ -51,15 +50,7 @@ class _GuanduHistoryListPageState extends State<GuanduHistoryListPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //修改颜色
-          ),
-          title: const Text(
-            '官渡文史',
-            style: TextStyle(
-                color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-          ),
-          centerTitle: true,
+          title: const Text('官渡文史'),
           actions: [
             Padding(
               padding: const EdgeInsets.only(right: 8.0),
@@ -68,7 +59,7 @@ class _GuanduHistoryListPageState extends State<GuanduHistoryListPage>
                 child: GestureDetector(
                   onTap: () {
                     Navigator.of(context)
-                        .pushNamed(Routes.postListWithFilterPage);
+                        .pushNamed(Routes.guanduHistoricalClueListPage);
                   },
                   child: Container(
                     decoration: BoxDecoration(
@@ -88,7 +79,6 @@ class _GuanduHistoryListPageState extends State<GuanduHistoryListPage>
               ),
             )
           ],
-          backgroundColor: AppColors.appOrange,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
             child: Theme(

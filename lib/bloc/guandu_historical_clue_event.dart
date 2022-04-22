@@ -13,16 +13,10 @@ class GuanduHistoricalClueLoadMore extends GuanduHistoricalClueEvent {}
 
 class GuanduHistoricalClueRefresh extends GuanduHistoricalClueEvent {}
 
-class AddHistoricalClue extends GuanduHistoricalClueEvent {
-  final String title;
-  final String content;
-  final String phone;
-  final String provider;
-  final String unit;
+class GuanduHistoricalClueAdd extends GuanduHistoricalClueEvent {
+  final GuanduHistoricalClue clue;
 
   final SuccessCallback successCallback;
 
-  const AddHistoricalClue(this.title, this.content, this.phone, this.provider,
-      this.unit, this.successCallback)
-      : super();
+  const GuanduHistoricalClueAdd(this.clue, this.successCallback) : super();
 }

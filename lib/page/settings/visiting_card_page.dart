@@ -12,23 +12,9 @@ class _VisitingCardPageState extends State<VisitingCardPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: Text(
-          "二维码名片",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("二维码名片"),
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: [
-          Text("功能开发中"),
-        ],
-      ),
+      body: const Text("功能开发中"),
     );
   }
 }

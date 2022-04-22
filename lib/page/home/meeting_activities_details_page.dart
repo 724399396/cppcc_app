@@ -28,18 +28,8 @@ class MeetingActivitiesDetailsPage extends StatelessWidget {
               BlocProvider.of<UserBloc>(context).state.userInfo?.userId);
       return Scaffold(
         appBar: AppBar(
-          iconTheme: const IconThemeData(
-            color: Colors.white, //修改颜色
-          ),
-          title: const Text(
-            "会议详情",
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: AppColors.appOrange,
-          elevation: 0.0,
+          title: const Text("会议详情"),
         ),
-        backgroundColor: const Color(0xfff4f4f4),
         floatingActionButton: (currentUserJoinState?.status == 1 &&
                 meeting != null)
             ? FloatingActionButton.extended(

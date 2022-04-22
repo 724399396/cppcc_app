@@ -15,7 +15,6 @@ class Routes {
   static const proposalManagePage = '/proposalManagePage';
   static const socialOpinionsPage = '/socialOpinionsPage';
   static const gdHistoricalAddPage = '/gdHistoricalAddPage';
-  static const guanduHistoricalClueMePage = '/guanduHistoricalClueMePage';
   static const guanduHistoricalClueListPage = '/guanduHistoricalClueListPage';
   static const guanduHistoricalDetailsPage = '/guanduHistoricalDetailsPage';
   static const postListWithFilterPage = '/postListWithFilterPage';

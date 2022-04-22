@@ -24,10 +24,8 @@ class GuanduHistoricalClueRepository {
         .toList();
   }
 
-  Future<BaseResponse> addHistoricalClue(String title, String unit,
-      String provider, String phone, String content) async {
-    var response = await _apiDataProvider.addHistoricalClue(
-        title, unit, provider, phone, content);
+  Future<BaseResponse> addHistoricalClue(GuanduHistoricalClue clue) async {
+    var response = await _apiDataProvider.addHistoricalClue(clue);
     return response;
   }
 }

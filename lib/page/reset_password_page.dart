@@ -27,18 +27,8 @@ class _ResetPasswordPageState extends State<ResetPasswordPage> {
     const itemSpace = SizedBox(height: 20);
 
     return Scaffold(
-      backgroundColor: themeData.backgroundColor,
       appBar: AppBar(
-        leading: IconButton(
-            icon: const Icon(
-              Icons.arrow_back_ios_new,
-              color: Colors.white,
-            ),
-            onPressed: () => Navigator.of(context).pop()),
-        title: Text('忘记密码',
-            style: themeData.primaryTextTheme.headline6
-                ?.copyWith(color: Colors.white)),
-        centerTitle: true,
+        title: const Text('忘记密码'),
       ),
       body: Container(
         margin: const EdgeInsets.all(16),

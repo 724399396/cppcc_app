@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cppcc_app/styles.dart';
 import 'package:flutter/material.dart';
 import '../widget/user_list_item.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -15,15 +16,8 @@ class HomeMe extends StatelessWidget {
     var themeData = Theme.of(context);
     return Scaffold(
         appBar: AppBar(
-          title: const Text(
-            "我",
-            style: TextStyle(color: Colors.white),
-          ),
-          centerTitle: true,
-          backgroundColor: const Color(0xFFFB7D30),
-          elevation: 0.0,
+          title: const Text("我"),
         ),
-        backgroundColor: const Color(0xfff4f4f4),
         body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
           final TextStyle? userFiledStyle =
               themeData.textTheme.bodyText1?.copyWith(color: Colors.white);
@@ -39,7 +33,8 @@ class HomeMe extends StatelessWidget {
                     bottomLeft: Radius.circular(30.0),
                     bottomRight: Radius.circular(30.0),
                   ),
-                  color: Color(0xFFFB7D30),
+                  gradient: LinearGradient(
+                      colors: [AppColors.appOrange, Color(0xFFe45a2a)]),
                 ),
               ),
               SingleChildScrollView(

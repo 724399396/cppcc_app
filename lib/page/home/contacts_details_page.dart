@@ -1,31 +1,17 @@
 import 'package:flutter/material.dart';
 
-class MessageDetailsPage extends StatefulWidget {
+class MessageDetailsPage extends StatelessWidget {
   const MessageDetailsPage({Key? key}) : super(key: key);
 
-  @override
-  _MessageDetailsPageState createState() => _MessageDetailsPageState();
-}
-
-class _MessageDetailsPageState extends State<MessageDetailsPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: Text(
-          "消息详情",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("消息详情"),
       ),
       body: Stack(
         alignment: Alignment.center,
-        children: [
+        children: const [
           Text("功能开发中"),
         ],
       ),

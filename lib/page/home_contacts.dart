@@ -22,16 +22,7 @@ class _HomeContactsState extends State<HomeContacts> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "通讯录",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("通讯录"),
       ),
       body: Column(
         children: [

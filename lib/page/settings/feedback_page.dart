@@ -15,16 +15,7 @@ class _FeedbackPageState extends State<FeedbackPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "建议反馈",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("建议反馈"),
         actions: <Widget>[
           Container(
             width: 60,
@@ -39,7 +30,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
           ),
         ],
       ),
-      backgroundColor: Color(0xfff4f4f4),
       body: Stack(
         alignment: Alignment.center,
         children: [

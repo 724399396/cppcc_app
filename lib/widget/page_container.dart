@@ -74,11 +74,11 @@ class _PageContainerState extends State<PageContainer>
       ),
       body: TabBarView(
         physics: const NeverScrollableScrollPhysics(),
-        children: [
-          const HomePage(),
-          const HomeNews(),
-          const HomeContacts(),
-          const HomeMessage(),
+        children: const [
+          HomePage(),
+          HomeNews(),
+          HomeContacts(),
+          HomeMessage(),
           HomeMe(),
         ],
         controller: _tabController,

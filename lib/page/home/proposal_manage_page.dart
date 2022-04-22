@@ -12,16 +12,7 @@ class _ProposalManagePageState extends State<ProposalManagePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        iconTheme: const IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: const Text(
-          "提案管理",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: const Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("提案管理"),
       ),
       body: Stack(
         alignment: Alignment.center,

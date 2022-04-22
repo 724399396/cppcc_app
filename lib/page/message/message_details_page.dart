@@ -22,18 +22,8 @@ class _MessageDetailsPageState extends State<MessageDetailsPage> {
     }
     return Scaffold(
       appBar: AppBar(
-        iconTheme: IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        title: Text(
-          "消息详情",
-          style: TextStyle(color: Colors.white),
-        ),
-        centerTitle: true,
-        backgroundColor: Color(0xfff27f56),
-        elevation: 0.0,
+        title: const Text("消息详情"),
       ),
-      backgroundColor: Color(0xfff4f4f4),
       body: Stack(
         alignment: Alignment.center,
         children: [

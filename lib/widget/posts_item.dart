@@ -19,28 +19,21 @@ class PostsItem extends StatelessWidget {
         switch (_post.postType) {
           case PostType.news:
             Navigator.of(context)
-                .pushNamed(Routes.newsDetailsPage, arguments: _post);
-            break;
-          case PostType.broadcast:
-            // TODO: Handle this case.
-            break;
-          case PostType.twoSessionsTopic:
-            // TODO: Handle this case.
-            break;
-          case PostType.discussPoliticsFile:
-            // TODO: Handle this case.
+                .pushNamed(Routes.postsDetailPage, arguments: _post);
             break;
           case PostType.learning:
-            // TODO: Handle this case.
+            Navigator.of(context)
+                .pushNamed(Routes.postsDetailPage, arguments: _post);
             break;
           case PostType.fileAnnment:
-            // TODO: Handle this case.
+            Navigator.of(context)
+                .pushNamed(Routes.postsDetailPage, arguments: _post);
             break;
-          case PostType.gdHistory:
-            // TODO: Handle this case.
+          case PostType.guanduHistory:
+            Navigator.of(context)
+                .pushNamed(Routes.postsDetailPage, arguments: _post);
             break;
           case PostType.unknown:
-            // TODO: Handle this case.
             break;
         }
       },
@@ -63,14 +56,31 @@ class PostsItem extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
-                    _post.title,
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context)
-                        .textTheme
-                        .headline6
-                        ?.copyWith(color: Colors.black),
+                  Row(
+                    children: [
+                      _post.read
+                          ? Container()
+                          : Container(
+                              width: 8,
+                              height: 8,
+                              margin: const EdgeInsets.only(right: 8),
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFfa7c2f),
+                              )),
+                      Expanded(
+                        child: Text(
+                          _post.title,
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                          style: Theme.of(context)
+                              .textTheme
+                              .headline6
+                              ?.copyWith(color: Colors.black),
+                        ),
+                      ),
+                    ],
                   ),
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.center,

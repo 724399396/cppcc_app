@@ -7,12 +7,13 @@ import 'package:flutter_html/flutter_html.dart';
 
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 
-class NewsDetailPage extends StatelessWidget {
-  const NewsDetailPage({Key? key}) : super(key: key);
+class PostsDetailPage extends StatelessWidget {
+  const PostsDetailPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final Posts _post = ModalRoute.of(context)?.settings.arguments as Posts;
+    BlocProvider.of<PostsBloc>(context).add(PostReaded(_post));
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(

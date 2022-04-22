@@ -26,6 +26,7 @@ class PostsResponse {
   final int? type;
   final String createBy;
   final String createTime;
+  final bool? read;
 
   @JsonKey(name: "categoryDictText")
   final String? categoryDictText;
@@ -42,7 +43,8 @@ class PostsResponse {
       this.type,
       this.createBy,
       this.createTime,
-      this.categoryDictText);
+      this.categoryDictText,
+      this.read);
 
   factory PostsResponse.fromJson(Map<String, dynamic> json) =>
       _$PostsResponseFromJson(json);

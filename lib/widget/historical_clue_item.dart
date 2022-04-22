@@ -1,4 +1,4 @@
-import 'package:cppcc_app/dto/historical_clue_response.dart';
+import 'package:cppcc_app/models/guandu_historical_clue.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:flutter/material.dart';
@@ -6,22 +6,21 @@ import 'package:flutter/material.dart';
 /// 列表项
 
 class HistoricalClueItem extends StatelessWidget {
-  final HistoricalClueResponse _response;
-  const HistoricalClueItem(this._response, {Key? key}) : super(key: key);
+  final GuanduHistoricalClue _bean;
+  const HistoricalClueItem(this._bean, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child: GestureDetector(
+    return GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.gdHistoricalDetailsPage,
-            arguments: {"id": _response.id});
+        Navigator.of(context)
+            .pushNamed(Routes.guanduHistoricalDetailsPage, arguments: _bean);
       },
       child: Container(
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
         margin: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-        decoration: BoxDecoration(
+        decoration: const BoxDecoration(
           border: Border(
             bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
           ),
@@ -36,7 +35,7 @@ class HistoricalClueItem extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    _response.title!,
+                    _bean.title,
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
                     style: Theme.of(context)
@@ -55,7 +54,7 @@ class HistoricalClueItem extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             vertical: 2, horizontal: 4),
                         child: Text(
-                          _response.provider!,
+                          _bean.provider,
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall
@@ -64,7 +63,7 @@ class HistoricalClueItem extends StatelessWidget {
                       ),
                       const SizedBox(width: 8),
                       Text(
-                        _response.unit!,
+                        _bean.unit,
                         style: Theme.of(context)
                             .textTheme
                             .bodySmall
@@ -78,6 +77,6 @@ class HistoricalClueItem extends StatelessWidget {
           ],
         ),
       ),
-    ));
+    );
   }
 }

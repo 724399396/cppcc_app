@@ -1,5 +1,5 @@
-import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
-import 'package:cppcc_app/dto/historical_clue_response.dart';
+import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
+import 'package:cppcc_app/models/guandu_historical_clue.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
@@ -14,15 +14,10 @@ class GdHistoricalDetailsPage extends StatefulWidget {
 }
 
 class _GdHistoricalDetailsPageState extends State<GdHistoricalDetailsPage> {
-  String? id;
-
-  late HistoricalClueResponse _bean;
   @override
   Widget build(BuildContext context) {
-    dynamic obj = ModalRoute.of(context)?.settings.arguments;
-    if (obj != null) {
-      id = obj["id"];
-    }
+    final GuanduHistoricalClue _bean =
+        ModalRoute.of(context)?.settings.arguments as GuanduHistoricalClue;
     return Scaffold(
       appBar: AppBar(
         iconTheme: const IconThemeData(
@@ -40,12 +35,9 @@ class _GdHistoricalDetailsPageState extends State<GdHistoricalDetailsPage> {
       body: Stack(
         alignment: Alignment.center,
         children: [
-          Container(child: BlocBuilder<HistoricalClueBloc, HistoricalClueState>(
+          Container(child:
+              BlocBuilder<GuanduHistoricalClueBloc, GuanduHistoricalClueState>(
             builder: (context, state) {
-              state.listDatas
-                  .where((item) => item.id == id)
-                  .forEach((item) => _bean = item);
-
               return EasyRefresh.custom(
                 slivers: <Widget>[
                   SliverList(
@@ -80,7 +72,7 @@ class _GdHistoricalDetailsPageState extends State<GdHistoricalDetailsPage> {
                                       padding: const EdgeInsets.only(
                                           left: 5, right: 5),
                                       decoration: const BoxDecoration(),
-                                      child: Text(_bean.title!,
+                                      child: Text(_bean.title,
                                           style: const TextStyle(
                                             fontSize: 16.0,
                                             color: Color(0xff333333),
@@ -104,7 +96,7 @@ class _GdHistoricalDetailsPageState extends State<GdHistoricalDetailsPage> {
                                             padding: const EdgeInsets.symmetric(
                                                 vertical: 2, horizontal: 4),
                                             child: Text(
-                                              _bean.provider!,
+                                              _bean.provider,
                                               style: Theme.of(context)
                                                   .textTheme
                                                   .bodySmall
@@ -115,7 +107,7 @@ class _GdHistoricalDetailsPageState extends State<GdHistoricalDetailsPage> {
                                           const SizedBox(
                                             width: 10,
                                           ),
-                                          Text(_bean.unit!,
+                                          Text(_bean.unit,
                                               style: const TextStyle(
                                                 fontSize: 12.0,
                                                 color: Color(0xff999999),

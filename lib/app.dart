@@ -1,8 +1,10 @@
 import 'package:cppcc_app/page/contacts/contact_detail.dart';
 import 'package:cppcc_app/page/contacts/send_business_card_page.dart';
 import 'package:cppcc_app/page/home/gd_historical_details_page.dart';
-import 'package:cppcc_app/page/home/gd_historical_me_page.dart';
+import 'package:cppcc_app/page/home/guandu_historical_clue_list_page.dart';
+import 'package:cppcc_app/page/home/guandu_historical_clue_me_page.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
+import 'package:cppcc_app/page/home/guandu_history_list_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
 // 首页相关页面
@@ -18,8 +20,8 @@ import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
+import 'package:cppcc_app/page/posts_details_page.dart';
 //资讯相关页面
-import 'package:cppcc_app/page/news/news_details_page.dart';
 import 'package:cppcc_app/page/reset_password_page.dart';
 import 'package:cppcc_app/page/home/search_page.dart';
 import 'package:cppcc_app/page/scan_qr_code_page.dart';
@@ -60,8 +62,12 @@ final routesDef = {
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
   Routes.gdHistoricalAddPage: (context) => const GdHistoricalAddPage(),
-  Routes.gdHistoricalClueMePage: (context) => const GdHistoricalClueMePage(),
-  Routes.gdHistoricalDetailsPage: (context) => const GdHistoricalDetailsPage(),
+  Routes.guanduHistoricalClueMePage: (context) =>
+      const GuanduHistoricalClueMePage(),
+  Routes.guanduHistoricalClueListPage: (context) =>
+      const GuanduHistoricalClueListPage(),
+  Routes.guanduHistoricalDetailsPage: (context) =>
+      const GdHistoricalDetailsPage(),
   Routes.searchPage: (context) => const SearchPage(),
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
   Routes.generalTabSwitchPostsListPage: (context) =>
@@ -69,6 +75,7 @@ final routesDef = {
   Routes.contactDetailPage: (context) => const ContactDetailPage(),
   Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
   Routes.twoMeetingPage: (context) => const TwoMeetingsPage(),
+  Routes.guanduHistoryListPage: (context) => const GuanduHistoryListPage(),
 
   //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),
@@ -80,8 +87,7 @@ final routesDef = {
   //消息相关功能
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
 
-  //资讯相关页面
-  Routes.newsDetailsPage: (context) => const NewsDetailPage(),
+  Routes.postsDetailPage: (context) => const PostsDetailPage(),
 };
 
 class CppccApp extends StatelessWidget {

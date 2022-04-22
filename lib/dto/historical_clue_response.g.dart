@@ -31,18 +31,20 @@ Map<String, dynamic> _$HistoricalClueWrapperToJson(
 
 HistoricalClueResponse _$HistoricalClueResponseFromJson(
         Map<String, dynamic> json) =>
-    HistoricalClueResponse()
-      ..id = json['id'] as String
-      ..content = json['content'] as String?
-      ..createBy = json['createBy'] as String?
-      ..createTime = json['createTime'] as String?
-      ..phone = json['phone'] as String?
-      ..title = json['title'] as String?
-      ..provider = json['provider'] as String?
-      ..sysOrgCode = json['sysOrgCode'] as String?
-      ..unit = json['unit'] as String?
-      ..updateBy = json['updateBy'] as String?
-      ..updateTime = json['updateTime'] as String?;
+    HistoricalClueResponse(
+      json['id'] as String,
+      json['content'] as String?,
+      json['createBy'] as String?,
+      json['createTime'] as String?,
+      json['phone'] as String?,
+      json['title'] as String?,
+      json['provider'] as String?,
+      json['sysOrgCode'] as String?,
+      json['unit'] as String?,
+      json['updateBy'] as String?,
+      json['updateTime'] as String?,
+      json['read'] as bool?,
+    );
 
 Map<String, dynamic> _$HistoricalClueResponseToJson(
         HistoricalClueResponse instance) =>
@@ -58,4 +60,5 @@ Map<String, dynamic> _$HistoricalClueResponseToJson(
       'unit': instance.unit,
       'updateBy': instance.updateBy,
       'updateTime': instance.updateTime,
+      'read': instance.read,
     };

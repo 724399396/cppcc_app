@@ -3,27 +3,19 @@ import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/dict.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/posts_list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GeneralTabArgument {
-  final String title;
-  final String dictKey;
-  final PostType postType;
-
-  GeneralTabArgument(this.title, this.dictKey, this.postType);
-}
-
-class GeneralTabSwitchListPage extends StatefulWidget {
-  const GeneralTabSwitchListPage({Key? key}) : super(key: key);
+class GuanduHistoryListPage extends StatefulWidget {
+  const GuanduHistoryListPage({Key? key}) : super(key: key);
 
   @override
-  State<GeneralTabSwitchListPage> createState() =>
-      _GeneralTabSwitchListPageState();
+  State<GuanduHistoryListPage> createState() => _GuanduHistoryListPageState();
 }
 
-class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
+class _GuanduHistoryListPageState extends State<GuanduHistoryListPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late List<Dict>? _tabs;
   late TabController _tabController;
@@ -32,8 +24,10 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
   @protected
   bool get wantKeepAlive => true;
 
-  void updateTab(Map<String, List<Dict>> dictMap, String key) {
-    _tabs = dictMap[key];
+  void updateTab(Map<String, List<Dict>> dictMap) {
+    _tabs = dictMap['gd_history_dict']
+        ?.where((element) => element.itemValue == '1')
+        .toList();
     _tabController =
         TabController(initialIndex: 0, length: _tabs?.length ?? 0, vsync: this);
   }
@@ -48,13 +42,11 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
     super.build(context);
     var dictMap =
         BlocProvider.of<AppSettingBloc>(context, listen: false).state.dictMap;
-    var argument =
-        ModalRoute.of(context)?.settings.arguments as GeneralTabArgument;
-    updateTab(dictMap, argument.dictKey);
+    updateTab(dictMap);
     return BlocListener<AppSettingBloc, AppSettingState>(
       listener: (context, state) {
         setState(() {
-          updateTab(state.dictMap, argument.dictKey);
+          updateTab(state.dictMap);
         });
       },
       child: Scaffold(
@@ -62,12 +54,40 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
           iconTheme: const IconThemeData(
             color: Colors.white, //修改颜色
           ),
-          title: Text(
-            argument.title,
-            style: const TextStyle(
+          title: const Text(
+            '官渡文史',
+            style: TextStyle(
                 color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
           ),
           centerTitle: true,
+          actions: [
+            Padding(
+              padding: const EdgeInsets.only(right: 8.0),
+              child: Align(
+                alignment: Alignment.center,
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.of(context)
+                        .pushNamed(Routes.postListWithFilterPage);
+                  },
+                  child: Container(
+                    decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        border: Border.all(color: Colors.white)),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                    child: const Text(
+                      '史料征集',
+                      style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 14,
+                          fontWeight: FontWeight.bold),
+                    ),
+                  ),
+                ),
+              ),
+            )
+          ],
           backgroundColor: AppColors.appOrange,
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
@@ -101,7 +121,7 @@ class _GeneralTabSwitchListPageState extends State<GeneralTabSwitchListPage>
           controller: _tabController,
           children: _tabs?.map<Widget>((item) {
                 return PostsListContainer(
-                    PostKey(argument.postType, int.parse(item.itemValue)));
+                    PostKey(PostType.guanduHistory, int.parse(item.itemValue)));
               }).toList() ??
               [],
         ),

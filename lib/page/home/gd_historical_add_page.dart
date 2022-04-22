@@ -1,4 +1,4 @@
-import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
+import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -11,7 +11,6 @@ class GdHistoricalAddPage extends StatefulWidget {
 }
 
 class _GdHistoricalAddPageState extends State<GdHistoricalAddPage> {
-  late String type = "1";
   late String title;
   late String content;
   late String phone;
@@ -44,13 +43,11 @@ class _GdHistoricalAddPageState extends State<GdHistoricalAddPage> {
             ),
             child: GestureDetector(
               onTap: () {
-                BlocProvider.of<HistoricalClueBloc>(context).add(
-                    AddHistoricalClue(
-                        type, title, content, phone, provider, unit, () {
+                BlocProvider.of<GuanduHistoricalClueBloc>(context).add(
+                    AddHistoricalClue(title, content, phone, provider, unit,
+                        () {
                   showToast('添加成功');
                   Navigator.of(context).pop();
-                }, () {
-                  showToast('添加失败');
                 }));
               },
               child: const Text("提交"),

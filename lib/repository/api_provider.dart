@@ -322,4 +322,10 @@ class ApiDataProvider {
       return BaseResponse.fromJson(value.data);
     });
   }
+
+  Future getPostsDetail(String id) {
+    return _dio.get('/app/posts/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) => BaseResponse.fromJson(value.data));
+  }
 }

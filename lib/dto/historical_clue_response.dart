@@ -19,19 +19,32 @@ class HistoricalClueWrapper {
 
 @JsonSerializable()
 class HistoricalClueResponse {
-  late String id;
-  late String? content;
-  late String? createBy;
-  late String? createTime;
-  late String? phone;
-  late String? title;
-  late String? provider;
-  late String? sysOrgCode;
-  late String? unit;
-  late String? updateBy;
-  late String? updateTime;
+  final String id;
+  final String? content;
+  final String? createBy;
+  final String? createTime;
+  final String? phone;
+  final String? title;
+  final String? provider;
+  final String? sysOrgCode;
+  final String? unit;
+  final String? updateBy;
+  final String? updateTime;
+  final bool? read;
 
-  HistoricalClueResponse();
+  HistoricalClueResponse(
+      this.id,
+      this.content,
+      this.createBy,
+      this.createTime,
+      this.phone,
+      this.title,
+      this.provider,
+      this.sysOrgCode,
+      this.unit,
+      this.updateBy,
+      this.updateTime,
+      this.read);
 
   factory HistoricalClueResponse.fromJson(Map<String, dynamic> json) =>
       _$HistoricalClueResponseFromJson(json);

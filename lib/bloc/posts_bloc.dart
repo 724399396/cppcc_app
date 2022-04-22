@@ -7,6 +7,7 @@ import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import "package:collection/collection.dart";
 
 part 'posts_event.dart';
 part 'posts_state.dart';
@@ -29,7 +30,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
 
       await _postRepository.getGdHistoryUnreadCount().then((count) {
         Map<PostType, int> newData = Map.from(state.unreadCount);
-        newData[PostType.gdHistory] = count;
+        newData[PostType.guanduHistory] = count;
         emit(state.copyWith(unreadCount: newData));
       });
 
@@ -72,6 +73,16 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
         ));
         await _dataLoad(emit, event.key);
       });
+    });
+    on<PostReaded>((event, emit) async {
+      await _postRepository.getPostsDetail(event.posts.id);
+      Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
+      newPosts[PostKey(event.posts.postType, event.posts.category)] =
+          newPosts[PostKey(event.posts.postType, event.posts.category)]!
+                  .where((element) => element.id != event.posts.id)
+                  .toList() +
+              [event.posts.copyWith(read: true)];
+      emit(state.copyWith(posts: newPosts));
     });
   }
 

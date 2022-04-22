@@ -14,7 +14,8 @@ class PostRepository {
         .getPostList(page, pageSize, postType, category)
         .then((response) {
       return response.records
-          .map((PostsResponse p) => Posts(
+          .map(
+            (PostsResponse p) => Posts(
                 id: p.id,
                 postType: convertToPostTypeFromCode(p.type!),
                 title: p.title,
@@ -27,7 +28,8 @@ class PostRepository {
                 createBy: p.createBy,
                 createTime: DateTime.parse(p.createTime),
                 categoryDictText: p.categoryDictText,
-              ))
+                read: p.read ?? false),
+          )
           .toList();
     });
   }
@@ -42,5 +44,9 @@ class PostRepository {
 
   Future<int> getGdHistoryUnreadCount() {
     return _apiDataProvider.getGdHistoryUnreadCount();
+  }
+
+  Future getPostsDetail(String id) {
+    return _apiDataProvider.getPostsDetail(id);
   }
 }

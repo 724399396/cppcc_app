@@ -1,20 +1,21 @@
 import 'dart:async';
 
-import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
+import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/historical_clue_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class GdHistoricalClueMePage extends StatefulWidget {
-  const GdHistoricalClueMePage({Key? key}) : super(key: key);
+class GuanduHistoricalClueMePage extends StatefulWidget {
+  const GuanduHistoricalClueMePage({Key? key}) : super(key: key);
 
   @override
-  _GdHistoricalClueMePageState createState() => _GdHistoricalClueMePageState();
+  _GuanduHistoricalClueMePageState createState() =>
+      _GuanduHistoricalClueMePageState();
 }
 
-class _GdHistoricalClueMePageState extends State<GdHistoricalClueMePage>
+class _GuanduHistoricalClueMePageState extends State<GuanduHistoricalClueMePage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   final List _tabs = [];
   late TabController _tabController;
@@ -65,10 +66,11 @@ class GdHistoricalClueContentPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
         color: Color(0xffffffff),
-        child: BlocBuilder<HistoricalClueBloc, HistoricalClueState>(
+        child: BlocBuilder<GuanduHistoricalClueBloc, GuanduHistoricalClueState>(
           builder: (context, state) {
             return EasyRefresh.custom(
-              emptyWidget: state.listDatas.isEmpty ? EmptyData() : null,
+              // TODO replace me data
+              emptyWidget: state.data.isEmpty ? EmptyData() : null,
               firstRefresh: true,
               header: _enableRefresh
                   ? ClassicalHeader(
@@ -102,17 +104,17 @@ class GdHistoricalClueContentPage extends StatelessWidget {
                   : null,
               onRefresh: _enableRefresh
                   ? () async {
-                      BlocProvider.of<HistoricalClueBloc>(context)
-                          .add(GetHistoricalClueListData(1, state.pageSize));
+                      // BlocProvider.of<GuanduHistoricalClueBloc>(context)
+                      //     .add(GetHistoricalClueListData(1, state.pageSize));
                       _controller.resetLoadState();
                       _controller.finishRefresh();
                     }
                   : null,
               onLoad: _enableLoad
                   ? () async {
-                      BlocProvider.of<HistoricalClueBloc>(context).add(
-                          GetHistoricalClueListData(
-                              state.pageNo + 1, state.pageSize));
+                      // BlocProvider.of<GuanduHistoricalClueBloc>(context).add(
+                      //     GetHistoricalClueListData(
+                      //         state.pageNo + 1, state.pageSize));
                       _controller.resetLoadState();
                       _controller.finishLoad();
                     }
@@ -121,9 +123,9 @@ class GdHistoricalClueContentPage extends StatelessWidget {
                 SliverList(
                   delegate: SliverChildBuilderDelegate(
                     (context, index) {
-                      return HistoricalClueItem(state.listDatas[index]);
+                      return HistoricalClueItem(state.data[index]);
                     },
-                    childCount: state.listDatas.length,
+                    childCount: state.data.length,
                   ),
                 ),
               ],

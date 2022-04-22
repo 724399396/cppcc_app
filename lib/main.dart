@@ -1,7 +1,7 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/contact_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
-import 'package:cppcc_app/bloc/historical_clue_bloc.dart';
+import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
@@ -16,7 +16,7 @@ import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/app_setting_repository.dart';
 import 'package:cppcc_app/repository/contact_repository.dart';
 import 'package:cppcc_app/repository/discuss_network_repository.dart';
-import 'package:cppcc_app/repository/historical_clue_repository.dart';
+import 'package:cppcc_app/repository/guandu_historical_clue_repository.dart';
 import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
@@ -53,7 +53,7 @@ Future<void> main() async {
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
         // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
-        baseUrl: 'http://172.10.1.110:10030/cppcc-boot/',
+        baseUrl: 'http://172.10.1.181:10030/cppcc-boot/',
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -90,8 +90,8 @@ Future<void> main() async {
         RepositoryProvider<MeetingRepository>(
           create: (context) => MeetingRepository(apiDataProvider),
         ),
-        RepositoryProvider<HistoricalClueRepository>(
-          create: (context) => HistoricalClueRepository(apiDataProvider),
+        RepositoryProvider<GuanduHistoricalClueRepository>(
+          create: (context) => GuanduHistoricalClueRepository(apiDataProvider),
         ),
         RepositoryProvider<OpinionRepository>(
           create: (context) => OpinionRepository(apiDataProvider),
@@ -141,9 +141,9 @@ Future<void> main() async {
               context.read<MeetingRepository>(),
             )..add(MeetingInitilized()),
           ),
-          BlocProvider<HistoricalClueBloc>(
-            create: (BuildContext context) => HistoricalClueBloc(
-              context.read<HistoricalClueRepository>(),
+          BlocProvider<GuanduHistoricalClueBloc>(
+            create: (BuildContext context) => GuanduHistoricalClueBloc(
+              context.read<GuanduHistoricalClueRepository>(),
             ),
           ),
           BlocProvider<PostsBloc>(

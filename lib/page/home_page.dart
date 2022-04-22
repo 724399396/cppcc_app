@@ -205,11 +205,6 @@ class HomePage extends StatelessWidget {
                             '委员学习',
                             'learning_categories',
                             PostType.learning,
-                            Builder(
-                              builder: ((context) {
-                                return Container();
-                              }),
-                            ),
                           ));
                     },
                   ),
@@ -228,45 +223,11 @@ class HomePage extends StatelessWidget {
                       return buildTabItem(
                         '官渡文史',
                         'assets/icons/ic_guanduwenshi.png',
-                        Routes.generalTabSwitchPostsListPage,
-                        state.unreadCount[PostType.gdHistory] ?? 0,
+                        Routes.guanduHistoryListPage,
+                        state.unreadCount[PostType.guanduHistory] ?? 0,
                         context,
                         routeArguments: GeneralTabArgument(
-                            '官渡文史', '	gd_history_dict', PostType.gdHistory,
-                            Builder(
-                          builder: ((context) {
-                            return Stack(
-                              children: [
-                                FloatingActionButton.extended(
-                                  heroTag: 'mine',
-                                  icon: const Icon(
-                                      Icons.my_library_books_outlined),
-                                  backgroundColor: const Color(0xfff27f56),
-                                  foregroundColor: Colors.white,
-                                  label: const Text("我的"),
-                                  onPressed: () {
-                                    Navigator.of(context).pushNamed(
-                                        Routes.gdHistoricalClueMePage);
-                                  },
-                                ),
-                                Container(
-                                    margin: const EdgeInsets.only(
-                                        top: 52, bottom: 5),
-                                    child: FloatingActionButton.extended(
-                                      heroTag: 'add',
-                                      icon: const Icon(Icons.add),
-                                      backgroundColor: const Color(0xfff33333),
-                                      foregroundColor: Colors.white,
-                                      label: const Text("新增"),
-                                      onPressed: () {
-                                        Navigator.of(context).pushNamed(
-                                            Routes.gdHistoricalAddPage);
-                                      },
-                                    )),
-                              ],
-                            );
-                          }),
-                        )),
+                            '官渡文史', 'gd_history_dict', PostType.guanduHistory),
                       );
                     },
                   ),

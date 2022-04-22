@@ -15,11 +15,13 @@ class Routes {
   static const proposalManagePage = '/proposalManagePage';
   static const socialOpinionsPage = '/socialOpinionsPage';
   static const gdHistoricalAddPage = '/gdHistoricalAddPage';
-  static const gdHistoricalClueMePage = '/gdHistoricalClueMePage';
-  static const gdHistoricalDetailsPage = '/gdHistoricalDetailsPage';
+  static const guanduHistoricalClueMePage = '/guanduHistoricalClueMePage';
+  static const guanduHistoricalClueListPage = '/guanduHistoricalClueListPage';
+  static const guanduHistoricalDetailsPage = '/guanduHistoricalDetailsPage';
   static const postListWithFilterPage = '/postListWithFilterPage';
   static const generalTabSwitchPostsListPage = '/generalTabSwitchPostsListPage';
   static const twoMeetingPage = '/twoMeetingPage';
+  static const guanduHistoryListPage = '/guanduHistoryListPage';
 
   //通讯录页面
   static const contactDetailPage = '/contactDetailPage';
@@ -28,9 +30,7 @@ class Routes {
   //消息页面
   static const messageDetailsPage = '/messageDetailsPage';
 
-  //咨询详情页面
-
-  static const newsDetailsPage = '/newsDetailsPage';
+  static const postsDetailPage = '/postsDetailPage';
 
   static const opinionDetailPage = '/opinionDetailPage';
 

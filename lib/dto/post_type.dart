@@ -1,11 +1,8 @@
 enum PostType {
   news,
-  broadcast,
-  twoSessionsTopic,
-  discussPoliticsFile,
   learning,
   fileAnnment,
-  gdHistory,
+  guanduHistory,
   unknown,
 }
 
@@ -16,16 +13,10 @@ extension TaskStatusExtension on PostType {
         return '资讯';
       case PostType.fileAnnment:
         return '文件公告';
-      case PostType.twoSessionsTopic:
-        return '两会专题';
-      case PostType.discussPoliticsFile:
-        return '议政文件';
       case PostType.learning:
         return '委员学习';
-      case PostType.gdHistory:
+      case PostType.guanduHistory:
         return '官渡文史';
-      case PostType.broadcast:
-        return '会议播报';
       default:
         return '未知';
     }
@@ -37,16 +28,10 @@ extension TaskStatusExtension on PostType {
         return 1;
       case PostType.fileAnnment:
         return 2;
-      case PostType.twoSessionsTopic:
-        return 3;
-      case PostType.discussPoliticsFile:
-        return 4;
       case PostType.learning:
         return 5;
-      case PostType.gdHistory:
+      case PostType.guanduHistory:
         return 6;
-      case PostType.broadcast:
-        return 7;
       default:
         return -1;
     }

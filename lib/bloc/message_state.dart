@@ -1,37 +1,36 @@
 part of 'message_bloc.dart';
 
 class MessageState extends Equatable {
-  final int pageNo;
-  final int pageSize;
-  final int total;
-  final List<MessageRecords> listDatas;
-
-  MessageState({
-    this.pageNo = 1,
-    this.pageSize = 10,
-    this.total = 0,
-    this.listDatas = const [],
+  final ListDataFetchStatus status;
+  final Map<MessageType, int> unreadCount;
+  final Map<MessageType, List<Message>> messages;
+  final Map<MessageType, int> currentPage;
+  const MessageState({
+    this.status = ListDataFetchStatus.normal,
+    this.unreadCount = const {},
+    this.messages = const {},
+    this.currentPage = const {},
   });
 
-  MessageState copyWith(
-    int pageNo,
-    MessageEntity result,
-  ) {
+  MessageState copyWith({
+    ListDataFetchStatus? status,
+    Map<MessageType, int>? unreadCount,
+    Map<MessageType, List<Message>>? messages,
+    Map<MessageType, int>? currentPage,
+  }) {
     return MessageState(
-      pageNo: pageNo,
-      pageSize: result.size,
-      total: result.total,
-      listDatas: result.records,
+      status: status ?? this.status,
+      unreadCount: unreadCount ?? this.unreadCount,
+      messages: messages ?? this.messages,
+      currentPage: currentPage ?? this.currentPage,
     );
   }
 
   @override
-  List<Object> get props {
-    return [
-      pageNo,
-      pageSize,
-      total,
-      listDatas,
-    ];
+  String toString() {
+    return 'MessageState(status: $status, unreadCount: $unreadCount, messages: $messages, currentPage: $currentPage)';
   }
+
+  @override
+  List<Object> get props => [status, unreadCount, messages, currentPage];
 }

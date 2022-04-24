@@ -1,155 +1,84 @@
+import 'package:cppcc_app/models/message.dart';
+import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/routes.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_html/flutter_html.dart';
 
-/// 列表项
-class MessageListItem extends StatefulWidget {
-  // 点击事件
-  final VoidCallback? onPressed;
+class MessageListItem extends StatelessWidget {
+  final Message _bean;
 
-  // 图标
-  final Widget? icon;
+  const MessageListItem(this._bean, {Key? key}) : super(key: key);
 
-  // 标题
-  final String? title;
-
-  // 描述
-  final String? describe;
-
-  // 时间
-  final String? createTime;
-
-  final Color titleColor;
-
-  // 右侧控件
-  final Widget? rightWidget;
-
-  // 构造函数
-  MessageListItem({
-    Key? key,
-    this.onPressed,
-    this.icon,
-    this.title,
-    this.describe,
-    this.createTime,
-    this.titleColor: Colors.black,
-    this.rightWidget,
-  }) : super(key: key);
-
-  @override
-  _MessageListItemState createState() => _MessageListItemState();
-}
-
-class _MessageListItemState extends State<MessageListItem> {
   @override
   Widget build(BuildContext context) {
-    return FlatButton(
-      onPressed: widget.onPressed,
-      padding: EdgeInsets.all(5.0),
-      shape: Border.all(
-        color: Colors.transparent,
-        width: 0.1,
-        style: BorderStyle.none,
-      ),
-      child: Container(
-        height: 120.0,
-        width: double.infinity,
-        padding: EdgeInsets.all(10.0),
-        decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
+    var themeData = Theme.of(context);
+    return SliverToBoxAdapter(
+      child: GestureDetector(
+        onTap: () {
+          Navigator.of(context)
+              .pushNamed(Routes.messageDetailsPage, arguments: _bean);
+        },
+        child: Container(
+          height: 120,
+          margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+          padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(12),
           ),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: <Widget>[
-            Container(
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: <Widget>[
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                textDirection: TextDirection.ltr,
-                verticalDirection: VerticalDirection.down,
                 children: <Widget>[
-                  Container(
-                    child: widget.title != null
-                        ? Text(
-                            widget.title!,
-                            style: TextStyle(
-                              color: Color(0xff333333),
-                              fontSize: 16.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : Container(),
+                  _bean.read
+                      ? Container()
+                      : Container(
+                          width: 8,
+                          height: 8,
+                          margin: const EdgeInsets.only(right: 8),
+                          alignment: Alignment.center,
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Color(0xFFfa7c2f),
+                          )),
+                  Expanded(
+                    child: Text(_bean.title,
+                        maxLines: 2,
+                        overflow: TextOverflow.ellipsis,
+                        style: Theme.of(context).textTheme.titleLarge),
                   ),
-                  Container(
-                    child: widget.createTime != null
-                        ? Text(
-                            widget.createTime!,
-                            style: TextStyle(
-                              color: Color(0xff999999),
-                              fontSize: 15.0,
-                              fontWeight: FontWeight.bold,
-                            ),
-                          )
-                        : Container(),
+                  Text(
+                    _bean.sendTime,
+                    style: themeData.textTheme.caption
+                        ?.copyWith(color: AppColors.greyTextColor),
                   )
                 ],
               ),
-            ),
-            Container(
-              padding: EdgeInsets.only(top: 15.0),
-              child: Row(
+              Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                mainAxisSize: MainAxisSize.max,
-                textDirection: TextDirection.ltr,
-                verticalDirection: VerticalDirection.down,
                 children: <Widget>[
-                  Container(
-                    child: widget.describe != null
-                        ? Expanded(
-                            child: Text(
-                              widget.describe!,
-                              maxLines: 100,
-                              style: TextStyle(
-                                color: Color(0xff999999),
-                                fontSize: 12.0,
-                                fontWeight: FontWeight.bold,
-                              ),
-                            ),
-                          )
-                        : Container(),
+                  Expanded(
+                    child: Html(
+                      data: _bean.msgContent,
+                      tagsList: Html.tags..addAll(["bird", "flutter"]),
+                    ),
                   ),
-                  Container(
-                    child: widget.icon != null
-                        ? Container(
-                            child: SizedBox(
-                              height: 16.0,
-                              width: 16.0,
-                              child: widget.icon,
-                            ),
-                          )
-                        : Container(
-                            width: 14.0,
-                          ),
+                  const SizedBox(
+                    height: 16.0,
+                    width: 16.0,
+                    child: Icon(Icons.chevron_right, color: Colors.grey),
                   )
                 ],
-              ),
-            )
-          ],
+              )
+            ],
+          ),
         ),
       ),
     );
-  }
-}
-
-/// 空图标
-class EmptyIcon extends Icon {
-  const EmptyIcon() : super(Icons.hourglass_empty);
-
-  @override
-  Widget build(BuildContext context) {
-    return Container();
   }
 }

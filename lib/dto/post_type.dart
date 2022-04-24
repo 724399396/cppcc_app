@@ -6,7 +6,7 @@ enum PostType {
   unknown,
 }
 
-extension TaskStatusExtension on PostType {
+extension PostTypeExtension on PostType {
   String get description {
     switch (this) {
       case PostType.news:

@@ -61,7 +61,6 @@ const int pageSize = 10;
 ///DictService().getDictItemByCode("msg_category").then((datas) => print(datas.length));
 // TODO delete
 class DictService {
-
   /// 	领导信箱类型
   String mailboxType = "mailbox_type";
 

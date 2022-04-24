@@ -11,6 +11,7 @@ import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
+import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
@@ -312,7 +313,7 @@ class HomePage extends StatelessWidget {
                         PostKey(PostType.fileAnnment, null)));
                   },
                   emptyWidget:
-                      data.isEmpty ? const Center(child: Text('暂无数据')) : null,
+                      data.isEmpty ? const EmptyData() : null,
                   slivers: data.map((p) => PostsItem(p)).toList(),
                 );
               },

@@ -7,30 +7,28 @@ abstract class MessageEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class GetListData extends MessageEvent {
-  final int pageNo;
-  final int pageSize;
-  final String msgType;
+class MessageInitilized extends MessageEvent {}
 
-  const GetListData(this.pageNo, this.pageSize, this.msgType) : super();
+class MessageFirstFetch extends MessageEvent {
+  final MessageType type;
 
-  @override
-  List<Object> get props => [pageNo, pageSize, msgType];
+  const MessageFirstFetch(this.type);
 }
 
-class GetDetailsData extends MessageEvent {
-  final String id;
+class MessageLoadMore extends MessageEvent {
+  final MessageType type;
 
-  const GetDetailsData(this.id) : super();
-
-  @override
-  List<Object> get props => [id];
+  const MessageLoadMore(this.type);
 }
 
-class MessageInitialed extends MessageEvent {
-  const MessageInitialed() : super();
+class MessageRefresh extends MessageEvent {
+  final MessageType type;
+
+  const MessageRefresh(this.type);
 }
 
-class MessageListEvent extends MessageEvent {
-  const MessageListEvent() : super();
+class MessageRead extends MessageEvent {
+  final Message message;
+
+  const MessageRead(this.message);
 }

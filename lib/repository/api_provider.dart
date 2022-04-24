@@ -5,6 +5,8 @@ import 'package:cppcc_app/dto/historical_clue_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/meeting_response.dart';
+import 'package:cppcc_app/dto/message_response.dart';
+import 'package:cppcc_app/dto/message_type.dart';
 import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
@@ -16,9 +18,6 @@ import 'package:cppcc_app/utils/toast.dart';
 import 'package:dio/dio.dart';
 
 import 'local_data_provider.dart';
-
-//消息
-import 'package:cppcc_app/dto/message/message_entity.dart';
 
 //资讯
 
@@ -100,25 +99,15 @@ class ApiDataProvider {
   }
 
   /// 获取消息
-  Future<MessageEntity> getMassage(
-      int pageNo, int pageSize, String msgCategory) {
-    return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
-        queryParameters: {
-          'pageNo': pageNo,
-          'pageSize': pageSize,
-          'msgCategory': msgCategory
-        }).then((value) {
-      return MessageEntity.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
-    });
-  }
-
-  /// 获取消息详情
-  Future<MessageRecords> getMassageInfo(String id) {
-    return _dio.get('/sys/sysAnnouncementSend/getMyAnnouncementSend',
-        queryParameters: {'id': id}).then((value) {
-      return MessageRecords.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+  Future<List<SystemMessageResponse>> getSystemMessageList(
+      int pageNo, int pageSize, MessageType type) {
+    return _dio.get('/sys/annountCement/app/list', queryParameters: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+      'msgCategory': type.code
+    }).then((value) {
+      return SystemMessageResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
     });
   }
 
@@ -327,5 +316,41 @@ class ApiDataProvider {
     return _dio.get('/app/posts/queryById/app', queryParameters: {
       'id': id,
     }).then((value) => BaseResponse.fromJson(value.data));
+  }
+
+  Future<int> getAnnouncementUnreadCount(MessageType type) {
+    return _dio.get('/sys/annountCement/app/unreadCount', queryParameters: {
+      'msgCategory': type.code,
+    }).then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<int> getBusinessCardUnreadCount() {
+    return _dio
+        .get('/app/buscardApply/count/num')
+        .then((value) => BaseResponse.fromJson(value.data).result as int);
+  }
+
+  Future<List<BusinessCardMessageResponse>> getBusinessCardMessageList(
+      int pageNo, int pageSize) {
+    return _dio.post('/app/buscardApply/appGetList', data: {
+      'pageNo': pageNo,
+      'pageSize': pageSize,
+    }).then((value) {
+      return BusinessCardMessageResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
+    });
+  }
+
+  Future<BaseResponse> readAnnouncementMessage(String id) {
+    return _dio.put('/sys/sysAnnouncementSend/editByAnntIdAndUserId', data: {
+      'anntId': id,
+    }).then((value) {
+      return BaseResponse.fromJson(value.data);
+    });
+  }
+
+  Future getBusinessCardDetail(String id) {
+    // TODO
+    return Future.value(null);
   }
 }

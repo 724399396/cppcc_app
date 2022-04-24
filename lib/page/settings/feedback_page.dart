@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:cppcc_app/dto/message/message_entity.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

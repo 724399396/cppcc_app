@@ -2,6 +2,7 @@ import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
+import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
@@ -186,6 +187,9 @@ class _LoginPageState extends State<LoginPage> {
                                             BlocProvider.of<TwoMeetingsBloc>(
                                                     context)
                                                 .add(TwoMeetingsInitilized());
+                                            BlocProvider.of<MessageBloc>(
+                                                    context)
+                                                .add(MessageInitilized());
                                             Navigator.of(context).canPop()
                                                 ? Navigator.pop(context)
                                                 : Navigator.of(context)

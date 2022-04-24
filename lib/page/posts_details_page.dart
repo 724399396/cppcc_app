@@ -2,7 +2,6 @@ import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/posts.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_html/flutter_html.dart';
 
 import 'package:cppcc_app/bloc/posts_bloc.dart';

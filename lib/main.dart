@@ -124,7 +124,7 @@ Future<void> main() async {
           BlocProvider<MessageBloc>(
             create: (BuildContext context) => MessageBloc(
               context.read<MessageRepository>(),
-            ),
+            )..add(MessageInitilized()),
           ),
           BlocProvider<MailboxBloc>(
             create: (BuildContext context) => MailboxBloc(

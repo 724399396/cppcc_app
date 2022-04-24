@@ -2,6 +2,7 @@ import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
+import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/opinion_item.dart';
 import 'package:flutter/material.dart';
@@ -20,7 +21,7 @@ class SocialOpinionsPage extends StatefulWidget {
 class _SocialOpinionsPageState extends State<SocialOpinionsPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
-  List<OpinionListType> _tabs = [];
+  late List<OpinionListType> _tabs;
 
   @override
   @protected
@@ -29,8 +30,8 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(initialIndex: 0, length: 2, vsync: this);
     _tabs = [OpinionListType.notFinished, OpinionListType.finished];
+    _tabController = TabController(initialIndex: 0, length: _tabs.length, vsync: this);
   }
 
   @override
@@ -153,7 +154,7 @@ class _OpinionListState extends State<OpinionList> {
                       .add(OpinionRefresh(widget._listType));
                 },
                 emptyWidget: filterData.isEmpty
-                    ? const Center(child: Text('暂无数据'))
+                    ? const EmptyData() 
                     : null,
                 slivers: filterData.map((p) => OpinionItem(p)).toList(),
               ))

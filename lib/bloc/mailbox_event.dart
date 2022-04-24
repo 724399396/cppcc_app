@@ -34,10 +34,9 @@ class AddMailbox extends MailboxEvent {
   final String userName;
   final String phone;
   final SuccessCallback? successCallback;
-  final FailCallback? failCallback;
 
   const AddMailbox(this.type, this.title, this.content, this.userName,
-      this.phone, this.successCallback, this.failCallback);
+      this.phone, this.successCallback);
 
   @override
   List<Object> get props => [type, title, content, userName, phone];

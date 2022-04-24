@@ -3,6 +3,7 @@ import 'package:cppcc_app/bloc/helper.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
+import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
@@ -50,16 +51,16 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
 
     //添加领导信箱
     on<AddMailbox>((event, emit) async {
-      await _mailboxRepository
-          .addMailbox(event.type, event.userName, event.phone, event.title,
-              event.content)
-          .then((result) {
-        if (result.success) {
-          event.successCallback!();
-        } else {
-          event.failCallback!();
-        }
-      });
+      emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
+      try {
+        await _mailboxRepository.addMailbox(event.type, event.userName,
+            event.phone, event.title, event.content);
+        emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
+        event.successCallback!();
+      } catch (err) {
+        debugPrint('guandu historical clue api error: $err');
+        emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
+      }
     });
   }
 

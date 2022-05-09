@@ -52,3 +52,6 @@ final List<BottomTab> selectedTabs = [
 ];
 
 const int pageSize = 10;
+
+const String baseUrl = 'cppcc.lingrit.com/cppcc-boot';
+// const String baseUrl = '172.10.1.181:10030/cppcc-boot';

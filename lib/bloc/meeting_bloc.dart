@@ -1,20 +1,31 @@
+import 'dart:convert';
+
 import 'package:bloc/bloc.dart';
+import 'package:collection/collection.dart';
 import 'package:cppcc_app/bloc/helper.dart';
+import 'package:cppcc_app/dto/meeting_change_response.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/meeting.dart';
+import 'package:cppcc_app/repository/local_data_provider.dart';
 import 'package:cppcc_app/repository/meeting_repository.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:intl/intl.dart';
+import 'package:web_socket_channel/io.dart';
+import 'package:web_socket_channel/web_socket_channel.dart';
 
 part 'meeting_event.dart';
 part 'meeting_state.dart';
 
 class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
   final MeetingRepository _meetingRepository;
+  final LocalDataProvider _localDataProvider;
+  WebSocketChannel? channel;
 
-  MeetingBloc(this._meetingRepository) : super(const MeetingState()) {
+  MeetingBloc(this._meetingRepository, this._localDataProvider)
+      : super(const MeetingState()) {
     on<MeetingInitilized>((event, emit) async {
       await _meetingRepository.getUnreadCount().then((count) {
         emit(state.copyWith(unreadCount: count));
@@ -49,10 +60,22 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       });
     });
 
-    on<GetMeetingDetail>((event, emit) async {
+    on<GoMeetingDetail>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
         await _meetingRepository.getMeetingDetail(event.id).then((meeting) {
           emit(state.copyWith(currentMetting: meeting));
+        });
+        channel?.sink.close();
+        channel = IOWebSocketChannel.connect(
+            // TODO
+            // Uri.parse('wss://' + baseUrl + '/meetingActivity/socket/' + event.id),
+            Uri.parse(
+                'ws://' + baseUrl + '/meetingActivity/socket/' + event.id),
+            headers: {'X-Access-Token': _localDataProvider.token()});
+        channel!.stream.listen((message) {
+          debugPrint(message);
+          add(MeetingChanged(
+              MeetingChangeResponse.fromJson(json.decode(message))));
         });
       });
     });
@@ -74,6 +97,84 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       } catch (err) {
         debugPrint('meeting api error: $err');
         emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
+      }
+    });
+
+    on<MeetingChanged>((event, emit) async {
+      var meetingChange = event.meetingChange;
+      final DateTime now = DateTime.now();
+      final DateFormat formatter = DateFormat('yyyy-MM-dd hh:mm:ss');
+      final String nowForamtedStr = formatter.format(now);
+      if (state.currentMetting != null) {
+        switch (getMeetingChangeTypeFromCode(meetingChange.type)) {
+          case MeetingChangeType.read:
+            var originUserRecords = state.currentMetting!.userRecords;
+            var otherUsers = originUserRecords
+                .where((element) => element.userId != meetingChange.userId)
+                .toList();
+            var readChangeUser = originUserRecords
+                .firstWhereOrNull(
+                    (element) => element.userId == meetingChange.userId)
+                ?.copyWith(read: true);
+            emit(state.copyWith(
+                currentMetting: state.currentMetting!.copyWith(
+                    userRecords: readChangeUser != null
+                        ? otherUsers + [readChangeUser]
+                        : otherUsers)));
+            break;
+          case MeetingChangeType.sign:
+            var originUserRecords = state.currentMetting!.userRecords;
+            var otherUsers = originUserRecords
+                .where((element) => element.userId != meetingChange.userId)
+                .toList();
+            var signChangeUser = originUserRecords
+                .firstWhereOrNull(
+                    (element) => element.userId == meetingChange.userId)
+                ?.copyWith(status: 2);
+            emit(state.copyWith(
+                currentMetting: state.currentMetting!.copyWith(
+                    userRecords: signChangeUser != null
+                        ? otherUsers + [signChangeUser]
+                        : otherUsers)));
+            break;
+          case MeetingChangeType.broadcast:
+            emit(state.copyWith(
+                currentMetting: state.currentMetting!.copyWith(
+                    broadcasts: state.currentMetting!.broadcasts +
+                        [
+                          Broadcast(
+                              title:
+                                  meetingChange.data?['title'] as String? ?? '',
+                              content:
+                                  meetingChange.data?['content'] as String? ??
+                                      '',
+                              createTime: nowForamtedStr)
+                        ])));
+            break;
+          case MeetingChangeType.newJoin:
+            var originUserRecords = state.currentMetting!.userRecords;
+            var existUser = originUserRecords.firstWhereOrNull(
+                (element) => element.userId == meetingChange.userId);
+            if (existUser == null) {
+              var otherUsers = originUserRecords
+                  .where((element) => element.userId != meetingChange.userId)
+                  .toList();
+              emit(state.copyWith(
+                  currentMetting: state.currentMetting!.copyWith(
+                      userRecords: otherUsers +
+                          [
+                            MeetingActiveRecord(
+                              read: false,
+                              status: 1,
+                              userId: meetingChange.userId ?? '',
+                              userIdDictText: meetingChange.userRealname ?? '',
+                            )
+                          ])));
+            }
+            break;
+          case MeetingChangeType.unknown:
+            break;
+        }
       }
     });
   }

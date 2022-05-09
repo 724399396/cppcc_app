@@ -12,6 +12,7 @@ import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/two_meetings_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
+import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/app_setting_repository.dart';
 import 'package:cppcc_app/repository/contact_repository.dart';
@@ -52,8 +53,9 @@ Future<void> main() async {
   var navigationService = NavigationService();
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
-        // baseUrl: 'https://cppcc.lingrit.com/cppcc-boot/',
-        baseUrl: 'http://172.10.1.181:10030/cppcc-boot/',
+        // TODO
+        // baseUrl: 'https://' + baseUrl,
+        baseUrl: 'http://' + baseUrl,
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),
@@ -138,8 +140,8 @@ Future<void> main() async {
           ),
           BlocProvider<MeetingBloc>(
             create: (BuildContext context) => MeetingBloc(
-              context.read<MeetingRepository>(),
-            )..add(MeetingInitilized()),
+                context.read<MeetingRepository>(), localDataProvider)
+              ..add(MeetingInitilized()),
           ),
           BlocProvider<GuanduHistoricalClueBloc>(
             create: (BuildContext context) => GuanduHistoricalClueBloc(

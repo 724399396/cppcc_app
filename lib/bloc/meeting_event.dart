@@ -27,10 +27,10 @@ class MeetingRefresh extends MeetingEvent {
   const MeetingRefresh(this.type);
 }
 
-class GetMeetingDetail extends MeetingEvent {
+class GoMeetingDetail extends MeetingEvent {
   final String id;
 
-  const GetMeetingDetail(this.id);
+  const GoMeetingDetail(this.id);
 }
 
 class ApplyLeaveMeeting extends MeetingEvent {
@@ -39,4 +39,10 @@ class ApplyLeaveMeeting extends MeetingEvent {
   final SuccessCallback successCallback;
 
   const ApplyLeaveMeeting(this.meetingId, this.userId, this.successCallback);
+}
+
+class MeetingChanged extends MeetingEvent {
+  final MeetingChangeResponse meetingChange;
+
+  const MeetingChanged(this.meetingChange);
 }

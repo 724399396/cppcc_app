@@ -233,3 +233,67 @@ class MeetingDetail extends Equatable {
     ];
   }
 }
+
+enum MeetingChangeType { read, sign, broadcast, newJoin, unknown }
+
+MeetingChangeType getMeetingChangeTypeFromCode(int code) {
+  switch (code) {
+    case 1:
+      return MeetingChangeType.read;
+    case 2:
+      return MeetingChangeType.sign;
+    case 3:
+      return MeetingChangeType.broadcast;
+    case 4:
+      return MeetingChangeType.newJoin;
+    default:
+      return MeetingChangeType.unknown;
+  }
+}
+
+class MeetingChange extends Equatable {
+  final MeetingChangeType type;
+  final String? userId;
+  final String? username;
+  final String? title;
+  final String? content;
+
+  const MeetingChange(
+      {required this.type,
+      required this.userId,
+      required this.username,
+      required this.title,
+      required this.content});
+
+  MeetingChange copyWith({
+    MeetingChangeType? type,
+    String? userId,
+    String? username,
+    String? title,
+    String? content,
+  }) {
+    return MeetingChange(
+      type: type ?? this.type,
+      userId: userId ?? this.userId,
+      username: username ?? this.username,
+      title: title ?? this.title,
+      content: content ?? this.content,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'MeetingChange(type: $type, userId: $userId, username: $username, title: $title, content: $content)';
+  }
+
+  @override
+  List<Object> get props {
+    return [
+      type,
+      userId ?? '',
+      username ?? '',
+      title ?? '',
+      content ?? '',
+    ];
+  }
+}

@@ -17,164 +17,171 @@ class MeetingActivitiesDetailsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     String id = ModalRoute.of(context)?.settings.arguments as String;
-    BlocProvider.of<MeetingBloc>(context).add(GetMeetingDetail(id));
+    BlocProvider.of<MeetingBloc>(context).add(GoMeetingDetail(id));
     var themeData = Theme.of(context);
-    return BlocBuilder<MeetingBloc, MeetingState>(builder: (context, state) {
-      MeetingDetail? meeting = state.currentMetting;
-      MeetingActiveRecord? currentUserJoinState = meeting?.userRecords
-          .firstWhereOrNull((element) =>
-              element.userId ==
-              BlocProvider.of<UserBloc>(context).state.userInfo?.userId);
-      return Scaffold(
-        appBar: AppBar(
-          title: const Text("会议详情"),
-        ),
-        floatingActionButton: (currentUserJoinState?.status == 1 &&
-                meeting != null)
-            ? FloatingActionButton.extended(
-                backgroundColor: AppColors.appOrange,
-                foregroundColor: Colors.white,
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8)),
-                extendedPadding: const EdgeInsets.symmetric(horizontal: 4),
-                label: state.submitStatus == FormStatus.submissionInProgress
-                    ? const SizedBox(
-                        width: 32,
-                        height: 32,
-                        child: CircularProgressIndicator(
-                          color: Colors.white,
+    return BlocBuilder<MeetingBloc, MeetingState>(
+        buildWhen: ((previous, current) =>
+            previous.currentMetting != current.currentMetting),
+        builder: (context, state) {
+          MeetingDetail? meeting = state.currentMetting;
+          MeetingActiveRecord? currentUserJoinState = meeting?.userRecords
+              .firstWhereOrNull((element) =>
+                  element.userId ==
+                  BlocProvider.of<UserBloc>(context).state.userInfo?.userId);
+          return Scaffold(
+            appBar: AppBar(
+              title: const Text("会议详情"),
+            ),
+            floatingActionButton: (currentUserJoinState?.status == 1 &&
+                    meeting != null)
+                ? FloatingActionButton.extended(
+                    backgroundColor: AppColors.appOrange,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8)),
+                    extendedPadding: const EdgeInsets.symmetric(horizontal: 4),
+                    label: state.submitStatus == FormStatus.submissionInProgress
+                        ? const SizedBox(
+                            width: 32,
+                            height: 32,
+                            child: CircularProgressIndicator(
+                              color: Colors.white,
+                            ),
+                          )
+                        : const Text("我要请假"),
+                    onPressed: () {
+                      if (state.submitStatus ==
+                          FormStatus.submissionInProgress) {
+                        return;
+                      }
+                      BlocProvider.of<MeetingBloc>(context).add(
+                        ApplyLeaveMeeting(
+                            meeting.id, currentUserJoinState!.userId, () {
+                          showToast('请假成功!');
+                        }),
+                      );
+                    },
+                  )
+                : Container(),
+            body: meeting == null
+                ? Container()
+                : ListView(
+                    children: [
+                      const SizedBox(height: 4),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        child: Text(meeting.title,
+                            style: themeData.textTheme.titleLarge),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                                "会议时间: " +
+                                    meeting.beginDate +
+                                    " " +
+                                    meeting.startTime.substring(0, 5) +
+                                    "-" +
+                                    meeting.endTime.substring(0, 5),
+                                style: themeData.textTheme.bodyText2),
+                            Text("会议地点: " + meeting.address,
+                                style: themeData.textTheme.bodyText2),
+                          ],
                         ),
-                      )
-                    : const Text("我要请假"),
-                onPressed: () {
-                  if (state.submitStatus == FormStatus.submissionInProgress) {
-                    return;
-                  }
-                  BlocProvider.of<MeetingBloc>(context).add(
-                    ApplyLeaveMeeting(meeting.id, currentUserJoinState!.userId,
-                        () {
-                      showToast('请假成功!');
-                    }),
-                  );
-                },
-              )
-            : Container(),
-        body: meeting == null
-            ? Container()
-            : ListView(
-                children: [
-                  const SizedBox(height: 4),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    child: Text(meeting.title,
-                        style: themeData.textTheme.titleLarge),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                            "会议时间: " +
-                                meeting.beginDate +
-                                " " +
-                                meeting.startTime.substring(0, 5) +
-                                "-" +
-                                meeting.endTime.substring(0, 5),
-                            style: themeData.textTheme.bodyText2),
-                        Text("会议地点: " + meeting.address,
-                            style: themeData.textTheme.bodyText2),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("会议内容: ", style: themeData.textTheme.bodyText2),
-                        meeting.content != ""
-                            ? Html(
-                                data: meeting.content,
-                                tagsList: Html.tags
-                                  ..addAll(["bird", "flutter"]),
-                              )
-                            : Container()
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    height: 300,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("实时播报: ", style: themeData.textTheme.bodyText2),
-                        Expanded(child: BroadcastPage(meeting)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    height: 100,
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("参与人: ", style: themeData.textTheme.bodyText2),
-                        Expanded(child: JoinUsersPage(meeting)),
-                      ],
-                    ),
-                  ),
-                  const SizedBox(height: 8),
-                  Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.all(8),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text("签到二维码: ", style: themeData.textTheme.bodyText2),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                              currentUserJoinState?.status == 1
-                                  ? "未签到"
-                                  : (currentUserJoinState?.status == 2
-                                      ? "已签到"
-                                      : ""),
-                              style: themeData.textTheme.bodyText2),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("会议内容: ",
+                                style: themeData.textTheme.bodyText2),
+                            meeting.content != ""
+                                ? Html(
+                                    data: meeting.content,
+                                    tagsList: Html.tags
+                                      ..addAll(["bird", "flutter"]),
+                                  )
+                                : Container()
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: meeting.signQrcode != ""
-                              ? CachedNetworkImage(
-                                  width: 200,
-                                  imageUrl: meeting.signQrcode.toString())
-                              : Container(),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        height: 300,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("实时播报: ",
+                                style: themeData.textTheme.bodyText2),
+                            Expanded(child: BroadcastPage(meeting)),
+                          ],
                         ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '请出示二维码进行签到',
-                            style: themeData.textTheme.bodyLarge
-                                ?.copyWith(color: AppColors.greyTextColor),
-                          ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        height: 100,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("参与人: ", style: themeData.textTheme.bodyText2),
+                            Expanded(child: JoinUsersPage(meeting)),
+                          ],
                         ),
-                      ],
-                    ),
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.all(8),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text("签到二维码: ",
+                                style: themeData.textTheme.bodyText2),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                  currentUserJoinState?.status == 1
+                                      ? "未签到"
+                                      : (currentUserJoinState?.status == 2
+                                          ? "已签到"
+                                          : ""),
+                                  style: themeData.textTheme.bodyText2),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: meeting.signQrcode != ""
+                                  ? CachedNetworkImage(
+                                      width: 200,
+                                      imageUrl: meeting.signQrcode.toString())
+                                  : Container(),
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '请出示二维码进行签到',
+                                style: themeData.textTheme.bodyLarge
+                                    ?.copyWith(color: AppColors.greyTextColor),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ],
                   ),
-                ],
-              ),
-      );
-    });
+          );
+        });
   }
 }
 

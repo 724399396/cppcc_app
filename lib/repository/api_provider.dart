@@ -1,6 +1,7 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/dict_response.dart';
 import 'package:cppcc_app/dto/discuss_network_response.dart';
+import 'package:cppcc_app/dto/file_response.dart';
 import 'package:cppcc_app/dto/historical_clue_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
@@ -16,6 +17,7 @@ import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:dio/dio.dart';
+import 'package:image_picker/image_picker.dart';
 
 import 'local_data_provider.dart';
 
@@ -356,5 +358,29 @@ class ApiDataProvider {
 
   Future get(String uri) {
     return _dio.get(uri).then((value) => BaseResponse.fromJson(value.data));
+  }
+
+  Future<FileResponse> uploadImage(XFile xfile) async {
+    var imageBytes = await xfile.readAsBytes();
+    var formData = FormData.fromMap({
+      'biz': 'mobile',
+      'file': MultipartFile.fromBytes(imageBytes, filename: xfile.name)
+    });
+    return _dio.post('/sys/upload/uploadMinio', data: formData).then((value) =>
+        FileResponse.fromJson(
+            BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
+  }
+
+  Future<BaseResponse> updateUserInfo(UserUpdateRequest userUpdateRequest) {
+    return _dio
+        .put('/sys/user/appEdit', data: userUpdateRequest.toJson())
+        .then((value) => BaseResponse.fromJson(value.data));
+  }
+
+  Future<BaseResponse> updatePhone(String phone, String verifyCode) {
+    return _dio.post('/app/user/updatePhone', data: {
+      'phone': phone,
+      'verifyCode': verifyCode,
+    }).then((value) => BaseResponse.fromJson(value.data));
   }
 }

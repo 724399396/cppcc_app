@@ -62,3 +62,26 @@ class UserResetPasswordRequested extends UserEvent {
   @override
   List<Object> get props => [phone, password, verifyCode];
 }
+
+class UserUpdateAvatarRequested extends UserEvent {
+  final XFile avatar;
+
+  const UserUpdateAvatarRequested(this.avatar, successCallback)
+      : super(successCallback);
+}
+
+class UserUpdatePhoneRequested extends UserEvent {
+  final String phone;
+  final String verifyCode;
+
+  const UserUpdatePhoneRequested(
+      this.phone, this.verifyCode, SuccessCallback? successCallback)
+      : super(successCallback);
+}
+
+class UserUpdateWxQrCode extends UserEvent {
+  final XFile image;
+
+  const UserUpdateWxQrCode(this.image, successCallback)
+      : super(successCallback);
+}

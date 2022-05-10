@@ -20,7 +20,7 @@ class HomeMe extends StatelessWidget {
         ),
         body: BlocBuilder<UserBloc, UserState>(builder: (context, state) {
           final TextStyle? userFiledStyle =
-              themeData.textTheme.bodyText1?.copyWith(color: Colors.white);
+              themeData.textTheme.bodyText2?.copyWith(color: Colors.white);
           return Stack(
             children: [
               Container(
@@ -92,9 +92,15 @@ class HomeMe extends StatelessWidget {
                                       ),
                                     ),
                                     Expanded(child: Container()),
-                                    Image.asset(
-                                      'assets/icons/ic_bianji.png',
-                                      width: 36,
+                                    GestureDetector(
+                                      onTap: () {
+                                        Navigator.pushNamed(
+                                            context, Routes.personSettingPage);
+                                      },
+                                      child: Image.asset(
+                                        'assets/icons/ic_bianji.png',
+                                        width: 36,
+                                      ),
                                     ),
                                     const SizedBox(width: 4),
                                     Image.asset(
@@ -280,7 +286,7 @@ class SettingsSystem extends StatelessWidget {
           ),
           title: "二维码名片",
           onClick: () {
-            Navigator.of(context).pushNamed(Routes.visitingCardPage);
+            Navigator.of(context).pushNamed(Routes.qrBusinessCardPage);
           },
         ),
         const SizedBox(height: 4),

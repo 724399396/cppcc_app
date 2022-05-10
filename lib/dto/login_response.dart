@@ -139,3 +139,15 @@ class DictItemEntity {
       _$DictItemEntityFromJson(json);
   Map<String, dynamic> toJson() => _$DictItemEntityToJson(this);
 }
+
+@JsonSerializable()
+class UserUpdateRequest {
+  final String? avatar;
+  final String? wxQrCode;
+
+  UserUpdateRequest({this.avatar, this.wxQrCode});
+
+  factory UserUpdateRequest.fromJson(Map<String, dynamic> json) =>
+      _$UserUpdateRequestFromJson(json);
+  Map<String, dynamic> toJson() => _$UserUpdateRequestToJson(this);
+}

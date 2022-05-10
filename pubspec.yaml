@@ -47,6 +47,7 @@ dependencies:
   image_gallery_saver: ^1.7.1
   timelines: ^0.1.0
   web_socket_channel: ^2.1.0
+  image_picker: ^0.8.5
 
 dev_dependencies:
   build_runner: ^2.0.0

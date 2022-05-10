@@ -53,7 +53,6 @@ Future<void> main() async {
   var navigationService = NavigationService();
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
-        // TODO
         baseUrl: 'https://' + baseUrl,
         // baseUrl: 'http://' + baseUrl,
         connectTimeout: 10000,

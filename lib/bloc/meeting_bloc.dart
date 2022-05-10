@@ -67,7 +67,6 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         });
         channel?.sink.close();
         channel = IOWebSocketChannel.connect(
-            // TODO
             Uri.parse(
                 'wss://' + baseUrl + '/meetingActivity/socket/' + event.id),
             // Uri.parse(

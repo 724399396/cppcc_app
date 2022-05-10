@@ -19,6 +19,7 @@ import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
+import 'package:cppcc_app/page/settings/user_setting_page.dart';
 import 'package:cppcc_app/page/posts_details_page.dart';
 //资讯相关页面
 import 'package:cppcc_app/page/reset_password_page.dart';
@@ -29,6 +30,7 @@ import 'package:cppcc_app/page/settings/archives_page.dart';
 import 'package:cppcc_app/page/settings/collection_page.dart';
 import 'package:cppcc_app/page/settings/feedback_page.dart';
 import 'package:cppcc_app/page/settings/settings_page.dart';
+import 'package:cppcc_app/page/settings/update_phone_page.dart';
 import 'package:cppcc_app/page/settings/visiting_card_page.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -44,8 +46,6 @@ final routesDef = {
   Routes.loginPage: (context) => const LoginPage(),
   Routes.home: (context) => const PageContainer(),
   Routes.resetPasswordPage: (context) => const ResetPasswordPage(),
-
-  //首页相关页面
   Routes.leaderMailboxPage: (context) => const LeaderMailboxPage(),
   Routes.leaderMailboxDetailsPage: (context) =>
       const LeaderMailboxDetailsPage(),
@@ -73,18 +73,15 @@ final routesDef = {
   Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
   Routes.twoMeetingPage: (context) => const TwoMeetingsPage(),
   Routes.guanduHistoryListPage: (context) => const GuanduHistoryListPage(),
-
-  //个人中心相关功能
   Routes.archivesPage: (context) => const ArchivesPage(),
   Routes.collectionPage: (context) => const CollectionPage(),
   Routes.feedbackPage: (context) => const FeedbackPage(),
   Routes.settingsPage: (context) => const SettingsPage(),
-  Routes.visitingCardPage: (context) => const VisitingCardPage(),
-
-  //消息相关功能
+  Routes.qrBusinessCardPage: (context) => const VisitingCardPage(),
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
-
   Routes.postsDetailPage: (context) => const PostsDetailPage(),
+  Routes.personSettingPage: (context) => const UserSettingPage(),
+  Routes.updatePhonePage: (context) => const UpdatePhonePage(),
 };
 
 class CppccApp extends StatelessWidget {
@@ -96,15 +93,14 @@ class CppccApp extends StatelessWidget {
   Widget build(BuildContext context) {
     var _theme = ThemeData(
       appBarTheme: const AppBarTheme(
-        iconTheme: IconThemeData(
-          color: Colors.white, //修改颜色
-        ),
-        centerTitle: true,
-        titleTextStyle: TextStyle(
-            color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
-        elevation: 0.0,
-        backgroundColor: AppColors.appOrange
-      ),
+          iconTheme: IconThemeData(
+            color: Colors.white, //修改颜色
+          ),
+          centerTitle: true,
+          titleTextStyle: TextStyle(
+              color: Colors.white, fontSize: 18, fontWeight: FontWeight.bold),
+          elevation: 0.0,
+          backgroundColor: AppColors.appOrange),
       primarySwatch: AppColors.primary,
       visualDensity: VisualDensity.adaptivePlatformDensity,
       // content

@@ -83,3 +83,15 @@ Map<String, dynamic> _$DictItemEntityToJson(DictItemEntity instance) =>
     <String, dynamic>{
       'dictData': instance.dictData,
     };
+
+UserUpdateRequest _$UserUpdateRequestFromJson(Map<String, dynamic> json) =>
+    UserUpdateRequest(
+      avatar: json['avatar'] as String?,
+      wxQrCode: json['wxQrCode'] as String?,
+    );
+
+Map<String, dynamic> _$UserUpdateRequestToJson(UserUpdateRequest instance) =>
+    <String, dynamic>{
+      'avatar': instance.avatar,
+      'wxQrCode': instance.wxQrCode,
+    };

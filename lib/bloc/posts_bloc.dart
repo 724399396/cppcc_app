@@ -7,6 +7,7 @@ import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 
 part 'posts_event.dart';
 part 'posts_state.dart';
@@ -76,11 +77,21 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
     on<PostReaded>((event, emit) async {
       await _postRepository.getPostsDetail(event.posts.id);
       Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
-      newPosts[PostKey(event.posts.postType, event.posts.category)] =
-          newPosts[PostKey(event.posts.postType, event.posts.category)]!
-                  .where((element) => element.id != event.posts.id)
-                  .toList() +
-              [event.posts.copyWith(read: true)];
+      for (var key in newPosts.keys) {
+        var posts = newPosts[key];
+        var readPost = newPosts[key]
+            ?.firstWhereOrNull((post) => post.id == event.posts.id);
+        if (readPost != null) {
+          newPosts[key] = (posts
+                      ?.where((element) => element.id != event.posts.id)
+                      .toList() ??
+                  []) +
+              [
+                readPost.copyWith(read: true, hits: (readPost.hits ?? 0) + 1),
+              ];
+        }
+      }
+      debugPrint(newPosts.keys.toString());
       emit(state.copyWith(posts: newPosts));
     });
   }

@@ -68,9 +68,10 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
         channel?.sink.close();
         channel = IOWebSocketChannel.connect(
             // TODO
-            // Uri.parse('wss://' + baseUrl + '/meetingActivity/socket/' + event.id),
             Uri.parse(
-                'ws://' + baseUrl + '/meetingActivity/socket/' + event.id),
+                'wss://' + baseUrl + '/meetingActivity/socket/' + event.id),
+            // Uri.parse(
+            //     'ws://' + baseUrl + '/meetingActivity/socket/' + event.id),
             headers: {'X-Access-Token': _localDataProvider.token()},
             pingInterval: const Duration(seconds: 1));
         channel!.stream.listen((message) {

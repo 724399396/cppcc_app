@@ -54,8 +54,8 @@ Future<void> main() async {
   var apiDataProvider = ApiDataProvider(
       Dio(BaseOptions(
         // TODO
-        // baseUrl: 'https://' + baseUrl,
-        baseUrl: 'http://' + baseUrl,
+        baseUrl: 'https://' + baseUrl,
+        // baseUrl: 'http://' + baseUrl,
         connectTimeout: 10000,
         receiveTimeout: 10000,
       )),

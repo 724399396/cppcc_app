@@ -67,7 +67,7 @@ class Posts extends Equatable {
 
   @override
   String toString() {
-    return 'Posts(id: $id, postType: $postType, title: $title, author: $author, content: $content, category: $category, cover: $cover, hits: $hits, appendix: $appendix, createBy: $createBy, createTime: $createTime, categoryDictText: $categoryDictText, read: $read)';
+    return 'Posts(id: $id, postType: $postType, title: $title, hits: $hits, categoryDictText: $categoryDictText, read: $read)';
   }
 
   @override

@@ -300,20 +300,18 @@ class HomePage extends StatelessWidget {
                   header: easyRefreshHeader,
                   footer: easyRefreshFooter,
                   onLoad: () async {
-                    BlocProvider.of<PostsBloc>(context).add(
-                        const PostLoadMore(PostKey(PostType.news, null)));
-                    BlocProvider.of<PostsBloc>(context).add(
-                        const PostLoadMore(
-                            PostKey(PostType.fileAnnment, null)));
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostLoadMore(PostKey(PostType.news, null)));
+                    BlocProvider.of<PostsBloc>(context).add(const PostLoadMore(
+                        PostKey(PostType.fileAnnment, null)));
                   },
                   onRefresh: () async {
                     BlocProvider.of<PostsBloc>(context)
                         .add(const PostRefresh(PostKey(PostType.news, null)));
-                    BlocProvider.of<PostsBloc>(context).add(const PostRefresh(
-                        PostKey(PostType.fileAnnment, null)));
+                    BlocProvider.of<PostsBloc>(context).add(
+                        const PostRefresh(PostKey(PostType.fileAnnment, null)));
                   },
-                  emptyWidget:
-                      data.isEmpty ? const EmptyData() : null,
+                  emptyWidget: data.isEmpty ? const EmptyData() : null,
                   slivers: data.map((p) => PostsItem(p)).toList(),
                 );
               },

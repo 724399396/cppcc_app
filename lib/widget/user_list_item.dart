@@ -21,11 +21,11 @@ class UserListItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
     return Container(
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(12)),
       child: GestureDetector(
+        behavior: HitTestBehavior.opaque,
         onTap: onClick,
         child: Row(children: [
           Container(
@@ -36,10 +36,7 @@ class UserListItem extends StatelessWidget {
               child: icon,
             ),
           ),
-          Text(
-            title,
-            style: themeData.textTheme.bodyLarge,
-          ),
+          Text(title, style: const TextStyle(fontSize: 18)),
           const Expanded(
             child: Align(
               alignment: Alignment.centerRight,

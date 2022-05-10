@@ -31,7 +31,7 @@ import 'package:cppcc_app/page/settings/collection_page.dart';
 import 'package:cppcc_app/page/settings/feedback_page.dart';
 import 'package:cppcc_app/page/settings/settings_page.dart';
 import 'package:cppcc_app/page/settings/update_phone_page.dart';
-import 'package:cppcc_app/page/settings/visiting_card_page.dart';
+import 'package:cppcc_app/page/settings/qr_business_card_apge.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -77,7 +77,7 @@ final routesDef = {
   Routes.collectionPage: (context) => const CollectionPage(),
   Routes.feedbackPage: (context) => const FeedbackPage(),
   Routes.settingsPage: (context) => const SettingsPage(),
-  Routes.qrBusinessCardPage: (context) => const VisitingCardPage(),
+  Routes.qrBusinessCardPage: (context) => const QrBusinessCardPage(),
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
   Routes.postsDetailPage: (context) => const PostsDetailPage(),
   Routes.personSettingPage: (context) => const UserSettingPage(),

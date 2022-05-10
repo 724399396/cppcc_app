@@ -170,7 +170,7 @@ class HomeMe extends StatelessWidget {
                       // 履职编号部分
                       Container(
                         width: double.infinity,
-                        padding: const EdgeInsets.all(10.0),
+                        padding: const EdgeInsets.symmetric(vertical: 10),
                         // opacity: 0.5,
                         decoration: BoxDecoration(
                           color: const Color(0x88ffe0be),
@@ -209,31 +209,34 @@ class DutiesNumber extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var themeData = Theme.of(context);
     return GestureDetector(
       onTap: () {
         Navigator.of(context).pushNamed(Routes.performanceFilePage);
       },
-      child: SizedBox(
+      child: Container(
           height: 48.0,
           child: Row(
             children: <Widget>[
-              Container(
-                padding: const EdgeInsets.all(14.0),
-                child: SizedBox(
-                  height: 32.0,
-                  width: 32.0,
-                  child: Image.asset('assets/icons/ic_ka.png'),
-                ),
+              const SizedBox(width: 14),
+              SizedBox(
+                height: 32.0,
+                width: 32.0,
+                child: Image.asset('assets/icons/ic_ka.png'),
               ),
-              Text(
+              const SizedBox(width: 14),
+              const Text(
                 "履职卡号",
-                style: themeData.textTheme.titleLarge
-                    ?.copyWith(color: const Color(0xfffcdcb4)),
+                style: TextStyle(fontSize: 18, color: Color(0xfffcdcb4)),
               ),
+              Expanded(child: Container()),
               Container(
-                width: 14.0,
-              ),
+                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                decoration: const BoxDecoration(
+                  color: Color(0xfffee0be),
+                  borderRadius: BorderRadius.all(Radius.circular(8))
+                ),
+                child: const Text("NO.123", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+              const SizedBox(width: 14),
             ],
           )),
     );
@@ -288,14 +291,6 @@ class SettingsSystem extends StatelessWidget {
           onClick: () {
             Navigator.of(context).pushNamed(Routes.qrBusinessCardPage);
           },
-        ),
-        const SizedBox(height: 4),
-        UserListItem(
-          icon: Image.asset(
-            'assets/icons/ic-banbenhdpi.png',
-          ),
-          title: "监测新版本",
-          onClick: () {},
         ),
         const SizedBox(height: 4),
         UserListItem(

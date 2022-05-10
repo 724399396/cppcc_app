@@ -96,7 +96,7 @@ class ContactItem extends StatelessWidget {
                     radius: 24.0,
                     backgroundImage: contact.avatar == null
                         ? Image.asset('assets/icons/ic_wode_selected.png').image
-                        : CachedNetworkImageProvider(contact.avatar.toString()),
+                        : CachedNetworkImageProvider(contact.avatar!),
                   ),
                 ),
               ),

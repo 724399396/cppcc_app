@@ -18,7 +18,7 @@ class MessageRepository {
               msgContent: e.msgContent ?? '',
               sendTime: e.sendTime ?? '',
               read: e.read ?? false,
-              type: convertToMessageTypeFromCode(e.msgCategory),
+              type: convertToMessageTypeFromSystemCode(e.msgCategory),
             ))
         .toList();
   }

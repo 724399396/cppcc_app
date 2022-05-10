@@ -32,3 +32,9 @@ class MessageRead extends MessageEvent {
 
   const MessageRead(this.message);
 }
+
+class MessageReceived extends MessageEvent {
+  final MessageReceiveResponse messageReceive;
+
+  const MessageReceived(this.messageReceive);
+}

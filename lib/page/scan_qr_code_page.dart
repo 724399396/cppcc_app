@@ -1,4 +1,6 @@
+import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:mobile_scanner/mobile_scanner.dart';
 
@@ -15,7 +17,10 @@ class ScanQRCodePage extends StatelessWidget {
             // TODO
             final String? code = barcode.rawValue;
             debugPrint('Barcode found! $code');
-            Navigator.pop(context);
+            if (code != null) {
+              RepositoryProvider.of<ApiDataProvider>(context).get(code);
+              Navigator.pop(context);
+            }
           }),
     );
   }

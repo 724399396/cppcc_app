@@ -30,7 +30,7 @@ extension MessageTypeExtension on MessageType {
   }
 }
 
-MessageType convertToMessageTypeFromCode(String code) {
+MessageType convertToMessageTypeFromSystemCode(String code) {
   for (var value in MessageType.values) {
     if (value.code.toString() == code) {
       return value;

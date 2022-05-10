@@ -71,7 +71,8 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             // Uri.parse('wss://' + baseUrl + '/meetingActivity/socket/' + event.id),
             Uri.parse(
                 'ws://' + baseUrl + '/meetingActivity/socket/' + event.id),
-            headers: {'X-Access-Token': _localDataProvider.token()});
+            headers: {'X-Access-Token': _localDataProvider.token()},
+            pingInterval: const Duration(seconds: 1));
         channel!.stream.listen((message) {
           debugPrint(message);
           add(MeetingChanged(

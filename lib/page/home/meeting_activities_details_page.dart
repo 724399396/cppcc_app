@@ -163,8 +163,7 @@ class MeetingActivitiesDetailsPage extends StatelessWidget {
                               alignment: Alignment.center,
                               child: meeting.signQrcode != ""
                                   ? CachedNetworkImage(
-                                      width: 200,
-                                      imageUrl: meeting.signQrcode.toString())
+                                      width: 200, imageUrl: meeting.signQrcode)
                                   : Container(),
                             ),
                             Align(

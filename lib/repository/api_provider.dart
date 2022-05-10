@@ -353,4 +353,8 @@ class ApiDataProvider {
     // TODO
     return Future.value(null);
   }
+
+  Future get(String uri) {
+    return _dio.get(uri).then((value) => BaseResponse.fromJson(value.data));
+  }
 }

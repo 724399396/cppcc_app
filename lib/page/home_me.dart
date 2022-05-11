@@ -213,7 +213,7 @@ class DutiesNumber extends StatelessWidget {
       onTap: () {
         Navigator.of(context).pushNamed(Routes.performanceFilePage);
       },
-      child: Container(
+      child: SizedBox(
           height: 48.0,
           child: Row(
             children: <Widget>[

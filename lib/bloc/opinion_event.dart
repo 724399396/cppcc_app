@@ -20,3 +20,16 @@ class OpinionRefresh extends OpinionEvent {
 
   const OpinionRefresh(this.type);
 }
+
+class OpinionAdd extends OpinionEvent {
+  final OpinionAddRequest opinion;
+  final SuccessCallback successCallback;
+
+  const OpinionAdd(this.opinion, this.successCallback);
+}
+
+class OpinionRead extends OpinionEvent {
+  final Opinion opinion;
+
+  const OpinionRead(this.opinion);
+}

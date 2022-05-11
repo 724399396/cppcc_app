@@ -1,3 +1,4 @@
+import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 
@@ -23,7 +24,16 @@ class OpinionRepository {
                 status: e.status ?? 0,
                 statusDictText: e.statusDictText ?? '',
                 createTime: DateTime.parse(e.createTime),
-                read: e.read))
+                read: e.read ?? false,
+                createBy: e.createBy))
             .toList());
+  }
+
+  Future addOpinion(OpinionAddRequest opinion) {
+    return _apiDataProvider.addOpinion(opinion);
+  }
+
+  Future getOpinionDetail(id) {
+    return _apiDataProvider.getOpinionDetail(id);
   }
 }

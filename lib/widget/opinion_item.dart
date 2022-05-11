@@ -14,8 +14,8 @@ class OpinionItem extends StatelessWidget {
     return SliverToBoxAdapter(
         child: GestureDetector(
       onTap: () {
-        Navigator.of(context).pushNamed(Routes.opinionDetailPage,
-            arguments: {"id": _opinion.id});
+        Navigator.of(context)
+            .pushNamed(Routes.opinionDetailPage, arguments: _opinion);
       },
       child: Container(
         height: 120,

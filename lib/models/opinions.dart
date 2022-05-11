@@ -10,6 +10,7 @@ class Opinion extends Equatable {
   final String statusDictText;
   final DateTime createTime;
   final bool read;
+  final String createBy;
 
   const Opinion({
     required this.id,
@@ -21,6 +22,7 @@ class Opinion extends Equatable {
     required this.statusDictText,
     required this.createTime,
     required this.read,
+    required this.createBy,
   });
 
   Opinion copyWith({
@@ -33,6 +35,7 @@ class Opinion extends Equatable {
     String? statusDictText,
     DateTime? createTime,
     bool? read,
+    String? createBy,
   }) {
     return Opinion(
       id: id ?? this.id,
@@ -44,12 +47,13 @@ class Opinion extends Equatable {
       statusDictText: statusDictText ?? this.statusDictText,
       createTime: createTime ?? this.createTime,
       read: read ?? this.read,
+      createBy: createBy ?? this.createBy,
     );
   }
 
   @override
   String toString() {
-    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read)';
+    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy)';
   }
 
   @override
@@ -64,6 +68,7 @@ class Opinion extends Equatable {
       statusDictText,
       createTime,
       read,
+      createBy,
     ];
   }
 }

@@ -1,6 +1,8 @@
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
+import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
@@ -22,6 +24,7 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
     with TickerProviderStateMixin, AutomaticKeepAliveClientMixin {
   late TabController _tabController;
   late List<OpinionListType> _tabs;
+  bool filterSelf = false;
 
   @override
   @protected
@@ -31,7 +34,8 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
   void initState() {
     super.initState();
     _tabs = [OpinionListType.notFinished, OpinionListType.finished];
-    _tabController = TabController(initialIndex: 0, length: _tabs.length, vsync: this);
+    _tabController =
+        TabController(initialIndex: 0, length: _tabs.length, vsync: this);
   }
 
   @override
@@ -65,11 +69,44 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
           ),
         ),
       ),
+      floatingActionButtonLocation: FloatingActionButtonLocation.miniEndDocked,
+      floatingActionButton: _tabController.index == 0
+          ? Stack(
+              children: [
+                FloatingActionButton.extended(
+                  heroTag: 'mine',
+                  icon: const Icon(Icons.my_library_books_outlined),
+                  backgroundColor: const Color(0xfff27f56),
+                  foregroundColor: Colors.white,
+                  label: Text(filterSelf ? "全部" : "我的"),
+                  onPressed: () {
+                    setState(() {
+                      filterSelf = !filterSelf;
+                    });
+                  },
+                ),
+                Container(
+                    margin: const EdgeInsets.only(top: 52, bottom: 5),
+                    child: FloatingActionButton.extended(
+                      heroTag: 'add',
+                      icon: const Icon(Icons.add),
+                      backgroundColor: const Color(0xfff33333),
+                      foregroundColor: Colors.white,
+                      label: const Text("新增"),
+                      onPressed: () {
+                        Navigator.of(context)
+                            .pushNamed(Routes.socialOpinionsAddPage);
+                      },
+                    )),
+              ],
+            )
+          : Container(),
       body: TabBarView(
         controller: _tabController,
         children: _tabs.map((item) {
           return OpinionList(
-            tabData: item,
+            item,
+            _tabController.index == 0 && filterSelf,
           );
         }).toList(),
       ),
@@ -80,9 +117,9 @@ class _SocialOpinionsPageState extends State<SocialOpinionsPage>
 // 列表信息
 class OpinionList extends StatefulWidget {
   final OpinionListType _listType;
-  const OpinionList({Key? key, required tabData})
-      : _listType = tabData,
-        super(key: key);
+  final bool _filterSelf;
+  const OpinionList(this._listType, this._filterSelf, {Key? key})
+      : super(key: key);
 
   @override
   State<OpinionList> createState() => _OpinionListState();
@@ -123,9 +160,19 @@ class _OpinionListState extends State<OpinionList> {
         },
         builder: (context, state) {
           var data = state.opinions[widget._listType] ?? [];
-          var filterData = _searchKeyWord.isEmpty
-              ? data
-              : data.where((d) => d.title.contains(_searchKeyWord)).toList();
+          var filterData = (_searchKeyWord.isEmpty
+                  ? data
+                  : data
+                      .where((d) => d.title.contains(_searchKeyWord))
+                      .toList())
+              .where((element) => widget._filterSelf
+                  ? element.createBy ==
+                      BlocProvider.of<UserBloc>(context)
+                          .state
+                          .userInfo
+                          ?.username
+                  : true)
+              .toList();
           return Column(
             children: [
               GeneralSearch(
@@ -153,9 +200,7 @@ class _OpinionListState extends State<OpinionList> {
                   BlocProvider.of<OpinionBloc>(context)
                       .add(OpinionRefresh(widget._listType));
                 },
-                emptyWidget: filterData.isEmpty
-                    ? const EmptyData() 
-                    : null,
+                emptyWidget: filterData.isEmpty ? const EmptyData() : null,
                 slivers: filterData.map((p) => OpinionItem(p)).toList(),
               ))
             ],

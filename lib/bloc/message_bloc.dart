@@ -32,8 +32,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
     on<MessageInitilized>((event, emit) async {
       channel?.sink.close();
       channel = IOWebSocketChannel.connect(
-          // TODO
-          Uri.parse('wss://' + baseUrl + '/userMessage/socket/'),
+          Uri.parse('wss://' + baseUrl + '/userMessage/socket'),
           // Uri.parse('ws://' + baseUrl + '/userMessage/socket'),
           headers: {'X-Access-Token': _localDataProvider.token()},
           pingInterval: const Duration(seconds: 1));

@@ -15,10 +15,20 @@ class OpinionResponse {
   @JsonKey(name: "type_dictText")
   final String? typeDictText;
   final String createTime;
-  final bool read;
+  final String createBy;
+  final bool? read;
 
-  OpinionResponse(this.id, this.title, this.content, this.authorUserDictText,
-      this.status, this.statusDictText, this.typeDictText, this.createTime, this.read);
+  OpinionResponse(
+      this.id,
+      this.title,
+      this.content,
+      this.authorUserDictText,
+      this.status,
+      this.statusDictText,
+      this.typeDictText,
+      this.createTime,
+      this.read,
+      this.createBy);
 
   factory OpinionResponse.fromJson(Map<String, dynamic> json) =>
       _$OpinionResponseFromJson(json);

@@ -15,10 +15,12 @@ import 'package:cppcc_app/page/home/discuss_network_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
 import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
+import 'package:cppcc_app/page/home/social_opinion_add_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
+import 'package:cppcc_app/page/opinion_details_page.dart';
 import 'package:cppcc_app/page/settings/update_password_page.dart';
 import 'package:cppcc_app/page/settings/user_setting_page.dart';
 import 'package:cppcc_app/page/posts_details_page.dart';
@@ -84,6 +86,8 @@ final routesDef = {
   Routes.personSettingPage: (context) => const UserSettingPage(),
   Routes.updatePhonePage: (context) => const UpdatePhonePage(),
   Routes.updatePasswordPage: (context) => const UpdatePasswordPage(),
+  Routes.socialOpinionsAddPage: (context) => const SocialOpinionAddPage(),
+  Routes.opinionDetailPage: (context) => const OpinionDetailsPage(),
 };
 
 class CppccApp extends StatelessWidget {

@@ -8,6 +8,7 @@ import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/meeting_response.dart';
 import 'package:cppcc_app/dto/message_response.dart';
 import 'package:cppcc_app/dto/message_type.dart';
+import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
@@ -77,7 +78,8 @@ class ApiDataProvider {
   }
 
   Future<Response<void>> modifyPassword(String newPassword) {
-    return _dio.post('/app/user/updatePassword', data: {'password': newPassword});
+    return _dio
+        .post('/app/user/updatePassword', data: {'password': newPassword});
   }
 
   Future<Response<void>> resetPassword(
@@ -377,5 +379,20 @@ class ApiDataProvider {
       'phone': phone,
       'verifyCode': verifyCode,
     }).then((value) => BaseResponse.fromJson(value.data));
+  }
+
+  Future<BaseResponse> addOpinion(OpinionAddRequest opinion) {
+    return _dio.post('/app/opinion/add', data: opinion.toJson()).then((value) {
+      return BaseResponse.fromJson(value.data);
+    });
+  }
+
+  Future<OpinionResponse> getOpinionDetail(id) {
+    return _dio.get('/app/opinion/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return OpinionResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 }

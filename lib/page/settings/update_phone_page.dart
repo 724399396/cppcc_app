@@ -124,11 +124,10 @@ class _UpdatePhonePageState extends State<UpdatePhonePage> {
                                     if (_formKey.currentState?.validate() ??
                                         false) {
                                       _formKey.currentState?.save();
-                                      // TODO
                                       BlocProvider.of<UserBloc>(context).add(
                                           UserUpdatePhoneRequested(
                                               _phone!, _verifyCode!, () {
-                                        showToast('重置密码成功');
+                                        showToast('修改手机号成功');
                                         Navigator.of(context).pop();
                                       }));
                                     }

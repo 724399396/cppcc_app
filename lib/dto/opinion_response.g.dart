@@ -16,7 +16,8 @@ OpinionResponse _$OpinionResponseFromJson(Map<String, dynamic> json) =>
       json['status_dictText'] as String?,
       json['type_dictText'] as String?,
       json['createTime'] as String,
-      json['read'] as bool,
+      json['read'] as bool?,
+      json['createBy'] as String,
     );
 
 Map<String, dynamic> _$OpinionResponseToJson(OpinionResponse instance) =>
@@ -29,5 +30,6 @@ Map<String, dynamic> _$OpinionResponseToJson(OpinionResponse instance) =>
       'status_dictText': instance.statusDictText,
       'type_dictText': instance.typeDictText,
       'createTime': instance.createTime,
+      'createBy': instance.createBy,
       'read': instance.read,
     };

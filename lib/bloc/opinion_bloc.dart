@@ -1,11 +1,14 @@
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
+import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/repository/opinion_repository.dart';
+import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
+import 'package:collection/collection.dart';
 
 part 'opinion_event.dart';
 part 'opinion_state.dart';
@@ -43,8 +46,7 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
 
     on<OpinionRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        Map<OpinionListType, List<Opinion>> newData =
-            Map.from(state.opinions);
+        Map<OpinionListType, List<Opinion>> newData = Map.from(state.opinions);
         newData[event.type] = [];
         Map<OpinionListType, int> newCurrentPage = Map.from(state.currentPage);
         newCurrentPage[event.type] = 1;
@@ -54,6 +56,42 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
         ));
         await _dataLoad(emit, event.type);
       });
+    });
+
+    on<OpinionRead>((event, emit) async {
+      await _opinionRepository.getOpinionDetail(event.opinion.id);
+      Map<OpinionListType, List<Opinion>> newData = Map.from(state.opinions);
+      int unreadCount = state.unreadCount;
+      for (var key in newData.keys) {
+        var opinions = newData[key];
+        var readOpinion = newData[key]
+            ?.firstWhereOrNull((post) => post.id == event.opinion.id);
+        if (readOpinion != null && !readOpinion.read) {
+          newData[key] = (opinions
+                      ?.where((element) => element.id != event.opinion.id)
+                      .toList() ??
+                  []) +
+              [
+                readOpinion.copyWith(read: true),
+              ];
+          unreadCount = unreadCount - 1;
+        }
+      }
+      emit(state.copyWith(opinions: newData, unreadCount: unreadCount));
+    });
+
+    on<OpinionAdd>((event, emit) async {
+      emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
+      try {
+        await _opinionRepository.addOpinion(event.opinion);
+        emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
+        event.successCallback();
+        // reload data
+        add(OpinionInitilized());
+      } catch (err) {
+        debugPrint('guandu historical clue api error: $err');
+        emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
+      }
     });
   }
 

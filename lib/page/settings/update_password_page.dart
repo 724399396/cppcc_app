@@ -1,31 +1,32 @@
 import 'package:cppcc_app/bloc/timer_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/utils/form_status.dart';
+import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class UpdatePhonePage extends StatefulWidget {
-  const UpdatePhonePage({Key? key}) : super(key: key);
+class UpdatePasswordPage extends StatefulWidget {
+  const UpdatePasswordPage({Key? key}) : super(key: key);
 
   @override
-  State<UpdatePhonePage> createState() => _UpdatePhonePageState();
+  State<UpdatePasswordPage> createState() => _UpdatePasswordPageState();
 }
 
-class _UpdatePhonePageState extends State<UpdatePhonePage> {
+class _UpdatePasswordPageState extends State<UpdatePasswordPage> {
   bool _formChanged = false;
-  String? _phone;
-  String? _verifyCode;
+  String? _password;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _passController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var themeData = Theme.of(context);
-    var phoneValidatorRegex = RegExp(r"^[0-9]{11}$");
     const itemSpace = SizedBox(height: 20);
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text('修改手机号'),
+        title: const Text('修改密码'),
       ),
       body: Container(
         margin: const EdgeInsets.all(16),
@@ -47,63 +48,36 @@ class _UpdatePhonePageState extends State<UpdatePhonePage> {
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
                 TextFormField(
-                  key: const ValueKey('phone'),
-                  onSaved: (String? val) => _phone = val,
-                  onChanged: (val) {
-                    setState(() {
-                      _phone = val;
-                    });
-                  },
+                  controller: _passController,
+                  key: const ValueKey('password'),
+                  onSaved: (String? val) => _password = val,
                   decoration: InputDecoration(
-                      hintText: '请输入手机号码',
+                      hintText: '请输入新密码',
                       hintStyle: themeData.textTheme.subtitle1
                           ?.copyWith(color: Colors.grey)),
+                  obscureText: true,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   validator: (String? val) {
-                    if (val?.isEmpty ?? true) return '手机号码不能为空';
-                    if (!phoneValidatorRegex.hasMatch(val!)) return '手机格式不正确';
+                    if (val?.isEmpty ?? true) return '新密码不能为空';
+                    if (val!.length < 8 || val.length > 20) return '密码长度为8-20位';
                     return null;
                   },
                 ),
                 itemSpace,
-                Stack(alignment: Alignment.centerRight, children: [
-                  TextFormField(
-                    key: const ValueKey('captcha'),
-                    onSaved: (String? val) => _verifyCode = val,
-                    decoration: InputDecoration(
-                        hintText: '请输入验证码',
-                        hintStyle: themeData.textTheme.subtitle1
-                            ?.copyWith(color: Colors.grey)),
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    validator: (String? val) {
-                      if (val?.isEmpty ?? true) return '验证码不能为空';
-                      return null;
-                    },
-                  ),
-                  BlocBuilder<TimerBloc, TimerState>(builder: (context, state) {
-                    var enbleResend = ((_phone?.isNotEmpty ?? false) &&
-                        phoneValidatorRegex.hasMatch(_phone ?? ''));
-                    return (state is TimerRunInProgress)
-                        ? Text('重发(${state.duration}秒)')
-                        : GestureDetector(
-                            child: Text(
-                              '获取验证码',
-                              style: themeData.textTheme.button?.copyWith(
-                                  color:
-                                      enbleResend ? Colors.blue : Colors.grey),
-                            ),
-                            onTap: enbleResend
-                                ? () {
-                                    BlocProvider.of<UserBloc>(context).add(
-                                        UserSendSmsVerifyCodeRequested(_phone!,
-                                            () {
-                                      showToast('验证码已发送，请注意查收');
-                                    }));
-                                  }
-                                : null,
-                          );
-                  }),
-                ]),
+                TextFormField(
+                  key: const ValueKey('confirmPassword'),
+                  decoration: InputDecoration(
+                      hintText: '请再次输入新密码',
+                      hintStyle: themeData.textTheme.subtitle1
+                          ?.copyWith(color: Colors.grey)),
+                  obscureText: true,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
+                  validator: (String? val) {
+                    if (val?.isEmpty ?? true) return '确认新密码不能为空';
+                    if (val != _passController.text) return '两次输入新密码不一致';
+                    return null;
+                  },
+                ),
                 itemSpace,
                 BlocBuilder<UserBloc, UserState>(
                     builder: (context, state) =>
@@ -124,12 +98,13 @@ class _UpdatePhonePageState extends State<UpdatePhonePage> {
                                     if (_formKey.currentState?.validate() ??
                                         false) {
                                       _formKey.currentState?.save();
-                                      // TODO
                                       BlocProvider.of<UserBloc>(context).add(
-                                          UserUpdatePhoneRequested(
-                                              _phone!, _verifyCode!, () {
-                                        showToast('重置密码成功');
-                                        Navigator.of(context).pop();
+                                          UserUpdatePasswordRequested(
+                                              _password!, () {
+                                        showToast('修改密码成功，请重新登录');
+                                        Navigator.of(context)
+                                            .pushNamedAndRemoveUntil(
+                                                Routes.loginPage, (r) => false);
                                       }));
                                     }
                                   },
@@ -156,7 +131,7 @@ class _UpdatePhonePageState extends State<UpdatePhonePage> {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: const Text('确定放弃修改手机号码吗?'),
+          content: const Text('确定放弃修改密码吗?'),
           actions: <Widget>[
             TextButton(
               style: TextButton.styleFrom(primary: Colors.black),

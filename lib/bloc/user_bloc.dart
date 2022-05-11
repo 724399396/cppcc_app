@@ -43,8 +43,7 @@ class UserBloc extends Bloc<UserEvent, UserState> {
             })));
     on<UserUpdatePasswordRequested>(
         (event, emit) => _generateCallApi(event, emit, (emit) async {
-              await _userRepository.updatePassword(
-                  event.oldPassword, event.newPassword);
+              await _userRepository.updatePassword(event.newPassword);
             }));
     on<UserResetPasswordRequested>(
         ((event, emit) => _generateCallApi(event, emit, (emit) async {

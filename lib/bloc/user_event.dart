@@ -29,15 +29,14 @@ class UserLoginRequested extends UserEvent {
 }
 
 class UserUpdatePasswordRequested extends UserEvent {
-  final String oldPassword;
   final String newPassword;
 
   const UserUpdatePasswordRequested(
-      this.oldPassword, this.newPassword, successCallback)
+      this.newPassword, successCallback)
       : super(successCallback);
 
   @override
-  List<Object> get props => [oldPassword, newPassword];
+  List<Object> get props => [newPassword];
 }
 
 class UserSendSmsVerifyCodeRequested extends UserEvent {

@@ -33,4 +33,5 @@ class Routes {
   static const qrBusinessCardPage = '/qrBusinessCardPage';
   static const personSettingPage = '/personSettingPage';
   static const updatePhonePage = '/updatePhonePage';
+  static const updatePasswordPage = '/updatePasswordPage';
 }

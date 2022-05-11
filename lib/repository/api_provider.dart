@@ -76,13 +76,8 @@ class ApiDataProvider {
     });
   }
 
-  Future<Response<void>> modifyPassword(
-      String oldPassword, String newPassword) {
-    return _dio.put('', data: {
-      'oldpassword': oldPassword,
-      'password': newPassword,
-      'confirmpassword': newPassword
-    });
+  Future<Response<void>> modifyPassword(String newPassword) {
+    return _dio.post('/app/user/updatePassword', data: {'password': newPassword});
   }
 
   Future<Response<void>> resetPassword(

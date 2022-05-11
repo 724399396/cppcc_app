@@ -31,9 +31,8 @@ class UserRepository {
     return loginResponse.userInfo;
   }
 
-  Future<Response<void>> updatePassword(
-      String oldPassword, String newPassword) async {
-    return await _apiDataProvider.modifyPassword(oldPassword, newPassword);
+  Future<Response<void>> updatePassword(String newPassword) async {
+    return await _apiDataProvider.modifyPassword(newPassword);
   }
 
   Future<Response<void>> resetPassword(

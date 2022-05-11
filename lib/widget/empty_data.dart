@@ -10,13 +10,13 @@ class EmptyData extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: double.infinity,
       child: Column(
+        mainAxisSize: MainAxisSize.max,
         mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: <Widget>[
-          const Expanded(
-            child: SizedBox(),
+          Expanded(
+            child: Container(),
             flex: 2,
           ),
           SizedBox(
@@ -29,8 +29,8 @@ class EmptyData extends StatelessWidget {
             "暂无数据！",
             style: TextStyle(fontSize: 16.0, color: Colors.grey[400]),
           ),
-          const Expanded(
-            child: SizedBox(),
+          Expanded(
+            child: Container(),
             flex: 3,
           ),
         ],

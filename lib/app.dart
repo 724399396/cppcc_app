@@ -19,6 +19,7 @@ import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
+import 'package:cppcc_app/page/settings/update_password_page.dart';
 import 'package:cppcc_app/page/settings/user_setting_page.dart';
 import 'package:cppcc_app/page/posts_details_page.dart';
 //资讯相关页面
@@ -82,6 +83,7 @@ final routesDef = {
   Routes.postsDetailPage: (context) => const PostsDetailPage(),
   Routes.personSettingPage: (context) => const UserSettingPage(),
   Routes.updatePhonePage: (context) => const UpdatePhonePage(),
+  Routes.updatePasswordPage: (context) => const UpdatePasswordPage(),
 };
 
 class CppccApp extends StatelessWidget {

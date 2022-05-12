@@ -91,7 +91,7 @@ class MeetingItem extends StatelessWidget {
                   badgeColor: _meeting.status == 1
                       ? AppColors.appBlue
                       : (_meeting.status == 2
-                          ? AppColors.appGren
+                          ? AppColors.appGreen
                           : const Color(0xFFbdc7d0)),
                   badgeSize: 60,
                   textSpan: TextSpan(

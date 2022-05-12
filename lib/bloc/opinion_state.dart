@@ -6,6 +6,7 @@ class OpinionState extends Equatable {
   final Map<OpinionListType, List<Opinion>> opinions;
   final Map<OpinionListType, int> currentPage;
   final FormStatus? submitStatus;
+  final Opinion? currentOpinion;
 
   const OpinionState({
     this.unreadCount = 0,
@@ -13,6 +14,7 @@ class OpinionState extends Equatable {
     this.opinions = const {},
     this.currentPage = const {},
     this.submitStatus,
+    this.currentOpinion,
   });
 
   @override
@@ -23,6 +25,7 @@ class OpinionState extends Equatable {
       opinions,
       currentPage,
       submitStatus ?? '',
+      currentOpinion ?? '',
     ];
   }
 
@@ -32,6 +35,7 @@ class OpinionState extends Equatable {
     Map<OpinionListType, List<Opinion>>? opinions,
     Map<OpinionListType, int>? currentPage,
     FormStatus? submitStatus,
+    Opinion? currentOpinion,
   }) {
     return OpinionState(
       unreadCount: unreadCount ?? this.unreadCount,
@@ -39,11 +43,12 @@ class OpinionState extends Equatable {
       opinions: opinions ?? this.opinions,
       currentPage: currentPage ?? this.currentPage,
       submitStatus: submitStatus ?? this.submitStatus,
+      currentOpinion: currentOpinion ?? this.currentOpinion,
     );
   }
 
   @override
   String toString() {
-    return 'OpinionState(unreadCount: $unreadCount, status: $status, opinions: $opinions, currentPage: $currentPage, submitStatus: $submitStatus)';
+    return 'OpinionState(unreadCount: $unreadCount, status: $status, opinions: $opinions, currentPage: $currentPage, submitStatus: $submitStatus, currentOpinion: $currentOpinion)';
   }
 }

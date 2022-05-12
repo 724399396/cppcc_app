@@ -21,6 +21,7 @@ import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
 import 'package:cppcc_app/page/opinion_details_page.dart';
+import 'package:cppcc_app/page/opinion_progress_page.dart';
 import 'package:cppcc_app/page/settings/update_password_page.dart';
 import 'package:cppcc_app/page/settings/user_setting_page.dart';
 import 'package:cppcc_app/page/posts_details_page.dart';
@@ -88,6 +89,7 @@ final routesDef = {
   Routes.updatePasswordPage: (context) => const UpdatePasswordPage(),
   Routes.socialOpinionsAddPage: (context) => const SocialOpinionAddPage(),
   Routes.opinionDetailPage: (context) => const OpinionDetailsPage(),
+  Routes.opinionProgressPage: (context) => const OpinionProgressPage(),
 };
 
 class CppccApp extends StatelessWidget {

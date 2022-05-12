@@ -35,4 +35,5 @@ class Routes {
   static const updatePhonePage = '/updatePhonePage';
   static const updatePasswordPage = '/updatePasswordPage';
   static const socialOpinionsAddPage = '/socialOpinionsAddPage';
+  static const opinionProgressPage = '/opinionProgressPage';
 }

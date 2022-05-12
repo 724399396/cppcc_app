@@ -13,7 +13,7 @@ class AppColors {
 
   static const appBlue = Color(0xFF75aae2);
 
-  static const appGren = Color(0xFF75e287);
+  static const appGreen = Color(0xFF75e287);
 
   static MaterialColor primary = MaterialColor(0xFFe26120, _primarySwatch);
 }

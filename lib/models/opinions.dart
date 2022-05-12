@@ -11,6 +11,7 @@ class Opinion extends Equatable {
   final DateTime createTime;
   final bool read;
   final String createBy;
+  final List<OpinionProgress> progress;
 
   const Opinion({
     required this.id,
@@ -23,6 +24,7 @@ class Opinion extends Equatable {
     required this.createTime,
     required this.read,
     required this.createBy,
+    this.progress = const [],
   });
 
   Opinion copyWith({
@@ -36,6 +38,7 @@ class Opinion extends Equatable {
     DateTime? createTime,
     bool? read,
     String? createBy,
+    List<OpinionProgress>? progress,
   }) {
     return Opinion(
       id: id ?? this.id,
@@ -48,12 +51,13 @@ class Opinion extends Equatable {
       createTime: createTime ?? this.createTime,
       read: read ?? this.read,
       createBy: createBy ?? this.createBy,
+      progress: progress ?? this.progress,
     );
   }
 
   @override
   String toString() {
-    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy)';
+    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy, progress: $progress)';
   }
 
   @override
@@ -69,6 +73,7 @@ class Opinion extends Equatable {
       createTime,
       read,
       createBy,
+      progress,
     ];
   }
 }
@@ -96,4 +101,59 @@ extension OpinionListTypeExtension on OpinionListType {
         return [6];
     }
   }
+}
+
+class KeyValue extends Equatable {
+  final String key;
+  final String value;
+  const KeyValue({
+    required this.key,
+    required this.value,
+  });
+
+  KeyValue copyWith({
+    String? key,
+    String? value,
+  }) {
+    return KeyValue(
+      key: key ?? this.key,
+      value: value ?? this.value,
+    );
+  }
+
+  @override
+  String toString() => 'KeyValue(key: $key, value: $value)';
+
+  @override
+  List<Object> get props => [key, value];
+}
+
+class OpinionProgress extends Equatable {
+  final int type;
+  final String typeDictText;
+  final List<KeyValue> content;
+  const OpinionProgress({
+    required this.typeDictText,
+    required this.content,
+    required this.type,
+  });
+
+  OpinionProgress copyWith({
+    int? type,
+    String? typeDictText,
+    List<KeyValue>? content,
+  }) {
+    return OpinionProgress(
+      type: type ?? this.type,
+      typeDictText: typeDictText ?? this.typeDictText,
+      content: content ?? this.content,
+    );
+  }
+
+  @override
+  String toString() =>
+      'OpinionProgress(type: $type, typeDictText: $typeDictText, content: $content)';
+
+  @override
+  List<Object> get props => [type, typeDictText, content];
 }

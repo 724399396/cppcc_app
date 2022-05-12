@@ -33,3 +33,9 @@ class OpinionRead extends OpinionEvent {
 
   const OpinionRead(this.opinion);
 }
+
+class OpinionProgressGet extends OpinionEvent {
+  final Opinion opinion;
+
+  const OpinionProgressGet(this.opinion);
+}

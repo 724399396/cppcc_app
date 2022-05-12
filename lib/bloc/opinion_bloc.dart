@@ -93,6 +93,19 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
         emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
       }
     });
+
+    on<OpinionProgressGet>((event, emit) async {
+      var progress =
+          await _opinionRepository.getOpinionProgress(event.opinion.id);
+      for (var key in state.opinions.keys) {
+        var matchOpinion = state.opinions[key]
+            ?.firstWhereOrNull((post) => post.id == event.opinion.id);
+        if (matchOpinion != null) {
+          emit(state.copyWith(
+              currentOpinion: matchOpinion.copyWith(progress: progress)));
+        }
+      }
+    });
   }
 
   Future<void> _generateCallApi(OpinionEvent event, Emitter<OpinionState> emit,

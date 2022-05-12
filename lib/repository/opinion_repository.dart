@@ -36,4 +36,16 @@ class OpinionRepository {
   Future getOpinionDetail(id) {
     return _apiDataProvider.getOpinionDetail(id);
   }
+
+  Future<List<OpinionProgress>> getOpinionProgress(String id) async {
+    var data = await _apiDataProvider.getOpinionProgress(id);
+    return data
+        .map((e) => OpinionProgress(
+            content: e.content
+                .map((ie) => KeyValue(key: ie.title, value: ie.value))
+                .toList(),
+            type: e.type,
+            typeDictText: e.typeDictText))
+        .toList();
+  }
 }

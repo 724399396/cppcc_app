@@ -33,3 +33,33 @@ Map<String, dynamic> _$OpinionResponseToJson(OpinionResponse instance) =>
       'createBy': instance.createBy,
       'read': instance.read,
     };
+
+KeyValueResponse _$KeyValueResponseFromJson(Map<String, dynamic> json) =>
+    KeyValueResponse(
+      json['title'] as String,
+      json['value'] as String,
+    );
+
+Map<String, dynamic> _$KeyValueResponseToJson(KeyValueResponse instance) =>
+    <String, dynamic>{
+      'title': instance.title,
+      'value': instance.value,
+    };
+
+OpinionProgressResponse _$OpinionProgressResponseFromJson(
+        Map<String, dynamic> json) =>
+    OpinionProgressResponse(
+      json['type'] as int,
+      (json['content'] as List<dynamic>)
+          .map((e) => KeyValueResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['type_dictText'] as String,
+    );
+
+Map<String, dynamic> _$OpinionProgressResponseToJson(
+        OpinionProgressResponse instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'type_dictText': instance.typeDictText,
+      'content': instance.content,
+    };

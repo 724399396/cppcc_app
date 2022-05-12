@@ -91,19 +91,26 @@ class OpinionItem extends StatelessWidget {
                   ),
                   const SizedBox(width: 8),
                   Expanded(child: Container()),
-                  Container(
-                    decoration: BoxDecoration(
-                      border: Border.all(color: const Color(0xFF66cc00)),
-                      borderRadius: BorderRadius.circular(8),
-                    ),
-                    padding:
-                        const EdgeInsets.symmetric(vertical: 2, horizontal: 6),
-                    child: Text(
-                      _opinion.statusDictText,
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodySmall
-                          ?.copyWith(color: const Color(0xFF66cc00)),
+                  GestureDetector(
+                    onTap: () {
+                      Navigator.of(context).pushNamed(
+                          Routes.opinionProgressPage,
+                          arguments: _opinion);
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        border: Border.all(color: const Color(0xFF66cc00)),
+                        borderRadius: BorderRadius.circular(8),
+                      ),
+                      padding: const EdgeInsets.symmetric(
+                          vertical: 2, horizontal: 6),
+                      child: Text(
+                        _opinion.statusDictText,
+                        style: Theme.of(context)
+                            .textTheme
+                            .bodySmall
+                            ?.copyWith(color: const Color(0xFF66cc00)),
+                      ),
                     ),
                   )
                 ],

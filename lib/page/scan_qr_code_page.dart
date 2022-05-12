@@ -1,4 +1,6 @@
 import 'package:cppcc_app/repository/api_provider.dart';
+import 'package:cppcc_app/repository/scan_qr_code_repository.dart';
+import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -14,12 +16,17 @@ class ScanQRCodePage extends StatelessWidget {
       body: MobileScanner(
           allowDuplicates: false,
           onDetect: (barcode, args) {
-            // TODO
             final String? code = barcode.rawValue;
             debugPrint('Barcode found! $code');
             if (code != null) {
-              RepositoryProvider.of<ApiDataProvider>(context).get(code);
-              Navigator.pop(context);
+              RepositoryProvider.of<ScanQrCodeRepository>(context)
+                  .get(code)
+                  .then((value) {
+                showToast(value.message);
+                Navigator.pop(context);
+              }, onError: (e) {
+                Navigator.pop(context);
+              });
             }
           }),
     );

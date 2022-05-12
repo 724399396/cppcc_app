@@ -25,6 +25,7 @@ import 'package:cppcc_app/repository/notice_repository.dart';
 import 'package:cppcc_app/repository/opinion_repository.dart';
 import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/repository/proposal_repository.dart';
+import 'package:cppcc_app/repository/scan_qr_code_repository.dart';
 import 'package:cppcc_app/repository/two_meetings_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
@@ -108,6 +109,9 @@ Future<void> main() async {
         ),
         RepositoryProvider<TwoMeetingsRepository>(
           create: (context) => TwoMeetingsRepository(apiDataProvider),
+        ),
+        RepositoryProvider<ScanQrCodeRepository>(
+          create: (context) => ScanQrCodeRepository(apiDataProvider),
         ),
       ],
       child: MultiBlocProvider(

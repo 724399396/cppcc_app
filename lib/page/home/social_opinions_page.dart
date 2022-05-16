@@ -142,7 +142,6 @@ class _OpinionListState extends State<OpinionList> {
             previous.opinions != current.opinions ||
             previous.status != current.status,
         listener: (previous, current) {
-          // easy conller
           switch (current.status) {
             case ListDataFetchStatus.normal:
               _easyRefreshController.finishRefresh(success: true);

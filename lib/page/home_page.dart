@@ -272,7 +272,6 @@ class HomePage extends StatelessWidget {
                   previous.posts != current.posts ||
                   previous.status != current.status,
               listener: (previous, current) {
-                // easy conller
                 switch (current.status) {
                   case ListDataFetchStatus.normal:
                     _easyRefreshController.finishRefresh(success: true);

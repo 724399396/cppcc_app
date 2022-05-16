@@ -12,14 +12,13 @@ import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
+import 'package:cppcc_app/dto/proposal_response.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
 import 'package:cppcc_app/models/guandu_historical_clue.dart';
-import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
 import 'local_data_provider.dart';
@@ -404,6 +403,18 @@ class ApiDataProvider {
       return OpinionProgressResponse.fromJsonList(
           ((BaseResponse.fromJson(value.data).result
               as Map<String, dynamic>)['records'] as List<dynamic>));
+    });
+  }
+
+  Future<List<ProposalResponse>> getProposalList(
+      int page, int pageSize, bool? excellent) {
+    return _dio.post('/app/proposal/appGetList', data: {
+      'pageNo': page,
+      'pageSize': pageSize,
+      'excellent': excellent,
+    }).then((value) {
+      return ProposalResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
     });
   }
 }

@@ -121,7 +121,6 @@ class MailboxContentPage extends StatelessWidget {
               previous.data != current.data ||
               previous.status != current.status,
           listener: (previous, current) {
-            // easy conller
             switch (current.status) {
               case ListDataFetchStatus.normal:
                 _easyRefreshController.finishRefresh(success: true);

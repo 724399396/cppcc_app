@@ -110,7 +110,6 @@ class MeetingContentPage extends StatelessWidget {
           previous.meetings != current.meetings ||
           previous.status != current.status,
       listener: (previous, current) {
-        // easy conller
         switch (current.status) {
           case ListDataFetchStatus.normal:
             _easyRefreshController.finishRefresh(success: true);

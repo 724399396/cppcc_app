@@ -1,4 +1,3 @@
-import 'package:cppcc_app/repository/api_provider.dart';
 import 'package:cppcc_app/repository/scan_qr_code_repository.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';

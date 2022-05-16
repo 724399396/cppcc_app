@@ -3,6 +3,7 @@ import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/models/proposal.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
@@ -93,9 +94,7 @@ class _ProposalManagePageState extends State<ProposalManagePage>
                       foregroundColor: Colors.white,
                       label: const Text("新增"),
                       onPressed: () {
-                        // TODO
-                        // Navigator.of(context)
-                        //     .pushNamed(Routes.socialOpinionsAddPage);
+                        Navigator.of(context).pushNamed(Routes.proposalAddPage);
                       },
                     )),
               ],
@@ -126,15 +125,13 @@ class ProposalList extends StatefulWidget {
 
 class _ProposalListState extends State<ProposalList> {
   String _searchKeyWord = "";
-  late int? selectYear;
+  int? selectYear;
 
   void updateSelectYear(List<Proposal>? proposal) {
-    setState(() {
-      selectYear = proposal?.map((e) => e.year).fold(
+    selectYear ??= proposal?.map((e) => e.year).fold(
           null,
           (value, element) =>
               (value == null || value < element) ? element : value);
-    });
   }
 
   @override
@@ -161,7 +158,6 @@ class _ProposalListState extends State<ProposalList> {
             previous.proposals != current.proposals ||
             previous.status != current.status,
         listener: (previous, current) {
-          updateSelectYear(current.proposals[widget._listType]);
           switch (current.status) {
             case ListDataFetchStatus.normal:
               _easyRefreshController.finishRefresh(success: true);
@@ -185,16 +181,15 @@ class _ProposalListState extends State<ProposalList> {
                       .where((d) => d.title.contains(_searchKeyWord))
                       .toList())
               .where((element) => widget._filterSelf
-                  ? element.createBy ==
-                      BlocProvider.of<UserBloc>(context)
-                          .state
-                          .userInfo
-                          ?.username
+                  ? element.authorId ==
+                      BlocProvider.of<UserBloc>(context).state.userInfo?.userId
                   : true)
-              .where((element) => selectYear != null
-                  ? element.year == selectYear
-                  : true)
+              .where((element) =>
+                  selectYear != null ? element.year == selectYear : true)
               .toList();
+          var years = data.map((e) => e.year).toSet().toList();
+          updateSelectYear(state.proposals[widget._listType]);
+          years.sort((a, b) => b.compareTo(a));
           return Column(
             children: [
               GeneralSearch(
@@ -211,45 +206,46 @@ class _ProposalListState extends State<ProposalList> {
               Container(
                 width: double.infinity,
                 decoration: const BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(8))
-                ),
-                child: Center(
-                  child: DropdownButtonHideUnderline(
-                    child: DropdownButton2(
-                      hint: Text(
-                        '选择年度',
-                        style: TextStyle(
-                          fontSize: 14,
-                          color: Theme.of(context).hintColor,
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(8))),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    DropdownButtonHideUnderline(
+                      child: DropdownButton2(
+                        hint: Text(
+                          '选择年度',
+                          style: TextStyle(
+                            fontSize: 14,
+                            color: Theme.of(context).hintColor,
+                          ),
                         ),
-                      ),
-                      items: data
-                          .map((e) => e.year)
-                          .toSet()
-                          .map((item) => DropdownMenuItem<int>(
-                                value: item,
-                                child: Text(
-                                  '$item 年度',
-                                  style: const TextStyle(
-                                    fontSize: 14,
+                        items: years
+                            .map((item) => DropdownMenuItem<int>(
+                                  value: item,
+                                  child: Text(
+                                    '$item 年度',
+                                    style: const TextStyle(
+                                      fontSize: 14,
+                                    ),
                                   ),
-                                ),
-                              ))
-                          .toList(),
-                      value: selectYear,
-                      onChanged: (value) {
-                        setState(() {
-                          selectYear = value as int;
-                        });
-                      },
-                      buttonHeight: 40,
-                      buttonWidth: 140,
-                      itemHeight: 40,
-                    ),
-                  ),
+                                ))
+                            .toList(),
+                        value: selectYear,
+                        onChanged: (value) {
+                          setState(() {
+                            selectYear = value as int;
+                          });
+                        },
+                        buttonHeight: 40,
+                        buttonWidth: 100,
+                        itemHeight: 40,
+                      ),
+                    )
+                  ],
                 ),
               ),
+              const SizedBox(height: 8),
               Expanded(
                   child: EasyRefresh.custom(
                 controller: _easyRefreshController,
@@ -286,14 +282,13 @@ class ProposalItem extends StatelessWidget {
     return SliverToBoxAdapter(
         child: GestureDetector(
       onTap: () {
-        // TODO
-        // Navigator.of(context)
-        //     .pushNamed(Routes.opinionDetailPage, arguments: _opinion);
+        Navigator.of(context)
+            .pushNamed(Routes.proposalDetailPage, arguments: _bean);
       },
       child: Container(
         height: 120,
         padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-        margin: const EdgeInsets.symmetric(vertical: 8),
+        margin: const EdgeInsets.only(bottom: 8),
         decoration: const BoxDecoration(
           borderRadius: BorderRadius.all(Radius.circular(8)),
           color: Colors.white,
@@ -351,10 +346,9 @@ class ProposalItem extends StatelessWidget {
                   Expanded(child: Container()),
                   GestureDetector(
                     onTap: () {
-                      // TODO
-                      // Navigator.of(context).pushNamed(
-                      //     Routes.opinionProgressPage,
-                      //     arguments: _bean);
+                      Navigator.of(context).pushNamed(
+                          Routes.proposalProgressPage,
+                          arguments: _bean);
                     },
                     child: Container(
                       decoration: BoxDecoration(

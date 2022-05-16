@@ -1,3 +1,4 @@
+import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'proposal_response.g.dart';
@@ -6,6 +7,7 @@ part 'proposal_response.g.dart';
 class ProposalResponse {
   final String id;
   final String title;
+  final String? authorUser;
   @JsonKey(name: 'authorUser_dictText')
   final String? authorUserDictText;
   final String? content;
@@ -20,6 +22,7 @@ class ProposalResponse {
   ProposalResponse({
     required this.id,
     required this.title,
+    required this.authorUser,
     required this.authorUserDictText,
     required this.content,
     required this.status,
@@ -36,4 +39,22 @@ class ProposalResponse {
 
   static List<ProposalResponse> fromJsonList(List<dynamic> json) =>
       json.map((e) => ProposalResponse.fromJson(e)).toList();
+}
+
+
+@JsonSerializable()
+class ProposalProgressResponse {
+  final int type;
+  @JsonKey(name: "type_dictText")
+  final String typeDictText;
+  final List<KeyValueResponse> content;
+
+  ProposalProgressResponse(this.type, this.content, this.typeDictText);
+
+  factory ProposalProgressResponse.fromJson(Map<String, dynamic> json) =>
+      _$ProposalProgressResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ProposalProgressResponseToJson(this);
+
+  static List<ProposalProgressResponse> fromJsonList(List<dynamic> json) =>
+      json.map((e) => ProposalProgressResponse.fromJson(e)).toList();
 }

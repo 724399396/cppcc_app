@@ -14,6 +14,7 @@ import 'package:cppcc_app/page/home/disccuss_network_details_page.dart';
 import 'package:cppcc_app/page/home/discuss_network_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
 import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
+import 'package:cppcc_app/page/home/proposal_add_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
 import 'package:cppcc_app/page/home/social_opinion_add_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
@@ -22,6 +23,8 @@ import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
 import 'package:cppcc_app/page/opinion_details_page.dart';
 import 'package:cppcc_app/page/opinion_progress_page.dart';
+import 'package:cppcc_app/page/proposal_details_page.dart';
+import 'package:cppcc_app/page/proposal_progress_page.dart';
 import 'package:cppcc_app/page/settings/update_password_page.dart';
 import 'package:cppcc_app/page/settings/user_setting_page.dart';
 import 'package:cppcc_app/page/posts_details_page.dart';
@@ -90,6 +93,10 @@ final routesDef = {
   Routes.socialOpinionsAddPage: (context) => const SocialOpinionAddPage(),
   Routes.opinionDetailPage: (context) => const OpinionDetailsPage(),
   Routes.opinionProgressPage: (context) => const OpinionProgressPage(),
+  Routes.proposalAddPage: (context) => const ProposalAddPage(),
+  Routes.proposalDetailPage: (context) => const ProposalDetailsPage(),
+  Routes.proposalProgressPage: (context) => const ProposalProgressPage(),
+  Routes.proposalAnswerListPage: (context) => const ProposalAnswerListPage(),
 };
 
 class CppccApp extends StatelessWidget {

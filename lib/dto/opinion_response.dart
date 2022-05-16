@@ -7,6 +7,7 @@ class OpinionResponse {
   final String id;
   final String title;
   final String? content;
+  final String? authorUser;
   @JsonKey(name: "authorUser_dictText")
   final String? authorUserDictText;
   final int? status;
@@ -18,17 +19,19 @@ class OpinionResponse {
   final String createBy;
   final bool? read;
 
-  OpinionResponse(
-      this.id,
-      this.title,
-      this.content,
-      this.authorUserDictText,
-      this.status,
-      this.statusDictText,
-      this.typeDictText,
-      this.createTime,
-      this.read,
-      this.createBy);
+  OpinionResponse({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.authorUser,
+    required this.authorUserDictText,
+    required this.status,
+    required this.statusDictText,
+    required this.typeDictText,
+    required this.createTime,
+    required this.read,
+    required this.createBy,
+  });
 
   factory OpinionResponse.fromJson(Map<String, dynamic> json) =>
       _$OpinionResponseFromJson(json);

@@ -19,6 +19,7 @@ class OpinionRepository {
                 id: e.id,
                 title: e.title,
                 typeDictText: e.typeDictText ?? '',
+                authorId: e.authorUser ?? '',
                 author: e.authorUserDictText ?? '',
                 content: e.content ?? '',
                 status: e.status ?? 0,

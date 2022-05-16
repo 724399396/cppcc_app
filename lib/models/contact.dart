@@ -10,7 +10,7 @@ class Contact extends Equatable {
   final String? avatar;
   final String? wxQrCode;
   final String? position;
-  final String? userId;
+  final String userId;
   const Contact({
     required this.username,
     required this.realname,
@@ -67,7 +67,7 @@ class Contact extends Equatable {
       avatar ?? '',
       wxQrCode ?? '',
       position ?? '',
-      userId ?? '',
+      userId,
     ];
   }
 }

@@ -36,4 +36,8 @@ class Routes {
   static const updatePasswordPage = '/updatePasswordPage';
   static const socialOpinionsAddPage = '/socialOpinionsAddPage';
   static const opinionProgressPage = '/opinionProgressPage';
+  static const proposalAddPage = '/proposalAddPage';
+  static const proposalDetailPage = '/proposalDetailPage';
+  static const proposalProgressPage = '/proposalProgressPage';
+  static const proposalAnswerListPage = '/proposalAnswerListPage';
 }

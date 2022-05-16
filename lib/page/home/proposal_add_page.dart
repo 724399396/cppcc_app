@@ -1,7 +1,8 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
-import 'package:cppcc_app/bloc/opinion_bloc.dart';
+import 'package:cppcc_app/bloc/contact_bloc.dart';
+import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
-import 'package:cppcc_app/dto/opinion_request.dart';
+import 'package:cppcc_app/dto/proposal_request.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/toast.dart';
@@ -9,17 +10,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter_quill/flutter_quill.dart' as quill;
+import 'package:multiselect_formfield/multiselect_formfield.dart';
 
-class SocialOpinionAddPage extends StatefulWidget {
-  const SocialOpinionAddPage({Key? key}) : super(key: key);
+class ProposalAddPage extends StatefulWidget {
+  const ProposalAddPage({Key? key}) : super(key: key);
 
   @override
-  _SocialOpinionAddPageState createState() => _SocialOpinionAddPageState();
+  _ProposalAddPageState createState() => _ProposalAddPageState();
 }
 
-class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
+class _ProposalAddPageState extends State<ProposalAddPage> {
   String? title;
   String? type;
+  List<String>? jointlyUsersName;
   bool _formChanged = false;
   final quill.QuillController _contentController =
       quill.QuillController.basic();
@@ -46,8 +49,9 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
             color: AppColors.greyTextColor,
           ),
     );
-    return BlocBuilder<OpinionBloc, OpinionState>(
+    return BlocBuilder<ProposalBloc, ProposalState>(
       builder: (context, state) {
+        var userInfo = BlocProvider.of<UserBloc>(context).state.userInfo;
         return Scaffold(
           appBar: AppBar(
             title: const Text("新增"),
@@ -77,17 +81,17 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                                   showToast('正文不能为空');
                                   return;
                                 }
-                                BlocProvider.of<OpinionBloc>(context)
-                                    .add(OpinionAdd(
-                                  OpinionAddRequest(
+                                BlocProvider.of<ProposalBloc>(context)
+                                    .add(ProposalAdd(
+                                  ProposalAddRequest(
                                       content: content,
                                       title: title!,
                                       type: type!,
-                                      authorUser:
-                                          BlocProvider.of<UserBloc>(context)
-                                              .state
-                                              .userInfo!
-                                              .userId),
+                                      jointlyUsers: jointlyUsersName?.join(","),
+                                      workUnit: userInfo!.company,
+                                      year: DateTime.now().year,
+                                      authorUser: userInfo.userId,
+                                      ),
                                   () {
                                     showToast('添加成功');
                                     Navigator.of(context).pop();
@@ -145,7 +149,7 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                     builder: (context, state) {
                       return DropdownButtonFormField2(
                         decoration: fieldDecoration.copyWith(hintText: '请选择类别'),
-                        items: state.dictMap['opinion_type']
+                        items: state.dictMap['proposal_type']
                             ?.map((item) => DropdownMenuItem<String>(
                                   value: item.itemValue,
                                   child: Text(
@@ -172,9 +176,65 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                   ),
                   gap,
                   Text(
+                    "单位",
+                    style: themeData.textTheme.titleMedium,
+                  ),
+                  gap,
+                  TextFormField(
+                    readOnly: true,
+                    initialValue: userInfo?.company ?? '',
+                    decoration: fieldDecoration,
+                  ),
+                  gap,
+                  Text(
+                    "姓名",
+                    style: themeData.textTheme.titleMedium,
+                  ),
+                  gap,
+                  TextFormField(
+                    readOnly: true,
+                    initialValue: userInfo?.realname ?? '',
+                    decoration: fieldDecoration,
+                  ),
+                  gap,
+                  BlocBuilder<ContactBloc, ContactState>(
+                      builder: (context, state) => MultiSelectFormField(
+                            autovalidate: AutovalidateMode.disabled,
+                            chipBackGroundColor: AppColors.primary,
+                            chipLabelStyle:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                            dialogTextStyle:
+                                const TextStyle(fontWeight: FontWeight.bold),
+                            checkBoxActiveColor: AppColors.primary,
+                            checkBoxCheckColor: Colors.white,
+                            dialogShapeBorder: const RoundedRectangleBorder(
+                                borderRadius:
+                                    BorderRadius.all(Radius.circular(12.0))),
+                            title: Text(
+                              "联名人",
+                              style: themeData.textTheme.titleMedium,
+                            ),
+                            dataSource: state.contacts
+                                .map((e) =>
+                                    {"value": e.userId, "display": e.realname})
+                                .toList(),
+                            textField: 'display',
+                            valueField: 'value',
+                            okButtonLabel: '确认',
+                            cancelButtonLabel: '取消',
+                            hintWidget: const Text('请选择'),
+                            onSaved: (value) {
+                              jointlyUsersName = (value as List<dynamic>)
+                                  .map((e) => (e as String))
+                                  .toList();
+                            },
+                          )),
+                  gap,
+                  Text(
                     "正文（必填）",
                     style: themeData.textTheme.titleMedium,
                   ),
+                  gap,
                   gap,
                   Container(
                     height: 400,

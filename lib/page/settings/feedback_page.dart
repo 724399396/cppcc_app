@@ -93,7 +93,6 @@ class _FeedbackPageState extends State<FeedbackPage> {
                       hintText: '请输入关键词',
                     ),
                     onSubmitted: (value) {
-                      print("object");
                     },
                     textInputAction: TextInputAction.search,
                   ),

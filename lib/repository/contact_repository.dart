@@ -20,7 +20,7 @@ class ContactRepository {
               wxQrCode: e.wxQrCode,
               position: e.position,
               idCard: e.idCard ?? '',
-              userId: null),
+              userId: e.id),
         )
         .toList();
   }

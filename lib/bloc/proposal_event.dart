@@ -26,3 +26,22 @@ class ProposalFirstFetch extends ProposalEvent {
 
   const ProposalFirstFetch(this.type);
 }
+
+class ProposalAdd extends ProposalEvent {
+  final ProposalAddRequest request;
+  final SuccessCallback successCallback;
+
+  const ProposalAdd(this.request, this.successCallback);
+}
+
+class ProposalRead extends ProposalEvent {
+  final Proposal proposal;
+
+  const ProposalRead(this.proposal);
+}
+
+class ProposalProgressGet extends ProposalEvent {
+  final Proposal proposal;
+
+  const ProposalProgressGet(this.proposal);
+}

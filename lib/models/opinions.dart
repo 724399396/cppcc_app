@@ -4,6 +4,7 @@ class Opinion extends Equatable {
   final String id;
   final String title;
   final String typeDictText;
+  final String authorId;
   final String author;
   final String content;
   final int status;
@@ -17,6 +18,7 @@ class Opinion extends Equatable {
     required this.id,
     required this.title,
     required this.typeDictText,
+    required this.authorId,
     required this.author,
     required this.content,
     required this.status,
@@ -31,6 +33,7 @@ class Opinion extends Equatable {
     String? id,
     String? title,
     String? typeDictText,
+    String? authorId,
     String? author,
     String? content,
     int? status,
@@ -44,6 +47,7 @@ class Opinion extends Equatable {
       id: id ?? this.id,
       title: title ?? this.title,
       typeDictText: typeDictText ?? this.typeDictText,
+      authorId: authorId ?? this.authorId,
       author: author ?? this.author,
       content: content ?? this.content,
       status: status ?? this.status,
@@ -57,7 +61,7 @@ class Opinion extends Equatable {
 
   @override
   String toString() {
-    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy, progress: $progress)';
+    return 'Opinion(id: $id, title: $title, typeDictText: $typeDictText, authorId: $authorId, author: $author, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy, progress: $progress)';
   }
 
   @override
@@ -66,6 +70,7 @@ class Opinion extends Equatable {
       id,
       title,
       typeDictText,
+      authorId,
       author,
       content,
       status,

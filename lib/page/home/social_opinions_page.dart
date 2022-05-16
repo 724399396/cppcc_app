@@ -165,11 +165,11 @@ class _OpinionListState extends State<OpinionList> {
                       .where((d) => d.title.contains(_searchKeyWord))
                       .toList())
               .where((element) => widget._filterSelf
-                  ? element.createBy ==
+                  ? element.authorId ==
                       BlocProvider.of<UserBloc>(context)
                           .state
                           .userInfo
-                          ?.username
+                          ?.userId
                   : true)
               .toList();
           return Column(

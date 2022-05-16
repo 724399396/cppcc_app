@@ -12,6 +12,7 @@ import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/dto/opinion_response.dart';
 import 'package:cppcc_app/dto/posts_response.dart';
 import 'package:cppcc_app/dto/post_type.dart';
+import 'package:cppcc_app/dto/proposal_request.dart';
 import 'package:cppcc_app/dto/proposal_response.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
 import 'package:cppcc_app/models/guandu_historical_clue.dart';
@@ -415,6 +416,30 @@ class ApiDataProvider {
     }).then((value) {
       return ProposalResponse.fromJsonList(
           BaseResponse.fromJson(value.data).result as List<dynamic>);
+    });
+  }
+
+  Future addProposal(ProposalAddRequest request) {
+    return _dio.post('/app/proposal/add', data: request.toJson()).then((value) {
+      return BaseResponse.fromJson(value.data);
+    });
+  }
+
+  Future<ProposalResponse> getProposalDetail(String id) {
+    return _dio.get('/app/proposal/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return ProposalResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
+  Future<List<ProposalProgressResponse>> getProposalProgress(String id) {
+    return _dio.get('/app/proposalProgress/list',
+        queryParameters: {'proposalId': id}).then((value) {
+      return ProposalProgressResponse.fromJsonList(
+          ((BaseResponse.fromJson(value.data).result
+              as Map<String, dynamic>)['records'] as List<dynamic>));
     });
   }
 }

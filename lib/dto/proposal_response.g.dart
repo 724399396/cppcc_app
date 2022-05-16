@@ -10,6 +10,7 @@ ProposalResponse _$ProposalResponseFromJson(Map<String, dynamic> json) =>
     ProposalResponse(
       id: json['id'] as String,
       title: json['title'] as String,
+      authorUser: json['authorUser'] as String?,
       authorUserDictText: json['authorUser_dictText'] as String?,
       content: json['content'] as String?,
       status: json['status'] as int?,
@@ -24,6 +25,7 @@ Map<String, dynamic> _$ProposalResponseToJson(ProposalResponse instance) =>
     <String, dynamic>{
       'id': instance.id,
       'title': instance.title,
+      'authorUser': instance.authorUser,
       'authorUser_dictText': instance.authorUserDictText,
       'content': instance.content,
       'status': instance.status,
@@ -32,4 +34,22 @@ Map<String, dynamic> _$ProposalResponseToJson(ProposalResponse instance) =>
       'read': instance.read,
       'createBy': instance.createBy,
       'year': instance.year,
+    };
+
+ProposalProgressResponse _$ProposalProgressResponseFromJson(
+        Map<String, dynamic> json) =>
+    ProposalProgressResponse(
+      json['type'] as int,
+      (json['content'] as List<dynamic>)
+          .map((e) => KeyValueResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      json['type_dictText'] as String,
+    );
+
+Map<String, dynamic> _$ProposalProgressResponseToJson(
+        ProposalProgressResponse instance) =>
+    <String, dynamic>{
+      'type': instance.type,
+      'type_dictText': instance.typeDictText,
+      'content': instance.content,
     };

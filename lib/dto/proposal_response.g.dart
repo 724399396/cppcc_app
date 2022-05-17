@@ -19,6 +19,10 @@ ProposalResponse _$ProposalResponseFromJson(Map<String, dynamic> json) =>
       read: json['read'] as bool?,
       createBy: json['createBy'] as String?,
       year: json['year'] as int?,
+      replyFiles: (json['replyFiles'] as List<dynamic>?)
+          ?.map((e) => ReplyFileResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
+      readNum: json['readNum'] as int?,
     );
 
 Map<String, dynamic> _$ProposalResponseToJson(ProposalResponse instance) =>
@@ -34,6 +38,8 @@ Map<String, dynamic> _$ProposalResponseToJson(ProposalResponse instance) =>
       'read': instance.read,
       'createBy': instance.createBy,
       'year': instance.year,
+      'readNum': instance.readNum,
+      'replyFiles': instance.replyFiles,
     };
 
 ProposalProgressResponse _$ProposalProgressResponseFromJson(
@@ -52,4 +58,22 @@ Map<String, dynamic> _$ProposalProgressResponseToJson(
       'type': instance.type,
       'type_dictText': instance.typeDictText,
       'content': instance.content,
+    };
+
+ReplyFileResponse _$ReplyFileResponseFromJson(Map<String, dynamic> json) =>
+    ReplyFileResponse(
+      json['id'] as String,
+      json['title'] as String,
+      json['content'] as String,
+      json['createTime'] as String?,
+      json['authorId'] as String?,
+    );
+
+Map<String, dynamic> _$ReplyFileResponseToJson(ReplyFileResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'content': instance.content,
+      'createTime': instance.createTime,
+      'authorId': instance.authorId,
     };

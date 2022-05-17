@@ -39,5 +39,6 @@ class Routes {
   static const proposalAddPage = '/proposalAddPage';
   static const proposalDetailPage = '/proposalDetailPage';
   static const proposalProgressPage = '/proposalProgressPage';
-  static const proposalAnswerListPage = '/proposalAnswerListPage';
+  static const proposalReplyListPage = '/proposalReplyListPage';
+  static const replayDetailPage = 'replayDetailPage';
 }

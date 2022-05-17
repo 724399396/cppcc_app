@@ -13,6 +13,8 @@ class Proposal extends Equatable {
   final String createBy;
   final int year;
   final List<ProposalProgress> progress;
+  final List<ReplyFile> replyFiles;
+  final int hits;
 
   const Proposal({
     required this.id,
@@ -27,6 +29,8 @@ class Proposal extends Equatable {
     required this.createBy,
     required this.year,
     this.progress = const [],
+    this.replyFiles = const [],
+    required this.hits,
   });
 
   Proposal copyWith({
@@ -42,6 +46,8 @@ class Proposal extends Equatable {
     String? createBy,
     int? year,
     List<ProposalProgress>? progress,
+    List<ReplyFile>? replyFiles,
+    int? hits,
   }) {
     return Proposal(
       id: id ?? this.id,
@@ -56,12 +62,14 @@ class Proposal extends Equatable {
       createBy: createBy ?? this.createBy,
       year: year ?? this.year,
       progress: progress ?? this.progress,
+      replyFiles: replyFiles ?? this.replyFiles,
+      hits: hits ?? this.hits,
     );
   }
 
   @override
   String toString() {
-    return 'Proposal(id: $id, title: $title, author: $author, authorId: $authorId, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy, year: $year, progress: $progress)';
+    return 'Proposal(id: $id, title: $title, author: $author, authorId: $authorId, content: $content, status: $status, statusDictText: $statusDictText, createTime: $createTime, read: $read, createBy: $createBy, year: $year, progress: $progress, replyFiles: $replyFiles, hits: $hits)';
   }
 
   @override
@@ -79,6 +87,8 @@ class Proposal extends Equatable {
       createBy,
       year,
       progress,
+      replyFiles,
+      hits,
     ];
   }
 }
@@ -152,4 +162,51 @@ class ProposalProgress extends Equatable {
 
   @override
   List<Object> get props => [type, typeDictText, content];
+}
+
+class ReplyFile extends Equatable {
+  final String id;
+  final String title;
+  final String content;
+  final DateTime createTime;
+  final String authorId;
+  const ReplyFile({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.createTime,
+    required this.authorId,
+  });
+
+  ReplyFile copyWith({
+    String? id,
+    String? title,
+    String? content,
+    DateTime? createTime,
+    String? authorId,
+  }) {
+    return ReplyFile(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      createTime: createTime ?? this.createTime,
+      authorId: authorId ?? this.authorId,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'ReplyFile(id: $id, title: $title, content: $content, createTime: $createTime, authorId: $authorId)';
+  }
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      title,
+      content,
+      createTime,
+      authorId,
+    ];
+  }
 }

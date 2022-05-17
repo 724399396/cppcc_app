@@ -127,21 +127,6 @@ class _ProposalListState extends State<ProposalList> {
   String _searchKeyWord = "";
   int? selectYear;
 
-  void updateSelectYear(List<Proposal>? proposal) {
-    selectYear ??= proposal?.map((e) => e.year).fold(
-          null,
-          (value, element) =>
-              (value == null || value < element) ? element : value);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    updateSelectYear(BlocProvider.of<ProposalBloc>(context)
-        .state
-        .proposals[widget._listType]);
-  }
-
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<ProposalBloc>(context)
@@ -175,6 +160,10 @@ class _ProposalListState extends State<ProposalList> {
         },
         builder: (context, state) {
           var data = state.proposals[widget._listType] ?? [];
+          selectYear ??= data.map((e) => e.year).fold(
+              null,
+              (value, element) =>
+                  (value == null || value < element) ? element : value);
           var filterData = (_searchKeyWord.isEmpty
                   ? data
                   : data
@@ -188,7 +177,6 @@ class _ProposalListState extends State<ProposalList> {
                   selectYear != null ? element.year == selectYear : true)
               .toList();
           var years = data.map((e) => e.year).toSet().toList();
-          updateSelectYear(state.proposals[widget._listType]);
           years.sort((a, b) => b.compareTo(a));
           return Column(
             children: [

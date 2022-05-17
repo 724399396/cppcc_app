@@ -18,6 +18,8 @@ class ProposalResponse {
   final bool? read;
   final String? createBy;
   final int? year;
+  final int? readNum;
+  final List<ReplyFileResponse>? replyFiles;
 
   ProposalResponse({
     required this.id,
@@ -31,6 +33,8 @@ class ProposalResponse {
     required this.read,
     required this.createBy,
     required this.year,
+    required this.replyFiles,
+    required this.readNum,
   });
 
   factory ProposalResponse.fromJson(Map<String, dynamic> json) =>
@@ -40,7 +44,6 @@ class ProposalResponse {
   static List<ProposalResponse> fromJsonList(List<dynamic> json) =>
       json.map((e) => ProposalResponse.fromJson(e)).toList();
 }
-
 
 @JsonSerializable()
 class ProposalProgressResponse {
@@ -57,4 +60,20 @@ class ProposalProgressResponse {
 
   static List<ProposalProgressResponse> fromJsonList(List<dynamic> json) =>
       json.map((e) => ProposalProgressResponse.fromJson(e)).toList();
+}
+
+@JsonSerializable()
+class ReplyFileResponse {
+  final String id;
+  final String title;
+  final String content;
+  final String? createTime;
+  final String? authorId;
+
+  ReplyFileResponse(
+      this.id, this.title, this.content, this.createTime, this.authorId);
+
+  factory ReplyFileResponse.fromJson(Map<String, dynamic> json) =>
+      _$ReplyFileResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$ReplyFileResponseToJson(this);
 }

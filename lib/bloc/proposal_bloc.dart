@@ -67,25 +67,34 @@ class ProposalBloc extends Bloc<ProposalEvent, ProposalState> {
     });
 
     on<ProposalRead>((event, emit) async {
-      await _proposalRepository.getProposalDetail(event.proposal.id);
+      var proposal =
+          await _proposalRepository.getProposalDetail(event.proposal.id);
       Map<ProposalListType, List<Proposal>> newData = Map.from(state.proposals);
       int unreadCount = state.unreadCount;
+      var currentProposal = state.currentProposal;
       for (var key in newData.keys) {
         var proposals = newData[key];
         var readProposal = newData[key]
             ?.firstWhereOrNull((post) => post.id == event.proposal.id);
-        if (readProposal != null && !readProposal.read) {
+        if (readProposal != null) {
           newData[key] = (proposals
                       ?.where((element) => element.id != event.proposal.id)
                       .toList() ??
                   []) +
               [
-                readProposal.copyWith(read: true),
+                proposal.copyWith(read: true, replyFiles: proposal.replyFiles),
               ];
           unreadCount = unreadCount - 1;
+          currentProposal = currentProposal == null
+              ? proposal.copyWith(read: true)
+              : currentProposal.copyWith(
+                  read: true, replyFiles: proposal.replyFiles);
         }
       }
-      emit(state.copyWith(proposals: newData, unreadCount: unreadCount));
+      emit(state.copyWith(
+          proposals: newData,
+          unreadCount: unreadCount,
+          currentProposal: currentProposal));
     });
 
     on<ProposalProgressGet>((event, emit) async {

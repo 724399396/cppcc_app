@@ -60,7 +60,8 @@ class ProposalRepository {
                     createTime: e.createTime != null
                         ? DateTime.parse(e.createTime!)
                         : DateTime.now(),
-                    authorId: e.authorId ?? ''))
+                    authorId: e.authorId ?? '',
+                    authorRealname: e.authorRealname ?? ''))
                 .toList() ??
             []);
   }

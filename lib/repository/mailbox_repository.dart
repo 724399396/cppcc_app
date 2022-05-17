@@ -21,7 +21,7 @@ class MailboxRepository {
               type: e.type ?? 0,
               typeDictText: e.typeDictText ?? '',
               userId: e.userId ?? '',
-              userIdDictText: e.userIdDictText ?? '',
+              userRealname: e.userRealname ?? '',
               category: e.category ?? 0,
               createBy: e.createBy,
               phone: e.phone ?? '',

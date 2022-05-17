@@ -7,7 +7,7 @@ class Mail extends Equatable {
   final String phone;
   final int category;
   final String userId;
-  final String userIdDictText;
+  final String userRealname;
   final int type;
   final String typeDictText;
   final String createBy;
@@ -20,7 +20,7 @@ class Mail extends Equatable {
     required this.phone,
     required this.category,
     required this.userId,
-    required this.userIdDictText,
+    required this.userRealname,
     required this.type,
     required this.typeDictText,
     required this.createBy,
@@ -35,7 +35,7 @@ class Mail extends Equatable {
     String? phone,
     int? category,
     String? userId,
-    String? userIdDictText,
+    String? userRealname,
     int? type,
     String? typeDictText,
     String? createBy,
@@ -49,7 +49,7 @@ class Mail extends Equatable {
       phone: phone ?? this.phone,
       category: category ?? this.category,
       userId: userId ?? this.userId,
-      userIdDictText: userIdDictText ?? this.userIdDictText,
+      userRealname: userRealname ?? this.userRealname,
       type: type ?? this.type,
       typeDictText: typeDictText ?? this.typeDictText,
       createBy: createBy ?? this.createBy,
@@ -60,7 +60,7 @@ class Mail extends Equatable {
 
   @override
   String toString() {
-    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userIdDictText: $userIdDictText, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read)';
+    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userRealname: $userRealname, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read)';
   }
 
   @override
@@ -72,7 +72,7 @@ class Mail extends Equatable {
       phone,
       category,
       userId,
-      userIdDictText,
+      userRealname,
       type,
       typeDictText,
       createBy,

@@ -2,25 +2,25 @@ import 'package:equatable/equatable.dart';
 
 class MeetingActiveRecord extends Equatable {
   final String userId;
-  final String userIdDictText;
+  final String userRealname;
   final int status;
   final bool read;
   const MeetingActiveRecord({
     required this.userId,
-    required this.userIdDictText,
+    required this.userRealname,
     required this.status,
     required this.read,
   });
 
   MeetingActiveRecord copyWith({
     String? userId,
-    String? userIdDictText,
+    String? userRealname,
     int? status,
     bool? read,
   }) {
     return MeetingActiveRecord(
       userId: userId ?? this.userId,
-      userIdDictText: userIdDictText ?? this.userIdDictText,
+      userRealname: userRealname ?? this.userRealname,
       status: status ?? this.status,
       read: read ?? this.read,
     );
@@ -28,11 +28,11 @@ class MeetingActiveRecord extends Equatable {
 
   @override
   String toString() {
-    return 'MeetingActiveRecord(userId: $userId, userIdDictText: $userIdDictText, status: $status, read: $read)';
+    return 'MeetingActiveRecord(userId: $userId, userRealname: $userRealname, status: $status, read: $read)';
   }
 
   @override
-  List<Object> get props => [userId, userIdDictText, status, read];
+  List<Object> get props => [userId, userRealname, status, read];
 }
 
 class Broadcast extends Equatable {

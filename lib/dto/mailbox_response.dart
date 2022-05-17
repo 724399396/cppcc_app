@@ -26,7 +26,7 @@ class MailboxResponse {
   final int? category;
   final String? userId;
   @JsonKey(name: 'userId_dictText')
-  final String? userIdDictText;
+  final String? userRealname;
   final int? type;
   @JsonKey(name: 'type_dictText')
   final String? typeDictText;
@@ -41,7 +41,7 @@ class MailboxResponse {
     this.phone,
     this.category,
     this.userId,
-    this.userIdDictText,
+    this.userRealname,
     this.type,
     this.typeDictText,
     this.createBy,

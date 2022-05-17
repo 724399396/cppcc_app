@@ -35,6 +35,10 @@ PostsResponse _$PostsResponseFromJson(Map<String, dynamic> json) =>
       json['createTime'] as String,
       json['categoryDictText'] as String?,
       json['read'] as bool?,
+      (json['userReadRecords'] as List<dynamic>?)
+          ?.map(
+              (e) => UserReadRecordResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$PostsResponseToJson(PostsResponse instance) =>
@@ -51,5 +55,18 @@ Map<String, dynamic> _$PostsResponseToJson(PostsResponse instance) =>
       'createBy': instance.createBy,
       'createTime': instance.createTime,
       'read': instance.read,
+      'userReadRecords': instance.userReadRecords,
       'categoryDictText': instance.categoryDictText,
+    };
+
+UserReadRecordResponse _$UserReadRecordResponseFromJson(
+        Map<String, dynamic> json) =>
+    UserReadRecordResponse(
+      json['userId_dictText'] as String,
+    );
+
+Map<String, dynamic> _$UserReadRecordResponseToJson(
+        UserReadRecordResponse instance) =>
+    <String, dynamic>{
+      'userId_dictText': instance.userRealname,
     };

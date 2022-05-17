@@ -168,7 +168,7 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
                               read: false,
                               status: 1,
                               userId: meetingChange.userId ?? '',
-                              userIdDictText: meetingChange.userRealname ?? '',
+                              userRealname: meetingChange.userRealname ?? '',
                             )
                           ])));
             }

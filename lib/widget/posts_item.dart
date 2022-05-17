@@ -27,7 +27,7 @@ class PostsItem extends StatelessWidget {
             break;
           case PostType.fileAnnment:
             Navigator.of(context)
-                .pushNamed(Routes.postsDetailPage, arguments: _post);
+                .pushNamed(Routes.fileAnnmentDetailsPage, arguments: _post);
             break;
           case PostType.guanduHistory:
             Navigator.of(context)
@@ -39,7 +39,7 @@ class PostsItem extends StatelessWidget {
       },
       child: Container(
         height: 120,
-        margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        margin: const EdgeInsets.symmetric(vertical: 8),
         padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
         decoration: BoxDecoration(
           color: Colors.white,

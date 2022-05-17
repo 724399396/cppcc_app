@@ -75,7 +75,7 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
       });
     });
     on<PostReaded>((event, emit) async {
-      await _postRepository.getPostsDetail(event.posts.id);
+      var post = await _postRepository.getPostsDetail(event.posts.id);
       Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
       for (var key in newPosts.keys) {
         var posts = newPosts[key];
@@ -87,12 +87,12 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
                       .toList() ??
                   []) +
               [
-                readPost.copyWith(read: true, hits: (readPost.hits ?? 0) + 1),
+                readPost.copyWith(read: true, hits: (readPost.hits ?? 0) + 1, userReadRecords: post.userReadRecords),
               ];
         }
       }
       debugPrint(newPosts.keys.toString());
-      emit(state.copyWith(posts: newPosts));
+      emit(state.copyWith(posts: newPosts, currentPost: post.copyWith(read: true)));
     });
   }
 

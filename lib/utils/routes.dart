@@ -15,7 +15,7 @@ class Routes {
   static const gdHistoricalAddPage = '/gdHistoricalAddPage';
   static const guanduHistoricalClueListPage = '/guanduHistoricalClueListPage';
   static const guanduHistoricalDetailsPage = '/guanduHistoricalDetailsPage';
-  static const postListWithFilterPage = '/postListWithFilterPage';
+  static const fileAnnmentPage = '/fileAnnmentPage';
   static const generalTabSwitchPostsListPage = '/generalTabSwitchPostsListPage';
   static const twoMeetingPage = '/twoMeetingPage';
   static const guanduHistoryListPage = '/guanduHistoryListPage';
@@ -40,5 +40,6 @@ class Routes {
   static const proposalDetailPage = '/proposalDetailPage';
   static const proposalProgressPage = '/proposalProgressPage';
   static const proposalReplyListPage = '/proposalReplyListPage';
-  static const replayDetailPage = 'replayDetailPage';
+  static const replayDetailPage = '/replayDetailPage';
+  static const fileAnnmentDetailsPage = '/fileAnnmentDetailsPage';
 }

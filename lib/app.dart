@@ -1,5 +1,6 @@
 import 'package:cppcc_app/page/contacts/contact_detail.dart';
 import 'package:cppcc_app/page/contacts/send_business_card_page.dart';
+import 'package:cppcc_app/page/file_annment_details_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_details_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_clue_list_page.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
@@ -13,7 +14,7 @@ import 'package:cppcc_app/page/home/meeting_activities_page.dart';
 import 'package:cppcc_app/page/home/disccuss_network_details_page.dart';
 import 'package:cppcc_app/page/home/discuss_network_page.dart';
 import 'package:cppcc_app/page/home/performance_file_page.dart';
-import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
+import 'package:cppcc_app/page/home/file_annment_page.dart';
 import 'package:cppcc_app/page/home/proposal_add_page.dart';
 import 'package:cppcc_app/page/home/proposal_reply_list_page.dart';
 import 'package:cppcc_app/page/home/proposal_manage_page.dart';
@@ -65,7 +66,7 @@ final routesDef = {
   Routes.discussNetworkPage: (context) => const DicusssNetworkPage(),
   Routes.discussNetworkDetailsPage: (context) =>
       const DiscussNetworkDetailsPage(),
-  Routes.postListWithFilterPage: (context) => const PostsListWithFilterPage(),
+  Routes.fileAnnmentPage: (context) => const FileAnnmentPage(),
   Routes.performanceFilePage: (context) => const PerformanceFilePage(),
   Routes.proposalManagePage: (context) => const ProposalManagePage(),
   Routes.socialOpinionsPage: (context) => const SocialOpinionsPage(),
@@ -100,6 +101,7 @@ final routesDef = {
   Routes.proposalProgressPage: (context) => const ProposalProgressPage(),
   Routes.proposalReplyListPage: (context) => const ProposalReplyListPage(),
   Routes.replayDetailPage: (context) => const ReplyDetailsPage(),
+  Routes.fileAnnmentDetailsPage: (context) => const FileAnnmentDetailsPage(),
 };
 
 class CppccApp extends StatelessWidget {

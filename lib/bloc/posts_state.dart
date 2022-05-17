@@ -31,33 +31,44 @@ class PostsState extends Equatable {
   final Map<PostKey, List<Posts>> posts;
   final Map<PostKey, int> currentPage;
   final Map<PostType, int> unreadCount;
+  final Posts? currentPost;
 
-  const PostsState({
-    this.status = ListDataFetchStatus.normal,
-    this.posts = const {},
-    this.currentPage = const {},
-    this.unreadCount = const {},
-  });
+  const PostsState(
+      {this.status = ListDataFetchStatus.normal,
+      this.posts = const {},
+      this.currentPage = const {},
+      this.unreadCount = const {},
+      this.currentPost});
 
   @override
-  List<Object> get props => [status, posts, currentPage, unreadCount];
+  List<Object> get props {
+    return [
+      status,
+      posts,
+      currentPage,
+      unreadCount,
+      currentPost ?? '',
+    ];
+  }
 
   PostsState copyWith({
     ListDataFetchStatus? status,
     Map<PostKey, List<Posts>>? posts,
     Map<PostKey, int>? currentPage,
     Map<PostType, int>? unreadCount,
+    Posts? currentPost,
   }) {
     return PostsState(
       status: status ?? this.status,
       posts: posts ?? this.posts,
       currentPage: currentPage ?? this.currentPage,
       unreadCount: unreadCount ?? this.unreadCount,
+      currentPost: currentPost ?? this.currentPost,
     );
   }
 
   @override
   String toString() {
-    return 'PostsState(status: $status, posts: $posts, currentPage: $currentPage, unreadCount: $unreadCount)';
+    return 'PostsState(status: $status, posts: $posts, currentPage: $currentPage, unreadCount: $unreadCount, currentPost: $currentPost)';
   }
 }

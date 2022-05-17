@@ -170,12 +170,14 @@ class ReplyFile extends Equatable {
   final String content;
   final DateTime createTime;
   final String authorId;
+  final String authorRealname;
   const ReplyFile({
     required this.id,
     required this.title,
     required this.content,
     required this.createTime,
     required this.authorId,
+    required this.authorRealname,
   });
 
   ReplyFile copyWith({
@@ -184,6 +186,7 @@ class ReplyFile extends Equatable {
     String? content,
     DateTime? createTime,
     String? authorId,
+    String? authorRealname,
   }) {
     return ReplyFile(
       id: id ?? this.id,
@@ -191,12 +194,13 @@ class ReplyFile extends Equatable {
       content: content ?? this.content,
       createTime: createTime ?? this.createTime,
       authorId: authorId ?? this.authorId,
+      authorRealname: authorRealname ?? this.authorRealname,
     );
   }
 
   @override
   String toString() {
-    return 'ReplyFile(id: $id, title: $title, content: $content, createTime: $createTime, authorId: $authorId)';
+    return 'ReplyFile(id: $id, title: $title, content: $content, createTime: $createTime, authorId: $authorId, authorRealname: $authorRealname)';
   }
 
   @override
@@ -207,6 +211,7 @@ class ReplyFile extends Equatable {
       content,
       createTime,
       authorId,
+      authorRealname,
     ];
   }
 }

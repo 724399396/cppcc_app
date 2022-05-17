@@ -274,7 +274,7 @@ class JoinUsersPage extends StatelessWidget {
                     ),
                   ],
                 ),
-                Text(us.userIdDictText),
+                Text(us.userRealname),
               ]),
             ),
           );

@@ -16,6 +16,7 @@ class Posts extends Equatable {
   final DateTime createTime;
   final String? categoryDictText;
   final bool read;
+  final List<UserReadRecord> userReadRecords;
 
   const Posts({
     required this.id,
@@ -31,6 +32,7 @@ class Posts extends Equatable {
     required this.createTime,
     required this.categoryDictText,
     required this.read,
+    required this.userReadRecords,
   });
 
   Posts copyWith({
@@ -47,6 +49,7 @@ class Posts extends Equatable {
     DateTime? createTime,
     String? categoryDictText,
     bool? read,
+    List<UserReadRecord>? userReadRecords,
   }) {
     return Posts(
       id: id ?? this.id,
@@ -62,12 +65,13 @@ class Posts extends Equatable {
       createTime: createTime ?? this.createTime,
       categoryDictText: categoryDictText ?? this.categoryDictText,
       read: read ?? this.read,
+      userReadRecords: userReadRecords ?? this.userReadRecords,
     );
   }
 
   @override
   String toString() {
-    return 'Posts(id: $id, postType: $postType, title: $title, hits: $hits, categoryDictText: $categoryDictText, read: $read)';
+    return 'Posts(id: $id, postType: $postType, title: $title, author: $author, content: $content, category: $category, cover: $cover, hits: $hits, appendix: $appendix, createBy: $createBy, createTime: $createTime, categoryDictText: $categoryDictText, read: $read, userReadRecords: $userReadRecords)';
   }
 
   @override
@@ -86,6 +90,28 @@ class Posts extends Equatable {
       createTime,
       categoryDictText ?? '',
       read,
+      userReadRecords,
     ];
   }
+}
+
+class UserReadRecord extends Equatable {
+  final String userRealname;
+  const UserReadRecord({
+    required this.userRealname,
+  });
+
+  UserReadRecord copyWith({
+    String? userRealname,
+  }) {
+    return UserReadRecord(
+      userRealname: userRealname ?? this.userRealname,
+    );
+  }
+
+  @override
+  String toString() => 'UserReadRecord(userRealname: $userRealname)';
+
+  @override
+  List<Object> get props => [userRealname];
 }

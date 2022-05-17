@@ -51,6 +51,7 @@ class _HomeNewsState extends State<HomeNews> {
         ),
         Container(
           margin: const EdgeInsets.only(top: 80),
+          padding: const EdgeInsets.symmetric(horizontal: 16),
           color: AppColors.background,
           child: BlocConsumer<PostsBloc, PostsState>(
             buildWhen: (previous, current) =>

@@ -27,6 +27,7 @@ class PostsResponse {
   final String createBy;
   final String createTime;
   final bool? read;
+  final List<UserReadRecordResponse>? userReadRecords;
 
   @JsonKey(name: "categoryDictText")
   final String? categoryDictText;
@@ -44,9 +45,21 @@ class PostsResponse {
       this.createBy,
       this.createTime,
       this.categoryDictText,
-      this.read);
+      this.read,
+      this.userReadRecords);
 
   factory PostsResponse.fromJson(Map<String, dynamic> json) =>
       _$PostsResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PostsResponseToJson(this);
+}
+
+@JsonSerializable()
+class UserReadRecordResponse {
+  @JsonKey(name: 'userId_dictText')
+  final String userRealname;
+  UserReadRecordResponse(this.userRealname);
+
+  factory UserReadRecordResponse.fromJson(Map<String, dynamic> json) =>
+      _$UserReadRecordResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$UserReadRecordResponseToJson(this);
 }

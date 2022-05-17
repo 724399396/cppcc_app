@@ -6,7 +6,6 @@ import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
-import 'package:cppcc_app/page/home/posts_list_with_filter_page.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -171,12 +170,9 @@ class HomePage extends StatelessWidget {
                       return buildTabItem(
                           '文件公告',
                           'assets/icons/ic_wenjiangonggao.png',
-                          Routes.postListWithFilterPage,
+                          Routes.fileAnnmentPage,
                           state.unreadCount[PostType.fileAnnment] ?? 0,
-                          context,
-                          routeArguments: PostsWithFilterArgument(
-                              const PostKey(PostType.fileAnnment, null),
-                              '文件公告'));
+                          context);
                     },
                   ),
                   BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
@@ -292,26 +288,30 @@ class HomePage extends StatelessWidget {
                         []) +
                     (state.posts[const PostKey(PostType.fileAnnment, null)] ??
                         []);
-                return EasyRefresh.custom(
-                  controller: _easyRefreshController,
-                  enableControlFinishRefresh: true,
-                  enableControlFinishLoad: true,
-                  header: easyRefreshHeader,
-                  footer: easyRefreshFooter,
-                  onLoad: () async {
-                    BlocProvider.of<PostsBloc>(context)
-                        .add(const PostLoadMore(PostKey(PostType.news, null)));
-                    BlocProvider.of<PostsBloc>(context).add(const PostLoadMore(
-                        PostKey(PostType.fileAnnment, null)));
-                  },
-                  onRefresh: () async {
-                    BlocProvider.of<PostsBloc>(context)
-                        .add(const PostRefresh(PostKey(PostType.news, null)));
-                    BlocProvider.of<PostsBloc>(context).add(
-                        const PostRefresh(PostKey(PostType.fileAnnment, null)));
-                  },
-                  emptyWidget: data.isEmpty ? const EmptyData() : null,
-                  slivers: data.map((p) => PostsItem(p)).toList(),
+                return Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: EasyRefresh.custom(
+                    controller: _easyRefreshController,
+                    enableControlFinishRefresh: true,
+                    enableControlFinishLoad: true,
+                    header: easyRefreshHeader,
+                    footer: easyRefreshFooter,
+                    onLoad: () async {
+                      BlocProvider.of<PostsBloc>(context).add(
+                          const PostLoadMore(PostKey(PostType.news, null)));
+                      BlocProvider.of<PostsBloc>(context).add(
+                          const PostLoadMore(
+                              PostKey(PostType.fileAnnment, null)));
+                    },
+                    onRefresh: () async {
+                      BlocProvider.of<PostsBloc>(context)
+                          .add(const PostRefresh(PostKey(PostType.news, null)));
+                      BlocProvider.of<PostsBloc>(context).add(const PostRefresh(
+                          PostKey(PostType.fileAnnment, null)));
+                    },
+                    emptyWidget: data.isEmpty ? const EmptyData() : null,
+                    slivers: data.map((p) => PostsItem(p)).toList(),
+                  ),
                 );
               },
             ),

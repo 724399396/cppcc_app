@@ -1,11 +1,8 @@
-import 'package:cppcc_app/bloc/contact_bloc.dart';
 import 'package:cppcc_app/models/proposal.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
-import 'package:collection/collection.dart';
 
 class ReplyDetailsPage extends StatelessWidget {
   const ReplyDetailsPage({Key? key}) : super(key: key);
@@ -51,9 +48,7 @@ class ReplyDetailsPage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: <Widget>[
                   Text(
-                    BlocProvider.of<ContactBloc>(context).state.contacts
-                    .firstWhereOrNull((element) => element.userId == _bean.authorId)
-                    ?.userId ?? '',
+                    _bean.authorRealname,
                     style: const TextStyle(
                       fontSize: 12.0,
                       color: Color(0xff999999),

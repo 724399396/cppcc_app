@@ -49,7 +49,7 @@ class MeetingRepository {
       userRecords: detail.userRecords
               ?.map<MeetingActiveRecord>((r) => MeetingActiveRecord(
                     userId: r.userId ?? '',
-                    userIdDictText: r.userIdDictText ?? '',
+                    userRealname: r.userRealname ?? '',
                     status: r.status ?? 0,
                     read: r.read ?? false,
                   ))

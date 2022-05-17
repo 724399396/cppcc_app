@@ -313,10 +313,11 @@ class ApiDataProvider {
     });
   }
 
-  Future getPostsDetail(String id) {
+  Future<PostsResponse> getPostsDetail(String id) {
     return _dio.get('/app/posts/queryById/app', queryParameters: {
       'id': id,
-    }).then((value) => BaseResponse.fromJson(value.data));
+    }).then((value) => PostsResponse.fromJson(
+        BaseResponse.fromJson(value.data).result as Map<String, dynamic>));
   }
 
   Future<int> getAnnouncementUnreadCount(MessageType type) {

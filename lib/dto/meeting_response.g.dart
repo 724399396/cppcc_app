@@ -196,6 +196,6 @@ Map<String, dynamic> _$UserRecordsResponseToJson(
       'updateBy': instance.updateBy,
       'updateTime': instance.updateTime,
       'userId': instance.userId,
-      'userId_dictText': instance.userIdDictText,
+      'userId_dictText': instance.userRealname,
       'read': instance.read,
     };

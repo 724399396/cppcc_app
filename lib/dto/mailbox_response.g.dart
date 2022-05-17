@@ -52,7 +52,7 @@ Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
       'phone': instance.phone,
       'category': instance.category,
       'userId': instance.userId,
-      'userId_dictText': instance.userIdDictText,
+      'userId_dictText': instance.userRealname,
       'type': instance.type,
       'type_dictText': instance.typeDictText,
       'createBy': instance.createBy,

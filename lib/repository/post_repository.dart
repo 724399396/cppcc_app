@@ -28,7 +28,8 @@ class PostRepository {
                 createBy: p.createBy,
                 createTime: DateTime.parse(p.createTime),
                 categoryDictText: p.categoryDictText,
-                read: p.read ?? false),
+                read: p.read ?? false,
+                userReadRecords: const []),
           )
           .toList();
     });
@@ -46,7 +47,25 @@ class PostRepository {
     return _apiDataProvider.getGdHistoryUnreadCount();
   }
 
-  Future getPostsDetail(String id) {
-    return _apiDataProvider.getPostsDetail(id);
+  Future<Posts> getPostsDetail(String id) async {
+    var p = await _apiDataProvider.getPostsDetail(id);
+    return Posts(
+        id: p.id,
+        postType: convertToPostTypeFromCode(p.type!),
+        title: p.title,
+        author: p.author,
+        content: p.content,
+        category: p.category,
+        cover: p.cover,
+        hits: p.hits,
+        appendix: p.appendix,
+        createBy: p.createBy,
+        createTime: DateTime.parse(p.createTime),
+        categoryDictText: p.categoryDictText,
+        read: p.read ?? false,
+        userReadRecords: p.userReadRecords
+                ?.map((e) => UserReadRecord(userRealname: e.userRealname))
+                .toList() ??
+            []);
   }
 }

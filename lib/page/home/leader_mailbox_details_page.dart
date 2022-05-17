@@ -57,7 +57,7 @@ class LeaderMailboxDetailsPage extends StatelessWidget {
                         const SizedBox(
                           width: 10,
                         ),
-                        Text(_bean.userIdDictText,
+                        Text(_bean.userRealname,
                             style: const TextStyle(
                               fontSize: 12.0,
                               color: Color(0xff999999),

@@ -67,6 +67,7 @@ ReplyFileResponse _$ReplyFileResponseFromJson(Map<String, dynamic> json) =>
       json['content'] as String,
       json['createTime'] as String?,
       json['authorId'] as String?,
+      json['author_dictText'] as String?,
     );
 
 Map<String, dynamic> _$ReplyFileResponseToJson(ReplyFileResponse instance) =>
@@ -76,4 +77,5 @@ Map<String, dynamic> _$ReplyFileResponseToJson(ReplyFileResponse instance) =>
       'content': instance.content,
       'createTime': instance.createTime,
       'authorId': instance.authorId,
+      'author_dictText': instance.authorRealname,
     };

@@ -69,9 +69,11 @@ class ReplyFileResponse {
   final String content;
   final String? createTime;
   final String? authorId;
+  @JsonKey(name: 'author_dictText')
+  final String? authorRealname;
 
   ReplyFileResponse(
-      this.id, this.title, this.content, this.createTime, this.authorId);
+      this.id, this.title, this.content, this.createTime, this.authorId, this.authorRealname);
 
   factory ReplyFileResponse.fromJson(Map<String, dynamic> json) =>
       _$ReplyFileResponseFromJson(json);

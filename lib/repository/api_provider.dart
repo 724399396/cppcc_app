@@ -443,4 +443,20 @@ class ApiDataProvider {
               as Map<String, dynamic>)['records'] as List<dynamic>));
     });
   }
+
+  Future getDiscussNetworkDetail(String id) {
+    return _dio.get('/app/discussNetwork/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return DiscussNetworkResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
+  }
+
+  Future userLikeDiscussNetwork(String id, int type) {
+    return _dio.post('/app/discussNetworkMsg/userLike', data: {
+      'sourceId': id,
+      'type': type,
+    }).then((value) => BaseResponse.fromJson(value.data).result);
+  }
 }

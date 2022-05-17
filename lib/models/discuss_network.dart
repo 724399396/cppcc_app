@@ -1,27 +1,28 @@
 import 'package:equatable/equatable.dart';
 
 class PartUser extends Equatable {
-  final String realname;
+  final String userRealname;
   const PartUser({
-    this.realname = '',
+    this.userRealname = '',
   });
 
   PartUser copyWith({
-    String? realname,
+    String? userRealname,
   }) {
     return PartUser(
-      realname: realname ?? this.realname,
+      userRealname: userRealname ?? this.userRealname,
     );
   }
 
   @override
-  String toString() => 'PartUser(realname: $realname)';
+  String toString() => 'PartUser(userRealname: $userRealname)';
 
   @override
-  List<Object> get props => [realname];
+  List<Object> get props => [userRealname];
 }
 
 class DiscussMessage extends Equatable {
+  final String id;
   final String message;
   final String ownerName;
   final String? ownerAvatar;
@@ -29,6 +30,7 @@ class DiscussMessage extends Equatable {
   final String createTime;
 
   const DiscussMessage({
+    required this.id,
     required this.message,
     required this.ownerName,
     required this.ownerAvatar,
@@ -37,6 +39,7 @@ class DiscussMessage extends Equatable {
   });
 
   DiscussMessage copyWith({
+    String? id,
     String? message,
     String? ownerName,
     String? ownerAvatar,
@@ -44,6 +47,7 @@ class DiscussMessage extends Equatable {
     String? createTime,
   }) {
     return DiscussMessage(
+      id: id ?? this.id,
       message: message ?? this.message,
       ownerName: ownerName ?? this.ownerName,
       ownerAvatar: ownerAvatar ?? this.ownerAvatar,
@@ -54,12 +58,13 @@ class DiscussMessage extends Equatable {
 
   @override
   String toString() {
-    return 'DiscussMessage(message: $message, ownerName: $ownerName, ownerAvatar: $ownerAvatar, praiseCount: $praiseCount, createTime: $createTime)';
+    return 'DiscussMessage(id: $id, message: $message, ownerName: $ownerName, ownerAvatar: $ownerAvatar, praiseCount: $praiseCount, createTime: $createTime)';
   }
 
   @override
   List<Object> get props {
     return [
+      id,
       message,
       ownerName,
       ownerAvatar ?? '',
@@ -87,6 +92,9 @@ class DiscussNetwork extends Equatable {
   final List<PartUser> userRecords;
   final List<DiscussMessage> discussMessages;
   final bool read;
+  final int thumbUpCount;
+  final bool thumbUpStatus;
+  final int commentCount;
   const DiscussNetwork({
     required this.id,
     required this.title,
@@ -105,6 +113,9 @@ class DiscussNetwork extends Equatable {
     required this.userRecords,
     required this.discussMessages,
     required this.read,
+    required this.thumbUpCount,
+    required this.thumbUpStatus,
+    required this.commentCount,
   });
 
   DiscussNetwork copyWith({
@@ -125,6 +136,9 @@ class DiscussNetwork extends Equatable {
     List<PartUser>? userRecords,
     List<DiscussMessage>? discussMessages,
     bool? read,
+    int? thumbUpCount,
+    bool? thumbUpStatus,
+    int? commentCount,
   }) {
     return DiscussNetwork(
       id: id ?? this.id,
@@ -144,12 +158,15 @@ class DiscussNetwork extends Equatable {
       userRecords: userRecords ?? this.userRecords,
       discussMessages: discussMessages ?? this.discussMessages,
       read: read ?? this.read,
+      thumbUpCount: thumbUpCount ?? this.thumbUpCount,
+      thumbUpStatus: thumbUpStatus ?? this.thumbUpStatus,
+      commentCount: commentCount ?? this.commentCount,
     );
   }
 
   @override
   String toString() {
-    return 'DiscussNetwork(id: $id, title: $title, description: $description, discussMsgs: $discussMsgs, status: $status, statusDictText: $statusDictText, praiseCount: $praiseCount, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, read: $read)';
+    return 'DiscussNetwork(id: $id, title: $title, description: $description, discussMsgs: $discussMsgs, status: $status, statusDictText: $statusDictText, praiseCount: $praiseCount, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, read: $read, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, commentCount: $commentCount)';
   }
 
   @override
@@ -172,6 +189,9 @@ class DiscussNetwork extends Equatable {
       userRecords,
       discussMessages,
       read,
+      thumbUpCount,
+      thumbUpStatus,
+      commentCount,
     ];
   }
 }

@@ -14,12 +14,7 @@ class _CollectionPageState extends State<CollectionPage> {
       appBar: AppBar(
         title: const Text("我的收藏"),
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: const [
-          Text("功能开发中"),
-        ],
-      ),
+      body: const Text("功能开发中"),
     );
   }
 }

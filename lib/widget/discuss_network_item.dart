@@ -10,6 +10,7 @@ class DiscussNetworkItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var statusColor = _bean.status == 2 ? const Color(0xff3a6cea) :AppColors.greyTextColor ;
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
@@ -63,28 +64,19 @@ class DiscussNetworkItem extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            color: _bean.status == 1
-                                ? const Color(0xFFc6c3bc)
-                                : const Color(0xff3c6dea),
-                            borderRadius: BorderRadius.circular(4),
+                            border: Border.all(
+                                color: statusColor),
+                            borderRadius: BorderRadius.circular(8),
                           ),
                           padding: const EdgeInsets.symmetric(
-                              vertical: 2, horizontal: 4),
+                              vertical: 4, horizontal: 8),
                           child: Text(
                             _bean.statusDictText.toString(),
                             style: Theme.of(context)
                                 .textTheme
                                 .bodySmall
-                                ?.copyWith(color: Colors.white),
+                                ?.copyWith(color: statusColor),
                           ),
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          _bean.praiseCount.toString() + '点赞',
-                          style: Theme.of(context)
-                              .textTheme
-                              .bodySmall
-                              ?.copyWith(color: AppColors.greyTextColor),
                         ),
                       ],
                     ),

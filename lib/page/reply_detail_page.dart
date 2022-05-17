@@ -14,23 +14,6 @@ class ReplyDetailsPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text("详情"),
         ),
-        floatingActionButtonLocation:
-            FloatingActionButtonLocation.miniEndDocked,
-        floatingActionButton: Stack(
-          children: [
-            FloatingActionButton.extended(
-              heroTag: 'mine',
-              icon: const Icon(Icons.my_library_books_outlined),
-              backgroundColor: const Color(0xfff27f56),
-              foregroundColor: Colors.white,
-              label: const Text("答复件列表"),
-              onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(Routes.proposalReplyListPage, arguments: _bean);
-              },
-            ),
-          ],
-        ),
         body: ListView(
           children: [
             Container(

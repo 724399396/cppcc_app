@@ -86,55 +86,51 @@ class DiscussNetworkContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EasyRefreshController _easyRefreshController =
-        EasyRefreshController();
-    return Card(
-        color: Colors.white,
-        child: BlocConsumer<DiscussNetworkBloc, DiscussNetworkState>(
-          buildWhen: (previous, current) =>
-              previous.data != current.data ||
-              previous.status != current.status,
-          listenWhen: (previous, current) =>
-              previous.data != current.data ||
-              previous.status != current.status,
-          listener: (previous, current) {
-            switch (current.status) {
-              case ListDataFetchStatus.normal:
-                _easyRefreshController.finishRefresh(success: true);
-                _easyRefreshController.finishLoad(success: true);
-                break;
-              case ListDataFetchStatus.refresh:
-                break;
-              case ListDataFetchStatus.loadMore:
-                break;
-              case ListDataFetchStatus.failure:
-                _easyRefreshController.finishRefresh(success: false);
-                _easyRefreshController.finishLoad(success: false);
-                break;
-            }
+    var _easyRefreshController = EasyRefreshController();
+    BlocProvider.of<DiscussNetworkBloc>(context)
+        .add(DiscussNetworkFirstFetch(type));
+    return BlocConsumer<DiscussNetworkBloc, DiscussNetworkState>(
+      buildWhen: (previous, current) =>
+          previous.data != current.data || previous.status != current.status,
+      listenWhen: (previous, current) =>
+          previous.data != current.data || previous.status != current.status,
+      listener: (previous, current) {
+        switch (current.status) {
+          case ListDataFetchStatus.normal:
+            _easyRefreshController.finishRefresh(success: true);
+            _easyRefreshController.finishLoad(success: true);
+            break;
+          case ListDataFetchStatus.refresh:
+            break;
+          case ListDataFetchStatus.loadMore:
+            break;
+          case ListDataFetchStatus.failure:
+            _easyRefreshController.finishRefresh(success: false);
+            _easyRefreshController.finishLoad(success: false);
+            break;
+        }
+      },
+      builder: (context, state) {
+        var data = state.data[type];
+        return EasyRefresh.custom(
+          controller: _easyRefreshController,
+          enableControlFinishRefresh: true,
+          enableControlFinishLoad: true,
+          header: easyRefreshHeader,
+          footer: easyRefreshFooter,
+          onLoad: () async {
+            BlocProvider.of<DiscussNetworkBloc>(context)
+                .add(DiscussNetworkLoadMore(type));
           },
-          builder: (context, state) {
-            var data = state.data[type];
-            return EasyRefresh.custom(
-              controller: _easyRefreshController,
-              enableControlFinishRefresh: true,
-              enableControlFinishLoad: true,
-              header: easyRefreshHeader,
-              footer: easyRefreshFooter,
-              onLoad: () async {
-                BlocProvider.of<DiscussNetworkBloc>(context)
-                    .add(DiscussNetworkLoadMore(type));
-              },
-              onRefresh: () async {
-                BlocProvider.of<DiscussNetworkBloc>(context)
-                    .add(DiscussNetworkRefresh(type));
-              },
-              emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
-              slivers:
-                  data?.map<Widget>((p) => DiscussNetworkItem(p)).toList() ??
-                      [],
-            );
+          onRefresh: () async {
+            BlocProvider.of<DiscussNetworkBloc>(context)
+                .add(DiscussNetworkRefresh(type));
           },
-        ));
+          emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
+          slivers:
+              data?.map<Widget>((p) => DiscussNetworkItem(p)).toList() ?? [],
+        );
+      },
+    );
   }
 }

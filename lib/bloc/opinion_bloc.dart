@@ -89,7 +89,7 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
         // reload data
         add(OpinionInitilized());
       } catch (err) {
-        debugPrint('guandu historical clue api error: $err');
+        debugPrint('opinion api error: $err');
         emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
       }
     });

@@ -246,37 +246,34 @@ class JoinUsersPage extends StatelessWidget {
         crossAxisCount: 4,
         children: List.generate(_meeting.userRecords.length, (index) {
           var us = _meeting.userRecords[index];
-          return GestureDetector(
-            onTap: () {},
-            child: SizedBox(
-              height: 24,
-              child: Row(children: [
-                Stack(
-                  children: [
-                    Container(
-                      padding: const EdgeInsets.symmetric(horizontal: 6),
-                      child: Image.asset(
-                        us.status == 2
-                            ? 'assets/icons/ic_online.png'
-                            : 'assets/icons/ic_offline.png',
-                        width: 28,
-                      ),
+          return SizedBox(
+            height: 24,
+            child: Row(children: [
+              Stack(
+                children: [
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 6),
+                    child: Image.asset(
+                      us.status == 2
+                          ? 'assets/icons/ic_online.png'
+                          : 'assets/icons/ic_offline.png',
+                      width: 28,
                     ),
-                    Positioned(
-                      right: 0,
-                      top: 0,
-                      child: Image.asset(
-                        us.read
-                            ? 'assets/icons/ic_yiyuedu.png'
-                            : 'assets/icons/ic_weiyuedu.png',
-                        width: 14,
-                      ),
+                  ),
+                  Positioned(
+                    right: 0,
+                    top: 0,
+                    child: Image.asset(
+                      us.read
+                          ? 'assets/icons/ic_yiyuedu.png'
+                          : 'assets/icons/ic_weiyuedu.png',
+                      width: 14,
                     ),
-                  ],
-                ),
-                Text(us.userRealname),
-              ]),
-            ),
+                  ),
+                ],
+              ),
+              Text(us.userRealname),
+            ]),
           );
         }),
       ),

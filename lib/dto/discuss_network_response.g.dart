@@ -31,6 +31,9 @@ DiscussNetworkResponse _$DiscussNetworkResponseFromJson(
               DiscussMessagesResponse.fromJson(e as Map<String, dynamic>))
           .toList(),
       json['read'] as bool?,
+      json['thumbUpCount'] as int?,
+      json['thumbUpStatus'] as bool?,
+      json['commentCount'] as int?,
     );
 
 Map<String, dynamic> _$DiscussNetworkResponseToJson(
@@ -51,6 +54,9 @@ Map<String, dynamic> _$DiscussNetworkResponseToJson(
       'updateTime': instance.updateTime,
       'cover': instance.cover,
       'read': instance.read,
+      'thumbUpCount': instance.thumbUpCount,
+      'thumbUpStatus': instance.thumbUpStatus,
+      'commentCount': instance.commentCount,
       'partInUsers': instance.users,
       'discussMessages': instance.discussMessages,
     };

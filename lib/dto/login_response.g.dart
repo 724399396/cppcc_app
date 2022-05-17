@@ -72,18 +72,6 @@ Map<String, dynamic> _$DictItemToJson(DictItem instance) => <String, dynamic>{
       'itemText': instance.itemText,
     };
 
-DictItemEntity _$DictItemEntityFromJson(Map<String, dynamic> json) =>
-    DictItemEntity(
-      (json['dictData'] as List<dynamic>)
-          .map((e) => DictItem.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    );
-
-Map<String, dynamic> _$DictItemEntityToJson(DictItemEntity instance) =>
-    <String, dynamic>{
-      'dictData': instance.dictData,
-    };
-
 UserUpdateRequest _$UserUpdateRequestFromJson(Map<String, dynamic> json) =>
     UserUpdateRequest(
       avatar: json['avatar'] as String?,

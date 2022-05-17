@@ -20,6 +20,9 @@ class DiscussNetworkResponse {
   final String? updateTime;
   final String? cover;
   final bool? read;
+  final int? thumbUpCount;
+  final bool? thumbUpStatus;
+  final int? commentCount;
 
   @JsonKey(name: 'partInUsers')
   final List<PartUsersResponse>? users;
@@ -42,7 +45,10 @@ class DiscussNetworkResponse {
       this.cover,
       this.users,
       this.discussMessages,
-      this.read);
+      this.read,
+      this.thumbUpCount,
+      this.thumbUpStatus,
+      this.commentCount);
 
   factory DiscussNetworkResponse.fromJson(Map<String, dynamic> json) =>
       _$DiscussNetworkResponseFromJson(json);
@@ -54,7 +60,7 @@ class DiscussNetworkResponse {
 
 @JsonSerializable()
 class DiscussMessagesResponse {
-  final String id; // "1504641203290071042"
+  final String id;
   final String? message; // "<p>测试留言</p>"
   final String? ownerName; // "符佳羽"
   final String? ownerAvatar; // "符佳羽"

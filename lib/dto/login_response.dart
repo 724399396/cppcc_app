@@ -130,17 +130,6 @@ class DictItem {
 }
 
 @JsonSerializable()
-class DictItemEntity {
-  List<DictItem> dictData;
-
-  DictItemEntity(this.dictData);
-
-  factory DictItemEntity.fromJson(Map<String, dynamic> json) =>
-      _$DictItemEntityFromJson(json);
-  Map<String, dynamic> toJson() => _$DictItemEntityToJson(this);
-}
-
-@JsonSerializable()
 class UserUpdateRequest {
   final String? avatar;
   final String? wxQrCode;

@@ -5,32 +5,43 @@ class DiscussNetworkState extends Equatable {
   final ListDataFetchStatus status;
   final Map<DiscussNetworkListType, List<DiscussNetwork>> data;
   final Map<DiscussNetworkListType, int> currentPage;
-  const DiscussNetworkState({
-    this.unreadCount = 0,
-    this.status = ListDataFetchStatus.normal,
-    this.data = const {},
-    this.currentPage = const {},
-  });
+  final FormStatus? submitStatus;
+  const DiscussNetworkState(
+      {this.unreadCount = 0,
+      this.status = ListDataFetchStatus.normal,
+      this.data = const {},
+      this.currentPage = const {},
+      this.submitStatus});
 
   DiscussNetworkState copyWith({
     int? unreadCount,
     ListDataFetchStatus? status,
     Map<DiscussNetworkListType, List<DiscussNetwork>>? data,
     Map<DiscussNetworkListType, int>? currentPage,
+    FormStatus? submitStatus,
   }) {
     return DiscussNetworkState(
       unreadCount: unreadCount ?? this.unreadCount,
       status: status ?? this.status,
       data: data ?? this.data,
       currentPage: currentPage ?? this.currentPage,
+      submitStatus: submitStatus ?? this.submitStatus,
     );
   }
 
   @override
   String toString() {
-    return 'DiscussNetworkState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage)';
+    return 'DiscussNetworkState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage, submitStatus: $submitStatus)';
   }
 
   @override
-  List<Object> get props => [unreadCount, status, data, currentPage];
+  List<Object> get props {
+    return [
+      unreadCount,
+      status,
+      data,
+      currentPage,
+      submitStatus ?? '',
+    ];
+  }
 }

@@ -58,7 +58,7 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
         emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
         event.successCallback!();
       } catch (err) {
-        debugPrint('guandu historical clue api error: $err');
+        debugPrint('mail box api error: $err');
         emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
       }
     });

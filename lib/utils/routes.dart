@@ -26,7 +26,6 @@ class Routes {
   static const opinionDetailPage = '/opinionDetailPage';
   static const searchPage = '/searchPage';
   static const scanQRCode = '/scanQRCode';
-  static const archivesPage = '/archivesPage';
   static const collectionPage = '/collectionPage';
   static const feedbackPage = '/feedbackPage';
   static const settingsPage = '/settingsPage';

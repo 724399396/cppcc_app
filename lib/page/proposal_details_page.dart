@@ -16,15 +16,13 @@ class ProposalDetailsPage extends StatelessWidget {
     return BlocBuilder<ProposalBloc, ProposalState>(
       builder: (context, state) {
         Proposal? _bean = state.currentProposal;
-        return _bean == null ? Container() : Scaffold(
-            appBar: AppBar(
-              title: const Text("详情"),
-            ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.miniEndDocked,
-            floatingActionButton: Stack(
-              children: [
-                FloatingActionButton.extended(
+        return _bean == null
+            ? Container()
+            : Scaffold(
+                appBar: AppBar(
+                  title: const Text("详情"),
+                ),
+                floatingActionButton: FloatingActionButton.extended(
                   heroTag: 'mine',
                   icon: const Icon(Icons.my_library_books_outlined),
                   backgroundColor: const Color(0xfff27f56),
@@ -36,66 +34,64 @@ class ProposalDetailsPage extends StatelessWidget {
                         arguments: _bean);
                   },
                 ),
-              ],
-            ),
-            body: ListView(
-              children: [
-                Container(
-                  padding: const EdgeInsets.all(5),
-                  child: Text(_bean.title,
-                      style: const TextStyle(
-                        fontSize: 16.0,
-                        color: Color(0xff333333),
-                      )),
-                ),
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  padding: const EdgeInsets.all(5),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: <Widget>[
-                      Text(
-                        _bean.author,
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0xff999999),
-                        ),
+                body: ListView(
+                  children: [
+                    Container(
+                      padding: const EdgeInsets.all(5),
+                      child: Text(_bean.title,
+                          style: const TextStyle(
+                            fontSize: 16.0,
+                            color: Color(0xff333333),
+                          )),
+                    ),
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      padding: const EdgeInsets.all(5),
+                      child: Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        children: <Widget>[
+                          Text(
+                            _bean.author,
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Color(0xff999999),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            DateFormat('yyyy-MM-dd').format(_bean.createTime),
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Color(0xff999999),
+                            ),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          Text(
+                            _bean.hits.toString() + "阅读",
+                            style: const TextStyle(
+                              fontSize: 12.0,
+                              color: Color(0xff999999),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        DateFormat('yyyy-MM-dd').format(_bean.createTime),
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0xff999999),
-                        ),
-                      ),
-                      const SizedBox(
-                        width: 10,
-                      ),
-                      Text(
-                        _bean.hits.toString() + "阅读",
-                        style: const TextStyle(
-                          fontSize: 12.0,
-                          color: Color(0xff999999),
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                // 顶部栏
-                Container(
-                  margin: const EdgeInsets.only(top: 10),
-                  child: _bean.content != ""
-                      ? Html(
-                          data: _bean.content,
-                          tagsList: Html.tags..addAll(["bird", "flutter"]),
-                        )
-                      : Container(),
-                )
-              ],
-            ));
+                    ),
+                    // 顶部栏
+                    Container(
+                      margin: const EdgeInsets.only(top: 10),
+                      child: _bean.content != ""
+                          ? Html(
+                              data: _bean.content,
+                              tagsList: Html.tags..addAll(["bird", "flutter"]),
+                            )
+                          : Container(),
+                    )
+                  ],
+                ));
       },
     );
   }

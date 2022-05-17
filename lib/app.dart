@@ -36,7 +36,6 @@ import 'package:cppcc_app/page/reset_password_page.dart';
 import 'package:cppcc_app/page/home/search_page.dart';
 import 'package:cppcc_app/page/scan_qr_code_page.dart';
 //个人中心页面
-import 'package:cppcc_app/page/settings/archives_page.dart';
 import 'package:cppcc_app/page/settings/collection_page.dart';
 import 'package:cppcc_app/page/settings/feedback_page.dart';
 import 'package:cppcc_app/page/settings/settings_page.dart';
@@ -83,7 +82,6 @@ final routesDef = {
   Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
   Routes.twoMeetingPage: (context) => const TwoMeetingsPage(),
   Routes.guanduHistoryListPage: (context) => const GuanduHistoryListPage(),
-  Routes.archivesPage: (context) => const ArchivesPage(),
   Routes.collectionPage: (context) => const CollectionPage(),
   Routes.feedbackPage: (context) => const FeedbackPage(),
   Routes.settingsPage: (context) => const SettingsPage(),

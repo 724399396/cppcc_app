@@ -257,7 +257,7 @@ class SettingsDuties extends StatelessWidget {
           ),
           title: "履职档案",
           onClick: () {
-            Navigator.of(context).pushNamed(Routes.archivesPage);
+            Navigator.of(context).pushNamed(Routes.performanceFilePage);
           },
         ),
         const SizedBox(height: 4),

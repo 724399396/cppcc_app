@@ -9,12 +9,7 @@ class MessageDetailsPage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("消息详情"),
       ),
-      body: Stack(
-        alignment: Alignment.center,
-        children: const [
-          Text("功能开发中"),
-        ],
-      ),
+      body: const Text("功能开发中"),
     );
   }
 }

@@ -32,11 +32,12 @@ class DiscussNetworkRepository {
               cover: e.cover,
               userRecords: e.users
                       ?.map<PartUser>(
-                          (u) => PartUser(realname: u.realname ?? ''))
+                          (u) => PartUser(userRealname: u.realname ?? ''))
                       .toList() ??
                   [],
               discussMessages: e.discussMessages
                       ?.map<DiscussMessage>((d) => DiscussMessage(
+                            id: d.id,
                             message: d.message ?? '',
                             ownerName: d.ownerName ?? '',
                             ownerAvatar: d.ownerAvatar,
@@ -46,7 +47,18 @@ class DiscussNetworkRepository {
                       .toList() ??
                   [],
               read: e.read ?? true,
+              thumbUpCount: e.thumbUpCount ?? 0,
+              thumbUpStatus: e.thumbUpStatus ?? false,
+              commentCount: e.commentCount ?? 0,
             ))
         .toList();
+  }
+
+  Future getDiscussNetworkDetail(String id) {
+    return _apiDataProvider.getDiscussNetworkDetail(id);
+  }
+
+  Future userLike(String id, int type) {
+    return _apiDataProvider.userLikeDiscussNetwork(id, type);
   }
 }

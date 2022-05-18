@@ -35,6 +35,7 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 18, vertical: 12),
                         color: Colors.white,
+                        width: double.infinity,
                         child: Text(bean.title,
                             style: const TextStyle(
                                 fontSize: 18.0, fontWeight: FontWeight.w500)),

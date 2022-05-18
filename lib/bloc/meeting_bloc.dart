@@ -109,34 +109,20 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
       if (state.currentMetting != null) {
         switch (getMeetingChangeTypeFromCode(meetingChange.type)) {
           case MeetingChangeType.read:
-            var originUserRecords = state.currentMetting!.userRecords;
-            var otherUsers = originUserRecords
-                .where((element) => element.userId != meetingChange.userId)
-                .toList();
-            var readChangeUser = originUserRecords
-                .firstWhereOrNull(
-                    (element) => element.userId == meetingChange.userId)
-                ?.copyWith(read: true);
             emit(state.copyWith(
-                currentMetting: state.currentMetting!.copyWith(
-                    userRecords: readChangeUser != null
-                        ? otherUsers + [readChangeUser]
-                        : otherUsers)));
+                currentMetting: state.currentMetting?.copyWith(
+                    userRecords: updateWithGenerateNewList<MeetingActiveRecord>(
+                        state.currentMetting?.userRecords ?? [],
+                        (e) => e.userId == meetingChange.userId,
+                        (e) => e?.copyWith(read: true)))));
             break;
           case MeetingChangeType.sign:
-            var originUserRecords = state.currentMetting!.userRecords;
-            var otherUsers = originUserRecords
-                .where((element) => element.userId != meetingChange.userId)
-                .toList();
-            var signChangeUser = originUserRecords
-                .firstWhereOrNull(
-                    (element) => element.userId == meetingChange.userId)
-                ?.copyWith(status: 2);
             emit(state.copyWith(
-                currentMetting: state.currentMetting!.copyWith(
-                    userRecords: signChangeUser != null
-                        ? otherUsers + [signChangeUser]
-                        : otherUsers)));
+                currentMetting: state.currentMetting?.copyWith(
+                    userRecords: updateWithGenerateNewList<MeetingActiveRecord>(
+                        state.currentMetting?.userRecords ?? [],
+                        (e) => e.userId == meetingChange.userId,
+                        (e) => e?.copyWith(status: 2)))));
             break;
           case MeetingChangeType.broadcast:
             emit(state.copyWith(
@@ -157,12 +143,9 @@ class MeetingBloc extends Bloc<MeetingEvent, MeetingState> {
             var existUser = originUserRecords.firstWhereOrNull(
                 (element) => element.userId == meetingChange.userId);
             if (existUser == null) {
-              var otherUsers = originUserRecords
-                  .where((element) => element.userId != meetingChange.userId)
-                  .toList();
               emit(state.copyWith(
                   currentMetting: state.currentMetting!.copyWith(
-                      userRecords: otherUsers +
+                      userRecords: originUserRecords +
                           [
                             MeetingActiveRecord(
                               read: false,

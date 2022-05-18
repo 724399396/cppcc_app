@@ -12,7 +12,6 @@ import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
-import 'package:collection/collection.dart';
 import 'package:intl/intl.dart';
 import 'package:web_socket_channel/io.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
@@ -67,12 +66,12 @@ class DiscussNetworkBloc
     on<GoDiscussNetworkDetail>((event, emit) async {
       channel?.sink.close();
       channel = IOWebSocketChannel.connect(
-          // Uri.parse('wss://' +
-          //     baseUrl +
-          //     '/discuss/socket/' +
-          //     event.discussNetwork.id),
-          Uri.parse(
-              'ws://' + baseUrl + '/discuss/socket/' + event.discussNetwork.id),
+          Uri.parse('wss://' +
+              baseUrl +
+              '/discuss/socket/' +
+              event.discussNetwork.id),
+          // Uri.parse(
+          //     'ws://' + baseUrl + '/discuss/socket/' + event.discussNetwork.id),
           headers: {'X-Access-Token': _localDataProvider.token()},
           pingInterval: const Duration(seconds: 1));
       channel!.stream.listen((message) {
@@ -85,26 +84,20 @@ class DiscussNetworkBloc
           .getDiscussNetworkDetail(event.discussNetwork.id);
       Map<DiscussNetworkListType, List<DiscussNetwork>> newData =
           Map.from(state.data);
-      int unreadCount = state.unreadCount;
+      bool found = false;
       for (var key in newData.keys) {
-        var opinions = newData[key];
-        var readDiscussNetwork = newData[key]
-            ?.firstWhereOrNull((post) => post.id == event.discussNetwork.id);
-        if (readDiscussNetwork != null && !readDiscussNetwork.read) {
-          newData[key] = (opinions
-                      ?.where(
-                          (element) => element.id != event.discussNetwork.id)
-                      .toList() ??
-                  []) +
-              [
-                readDiscussNetwork.copyWith(read: true),
-              ];
-          unreadCount = unreadCount - 1;
-        }
+        newData[key] = updateWithGenerateNewList<DiscussNetwork>(
+          newData[key] ?? [],
+          (e) => e.id == event.discussNetwork.id,
+          (e) => e?.copyWith(read: true),
+          matcherCallback: (e) {
+            found = true;
+          },
+        );
       }
       emit(state.copyWith(
           data: newData,
-          unreadCount: unreadCount,
+          unreadCount: found ? state.unreadCount - 1 : state.unreadCount,
           currentDiscuss: currentDiscuss));
     });
 
@@ -167,31 +160,17 @@ class DiscussNetworkBloc
                         : true)));
             break;
           case DiscussNetworkChangeType.msgThumsup:
-            var prefixMsgs = state.currentDiscuss?.discussMessages
-                    .takeWhile((element) => element.id != change.sourceId)
-                    .toList() ??
-                [];
-            var suffixMsgs = state.currentDiscuss?.discussMessages
-                    .skipWhile((element) => element.id != change.sourceId)
-                    .skip(1)
-                    .toList() ??
-                [];
-            var msg = state.currentDiscuss?.discussMessages
-                .firstWhereOrNull((m) => m.id == change.sourceId);
-            if (msg != null) {
-              emit(state.copyWith(
-                  currentDiscuss: state.currentDiscuss?.copyWith(
-                      discussMessages: prefixMsgs +
-                          [
-                            msg.copyWith(
-                                thumbUpCount: change.thumbUpCount,
-                                thumbUpStatus: (msg.thumbUpStatus == false)
-                                    ? change.thumbUpUserId ==
-                                        _localDataProvider.userId()
-                                    : true)
-                          ] +
-                          suffixMsgs)));
-            }
+            emit(state.copyWith(
+                currentDiscuss: state.currentDiscuss?.copyWith(
+                    discussMessages: updateWithGenerateNewList<DiscussMessage>(
+                        state.currentDiscuss?.discussMessages ?? [],
+                        (element) => element.id == change.sourceId,
+                        (msg) => msg?.copyWith(
+                            thumbUpCount: change.thumbUpCount,
+                            thumbUpStatus: (msg.thumbUpStatus == false)
+                                ? change.thumbUpUserId ==
+                                    _localDataProvider.userId()
+                                : true)))));
             break;
           case DiscussNetworkChangeType.newSubMsg:
             // TODO

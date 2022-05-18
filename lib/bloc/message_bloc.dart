@@ -91,10 +91,10 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
           newUnreadCount[event.message.type]! - 1;
 
       Map<MessageType, List<Message>> newDatas = Map.from(state.messages);
-      newDatas[event.message.type] = newDatas[event.message.type]!
-              .where((element) => element.id != event.message.id)
-              .toList() +
-          [event.message.copyWith(read: true)];
+      newDatas[event.message.type] = updateWithGenerateNewList<Message>(
+          newDatas[event.message.type] ?? [],
+          (message) => message.id == event.message.id,
+          (message) => message?.copyWith(read: true));
       emit(state.copyWith(
         messages: newDatas,
         unreadCount: newUnreadCount,
@@ -115,7 +115,6 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
         default:
           messageType = MessageType.system;
       }
-      convertToMessageTypeFromSystemCode(newMessage.type.toString());
       Map<MessageType, int> newUnreadCount = Map.from(state.unreadCount);
       newUnreadCount[messageType] = (newUnreadCount[messageType] ?? 0) + 1;
       Map<MessageType, List<Message>> newDatas = Map.from(state.messages);

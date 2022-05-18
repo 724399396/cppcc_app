@@ -70,31 +70,27 @@ class ProposalBloc extends Bloc<ProposalEvent, ProposalState> {
       var proposal =
           await _proposalRepository.getProposalDetail(event.proposal.id);
       Map<ProposalListType, List<Proposal>> newData = Map.from(state.proposals);
-      int unreadCount = state.unreadCount;
+      bool found = false;
       var currentProposal = state.currentProposal;
       for (var key in newData.keys) {
-        var proposals = newData[key];
-        var readProposal = newData[key]
-            ?.firstWhereOrNull((post) => post.id == event.proposal.id);
-        if (readProposal != null) {
-          newData[key] = (proposals
-                      ?.where((element) => element.id != event.proposal.id)
-                      .toList() ??
-                  []) +
-              [
-                proposal.copyWith(read: true, replyFiles: proposal.replyFiles),
-              ];
-          unreadCount = unreadCount - 1;
+        newData[key] = updateWithGenerateNewList<Proposal>(
+            newData[key] ?? [],
+            (item) => item.id == event.proposal.id,
+            (item) =>
+                item?.copyWith(read: true, replyFiles: proposal.replyFiles),
+            matcherCallback: (e) {
+          found = true;
           currentProposal = currentProposal == null
               ? proposal.copyWith(read: true)
-              : currentProposal.copyWith(
-                  read: true, replyFiles: proposal.replyFiles);
-        }
+              : currentProposal!
+                  .copyWith(read: true, replyFiles: proposal.replyFiles);
+        });
       }
       emit(state.copyWith(
-          proposals: newData,
-          unreadCount: unreadCount,
-          currentProposal: currentProposal));
+        proposals: newData,
+        unreadCount: found ? state.unreadCount - 1 : state.unreadCount,
+        currentProposal: currentProposal,
+      ));
     });
 
     on<ProposalProgressGet>((event, emit) async {

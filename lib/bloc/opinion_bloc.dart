@@ -61,23 +61,19 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
     on<OpinionRead>((event, emit) async {
       await _opinionRepository.getOpinionDetail(event.opinion.id);
       Map<OpinionListType, List<Opinion>> newData = Map.from(state.opinions);
-      int unreadCount = state.unreadCount;
+      bool found = false;
       for (var key in newData.keys) {
-        var opinions = newData[key];
-        var readOpinion = newData[key]
-            ?.firstWhereOrNull((post) => post.id == event.opinion.id);
-        if (readOpinion != null && !readOpinion.read) {
-          newData[key] = (opinions
-                      ?.where((element) => element.id != event.opinion.id)
-                      .toList() ??
-                  []) +
-              [
-                readOpinion.copyWith(read: true),
-              ];
-          unreadCount = unreadCount - 1;
-        }
+        newData[key] = updateWithGenerateNewList<Opinion>(
+            newData[key] ?? [],
+            (item) => item.id == event.opinion.id,
+            (item) => item?.copyWith(read: true), matcherCallback: (e) {
+          found = true;
+        });
       }
-      emit(state.copyWith(opinions: newData, unreadCount: unreadCount));
+      emit(state.copyWith(
+        opinions: newData,
+        unreadCount: found ? state.unreadCount - 1 : state.unreadCount,
+      ));
     });
 
     on<OpinionAdd>((event, emit) async {

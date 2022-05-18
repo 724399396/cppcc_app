@@ -1,4 +1,5 @@
 import 'package:cppcc_app/models/mail.dart';
+import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:flutter/material.dart';
 
@@ -19,29 +20,22 @@ class MailboxListItem extends StatelessWidget {
               .pushNamed(Routes.leaderMailboxDetailsPage, arguments: _bean);
         },
         child: Container(
-          height: 80.0,
-          width: double.infinity,
-          padding: const EdgeInsets.all(10.0),
+          padding: const EdgeInsets.all(8.0),
+          margin: const EdgeInsets.all(8),
+          constraints: const BoxConstraints(minHeight: 80),
           decoration: const BoxDecoration(
-            border: Border(
-              bottom: BorderSide(width: 1, color: Color(0xfff4f4f4)),
-            ),
-          ),
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
           child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
             crossAxisAlignment: CrossAxisAlignment.start,
-            children: <Widget>[
+            children: [
               Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                mainAxisAlignment: MainAxisAlignment.start,
-                mainAxisSize: MainAxisSize.max,
-                textDirection: TextDirection.ltr,
-                verticalDirection: VerticalDirection.down,
-                children: <Widget>[
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
                   SizedBox(
-                    height: 16.0,
-                    width: 16.0,
-                    child: Icon(Icons.mail,
+                    height: 24,
+                    child: Icon(Icons.mail_outline,
                         color: _bean.read
                             ? Colors.grey
                             : (_bean.type == 1
@@ -50,46 +44,32 @@ class MailboxListItem extends StatelessWidget {
                                     ? const Color(0xff6497fc)
                                     : const Color(0xff6cd47a)))),
                   ),
-                  Container(
-                    padding: const EdgeInsets.only(left: 10.0),
-                    child: Text(
-                      _bean.title,
-                      style: const TextStyle(
-                        color: Color(0xff333333),
-                        fontSize: 16.0,
-                        fontWeight: FontWeight.bold,
-                      ),
+                  const SizedBox(width: 8),
+                  Text(
+                    _bean.title,
+                    overflow: TextOverflow.ellipsis,
+                    style: const TextStyle(
+                      fontSize: 18.0,
                     ),
                   ),
                 ],
               ),
-              Container(
-                padding: const EdgeInsets.only(top: 15.0),
-                child: Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  mainAxisSize: MainAxisSize.max,
-                  textDirection: TextDirection.ltr,
-                  verticalDirection: VerticalDirection.down,
-                  children: <Widget>[
-                    Expanded(
-                      child: Text(
-                        _bean.createTime,
-                        maxLines: 100,
-                        style: const TextStyle(
-                          color: Color(0xff999999),
-                          fontSize: 12.0,
-                          fontWeight: FontWeight.bold,
-                        ),
+              Row(
+                children: [
+                  Expanded(
+                    child: Text(
+                      _bean.createTime,
+                      style: const TextStyle(
+                        color: AppColors.greyTextColor,
+                        fontSize: 14.0,
                       ),
                     ),
-                    const SizedBox(
-                      height: 16.0,
-                      width: 16.0,
-                      child: Icon(Icons.chevron_right, color: Colors.grey),
-                    )
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    height: 16.0,
+                    child: Icon(Icons.chevron_right, color: AppColors.greyTextColor),
+                  )
+                ],
               )
             ],
           ),

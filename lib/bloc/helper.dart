@@ -8,7 +8,7 @@ typedef SuccessCallback = void Function();
 typedef FailCallback = void Function();
 
 List<T> updateWithGenerateNewList<T>(List<T> data, bool Function(T value) test,
-    T? Function(T? value) changer, {void Function(T? value)? matcherCallback}) {
+    T? Function(T? value) changer, {void Function(T value)? matcherCallback}) {
   var prefix = data.takeWhile((e) => !test(e)).toList();
   var suffix = data.skipWhile((e) => !test(e)).skip(1).toList();
   var match = data.firstWhereOrNull((m) => test(m));

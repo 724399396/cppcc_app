@@ -17,6 +17,7 @@ import 'package:cppcc_app/dto/proposal_request.dart';
 import 'package:cppcc_app/dto/proposal_response.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
 import 'package:cppcc_app/models/guandu_historical_clue.dart';
+import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
@@ -114,15 +115,15 @@ class ApiDataProvider {
   }
 
   /// 获取领导信箱
-  Future<MailboxResponseWrapper> getMailBoxList(
+  Future<List<MailboxResponse>> getMailBoxList(
       int pageNo, int pageSize, String mailboxType) {
-    return _dio.get('/app/mailbox/list', queryParameters: {
+    return _dio.post('/app/mailbox/appGetList', data: {
       'pageNo': pageNo,
       'pageSize': pageSize,
-      "type": mailboxType
+      "mailboxType": int.tryParse(mailboxType)
     }).then((value) {
-      return MailboxResponseWrapper.fromJson(
-          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+      return MailboxResponse.fromJsonList(
+          BaseResponse.fromJson(value.data).result as List<dynamic>);
     });
   }
 
@@ -465,5 +466,14 @@ class ApiDataProvider {
     return _dio
         .post('/app/discussNetworkMsg/add', data: request.toJson())
         .then((value) => BaseResponse.fromJson(value.data).result);
+  }
+
+  Future<MailboxResponse> getMailDetail(String id) {
+    return _dio.get('/app/mailbox/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return MailboxResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 }

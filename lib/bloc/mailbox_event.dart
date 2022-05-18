@@ -41,3 +41,9 @@ class AddMailbox extends MailboxEvent {
   @override
   List<Object> get props => [type, title, content, userName, phone];
 }
+
+class GoMailDetail extends MailboxEvent {
+  final String id;
+
+  const GoMailDetail(this.id);
+}

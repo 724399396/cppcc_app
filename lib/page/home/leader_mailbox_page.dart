@@ -51,7 +51,7 @@ class _LeaderMailboxPageState extends State<LeaderMailboxPage>
       },
       child: Scaffold(
         appBar: AppBar(
-          title: const Text( "领导信箱"),
+          title: const Text("领导信箱"),
           bottom: PreferredSize(
             preferredSize: const Size.fromHeight(48),
             child: Theme(
@@ -111,50 +111,45 @@ class MailboxContentPage extends StatelessWidget {
     final EasyRefreshController _easyRefreshController =
         EasyRefreshController();
     BlocProvider.of<MailboxBloc>(context).add(MailboxFirstFetch(type));
-    return Card(
-        color: const Color(0xffffffff),
-        child: BlocConsumer<MailboxBloc, MailboxState>(
-          buildWhen: (previous, current) =>
-              previous.data != current.data ||
-              previous.status != current.status,
-          listenWhen: (previous, current) =>
-              previous.data != current.data ||
-              previous.status != current.status,
-          listener: (previous, current) {
-            switch (current.status) {
-              case ListDataFetchStatus.normal:
-                _easyRefreshController.finishRefresh(success: true);
-                _easyRefreshController.finishLoad(success: true);
-                break;
-              case ListDataFetchStatus.refresh:
-                break;
-              case ListDataFetchStatus.loadMore:
-                break;
-              case ListDataFetchStatus.failure:
-                _easyRefreshController.finishRefresh(success: false);
-                _easyRefreshController.finishLoad(success: false);
-                break;
-            }
+    return BlocConsumer<MailboxBloc, MailboxState>(
+      buildWhen: (previous, current) =>
+          previous.data != current.data || previous.status != current.status,
+      listenWhen: (previous, current) =>
+          previous.data != current.data || previous.status != current.status,
+      listener: (previous, current) {
+        switch (current.status) {
+          case ListDataFetchStatus.normal:
+            _easyRefreshController.finishRefresh(success: true);
+            _easyRefreshController.finishLoad(success: true);
+            break;
+          case ListDataFetchStatus.refresh:
+            break;
+          case ListDataFetchStatus.loadMore:
+            break;
+          case ListDataFetchStatus.failure:
+            _easyRefreshController.finishRefresh(success: false);
+            _easyRefreshController.finishLoad(success: false);
+            break;
+        }
+      },
+      builder: (context, state) {
+        var data = state.data[type];
+        return EasyRefresh.custom(
+          controller: _easyRefreshController,
+          enableControlFinishRefresh: true,
+          enableControlFinishLoad: true,
+          header: easyRefreshHeader,
+          footer: easyRefreshFooter,
+          onLoad: () async {
+            BlocProvider.of<MailboxBloc>(context).add(MailboxLoadMore(type));
           },
-          builder: (context, state) {
-            var data = state.data[type];
-            return EasyRefresh.custom(
-              controller: _easyRefreshController,
-              enableControlFinishRefresh: true,
-              enableControlFinishLoad: true,
-              header: easyRefreshHeader,
-              footer: easyRefreshFooter,
-              onLoad: () async {
-                BlocProvider.of<MailboxBloc>(context)
-                    .add(MailboxLoadMore(type));
-              },
-              onRefresh: () async {
-                BlocProvider.of<MailboxBloc>(context).add(MailboxRefresh(type));
-              },
-              emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
-              slivers: data?.map((p) => MailboxListItem(p)).toList() ?? [],
-            );
+          onRefresh: () async {
+            BlocProvider.of<MailboxBloc>(context).add(MailboxRefresh(type));
           },
-        ));
+          emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
+          slivers: data?.map((p) => MailboxListItem(p)).toList() ?? [],
+        );
+      },
+    );
   }
 }

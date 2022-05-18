@@ -49,6 +49,28 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
       });
     });
 
+    on<GoMailDetail>((event, emit) async {
+      Mail? currentMail = await _mailboxRepository.getMailDetail(event.id);
+      Map<String, List<Mail>> newData = Map.from(state.data);
+      bool found = false;
+      for (var key in newData.keys) {
+        newData[key] = updateWithGenerateNewList<Mail>(
+          newData[key] ?? [],
+          (e) => e.id == event.id,
+          (e) => e?.copyWith(read: true),
+          matcherCallback: (e) {
+            if (!e.read) {
+              found = true;
+            }
+          },
+        );
+      }
+      emit(state.copyWith(
+          data: newData,
+          unreadCount: found ? state.unreadCount - 1 : state.unreadCount,
+          currentMail: currentMail.copyWith(read: true)));
+    });
+
     //添加领导信箱
     on<AddMailbox>((event, emit) async {
       emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));

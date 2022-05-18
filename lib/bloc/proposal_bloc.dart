@@ -79,7 +79,9 @@ class ProposalBloc extends Bloc<ProposalEvent, ProposalState> {
             (item) =>
                 item?.copyWith(read: true, replyFiles: proposal.replyFiles),
             matcherCallback: (e) {
-          found = true;
+          if (!e.read) {
+            found = true;
+          }
           currentProposal = currentProposal == null
               ? proposal.copyWith(read: true)
               : currentProposal!

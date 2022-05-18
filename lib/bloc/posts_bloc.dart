@@ -86,7 +86,9 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
               hits: (item.hits ?? 0) + 1,
               userReadRecords: post.userReadRecords),
           matcherCallback: (e) {
-            unreadCount[key.type] = (unreadCount[key.type] ?? 1) - 1;
+            if (!e.read) {
+              unreadCount[key.type] = (unreadCount[key.type] ?? 1) - 1;
+            }
           },
         );
       }

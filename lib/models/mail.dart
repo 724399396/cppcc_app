@@ -13,6 +13,9 @@ class Mail extends Equatable {
   final String createBy;
   final String createTime;
   final bool read;
+  final String handleWorkunit;
+  final String replyMessage;
+  final DateTime? handleTime;
   const Mail({
     required this.id,
     required this.title,
@@ -26,6 +29,9 @@ class Mail extends Equatable {
     required this.createBy,
     required this.createTime,
     required this.read,
+    required this.handleWorkunit,
+    required this.replyMessage,
+    required this.handleTime,
   });
 
   Mail copyWith({
@@ -41,6 +47,9 @@ class Mail extends Equatable {
     String? createBy,
     String? createTime,
     bool? read,
+    String? handleWorkunit,
+    String? replyMessage,
+    DateTime? handleTime,
   }) {
     return Mail(
       id: id ?? this.id,
@@ -55,12 +64,15 @@ class Mail extends Equatable {
       createBy: createBy ?? this.createBy,
       createTime: createTime ?? this.createTime,
       read: read ?? this.read,
+      handleWorkunit: handleWorkunit ?? this.handleWorkunit,
+      replyMessage: replyMessage ?? this.replyMessage,
+      handleTime: handleTime ?? this.handleTime,
     );
   }
 
   @override
   String toString() {
-    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userRealname: $userRealname, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read)';
+    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userRealname: $userRealname, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read, handleWorkunit: $handleWorkunit, replyMessage: $replyMessage, handleTime: $handleTime)';
   }
 
   @override
@@ -78,6 +90,9 @@ class Mail extends Equatable {
       createBy,
       createTime,
       read,
+      handleWorkunit,
+      replyMessage,
+      handleTime ?? '',
     ];
   }
 }

@@ -3,21 +3,6 @@ import 'package:json_annotation/json_annotation.dart';
 part 'mailbox_response.g.dart';
 
 @JsonSerializable()
-class MailboxResponseWrapper {
-  final List<MailboxResponse> records;
-  late int total;
-  late int size;
-  late int current;
-  late int pages;
-
-  MailboxResponseWrapper(this.records);
-
-  factory MailboxResponseWrapper.fromJson(Map<String, dynamic> json) =>
-      _$MailboxResponseWrapperFromJson(json);
-  Map<String, dynamic> toJson() => _$MailboxResponseWrapperToJson(this);
-}
-
-@JsonSerializable()
 class MailboxResponse {
   final String id;
   final String title;
@@ -33,6 +18,10 @@ class MailboxResponse {
   final String createBy;
   final String createTime;
   final bool? read;
+  @JsonKey(name: 'handleWorkutil')
+  final String? handleWorkunit;
+  final String? replyMessage;
+  final String? handleTime;
 
   MailboxResponse(
     this.id,
@@ -47,9 +36,14 @@ class MailboxResponse {
     this.createBy,
     this.createTime,
     this.read,
+    this.handleWorkunit,
+    this.replyMessage,
+    this.handleTime,
   );
 
   factory MailboxResponse.fromJson(Map<String, dynamic> json) =>
       _$MailboxResponseFromJson(json);
   Map<String, dynamic> toJson() => _$MailboxResponseToJson(this);
+  static List<MailboxResponse> fromJsonList(List<dynamic> json) =>
+      json.map((e) => MailboxResponse.fromJson(e)).toList();
 }

@@ -91,7 +91,9 @@ class DiscussNetworkBloc
           (e) => e.id == event.discussNetwork.id,
           (e) => e?.copyWith(read: true),
           matcherCallback: (e) {
-            found = true;
+            if (!e.read) {
+              found = true;
+            }
           },
         );
       }

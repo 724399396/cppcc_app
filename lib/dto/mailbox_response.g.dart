@@ -6,28 +6,6 @@ part of 'mailbox_response.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-MailboxResponseWrapper _$MailboxResponseWrapperFromJson(
-        Map<String, dynamic> json) =>
-    MailboxResponseWrapper(
-      (json['records'] as List<dynamic>)
-          .map((e) => MailboxResponse.fromJson(e as Map<String, dynamic>))
-          .toList(),
-    )
-      ..total = json['total'] as int
-      ..size = json['size'] as int
-      ..current = json['current'] as int
-      ..pages = json['pages'] as int;
-
-Map<String, dynamic> _$MailboxResponseWrapperToJson(
-        MailboxResponseWrapper instance) =>
-    <String, dynamic>{
-      'records': instance.records,
-      'total': instance.total,
-      'size': instance.size,
-      'current': instance.current,
-      'pages': instance.pages,
-    };
-
 MailboxResponse _$MailboxResponseFromJson(Map<String, dynamic> json) =>
     MailboxResponse(
       json['id'] as String,
@@ -42,6 +20,9 @@ MailboxResponse _$MailboxResponseFromJson(Map<String, dynamic> json) =>
       json['createBy'] as String,
       json['createTime'] as String,
       json['read'] as bool?,
+      json['handleWorkutil'] as String?,
+      json['replyMessage'] as String?,
+      json['handleTime'] as String?,
     );
 
 Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
@@ -58,4 +39,7 @@ Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
       'createBy': instance.createBy,
       'createTime': instance.createTime,
       'read': instance.read,
+      'handleWorkutil': instance.handleWorkunit,
+      'replyMessage': instance.replyMessage,
+      'handleTime': instance.handleTime,
     };

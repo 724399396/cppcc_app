@@ -6,12 +6,14 @@ class MailboxState extends Equatable {
   final Map<String, List<Mail>> data;
   final Map<String, int> currentPage;
   final FormStatus? submitStatus;
+  final Mail? currentMail;
   const MailboxState({
     this.unreadCount = 0,
     this.status = ListDataFetchStatus.normal,
     this.data = const {},
     this.currentPage = const {},
     this.submitStatus,
+    this.currentMail,
   });
 
   MailboxState copyWith({
@@ -20,6 +22,7 @@ class MailboxState extends Equatable {
     Map<String, List<Mail>>? data,
     Map<String, int>? currentPage,
     FormStatus? submitStatus,
+    Mail? currentMail,
   }) {
     return MailboxState(
       unreadCount: unreadCount ?? this.unreadCount,
@@ -27,12 +30,13 @@ class MailboxState extends Equatable {
       data: data ?? this.data,
       currentPage: currentPage ?? this.currentPage,
       submitStatus: submitStatus ?? this.submitStatus,
+      currentMail: currentMail ?? this.currentMail,
     );
   }
 
   @override
   String toString() {
-    return 'MailboxState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage, submitStatus: $submitStatus)';
+    return 'MailboxState(unreadCount: $unreadCount, status: $status, data: $data, currentPage: $currentPage, submitStatus: $submitStatus, currentMail: $currentMail)';
   }
 
   @override
@@ -43,6 +47,7 @@ class MailboxState extends Equatable {
       data,
       currentPage,
       submitStatus ?? '',
+      currentMail ?? '',
     ];
   }
 }

@@ -8,7 +8,6 @@ import 'package:cppcc_app/widget/easy_refresh.dart';
 import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/posts_item.dart';
-import 'package:cppcc_app/widget/posts_list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_easyrefresh/easy_refresh.dart';

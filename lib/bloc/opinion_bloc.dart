@@ -67,7 +67,9 @@ class OpinionBloc extends Bloc<OpinionEvent, OpinionState> {
             newData[key] ?? [],
             (item) => item.id == event.opinion.id,
             (item) => item?.copyWith(read: true), matcherCallback: (e) {
-          found = true;
+          if (!e.read) {
+            found = true;
+          }
         });
       }
       emit(state.copyWith(

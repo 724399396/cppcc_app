@@ -244,6 +244,7 @@ class JoinUsersPage extends StatelessWidget {
       color: Colors.white,
       child: GridView.count(
         crossAxisCount: 4,
+        childAspectRatio: 2,
         children: List.generate(_meeting.userRecords.length, (index) {
           var us = _meeting.userRecords[index];
           return SizedBox(

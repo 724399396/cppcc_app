@@ -1,3 +1,4 @@
+import 'package:cppcc_app/dto/discuss_network_request.dart';
 import 'package:cppcc_app/models/discuss_network.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
 
@@ -46,6 +47,15 @@ class DiscussNetworkRepository {
                           ))
                       .toList() ??
                   [],
+              discussFiles: e.discussFiles
+                      ?.map((e) => DiscussFile(
+                          id: e.id,
+                          title: e.title,
+                          content: e.content,
+                          createTime: e.createTime != null ? DateTime.parse(e.createTime!) : DateTime.now(),
+                          authorRealname: e.authorRealname ?? ''))
+                      .toList() ??
+                  [],
               read: e.read ?? true,
               thumbUpCount: e.thumbUpCount ?? 0,
               thumbUpStatus: e.thumbUpStatus ?? false,
@@ -60,5 +70,9 @@ class DiscussNetworkRepository {
 
   Future userLike(String id, int type) {
     return _apiDataProvider.userLikeDiscussNetwork(id, type);
+  }
+
+  Future sendMsg(DiscussMessageSendRequest request) {
+    return _apiDataProvider.dicusssNetworkMsgSend(request);
   }
 }

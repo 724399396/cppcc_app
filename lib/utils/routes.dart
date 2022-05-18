@@ -41,4 +41,6 @@ class Routes {
   static const proposalReplyListPage = '/proposalReplyListPage';
   static const replayDetailPage = '/replayDetailPage';
   static const fileAnnmentDetailsPage = '/fileAnnmentDetailsPage';
+  static const discussNetworkFilePage = '/discussNetworkFilePage';
+  static const dicussFileDetailsPage = '/dicussFileDetailsPage';
 }

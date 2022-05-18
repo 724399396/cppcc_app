@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
+import 'package:cppcc_app/dto/discuss_network_request.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/discuss_network.dart';
 import 'package:cppcc_app/repository/discuss_network_repository.dart';
@@ -83,6 +84,18 @@ class DiscussNetworkBloc
       emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
       try {
         await _discussNetworkRepository.userLike(event.id, event.type);
+        emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
+        event.successCallback();
+      } catch (err) {
+        debugPrint('discuss network api error: $err');
+        emit(state.copyWith(submitStatus: FormStatus.submissionFailure));
+      }
+    });
+
+    on<DicusssNetworkMsgSend>((event, emit) async {
+      emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
+      try {
+        await _discussNetworkRepository.sendMsg(event.request);
         emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
         event.successCallback();
       } catch (err) {

@@ -1,7 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
+import 'package:cppcc_app/bloc/user_bloc.dart';
+import 'package:cppcc_app/dto/discuss_network_request.dart';
 import 'package:cppcc_app/models/discuss_network.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/routes.dart';
+import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -19,9 +23,11 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
         appBar: AppBar(
           title: const Text("详情"),
         ),
+        resizeToAvoidBottomInset: false,
         body: BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
           builder: (context, state) {
             return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Container(
                   padding:
@@ -63,6 +69,28 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
                                   ..addAll(["bird", "flutter"]),
                               )
                             : Container(),
+                      ),
+                      const SizedBox(height: 8),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          Navigator.of(context).pushNamed(
+                              Routes.discussNetworkFilePage,
+                              arguments: bean);
+                        },
+                        child: Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(color: const Color(0xff3a6cea)),
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 4, horizontal: 8),
+                          child: const Text(
+                            '文件资料',
+                            style: TextStyle(
+                                fontSize: 16, color: Color(0xff3a6cea)),
+                          ),
+                        ),
                       )
                     ],
                   ),
@@ -79,23 +107,27 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
                       SizedBox(
                         height: 100,
                         child: GridView.count(
+                          childAspectRatio: 2,
                           crossAxisCount: 4,
                           children:
                               List.generate(bean.userRecords.length, (index) {
                             var us = bean.userRecords[index];
-                            return SizedBox(
-                              height: 24,
-                              child: Row(children: [
-                                Container(
-                                  padding:
-                                      const EdgeInsets.symmetric(horizontal: 6),
-                                  child: Image.asset(
-                                    'assets/icons/ic_normal.png',
-                                    width: 28,
+                            return Container(
+                              constraints: const BoxConstraints(maxHeight: 34),
+                              child: Row(
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 6),
+                                    child: Image.asset(
+                                      'assets/icons/ic_normal.png',
+                                      width: 28,
+                                      height: 28,
+                                    ),
                                   ),
-                                ),
-                                Text(us.userRealname),
-                              ]),
+                                  Text(us.userRealname),
+                                ],
+                              ),
                             );
                           }),
                         ),
@@ -113,11 +145,15 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         const Text("观点："),
+                        const SizedBox(height: 4),
                         Expanded(
                           child: ListView(
                             children: bean.discussMessages.map((us) {
-                              return SizedBox(
-                                height: 96,
+                              return Container(
+                                padding:
+                                    const EdgeInsets.symmetric(vertical: 4),
+                                constraints:
+                                    const BoxConstraints(minHeight: 96),
                                 child: Row(
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
@@ -211,6 +247,7 @@ class ChatInput extends StatelessWidget {
   const ChatInput(this.bean, {Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    var textController = TextEditingController();
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Row(
@@ -219,8 +256,20 @@ class ChatInput extends StatelessWidget {
             child: Container(
               padding: const EdgeInsets.symmetric(vertical: 8),
               child: TextField(
+                  controller: textController,
                   onSubmitted: (value) {
-                    // TODO
+                    BlocProvider.of<DiscussNetworkBloc>(context).add(
+                        DicusssNetworkMsgSend(
+                            DiscussMessageSendRequest(
+                                discussNetworkId: bean.id,
+                                userId: BlocProvider.of<UserBloc>(context)
+                                    .state
+                                    .userInfo!
+                                    .userId,
+                                message: value), () {
+                      showToast('发表成功');
+                      textController.clear();
+                    }));
                   },
                   decoration: const InputDecoration(
                       fillColor: Colors.white,

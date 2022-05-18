@@ -1,6 +1,8 @@
 import 'package:cppcc_app/page/contacts/contact_detail.dart';
 import 'package:cppcc_app/page/contacts/send_business_card_page.dart';
+import 'package:cppcc_app/page/discuss_file_detail_page.dart';
 import 'package:cppcc_app/page/file_annment_details_page.dart';
+import 'package:cppcc_app/page/home/discuss_network_file_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_details_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_clue_list_page.dart';
 import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
@@ -100,6 +102,8 @@ final routesDef = {
   Routes.proposalReplyListPage: (context) => const ProposalReplyListPage(),
   Routes.replayDetailPage: (context) => const ReplyDetailsPage(),
   Routes.fileAnnmentDetailsPage: (context) => const FileAnnmentDetailsPage(),
+  Routes.discussNetworkFilePage: (context) => const DiscussNetworkFilePage(),
+  Routes.dicussFileDetailsPage: (context) => const DiscussFileDetailsPage(),
 };
 
 class CppccApp extends StatelessWidget {

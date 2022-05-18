@@ -27,6 +27,7 @@ class DiscussNetworkResponse {
   @JsonKey(name: 'partInUsers')
   final List<PartUsersResponse>? users;
   final List<DiscussMessagesResponse>? discussMessages;
+  final List<DicusssFileResponse>? discussFiles;
 
   DiscussNetworkResponse(
       this.id,
@@ -48,7 +49,8 @@ class DiscussNetworkResponse {
       this.read,
       this.thumbUpCount,
       this.thumbUpStatus,
-      this.commentCount);
+      this.commentCount,
+      this.discussFiles);
 
   factory DiscussNetworkResponse.fromJson(Map<String, dynamic> json) =>
       _$DiscussNetworkResponseFromJson(json);
@@ -119,4 +121,21 @@ class PartUsersResponse {
   factory PartUsersResponse.fromJson(Map<String, dynamic> json) =>
       _$PartUsersResponseFromJson(json);
   Map<String, dynamic> toJson() => _$PartUsersResponseToJson(this);
+}
+
+@JsonSerializable()
+class DicusssFileResponse {
+  final String id;
+  final String title;
+  final String content;
+  final String? createTime;
+  @JsonKey(name: 'author_dictText')
+  final String? authorRealname;
+
+  DicusssFileResponse(
+      this.id, this.title, this.content, this.createTime, this.authorRealname);
+
+  factory DicusssFileResponse.fromJson(Map<String, dynamic> json) =>
+      _$DicusssFileResponseFromJson(json);
+  Map<String, dynamic> toJson() => _$DicusssFileResponseToJson(this);
 }

@@ -1,14 +1,15 @@
-import 'package:cppcc_app/models/proposal.dart';
+import 'package:cppcc_app/models/discuss_network.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
 import 'package:intl/intl.dart';
 
-class ReplyDetailsPage extends StatelessWidget {
-  const ReplyDetailsPage({Key? key}) : super(key: key);
+class DiscussFileDetailsPage extends StatelessWidget {
+  const DiscussFileDetailsPage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    ReplyFile _bean = ModalRoute.of(context)?.settings.arguments as ReplyFile;
+    DiscussFile _bean =
+        ModalRoute.of(context)?.settings.arguments as DiscussFile;
     return Scaffold(
         appBar: AppBar(
           title: const Text("详情"),

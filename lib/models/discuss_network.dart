@@ -74,6 +74,53 @@ class DiscussMessage extends Equatable {
   }
 }
 
+class DiscussFile extends Equatable {
+  final String id;
+  final String title;
+  final String content;
+  final DateTime createTime;
+  final String authorRealname;
+  const DiscussFile({
+    required this.id,
+    required this.title,
+    required this.content,
+    required this.createTime,
+    required this.authorRealname,
+  });
+
+  DiscussFile copyWith({
+    String? id,
+    String? title,
+    String? content,
+    DateTime? createTime,
+    String? authorRealname,
+  }) {
+    return DiscussFile(
+      id: id ?? this.id,
+      title: title ?? this.title,
+      content: content ?? this.content,
+      createTime: createTime ?? this.createTime,
+      authorRealname: authorRealname ?? this.authorRealname,
+    );
+  }
+
+  @override
+  String toString() {
+    return 'DiscussFile(id: $id, title: $title, content: $content, createTime: $createTime, authorRealname: $authorRealname)';
+  }
+
+  @override
+  List<Object> get props {
+    return [
+      id,
+      title,
+      content,
+      createTime,
+      authorRealname,
+    ];
+  }
+}
+
 class DiscussNetwork extends Equatable {
   final String id;
   final String title;
@@ -91,6 +138,7 @@ class DiscussNetwork extends Equatable {
   final String? cover;
   final List<PartUser> userRecords;
   final List<DiscussMessage> discussMessages;
+  final List<DiscussFile> discussFiles;
   final bool read;
   final int thumbUpCount;
   final bool thumbUpStatus;
@@ -112,6 +160,7 @@ class DiscussNetwork extends Equatable {
     required this.cover,
     required this.userRecords,
     required this.discussMessages,
+    required this.discussFiles,
     required this.read,
     required this.thumbUpCount,
     required this.thumbUpStatus,
@@ -135,6 +184,7 @@ class DiscussNetwork extends Equatable {
     String? cover,
     List<PartUser>? userRecords,
     List<DiscussMessage>? discussMessages,
+    List<DiscussFile>? discussFiles,
     bool? read,
     int? thumbUpCount,
     bool? thumbUpStatus,
@@ -157,6 +207,7 @@ class DiscussNetwork extends Equatable {
       cover: cover ?? this.cover,
       userRecords: userRecords ?? this.userRecords,
       discussMessages: discussMessages ?? this.discussMessages,
+      discussFiles: discussFiles ?? this.discussFiles,
       read: read ?? this.read,
       thumbUpCount: thumbUpCount ?? this.thumbUpCount,
       thumbUpStatus: thumbUpStatus ?? this.thumbUpStatus,
@@ -166,7 +217,7 @@ class DiscussNetwork extends Equatable {
 
   @override
   String toString() {
-    return 'DiscussNetwork(id: $id, title: $title, description: $description, discussMsgs: $discussMsgs, status: $status, statusDictText: $statusDictText, praiseCount: $praiseCount, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, read: $read, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, commentCount: $commentCount)';
+    return 'DiscussNetwork(id: $id, title: $title, description: $description, discussMsgs: $discussMsgs, status: $status, statusDictText: $statusDictText, praiseCount: $praiseCount, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, discussFiles: $discussFiles, read: $read, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, commentCount: $commentCount)';
   }
 
   @override
@@ -188,6 +239,7 @@ class DiscussNetwork extends Equatable {
       cover ?? '',
       userRecords,
       discussMessages,
+      discussFiles,
       read,
       thumbUpCount,
       thumbUpStatus,

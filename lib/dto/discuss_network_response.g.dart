@@ -34,6 +34,9 @@ DiscussNetworkResponse _$DiscussNetworkResponseFromJson(
       json['thumbUpCount'] as int?,
       json['thumbUpStatus'] as bool?,
       json['commentCount'] as int?,
+      (json['discussFiles'] as List<dynamic>?)
+          ?.map((e) => DicusssFileResponse.fromJson(e as Map<String, dynamic>))
+          .toList(),
     );
 
 Map<String, dynamic> _$DiscussNetworkResponseToJson(
@@ -59,6 +62,7 @@ Map<String, dynamic> _$DiscussNetworkResponseToJson(
       'commentCount': instance.commentCount,
       'partInUsers': instance.users,
       'discussMessages': instance.discussMessages,
+      'discussFiles': instance.discussFiles,
     };
 
 DiscussMessagesResponse _$DiscussMessagesResponseFromJson(
@@ -119,4 +123,23 @@ Map<String, dynamic> _$PartUsersResponseToJson(PartUsersResponse instance) =>
       'telephone': instance.telephone,
       'updateBy': instance.updateBy,
       'username': instance.username,
+    };
+
+DicusssFileResponse _$DicusssFileResponseFromJson(Map<String, dynamic> json) =>
+    DicusssFileResponse(
+      json['id'] as String,
+      json['title'] as String,
+      json['content'] as String,
+      json['createTime'] as String?,
+      json['author_dictText'] as String?,
+    );
+
+Map<String, dynamic> _$DicusssFileResponseToJson(
+        DicusssFileResponse instance) =>
+    <String, dynamic>{
+      'id': instance.id,
+      'title': instance.title,
+      'content': instance.content,
+      'createTime': instance.createTime,
+      'author_dictText': instance.authorRealname,
     };

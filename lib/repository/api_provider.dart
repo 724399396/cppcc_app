@@ -1,5 +1,6 @@
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/dict_response.dart';
+import 'package:cppcc_app/dto/discuss_network_request.dart';
 import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/file_response.dart';
 import 'package:cppcc_app/dto/historical_clue_response.dart';
@@ -458,5 +459,11 @@ class ApiDataProvider {
       'sourceId': id,
       'type': type,
     }).then((value) => BaseResponse.fromJson(value.data).result);
+  }
+
+  Future dicusssNetworkMsgSend(DiscussMessageSendRequest request) {
+    return _dio
+        .post('/app/discussNetworkMsg/add', data: request.toJson())
+        .then((value) => BaseResponse.fromJson(value.data).result);
   }
 }

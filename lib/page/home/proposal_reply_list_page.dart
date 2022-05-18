@@ -84,7 +84,7 @@ class ReplyItem extends StatelessWidget {
             children: [
               const SizedBox(width: 8),
               Text(
-                _bean.authorId,
+                _bean.authorRealname,
                 style: Theme.of(context)
                     .textTheme
                     .bodySmall

@@ -3,6 +3,7 @@ import 'package:cppcc_app/models/discuss_network.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:flutter/material.dart';
 import 'package:cppcc_app/utils/routes.dart';
+import 'package:intl/intl.dart';
 
 class DiscussNetworkItem extends StatelessWidget {
   final DiscussNetwork _bean;
@@ -10,7 +11,8 @@ class DiscussNetworkItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var statusColor = _bean.status == 2 ? const Color(0xff3a6cea) :AppColors.greyTextColor ;
+    var statusColor =
+        _bean.status == 2 ? const Color(0xff3a6cea) : AppColors.greyTextColor;
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
@@ -64,8 +66,7 @@ class DiscussNetworkItem extends StatelessWidget {
                       children: [
                         Container(
                           decoration: BoxDecoration(
-                            border: Border.all(
-                                color: statusColor),
+                            border: Border.all(color: statusColor),
                             borderRadius: BorderRadius.circular(8),
                           ),
                           padding: const EdgeInsets.symmetric(
@@ -77,6 +78,22 @@ class DiscussNetworkItem extends StatelessWidget {
                                 .bodySmall
                                 ?.copyWith(color: statusColor),
                           ),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          DateFormat("yyyy-MM-dd").format(DateTime.parse(_bean.createTime)),
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: AppColors.greyTextColor),
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          _bean.praiseCount.toString() + '点赞',
+                          style: Theme.of(context)
+                              .textTheme
+                              .bodySmall
+                              ?.copyWith(color: AppColors.greyTextColor),
                         ),
                       ],
                     ),

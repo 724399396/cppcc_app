@@ -40,3 +40,10 @@ class DicusssNetworkMsgLike extends DiscussNetworkEvent {
 
   const DicusssNetworkMsgLike(this.id, this.type, this.successCallback);
 }
+
+class DicusssNetworkMsgSend extends DiscussNetworkEvent {
+  final DiscussMessageSendRequest request;
+  final SuccessCallback successCallback;
+
+  const DicusssNetworkMsgSend(this.request, this.successCallback);
+}

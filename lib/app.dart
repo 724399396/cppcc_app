@@ -5,7 +5,7 @@ import 'package:cppcc_app/page/file_annment_details_page.dart';
 import 'package:cppcc_app/page/home/discuss_network_file_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_details_page.dart';
 import 'package:cppcc_app/page/home/guandu_historical_clue_list_page.dart';
-import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
+import 'package:cppcc_app/page/home/committe_study_page.dart';
 import 'package:cppcc_app/page/home/guandu_history_list_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_add_page.dart';
 import 'package:cppcc_app/page/home/leader_mailbox_details_page.dart';
@@ -78,8 +78,7 @@ final routesDef = {
       const GuanduHistoricalDetailsPage(),
   Routes.searchPage: (context) => const SearchPage(),
   Routes.scanQRCode: (context) => const ScanQRCodePage(),
-  Routes.generalTabSwitchPostsListPage: (context) =>
-      const GeneralTabSwitchListPage(),
+  Routes.committeStudyPage: (context) => const CommitteStudyPage(),
   Routes.contactDetailPage: (context) => const ContactDetailPage(),
   Routes.sendBusinessCardPage: (context) => const SendBusinessCardPage(),
   Routes.twoMeetingPage: (context) => const TwoMeetingsPage(),

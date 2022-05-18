@@ -5,7 +5,7 @@ import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
-import 'package:cppcc_app/page/home/general_tab_switch_list_page.dart';
+import 'package:cppcc_app/page/home/committe_study_page.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -195,14 +195,9 @@ class HomePage extends StatelessWidget {
                       return buildTabItem(
                           '委员学习',
                           'assets/icons/ic_weiyuanxuexi.png',
-                          Routes.generalTabSwitchPostsListPage,
+                          Routes.committeStudyPage,
                           state.unreadCount[PostType.learning] ?? 0,
-                          context,
-                          routeArguments: GeneralTabArgument(
-                            '委员学习',
-                            'learning_categories',
-                            PostType.learning,
-                          ));
+                          context);
                     },
                   ),
                   BlocBuilder<MailboxBloc, MailboxState>(
@@ -223,8 +218,6 @@ class HomePage extends StatelessWidget {
                         Routes.guanduHistoryListPage,
                         state.unreadCount[PostType.guanduHistory] ?? 0,
                         context,
-                        routeArguments: GeneralTabArgument(
-                            '官渡文史', 'gd_history_dict', PostType.guanduHistory),
                       );
                     },
                   ),

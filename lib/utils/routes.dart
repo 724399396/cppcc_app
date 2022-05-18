@@ -16,7 +16,7 @@ class Routes {
   static const guanduHistoricalClueListPage = '/guanduHistoricalClueListPage';
   static const guanduHistoricalDetailsPage = '/guanduHistoricalDetailsPage';
   static const fileAnnmentPage = '/fileAnnmentPage';
-  static const generalTabSwitchPostsListPage = '/generalTabSwitchPostsListPage';
+  static const committeStudyPage = '/committeStudyPage';
   static const twoMeetingPage = '/twoMeetingPage';
   static const guanduHistoryListPage = '/guanduHistoryListPage';
   static const contactDetailPage = '/contactDetailPage';

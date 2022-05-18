@@ -140,6 +140,7 @@ Future<void> main() async {
           BlocProvider<DiscussNetworkBloc>(
             create: (BuildContext context) => DiscussNetworkBloc(
               context.read<DiscussNetworkRepository>(),
+              localDataProvider,
             )..add(DiscussNetworkInitilized()),
           ),
           BlocProvider<MeetingBloc>(

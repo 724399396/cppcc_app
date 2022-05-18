@@ -11,7 +11,6 @@ class DiscussNetworkResponse {
   final int? status;
   @JsonKey(name: 'status_dictText')
   final String? statusDictText;
-  final int? praiseCount;
   final String? beginDate;
   final String? endDate;
   final String createBy;
@@ -36,7 +35,6 @@ class DiscussNetworkResponse {
       this.discussMsgs,
       this.status,
       this.statusDictText,
-      this.praiseCount,
       this.beginDate,
       this.endDate,
       this.createBy,
@@ -63,16 +61,17 @@ class DiscussNetworkResponse {
 @JsonSerializable()
 class DiscussMessagesResponse {
   final String id;
-  final String? message; // "<p>测试留言</p>"
-  final String? ownerName; // "符佳羽"
-  final String? ownerAvatar; // "符佳羽"
-  final String? parentMsgId; // "0"
-  final int? praiseCount; // 0
-  final String? userId; // "1501143094266204161"
+  final String? message;
+  final String? ownerName;
+  final String? ownerAvatar;
+  final String? parentMsgId;
+  final String? userId;
   final String? createBy;
   final String? createTime;
   final String? updateBy;
   final String? updateTime;
+  final int? thumbUpCount;
+  final bool? thumbUpStatus;
 
   DiscussMessagesResponse(
     this.id,
@@ -80,12 +79,13 @@ class DiscussMessagesResponse {
     this.ownerName,
     this.ownerAvatar,
     this.parentMsgId,
-    this.praiseCount,
     this.userId,
     this.createBy,
     this.createTime,
     this.updateBy,
     this.updateTime,
+    this.thumbUpCount,
+    this.thumbUpStatus,
   );
 
   factory DiscussMessagesResponse.fromJson(Map<String, dynamic> json) =>

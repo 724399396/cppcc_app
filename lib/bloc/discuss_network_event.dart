@@ -27,10 +27,10 @@ class DiscussNetworkFirstFetch extends DiscussNetworkEvent {
   const DiscussNetworkFirstFetch(this.type);
 }
 
-class DiscussNetworkRead extends DiscussNetworkEvent {
+class GoDiscussNetworkDetail extends DiscussNetworkEvent {
   final DiscussNetwork discussNetwork;
 
-  const DiscussNetworkRead(this.discussNetwork);
+  const GoDiscussNetworkDetail(this.discussNetwork);
 }
 
 class DicusssNetworkMsgLike extends DiscussNetworkEvent {
@@ -46,4 +46,10 @@ class DicusssNetworkMsgSend extends DiscussNetworkEvent {
   final SuccessCallback successCallback;
 
   const DicusssNetworkMsgSend(this.request, this.successCallback);
+}
+
+class DiscussNetowrkChanged extends DiscussNetworkEvent {
+  final DiscussNetworkChangeResponse change;
+
+  const DiscussNetowrkChanged(this.change);
 }

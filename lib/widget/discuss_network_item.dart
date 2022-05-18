@@ -89,7 +89,7 @@ class DiscussNetworkItem extends StatelessWidget {
                         ),
                         const SizedBox(width: 8),
                         Text(
-                          _bean.praiseCount.toString() + '点赞',
+                          _bean.thumbUpCount.toString() + '点赞',
                           style: Theme.of(context)
                               .textTheme
                               .bodySmall

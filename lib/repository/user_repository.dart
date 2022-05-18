@@ -16,6 +16,7 @@ class UserRepository {
   Future<UserResponse> login(String username, String password) async {
     var response = await _apiDataProvider.login(username, password);
     await _localDataProvider.setIsLogin(true);
+    await _localDataProvider.setUserId(response.userInfo.id);
     await _localDataProvider.setToken(response.token);
 
     return response.userInfo;

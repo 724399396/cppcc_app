@@ -3,7 +3,7 @@ import 'package:equatable/equatable.dart';
 class PartUser extends Equatable {
   final String userRealname;
   const PartUser({
-    this.userRealname = '',
+    required this.userRealname,
   });
 
   PartUser copyWith({
@@ -26,7 +26,8 @@ class DiscussMessage extends Equatable {
   final String message;
   final String ownerName;
   final String? ownerAvatar;
-  final int praiseCount;
+  final int thumbUpCount;
+  final bool thumbUpStatus;
   final String createTime;
 
   const DiscussMessage({
@@ -34,7 +35,8 @@ class DiscussMessage extends Equatable {
     required this.message,
     required this.ownerName,
     required this.ownerAvatar,
-    required this.praiseCount,
+    required this.thumbUpCount,
+    required this.thumbUpStatus,
     required this.createTime,
   });
 
@@ -43,7 +45,8 @@ class DiscussMessage extends Equatable {
     String? message,
     String? ownerName,
     String? ownerAvatar,
-    int? praiseCount,
+    int? thumbUpCount,
+    bool? thumbUpStatus,
     String? createTime,
   }) {
     return DiscussMessage(
@@ -51,14 +54,15 @@ class DiscussMessage extends Equatable {
       message: message ?? this.message,
       ownerName: ownerName ?? this.ownerName,
       ownerAvatar: ownerAvatar ?? this.ownerAvatar,
-      praiseCount: praiseCount ?? this.praiseCount,
+      thumbUpCount: thumbUpCount ?? this.thumbUpCount,
+      thumbUpStatus: thumbUpStatus ?? this.thumbUpStatus,
       createTime: createTime ?? this.createTime,
     );
   }
 
   @override
   String toString() {
-    return 'DiscussMessage(id: $id, message: $message, ownerName: $ownerName, ownerAvatar: $ownerAvatar, praiseCount: $praiseCount, createTime: $createTime)';
+    return 'DiscussMessage(id: $id, message: $message, ownerName: $ownerName, ownerAvatar: $ownerAvatar, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, createTime: $createTime)';
   }
 
   @override
@@ -68,7 +72,8 @@ class DiscussMessage extends Equatable {
       message,
       ownerName,
       ownerAvatar ?? '',
-      praiseCount,
+      thumbUpCount,
+      thumbUpStatus,
       createTime,
     ];
   }
@@ -125,10 +130,8 @@ class DiscussNetwork extends Equatable {
   final String id;
   final String title;
   final String description;
-  final String discussMsgs;
   final int status;
   final String statusDictText;
-  final int praiseCount;
   final String beginDate;
   final String endDate;
   final String createBy;
@@ -147,10 +150,8 @@ class DiscussNetwork extends Equatable {
     required this.id,
     required this.title,
     required this.description,
-    required this.discussMsgs,
     required this.status,
     required this.statusDictText,
-    required this.praiseCount,
     required this.beginDate,
     required this.endDate,
     required this.createBy,
@@ -171,10 +172,8 @@ class DiscussNetwork extends Equatable {
     String? id,
     String? title,
     String? description,
-    String? discussMsgs,
     int? status,
     String? statusDictText,
-    int? praiseCount,
     String? beginDate,
     String? endDate,
     String? createBy,
@@ -194,10 +193,8 @@ class DiscussNetwork extends Equatable {
       id: id ?? this.id,
       title: title ?? this.title,
       description: description ?? this.description,
-      discussMsgs: discussMsgs ?? this.discussMsgs,
       status: status ?? this.status,
       statusDictText: statusDictText ?? this.statusDictText,
-      praiseCount: praiseCount ?? this.praiseCount,
       beginDate: beginDate ?? this.beginDate,
       endDate: endDate ?? this.endDate,
       createBy: createBy ?? this.createBy,
@@ -217,7 +214,7 @@ class DiscussNetwork extends Equatable {
 
   @override
   String toString() {
-    return 'DiscussNetwork(id: $id, title: $title, description: $description, discussMsgs: $discussMsgs, status: $status, statusDictText: $statusDictText, praiseCount: $praiseCount, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, discussFiles: $discussFiles, read: $read, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, commentCount: $commentCount)';
+    return 'DiscussNetwork(id: $id, title: $title, description: $description, status: $status, statusDictText: $statusDictText, beginDate: $beginDate, endDate: $endDate, createBy: $createBy, createTime: $createTime, updateBy: $updateBy, updateTime: $updateTime, cover: $cover, userRecords: $userRecords, discussMessages: $discussMessages, discussFiles: $discussFiles, read: $read, thumbUpCount: $thumbUpCount, thumbUpStatus: $thumbUpStatus, commentCount: $commentCount)';
   }
 
   @override
@@ -226,10 +223,8 @@ class DiscussNetwork extends Equatable {
       id,
       title,
       description,
-      discussMsgs,
       status,
       statusDictText,
-      praiseCount,
       beginDate,
       endDate,
       createBy,
@@ -270,5 +265,28 @@ extension OpinionListTypeExtension on DiscussNetworkListType {
       case DiscussNetworkListType.finished:
         return [3];
     }
+  }
+}
+
+enum DiscussNetworkChangeType {
+  newMsg,
+  discussThumsup,
+  msgThumsup,
+  newSubMsg,
+  unknown
+}
+
+DiscussNetworkChangeType getDiscussNetworkChangeTypeFromCode(int code) {
+  switch (code) {
+    case 1:
+      return DiscussNetworkChangeType.newMsg;
+    case 2:
+      return DiscussNetworkChangeType.discussThumsup;
+    case 3:
+      return DiscussNetworkChangeType.msgThumsup;
+    case 4:
+      return DiscussNetworkChangeType.newSubMsg;
+    default:
+      return DiscussNetworkChangeType.unknown;
   }
 }

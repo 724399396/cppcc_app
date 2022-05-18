@@ -15,7 +15,6 @@ DiscussNetworkResponse _$DiscussNetworkResponseFromJson(
       json['discussMsgs'] as String?,
       json['status'] as int?,
       json['status_dictText'] as String?,
-      json['praiseCount'] as int?,
       json['beginDate'] as String?,
       json['endDate'] as String?,
       json['createBy'] as String,
@@ -48,7 +47,6 @@ Map<String, dynamic> _$DiscussNetworkResponseToJson(
       'discussMsgs': instance.discussMsgs,
       'status': instance.status,
       'status_dictText': instance.statusDictText,
-      'praiseCount': instance.praiseCount,
       'beginDate': instance.beginDate,
       'endDate': instance.endDate,
       'createBy': instance.createBy,
@@ -73,12 +71,13 @@ DiscussMessagesResponse _$DiscussMessagesResponseFromJson(
       json['ownerName'] as String?,
       json['ownerAvatar'] as String?,
       json['parentMsgId'] as String?,
-      json['praiseCount'] as int?,
       json['userId'] as String?,
       json['createBy'] as String?,
       json['createTime'] as String?,
       json['updateBy'] as String?,
       json['updateTime'] as String?,
+      json['thumbUpCount'] as int?,
+      json['thumbUpStatus'] as bool?,
     );
 
 Map<String, dynamic> _$DiscussMessagesResponseToJson(
@@ -89,12 +88,13 @@ Map<String, dynamic> _$DiscussMessagesResponseToJson(
       'ownerName': instance.ownerName,
       'ownerAvatar': instance.ownerAvatar,
       'parentMsgId': instance.parentMsgId,
-      'praiseCount': instance.praiseCount,
       'userId': instance.userId,
       'createBy': instance.createBy,
       'createTime': instance.createTime,
       'updateBy': instance.updateBy,
       'updateTime': instance.updateTime,
+      'thumbUpCount': instance.thumbUpCount,
+      'thumbUpStatus': instance.thumbUpStatus,
     };
 
 PartUsersResponse _$PartUsersResponseFromJson(Map<String, dynamic> json) =>

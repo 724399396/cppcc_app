@@ -5,19 +5,23 @@ class DiscussNetworkState extends Equatable {
   final ListDataFetchStatus status;
   final Map<DiscussNetworkListType, List<DiscussNetwork>> data;
   final Map<DiscussNetworkListType, int> currentPage;
+  final DiscussNetwork? currentDiscuss;
   final FormStatus? submitStatus;
-  const DiscussNetworkState(
-      {this.unreadCount = 0,
-      this.status = ListDataFetchStatus.normal,
-      this.data = const {},
-      this.currentPage = const {},
-      this.submitStatus});
+  const DiscussNetworkState({
+    this.unreadCount = 0,
+    this.status = ListDataFetchStatus.normal,
+    this.data = const {},
+    this.currentPage = const {},
+    this.currentDiscuss,
+    this.submitStatus,
+  });
 
   DiscussNetworkState copyWith({
     int? unreadCount,
     ListDataFetchStatus? status,
     Map<DiscussNetworkListType, List<DiscussNetwork>>? data,
     Map<DiscussNetworkListType, int>? currentPage,
+    DiscussNetwork? currentDiscuss,
     FormStatus? submitStatus,
   }) {
     return DiscussNetworkState(
@@ -25,6 +29,7 @@ class DiscussNetworkState extends Equatable {
       status: status ?? this.status,
       data: data ?? this.data,
       currentPage: currentPage ?? this.currentPage,
+      currentDiscuss: currentDiscuss ?? this.currentDiscuss,
       submitStatus: submitStatus ?? this.submitStatus,
     );
   }
@@ -41,6 +46,7 @@ class DiscussNetworkState extends Equatable {
       status,
       data,
       currentPage,
+      currentDiscuss ?? '',
       submitStatus ?? '',
     ];
   }

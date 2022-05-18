@@ -101,7 +101,10 @@ class MessageContentPage extends StatelessWidget {
         }
       },
       builder: (context, state) {
-        var data = state.messages[type] ?? [];
+        // TODO
+        var data = (state.messages[type] ?? [])
+            .where((element) => !["提案办理通知", "社情民意通知"].contains(element.title))
+            .toList();
         return EasyRefresh.custom(
           controller: _easyRefreshController,
           enableControlFinishRefresh: true,

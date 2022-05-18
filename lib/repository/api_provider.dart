@@ -445,7 +445,7 @@ class ApiDataProvider {
     });
   }
 
-  Future getDiscussNetworkDetail(String id) {
+  Future<DiscussNetworkResponse> getDiscussNetworkDetail(String id) {
     return _dio.get('/app/discussNetwork/queryById/app', queryParameters: {
       'id': id,
     }).then((value) {

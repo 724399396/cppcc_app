@@ -15,10 +15,9 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final DiscussNetwork bean =
-        ModalRoute.of(context)?.settings.arguments as DiscussNetwork;
     var boldTextStyle = const TextStyle(fontWeight: FontWeight.bold);
-    BlocProvider.of<DiscussNetworkBloc>(context).add(DiscussNetworkRead(bean));
+    BlocProvider.of<DiscussNetworkBloc>(context).add(GoDiscussNetworkDetail(
+        ModalRoute.of(context)?.settings.arguments as DiscussNetwork));
     return Scaffold(
         appBar: AppBar(
           title: const Text("详情"),
@@ -26,217 +25,236 @@ class DiscussNetworkDetailsPage extends StatelessWidget {
         resizeToAvoidBottomInset: false,
         body: BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
           builder: (context, state) {
-            return Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                  color: Colors.white,
-                  child: Text(bean.title,
-                      style: const TextStyle(
-                          fontSize: 18.0, fontWeight: FontWeight.w500)),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                  color: Colors.white,
-                  child: Column(
+            final DiscussNetwork? bean = state.currentDiscuss;
+            return bean == null
+                ? Container()
+                : Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Row(
-                        children: [
-                          Text('开始时间:', style: boldTextStyle),
-                          const SizedBox(width: 4),
-                          Text(bean.beginDate, style: boldTextStyle)
-                        ],
-                      ),
-                      Row(
-                        children: [
-                          Text('结束时间:', style: boldTextStyle),
-                          const SizedBox(width: 2),
-                          Text(bean.endDate, style: boldTextStyle)
-                        ],
-                      ),
-                      const SizedBox(height: 8),
-                      Text('说明:', style: boldTextStyle),
                       Container(
-                        child: bean.description != ""
-                            ? Html(
-                                data: bean.description,
-                                tagsList: Html.tags
-                                  ..addAll(["bird", "flutter"]),
-                              )
-                            : Container(),
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 12),
+                        color: Colors.white,
+                        child: Text(bean.title,
+                            style: const TextStyle(
+                                fontSize: 18.0, fontWeight: FontWeight.w500)),
                       ),
                       const SizedBox(height: 8),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
-                          Navigator.of(context).pushNamed(
-                              Routes.discussNetworkFilePage,
-                              arguments: bean);
-                        },
-                        child: Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(color: const Color(0xff3a6cea)),
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          padding: const EdgeInsets.symmetric(
-                              vertical: 4, horizontal: 8),
-                          child: const Text(
-                            '文件资料',
-                            style: TextStyle(
-                                fontSize: 16, color: Color(0xff3a6cea)),
-                          ),
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Container(
-                  color: Colors.white,
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 18, vertical: 12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      const Text("参与人："),
-                      SizedBox(
-                        height: 100,
-                        child: GridView.count(
-                          childAspectRatio: 2,
-                          crossAxisCount: 4,
-                          children:
-                              List.generate(bean.userRecords.length, (index) {
-                            var us = bean.userRecords[index];
-                            return Container(
-                              constraints: const BoxConstraints(maxHeight: 34),
-                              child: Row(
-                                children: [
-                                  Container(
-                                    padding: const EdgeInsets.symmetric(
-                                        horizontal: 6),
-                                    child: Image.asset(
-                                      'assets/icons/ic_normal.png',
-                                      width: 28,
-                                      height: 28,
-                                    ),
-                                  ),
-                                  Text(us.userRealname),
-                                ],
+                      Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 12),
+                        color: Colors.white,
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Row(
+                              children: [
+                                Text('开始时间:', style: boldTextStyle),
+                                const SizedBox(width: 4),
+                                Text(bean.beginDate, style: boldTextStyle)
+                              ],
+                            ),
+                            Row(
+                              children: [
+                                Text('结束时间:', style: boldTextStyle),
+                                const SizedBox(width: 2),
+                                Text(bean.endDate, style: boldTextStyle)
+                              ],
+                            ),
+                            const SizedBox(height: 8),
+                            Text('说明:', style: boldTextStyle),
+                            Container(
+                              child: bean.description != ""
+                                  ? Html(
+                                      data: bean.description,
+                                      tagsList: Html.tags
+                                        ..addAll(["bird", "flutter"]),
+                                    )
+                                  : Container(),
+                            ),
+                            const SizedBox(height: 8),
+                            GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                Navigator.of(context).pushNamed(
+                                    Routes.discussNetworkFilePage,
+                                    arguments: bean);
+                              },
+                              child: Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                      color: const Color(0xff3a6cea)),
+                                  borderRadius: BorderRadius.circular(8),
+                                ),
+                                padding: const EdgeInsets.symmetric(
+                                    vertical: 4, horizontal: 8),
+                                child: const Text(
+                                  '文件资料',
+                                  style: TextStyle(
+                                      fontSize: 16, color: Color(0xff3a6cea)),
+                                ),
                               ),
-                            );
-                          }),
+                            )
+                          ],
                         ),
-                      )
-                    ],
-                  ),
-                ),
-                const SizedBox(height: 8),
-                Expanded(
-                  child: Container(
-                    color: Colors.white,
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 18, vertical: 12),
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        const Text("观点："),
-                        const SizedBox(height: 4),
-                        Expanded(
-                          child: ListView(
-                            children: bean.discussMessages.map((us) {
-                              return Container(
-                                padding:
-                                    const EdgeInsets.symmetric(vertical: 4),
-                                constraints:
-                                    const BoxConstraints(minHeight: 96),
-                                child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      CircleAvatar(
-                                        backgroundColor: Colors.white,
-                                        radius: 16,
-                                        backgroundImage: us.ownerAvatar == null
-                                            ? Image.asset(
-                                                    'assets/icons/ic_wode_selected.png')
-                                                .image
-                                            : CachedNetworkImageProvider(
-                                                us.ownerAvatar!),
-                                      ),
-                                      Expanded(
-                                        child: Column(
+                      ),
+                      const SizedBox(height: 8),
+                      Container(
+                        color: Colors.white,
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 18, vertical: 12),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            const Text("参与人："),
+                            SizedBox(
+                              height: 100,
+                              child: GridView.count(
+                                childAspectRatio: 2,
+                                crossAxisCount: 4,
+                                children: List.generate(bean.userRecords.length,
+                                    (index) {
+                                  var us = bean.userRecords[index];
+                                  return Container(
+                                    constraints:
+                                        const BoxConstraints(maxHeight: 34),
+                                    child: Row(
+                                      children: [
+                                        Container(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 6),
+                                          child: Image.asset(
+                                            'assets/icons/ic_normal.png',
+                                            width: 28,
+                                            height: 28,
+                                          ),
+                                        ),
+                                        Text(us.userRealname),
+                                      ],
+                                    ),
+                                  );
+                                }),
+                              ),
+                            )
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      Expanded(
+                        child: Container(
+                          color: Colors.white,
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 18, vertical: 12),
+                          child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              const Text("观点："),
+                              const SizedBox(height: 4),
+                              Expanded(
+                                child: ListView(
+                                  children: bean.discussMessages.map((msg) {
+                                    return Container(
+                                      padding: const EdgeInsets.symmetric(
+                                          vertical: 4),
+                                      constraints:
+                                          const BoxConstraints(minHeight: 96),
+                                      child: Row(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
-                                            Text(us.ownerName),
-                                            Container(
-                                              child: us.message != ""
-                                                  ? Html(
-                                                      data: us.message,
-                                                      tagsList: Html.tags
-                                                        ..addAll([
-                                                          "bird",
-                                                          "flutter"
-                                                        ]),
-                                                    )
-                                                  : Container(),
+                                            CircleAvatar(
+                                              backgroundColor: Colors.white,
+                                              radius: 16,
+                                              backgroundImage: msg.ownerAvatar ==
+                                                      null
+                                                  ? Image.asset(
+                                                          'assets/icons/ic_wode_selected.png')
+                                                      .image
+                                                  : CachedNetworkImageProvider(
+                                                      msg.ownerAvatar!),
                                             ),
-                                            Text(
-                                              us.createTime,
-                                              style: const TextStyle(
-                                                  color:
-                                                      AppColors.greyTextColor,
-                                                  fontSize: 12),
+                                            Expanded(
+                                              child: Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(msg.ownerName),
+                                                  Container(
+                                                    child: msg.message != ""
+                                                        ? Html(
+                                                            data: msg.message,
+                                                            tagsList: Html.tags
+                                                              ..addAll([
+                                                                "bird",
+                                                                "flutter"
+                                                              ]),
+                                                          )
+                                                        : Container(),
+                                                  ),
+                                                  Text(
+                                                    msg.createTime,
+                                                    style: const TextStyle(
+                                                        color: AppColors
+                                                            .greyTextColor,
+                                                        fontSize: 12),
+                                                  ),
+                                                ],
+                                              ),
                                             ),
-                                          ],
-                                        ),
-                                      ),
-                                      Column(
-                                        children: [
-                                          GestureDetector(
-                                            behavior: HitTestBehavior.opaque,
-                                            onTap: () {
-                                              BlocProvider.of<
-                                                          DiscussNetworkBloc>(
-                                                      context)
-                                                  .add(DicusssNetworkMsgLike(
-                                                      us.id, 2, () {}));
-                                            },
-                                            child: Row(
+                                            Column(
                                               children: [
-                                                Image.asset(
-                                                    'assets/icons/ic_dz2.png',
-                                                    width: 16),
-                                                const SizedBox(width: 4),
-                                                Text(
-                                                  us.praiseCount.toString(),
-                                                  style: const TextStyle(
-                                                      color: AppColors
-                                                          .greyTextColor),
+                                                GestureDetector(
+                                                  behavior:
+                                                      HitTestBehavior.opaque,
+                                                  onTap: () {
+                                                    if (!msg.thumbUpStatus) {
+                                                      BlocProvider.of<
+                                                                  DiscussNetworkBloc>(
+                                                              context)
+                                                          .add(
+                                                        DicusssNetworkMsgLike(
+                                                            msg.id, 2, () {
+                                                          showToast('点赞成功');
+                                                        }),
+                                                      );
+                                                    }
+                                                  },
+                                                  child: Row(
+                                                    children: [
+                                                      Image.asset(
+                                                        'assets/icons/ic_dz2.png',
+                                                        width: 16,
+                                                        color: msg.thumbUpStatus
+                                                            ? AppColors.primary
+                                                            : AppColors
+                                                                .greyTextColor,
+                                                      ),
+                                                      const SizedBox(width: 4),
+                                                      Text(
+                                                        msg.thumbUpCount
+                                                            .toString(),
+                                                        style: const TextStyle(
+                                                            color: AppColors
+                                                                .greyTextColor),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    ]),
-                              );
-                            }).toList(),
+                                            )
+                                          ]),
+                                    );
+                                  }).toList(),
+                                ),
+                              )
+                            ],
                           ),
-                        )
-                      ],
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 8),
-                ChatInput(bean),
-              ],
-            );
+                        ),
+                      ),
+                      const SizedBox(height: 8),
+                      ChatInput(bean),
+                    ],
+                  );
           },
         ));
   }
@@ -285,12 +303,22 @@ class ChatInput extends StatelessWidget {
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              BlocProvider.of<DiscussNetworkBloc>(context)
-                  .add(DicusssNetworkMsgLike(bean.id, 1, () {}));
+              if (!bean.thumbUpStatus) {
+                BlocProvider.of<DiscussNetworkBloc>(context)
+                    .add(DicusssNetworkMsgLike(bean.id, 1, () {
+                  showToast('点赞成功');
+                }));
+              }
             },
             child: Row(
               children: [
-                Image.asset('assets/icons/ic_dz.png', width: 24),
+                Image.asset(
+                  'assets/icons/ic_dz.png',
+                  width: 24,
+                  color: bean.thumbUpStatus
+                      ? AppColors.primary
+                      : AppColors.greyTextColor,
+                ),
                 const SizedBox(width: 4),
                 Text(
                   bean.thumbUpCount.toString(),

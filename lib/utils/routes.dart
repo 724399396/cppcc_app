@@ -43,4 +43,5 @@ class Routes {
   static const fileAnnmentDetailsPage = '/fileAnnmentDetailsPage';
   static const discussNetworkFilePage = '/discussNetworkFilePage';
   static const dicussFileDetailsPage = '/dicussFileDetailsPage';
+  static const businessCardMessagePage = '/businessCardMessagePage';
 }

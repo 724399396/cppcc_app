@@ -24,6 +24,7 @@ import 'package:cppcc_app/page/home/social_opinion_add_page.dart';
 import 'package:cppcc_app/page/home/social_opinions_page.dart';
 import 'package:cppcc_app/page/login_page.dart';
 import 'package:cppcc_app/page/meetings/two_meetings_page.dart';
+import 'package:cppcc_app/page/message/business_card_message_details_page.dart';
 import 'package:cppcc_app/page/message/message_details_page.dart';
 import 'package:cppcc_app/page/opinion_details_page.dart';
 import 'package:cppcc_app/page/opinion_progress_page.dart';
@@ -88,6 +89,7 @@ final routesDef = {
   Routes.settingsPage: (context) => const SettingsPage(),
   Routes.qrBusinessCardPage: (context) => const QrBusinessCardPage(),
   Routes.messageDetailsPage: (context) => const MessageDetailsPage(),
+  Routes.businessCardMessagePage: (context) => const BusinessCardMessageDetailsPage(),
   Routes.postsDetailPage: (context) => const PostsDetailPage(),
   Routes.personSettingPage: (context) => const UserSettingPage(),
   Routes.updatePhonePage: (context) => const UpdatePhonePage(),

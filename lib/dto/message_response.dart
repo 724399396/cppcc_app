@@ -26,13 +26,14 @@ class SystemMessageResponse {
 class BusinessCardMessageResponse {
   final String id;
   final String createTime;
+  final String sendUser;
   @JsonKey(name: "sendUser_dictText")
   final String sendUserDictText;
   final String message;
   final bool? read;
 
   BusinessCardMessageResponse(
-      this.id, this.createTime, this.sendUserDictText, this.message, this.read);
+      this.id, this.createTime, this.sendUserDictText, this.message, this.read, this.sendUser);
 
   factory BusinessCardMessageResponse.fromJson(Map<String, dynamic> json) =>
       _$BusinessCardMessageResponseFromJson(json);

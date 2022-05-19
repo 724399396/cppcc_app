@@ -9,6 +9,7 @@ class Message extends Equatable {
   final String sendTime;
   final bool read;
   final MessageType type;
+  final String? sendUserId;
   const Message({
     required this.id,
     required this.title,
@@ -16,6 +17,7 @@ class Message extends Equatable {
     required this.sendTime,
     required this.read,
     required this.type,
+    required this.sendUserId,
   });
 
   Message copyWith({
@@ -25,6 +27,7 @@ class Message extends Equatable {
     String? sendTime,
     bool? read,
     MessageType? type,
+    String? sendUserId,
   }) {
     return Message(
       id: id ?? this.id,
@@ -33,12 +36,13 @@ class Message extends Equatable {
       sendTime: sendTime ?? this.sendTime,
       read: read ?? this.read,
       type: type ?? this.type,
+      sendUserId: sendUserId ?? this.sendUserId,
     );
   }
 
   @override
   String toString() {
-    return 'Message(id: $id, title: $title, msgContent: $msgContent, sendTime: $sendTime, read: $read, type: $type)';
+    return 'Message(id: $id, title: $title, msgContent: $msgContent, sendTime: $sendTime, read: $read, type: $type, sendUserId: $sendUserId)';
   }
 
   @override
@@ -50,6 +54,7 @@ class Message extends Equatable {
       sendTime,
       read,
       type,
+      sendUserId ?? '',
     ];
   }
 }

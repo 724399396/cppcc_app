@@ -13,13 +13,13 @@ class MessageRepository {
         await _apiDataProvider.getSystemMessageList(pageNo, pageSize, type);
     return response
         .map((e) => Message(
-              id: e.id,
-              title: e.titile,
-              msgContent: e.msgContent ?? '',
-              sendTime: e.sendTime ?? '',
-              read: e.read ?? false,
-              type: convertToMessageTypeFromSystemCode(e.msgCategory),
-            ))
+            id: e.id,
+            title: e.titile,
+            msgContent: e.msgContent ?? '',
+            sendTime: e.sendTime ?? '',
+            read: e.read ?? false,
+            type: convertToMessageTypeFromSystemCode(e.msgCategory),
+            sendUserId: null))
         .toList();
   }
 
@@ -33,6 +33,7 @@ class MessageRepository {
             msgContent: e.message,
             sendTime: e.createTime,
             read: e.read ?? false,
+            sendUserId: e.sendUser,
             type: MessageType.businessCard))
         .toList();
   }

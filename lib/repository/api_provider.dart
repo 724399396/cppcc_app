@@ -348,8 +348,12 @@ class ApiDataProvider {
   }
 
   Future getBusinessCardDetail(String id) {
-    // TODO
-    return Future.value(null);
+    return _dio.get('/app/buscardApply/queryById/app', queryParameters: {
+      'id': id,
+    }).then((value) {
+      return BusinessCardMessageResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 
   Future<BaseResponse> get(String uri) {

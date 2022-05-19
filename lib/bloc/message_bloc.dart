@@ -134,6 +134,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
                       msgContent: messageData?['message'] ?? '',
                       sendTime: nowForamtedStr,
                       read: false,
+                      sendUserId: messageData?['sendUser'],
                       type: MessageType.businessCard)
                   : Message(
                       id: messageData?['id'],
@@ -142,6 +143,7 @@ class MessageBloc extends Bloc<MessageEvent, MessageState> {
                       sendTime: nowForamtedStr,
                       read: false,
                       type: messageType,
+                      sendUserId: null,
                     )
             ];
       }

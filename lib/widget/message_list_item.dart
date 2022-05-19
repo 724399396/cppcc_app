@@ -1,3 +1,4 @@
+import 'package:cppcc_app/dto/message_type.dart';
 import 'package:cppcc_app/models/message.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -15,8 +16,13 @@ class MessageListItem extends StatelessWidget {
     return SliverToBoxAdapter(
       child: GestureDetector(
         onTap: () {
-          Navigator.of(context)
-              .pushNamed(Routes.messageDetailsPage, arguments: _bean);
+          if (_bean.type == MessageType.businessCard) {
+            Navigator.of(context)
+                .pushNamed(Routes.businessCardMessagePage, arguments: _bean);
+          } else {
+            Navigator.of(context)
+                .pushNamed(Routes.messageDetailsPage, arguments: _bean);
+          }
         },
         child: Container(
           height: 120,

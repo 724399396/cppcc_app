@@ -36,6 +36,7 @@ BusinessCardMessageResponse _$BusinessCardMessageResponseFromJson(
       json['sendUser_dictText'] as String,
       json['message'] as String,
       json['read'] as bool?,
+      json['sendUser'] as String,
     );
 
 Map<String, dynamic> _$BusinessCardMessageResponseToJson(
@@ -43,6 +44,7 @@ Map<String, dynamic> _$BusinessCardMessageResponseToJson(
     <String, dynamic>{
       'id': instance.id,
       'createTime': instance.createTime,
+      'sendUser': instance.sendUser,
       'sendUser_dictText': instance.sendUserDictText,
       'message': instance.message,
       'read': instance.read,

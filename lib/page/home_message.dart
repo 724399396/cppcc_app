@@ -35,40 +35,67 @@ class _HomeMessageState extends State<HomeMessage>
   @override
   Widget build(BuildContext context) {
     super.build(context);
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text("消息"),
-        bottom: PreferredSize(
-          preferredSize: const Size.fromHeight(48),
-          child: Theme(
-            data: ThemeData(
-                splashColor: Colors.transparent,
-                highlightColor: Colors.transparent),
-            child: TabBar(
-              controller: _tabController,
-              isScrollable: true,
-              unselectedLabelColor: Colors.white,
-              indicatorColor: const Color(0xffffffff),
-              indicatorWeight: 1,
-              tabs: _tabs.map((item) {
-                return Container(
-                  padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
-                  child: Text(
-                    item.description,
-                    style: const TextStyle(color: Colors.white, fontSize: 16),
-                  ),
-                );
-              }).toList(),
+    return BlocBuilder<MessageBloc, MessageState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            title: const Text("消息"),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(48),
+              child: Theme(
+                data: ThemeData(
+                    splashColor: Colors.transparent,
+                    highlightColor: Colors.transparent),
+                child: TabBar(
+                  controller: _tabController,
+                  isScrollable: true,
+                  unselectedLabelColor: Colors.white,
+                  indicatorColor: const Color(0xffffffff),
+                  indicatorWeight: 1,
+                  tabs: _tabs.map((item) {
+                    int unreadCount = state.unreadCount[item] ?? 0;
+                    return Container(
+                      padding: const EdgeInsets.fromLTRB(16.0, 16.0, 16.0, 8.0),
+                      child: Stack(
+                        clipBehavior: Clip.none,
+                        children: [
+                          Text(
+                            item.description,
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                          unreadCount > 0 ? Positioned(
+                            top: -2,
+                            right: -16,
+                            child: Container(
+                              width: 16,
+                              alignment: Alignment.center,
+                              decoration: const BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Color(0xFFfa472f),
+                              ),
+                              child: Text(
+                                unreadCount.toString(),
+                                style: const TextStyle(color: Colors.white),
+                              ),
+                            ),
+                          ) : Container()
+                        ],
+                      ),
+                    );
+                  }).toList(),
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: _tabs.map((item) {
-          return MessageContentPage(type: item);
-        }).toList(),
-      ),
+          body: TabBarView(
+            controller: _tabController,
+            children: _tabs.map((item) {
+              return MessageContentPage(type: item);
+            }).toList(),
+          ),
+        );
+      },
     );
   }
 }

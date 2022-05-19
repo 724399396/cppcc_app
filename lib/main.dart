@@ -1,3 +1,4 @@
+import 'package:bloc_concurrency/bloc_concurrency.dart';
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/contact_bloc.dart';
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
@@ -5,7 +6,6 @@ import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/bloc/message_bloc.dart';
-import 'package:cppcc_app/bloc/notice_bloc.dart';
 import 'package:cppcc_app/bloc/opinion_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
@@ -120,76 +120,81 @@ Future<void> main() async {
       child: MultiBlocProvider(
         providers: [
           BlocProvider<TimerBloc>(
-            create: (BuildContext context) => TimerBloc(),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => TimerBloc(),
+                  eventTransformer: sequential())),
           BlocProvider<UserBloc>(
-            lazy: false,
-            create: (BuildContext context) => UserBloc(
-              context.read<UserRepository>(),
-              context.read<TimerBloc>(),
-            )..add(const UserInitialed()),
-          ),
+              lazy: false,
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => UserBloc(
+                        context.read<UserRepository>(),
+                        context.read<TimerBloc>(),
+                      )..add(const UserInitialed()),
+                  eventTransformer: sequential())),
           BlocProvider<MessageBloc>(
-            create: (BuildContext context) => MessageBloc(
-              context.read<MessageRepository>(),
-              localDataProvider,
-            )..add(MessageInitilized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => MessageBloc(
+                        context.read<MessageRepository>(),
+                        localDataProvider,
+                      )..add(MessageInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<MailboxBloc>(
-            create: (BuildContext context) => MailboxBloc(
-              context.read<MailboxRepository>(),
-            )..add(MailboxInitilized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => MailboxBloc(
+                        context.read<MailboxRepository>(),
+                      )..add(MailboxInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<DiscussNetworkBloc>(
-            create: (BuildContext context) => DiscussNetworkBloc(
-              context.read<DiscussNetworkRepository>(),
-              localDataProvider,
-            )..add(DiscussNetworkInitilized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => DiscussNetworkBloc(
+                        context.read<DiscussNetworkRepository>(),
+                        localDataProvider,
+                      )..add(DiscussNetworkInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<MeetingBloc>(
-            create: (BuildContext context) => MeetingBloc(
-                context.read<MeetingRepository>(), localDataProvider)
-              ..add(MeetingInitilized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => MeetingBloc(
+                      context.read<MeetingRepository>(), localDataProvider)
+                    ..add(MeetingInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<GuanduHistoricalClueBloc>(
-            create: (BuildContext context) => GuanduHistoricalClueBloc(
-              context.read<GuanduHistoricalClueRepository>(),
-            ),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => GuanduHistoricalClueBloc(
+                        context.read<GuanduHistoricalClueRepository>(),
+                      ),
+                  eventTransformer: sequential())),
           BlocProvider<PostsBloc>(
-              create: (BuildContext context) => PostsBloc(
-                    context.read<PostRepository>(),
-                  )..add(PostInitilized())),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => PostsBloc(
+                        context.read<PostRepository>(),
+                      )..add(PostInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<OpinionBloc>(
-              create: (BuildContext context) =>
-                  OpinionBloc(context.read<OpinionRepository>())
-                    ..add(OpinionInitilized())),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => OpinionBloc(context.read<OpinionRepository>())
+                    ..add(OpinionInitilized()),
+                  eventTransformer: sequential())),
           BlocProvider<AppSettingBloc>(
-            lazy: false,
-            create: (BuildContext context) =>
-                AppSettingBloc(context.read<AppSettingRepository>())
-                  ..add(AppSettingInitlized()),
-          ),
+              lazy: false,
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => AppSettingBloc(context.read<AppSettingRepository>())
+                    ..add(AppSettingInitlized()),
+                  eventTransformer: sequential())),
           BlocProvider<ProposalBloc>(
-            create: (BuildContext context) =>
-                ProposalBloc(context.read<ProposalRepository>())
-                  ..add(ProposalInitialied()),
-          ),
-          BlocProvider<NoticeBloc>(
-            create: (BuildContext context) =>
-                NoticeBloc(context.read<NoticeRepository>())
-                  ..add(NoticeInitialized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => ProposalBloc(context.read<ProposalRepository>())
+                    ..add(ProposalInitialied()),
+                  eventTransformer: sequential())),
           BlocProvider<ContactBloc>(
-            create: (BuildContext context) =>
-                ContactBloc(context.read<ContactRepository>())
-                  ..add(ContactInitialized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => ContactBloc(context.read<ContactRepository>())
+                    ..add(ContactInitialized()),
+                  eventTransformer: sequential())),
           BlocProvider<TwoMeetingsBloc>(
-            create: (BuildContext context) =>
-                TwoMeetingsBloc(context.read<TwoMeetingsRepository>())
-                  ..add(TwoMeetingsInitilized()),
-          ),
+              create: (BuildContext context) => BlocOverrides.runZoned(
+                  () => TwoMeetingsBloc(context.read<TwoMeetingsRepository>())
+                    ..add(TwoMeetingsInitilized()),
+                  eventTransformer: sequential())),
         ],
         child: CppccApp(navigationService),
       ),

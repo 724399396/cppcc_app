@@ -6,6 +6,7 @@ import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/rich_text.dart';
 import 'package:cppcc_app/utils/toast.dart';
+import 'package:cppcc_app/widget/quill_editor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
@@ -182,7 +183,7 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                     decoration: BoxDecoration(
                         border: Border.all(
                             width: 2, color: const Color(0xfff4f4f4))),
-                    child: quillEditor(context, _contentController),
+                    child: QuillEditor(_contentController),
                   )
                 ],
               ),

@@ -6,6 +6,8 @@ import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
 import 'package:cppcc_app/utils/rich_text.dart';
 import 'package:cppcc_app/utils/toast.dart';
+import 'package:cppcc_app/widget/quill_editor.dart';
+import 'package:cppcc_app/widget/uploader.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -24,6 +26,7 @@ class _LeaderMailboxAddPageState extends State<LeaderMailboxAddPage> {
   String? title;
   String? userName;
   String? phone;
+  List<UploadInfo>? files;
   final quill.QuillController _contentController =
       quill.QuillController.basic();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
@@ -95,7 +98,10 @@ class _LeaderMailboxAddPageState extends State<LeaderMailboxAddPage> {
                                               phone: phone!,
                                               title: title!,
                                               type: type!,
-                                              userId: userInfo!.userId), () {
+                                              userId: userInfo!.userId,
+                                              appendix: files
+                                                  ?.map((e) => e.url)
+                                                  .join(',')), () {
                                     showToast('添加成功');
                                     Navigator.of(context).pop();
                                   }));
@@ -233,12 +239,16 @@ class _LeaderMailboxAddPageState extends State<LeaderMailboxAddPage> {
                       ),
                       gap,
                       Container(
-                        height: 400,
+                        height: 300,
                         decoration: BoxDecoration(
                             border: Border.all(
                                 width: 2, color: const Color(0xfff4f4f4))),
-                        child: quillEditor(context, _contentController),
-                      )
+                        child: QuillEditor(_contentController),
+                      ),
+                      gap,
+                      Uploader(callback: (List<UploadInfo> uploadedFiles) {
+                        files = uploadedFiles;
+                      }),
                     ],
                   ))),
         );

@@ -14,6 +14,7 @@ AddMailRequest _$AddMailRequestFromJson(Map<String, dynamic> json) =>
       phone: json['phone'] as String,
       title: json['title'] as String,
       content: json['content'] as String,
+      appendix: json['appendix'] as String?,
     );
 
 Map<String, dynamic> _$AddMailRequestToJson(AddMailRequest instance) =>
@@ -24,4 +25,5 @@ Map<String, dynamic> _$AddMailRequestToJson(AddMailRequest instance) =>
       'phone': instance.phone,
       'title': instance.title,
       'content': instance.content,
+      'appendix': instance.appendix,
     };

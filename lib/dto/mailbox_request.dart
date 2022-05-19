@@ -10,6 +10,7 @@ class AddMailRequest {
   final String phone;
   final String title;
   final String content;
+  final String? appendix;
 
   AddMailRequest(
       {required this.type,
@@ -17,7 +18,8 @@ class AddMailRequest {
       required this.userId,
       required this.phone,
       required this.title,
-      required this.content});
+      required this.content,
+      required this.appendix});
 
   factory AddMailRequest.fromJson(Map<String, dynamic> json) =>
       _$AddMailRequestFromJson(json);

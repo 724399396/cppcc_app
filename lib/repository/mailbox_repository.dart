@@ -47,6 +47,7 @@ class MailboxRepository {
       handleTime: e.handleTime != null ? DateTime.parse(e.handleTime!) : null,
       handleWorkunit: e.handleWorkunit ?? '',
       replyMessage: e.replyMessage ?? '',
+      appendix: e.appendix?.split(",")
     );
   }
 }

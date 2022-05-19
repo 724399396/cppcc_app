@@ -23,6 +23,7 @@ MailboxResponse _$MailboxResponseFromJson(Map<String, dynamic> json) =>
       json['handleWorkutil'] as String?,
       json['replyMessage'] as String?,
       json['handleTime'] as String?,
+      json['appendix'] as String?,
     );
 
 Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
@@ -42,4 +43,5 @@ Map<String, dynamic> _$MailboxResponseToJson(MailboxResponse instance) =>
       'handleWorkutil': instance.handleWorkunit,
       'replyMessage': instance.replyMessage,
       'handleTime': instance.handleTime,
+      'appendix': instance.appendix,
     };

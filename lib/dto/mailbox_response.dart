@@ -22,6 +22,7 @@ class MailboxResponse {
   final String? handleWorkunit;
   final String? replyMessage;
   final String? handleTime;
+  final String? appendix;
 
   MailboxResponse(
     this.id,
@@ -39,6 +40,7 @@ class MailboxResponse {
     this.handleWorkunit,
     this.replyMessage,
     this.handleTime,
+    this.appendix,
   );
 
   factory MailboxResponse.fromJson(Map<String, dynamic> json) =>

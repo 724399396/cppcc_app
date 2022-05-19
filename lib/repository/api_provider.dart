@@ -469,4 +469,14 @@ class ApiDataProvider {
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }
+
+  Future<List<int>> download(String url) async {
+    var response = await Dio().get(
+      url,
+      options: Options(
+        responseType: ResponseType.bytes,
+      ),
+    );
+    return response.data;
+  }
 }

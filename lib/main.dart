@@ -114,8 +114,8 @@ Future<void> main() async {
         RepositoryProvider<ScanQrCodeRepository>(
           create: (context) => ScanQrCodeRepository(apiDataProvider),
         ),
-        RepositoryProvider<UploadRepository>(
-            create: (context) => UploadRepository(apiDataProvider)),
+        RepositoryProvider<FileRepository>(
+            create: (context) => FileRepository(apiDataProvider)),
       ],
       child: MultiBlocProvider(
         providers: [

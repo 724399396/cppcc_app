@@ -30,7 +30,7 @@ class QuillEditor extends StatelessWidget {
           showVideoButton: false,
           showCameraButton: false,
           onImagePickCallback: (file) async {
-            var url = await RepositoryProvider.of<UploadRepository>(context)
+            var url = await RepositoryProvider.of<FileRepository>(context)
                 .upload(file);
             return url;
           },

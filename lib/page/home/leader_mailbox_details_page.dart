@@ -1,6 +1,7 @@
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/widget/url_file_opener.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
@@ -55,6 +56,7 @@ class LeaderMailboxDetailsPage extends StatelessWidget {
                           padding: const EdgeInsets.symmetric(
                               horizontal: 8, vertical: 12),
                           child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Row(
                                 children: [
@@ -86,7 +88,10 @@ class LeaderMailboxDetailsPage extends StatelessWidget {
                                       tagsList: Html.tags
                                         ..addAll(["bird", "flutter"]),
                                     )
-                                  : Container()
+                                  : Container(),
+                              ...(_bean.appendix
+                                      ?.map((url) => UrlFileOpener(url)) ??
+                                  [])
                             ],
                           ),
                         ),

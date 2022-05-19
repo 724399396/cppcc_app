@@ -34,7 +34,7 @@ class _UploaderState extends State<Uploader> {
             await FilePicker.platform.pickFiles(type: FileType.media);
         if (result != null) {
           var filePath = result.files.single.path!;
-          var url = await RepositoryProvider.of<UploadRepository>(context)
+          var url = await RepositoryProvider.of<FileRepository>(context)
               .upload(File(filePath));
           setState(() {
             uploaded = uploaded + [UploadInfo(p.basename(filePath), url)];

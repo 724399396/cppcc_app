@@ -16,6 +16,7 @@ class Mail extends Equatable {
   final String handleWorkunit;
   final String replyMessage;
   final DateTime? handleTime;
+  final List<String>? appendix;
   const Mail({
     required this.id,
     required this.title,
@@ -32,6 +33,7 @@ class Mail extends Equatable {
     required this.handleWorkunit,
     required this.replyMessage,
     required this.handleTime,
+    required this.appendix,
   });
 
   Mail copyWith({
@@ -50,6 +52,7 @@ class Mail extends Equatable {
     String? handleWorkunit,
     String? replyMessage,
     DateTime? handleTime,
+    List<String>? appendix,
   }) {
     return Mail(
       id: id ?? this.id,
@@ -67,12 +70,13 @@ class Mail extends Equatable {
       handleWorkunit: handleWorkunit ?? this.handleWorkunit,
       replyMessage: replyMessage ?? this.replyMessage,
       handleTime: handleTime ?? this.handleTime,
+      appendix: appendix ?? this.appendix,
     );
   }
 
   @override
   String toString() {
-    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userRealname: $userRealname, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read, handleWorkunit: $handleWorkunit, replyMessage: $replyMessage, handleTime: $handleTime)';
+    return 'Mail(id: $id, title: $title, content: $content, phone: $phone, category: $category, userId: $userId, userRealname: $userRealname, type: $type, typeDictText: $typeDictText, createBy: $createBy, createTime: $createTime, read: $read, handleWorkunit: $handleWorkunit, replyMessage: $replyMessage, handleTime: $handleTime, appendix: $appendix)';
   }
 
   @override
@@ -93,6 +97,7 @@ class Mail extends Equatable {
       handleWorkunit,
       replyMessage,
       handleTime ?? '',
+      appendix ?? '',
     ];
   }
 }

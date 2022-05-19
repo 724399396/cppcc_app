@@ -1,3 +1,5 @@
+import 'dart:typed_data';
+
 import 'package:cppcc_app/dto/base_response.dart';
 import 'package:cppcc_app/dto/dict_response.dart';
 import 'package:cppcc_app/dto/discuss_network_request.dart';
@@ -5,6 +7,7 @@ import 'package:cppcc_app/dto/discuss_network_response.dart';
 import 'package:cppcc_app/dto/file_response.dart';
 import 'package:cppcc_app/dto/historical_clue_response.dart';
 import 'package:cppcc_app/dto/login_response.dart';
+import 'package:cppcc_app/dto/mailbox_request.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/dto/meeting_response.dart';
 import 'package:cppcc_app/dto/message_response.dart';
@@ -17,12 +20,10 @@ import 'package:cppcc_app/dto/proposal_request.dart';
 import 'package:cppcc_app/dto/proposal_response.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
 import 'package:cppcc_app/models/guandu_historical_clue.dart';
-import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:dio/dio.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'local_data_provider.dart';
 
@@ -128,15 +129,8 @@ class ApiDataProvider {
   }
 
   /// 添加领导信箱
-  Future<BaseResponse> addMailbox(
-      String type, String userId, String phone, String title, String content) {
-    return _dio.post('/app/mailbox/add', data: {
-      "type": type,
-      "userId": userId,
-      "phone": phone,
-      "title": title,
-      "content": content
-    }).then((value) {
+  Future<BaseResponse> addMailbox(AddMailRequest request) {
+    return _dio.post('/app/mailbox/add', data: request.toJson()).then((value) {
       return BaseResponse.fromJson(value.data);
     });
   }
@@ -362,11 +356,10 @@ class ApiDataProvider {
     return _dio.get(uri).then((value) => BaseResponse.fromJson(value.data));
   }
 
-  Future<FileResponse> uploadImage(XFile xfile) async {
-    var imageBytes = await xfile.readAsBytes();
+  Future<FileResponse> upload(Uint8List dataBytes, String name) async {
     var formData = FormData.fromMap({
       'biz': 'mobile',
-      'file': MultipartFile.fromBytes(imageBytes, filename: xfile.name)
+      'file': MultipartFile.fromBytes(dataBytes, filename: name)
     });
     return _dio.post('/sys/upload/uploadMinio', data: formData).then((value) =>
         FileResponse.fromJson(

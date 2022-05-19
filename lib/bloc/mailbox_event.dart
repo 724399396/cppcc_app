@@ -28,18 +28,10 @@ class MailboxLoadMore extends MailboxEvent {
 }
 
 class AddMailbox extends MailboxEvent {
-  final String type;
-  final String title;
-  final String content;
-  final String userName;
-  final String phone;
+  final AddMailRequest request;
   final SuccessCallback? successCallback;
 
-  const AddMailbox(this.type, this.title, this.content, this.userName,
-      this.phone, this.successCallback);
-
-  @override
-  List<Object> get props => [type, title, content, userName, phone];
+  const AddMailbox(this.request, this.successCallback);
 }
 
 class GoMailDetail extends MailboxEvent {

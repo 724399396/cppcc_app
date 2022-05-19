@@ -1,4 +1,5 @@
 import 'package:cppcc_app/dto/base_response.dart';
+import 'package:cppcc_app/dto/mailbox_request.dart';
 import 'package:cppcc_app/dto/mailbox_response.dart';
 import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/repository/api_provider.dart';
@@ -15,10 +16,8 @@ class MailboxRepository {
     return response.map(_buildMail).toList();
   }
 
-  Future<BaseResponse> addMailbox(String type, String userId, String phone,
-      String title, String content) async {
-    var response =
-        await _apiDataProvider.addMailbox(type, userId, phone, title, content);
+  Future<BaseResponse> addMailbox(AddMailRequest request) async {
+    var response = await _apiDataProvider.addMailbox(request);
     return response;
   }
 

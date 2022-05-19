@@ -56,12 +56,6 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
 
     on<PostRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        await _dataLoad(emit, event.key);
-      });
-    });
-
-    on<PostLoadMore>((event, emit) async {
-      await _generateCallApi(event, emit, (emit) async {
         Map<PostKey, List<Posts>> newPosts = Map.from(state.posts);
         newPosts[event.key] = [];
         Map<PostKey, int> newCurrentPage = Map.from(state.currentPage);
@@ -70,6 +64,12 @@ class PostsBloc extends Bloc<PostsEvent, PostsState> {
           currentPage: newCurrentPage,
           posts: newPosts,
         ));
+        await _dataLoad(emit, event.key);
+      });
+    });
+
+    on<PostLoadMore>((event, emit) async {
+      await _generateCallApi(event, emit, (emit) async {
         await _dataLoad(emit, event.key);
       });
     });

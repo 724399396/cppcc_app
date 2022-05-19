@@ -4,6 +4,7 @@ import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/dto/opinion_request.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/form_status.dart';
+import 'package:cppcc_app/utils/rich_text.dart';
 import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -71,8 +72,8 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                                 return;
                               }
                               if (_formKey.currentState?.validate() ?? false) {
-                                String content =
-                                    _contentController.document.toPlainText();
+                                String content = quillDeltaToHtml(
+                                    _contentController.document.toDelta());
                                 if (content.trim().isEmpty) {
                                   showToast('正文不能为空');
                                   return;
@@ -181,28 +182,7 @@ class _SocialOpinionAddPageState extends State<SocialOpinionAddPage> {
                     decoration: BoxDecoration(
                         border: Border.all(
                             width: 2, color: const Color(0xfff4f4f4))),
-                    child: Column(
-                      children: [
-                        quill.QuillToolbar.basic(
-                          controller: _contentController,
-                          locale: const Locale('zh', 'CN'),
-                        ),
-                        Expanded(
-                          child: quill.QuillEditor(
-                            locale: const Locale('zh', 'CN'),
-                            controller: _contentController,
-                            scrollController: ScrollController(),
-                            scrollable: true,
-                            focusNode: FocusNode(),
-                            autoFocus: true,
-                            readOnly: false,
-                            expands: false,
-                            padding: EdgeInsets.zero,
-                            keyboardAppearance: Brightness.light,
-                          ),
-                        )
-                      ],
-                    ),
+                    child: quillEditor(context, _contentController),
                   )
                 ],
               ),

@@ -225,6 +225,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "2.2.3"
+  delta_markdown:
+    dependency: "direct main"
+    description:
+      name: delta_markdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "0.6.0"
   device_info_plus:
     dependency: transitive
     description:
@@ -443,12 +450,10 @@ packages:
   flutter_quill:
     dependency: "direct main"
     description:
-      path: "."
-      ref: master
-      resolved-ref: "90e9d60356e325b91c4073039df65b6b09e159d9"
-      url: "https://github.com/singerdmx/flutter-quill.git"
-    source: git
-    version: "4.1.9"
+      name: flutter_quill
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "4.2.1"
   flutter_svg:
     dependency: transitive
     description:
@@ -648,6 +653,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.0.2"
+  markdown:
+    dependency: "direct main"
+    description:
+      name: markdown
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "5.0.0"
   matcher:
     dependency: transitive
     description:
@@ -1095,7 +1107,7 @@ packages:
       name: url_launcher
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "6.1.1"
+    version: "6.1.2"
   url_launcher_android:
     dependency: transitive
     description:
@@ -1137,7 +1149,7 @@ packages:
       name: url_launcher_web
       url: "https://pub.dartlang.org"
     source: hosted
-    version: "2.0.10"
+    version: "2.0.11"
   url_launcher_windows:
     dependency: transitive
     description:
@@ -1146,7 +1158,7 @@ packages:
     source: hosted
     version: "3.0.1"
   uuid:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: uuid
       url: "https://pub.dartlang.org"

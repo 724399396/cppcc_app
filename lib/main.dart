@@ -27,6 +27,7 @@ import 'package:cppcc_app/repository/post_repository.dart';
 import 'package:cppcc_app/repository/proposal_repository.dart';
 import 'package:cppcc_app/repository/scan_qr_code_repository.dart';
 import 'package:cppcc_app/repository/two_meetings_repository.dart';
+import 'package:cppcc_app/repository/upload_repository.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/time_ago_format.dart';
@@ -113,6 +114,8 @@ Future<void> main() async {
         RepositoryProvider<ScanQrCodeRepository>(
           create: (context) => ScanQrCodeRepository(apiDataProvider),
         ),
+        RepositoryProvider<UploadRepository>(
+            create: (context) => UploadRepository(apiDataProvider)),
       ],
       child: MultiBlocProvider(
         providers: [

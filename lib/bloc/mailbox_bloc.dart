@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:cppcc_app/bloc/helper.dart';
+import 'package:cppcc_app/dto/mailbox_request.dart';
 import 'package:cppcc_app/models/app_settings.dart';
 import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/repository/mailbox_repository.dart';
@@ -31,12 +32,6 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
 
     on<MailboxRefresh>((event, emit) async {
       await _generateCallApi(event, emit, (emit) async {
-        await _dataLoad(emit, event.type);
-      });
-    });
-
-    on<MailboxLoadMore>((event, emit) async {
-      await _generateCallApi(event, emit, (emit) async {
         Map<String, List<Mail>> newMailbox = Map.from(state.data);
         newMailbox[event.type] = [];
         Map<String, int> newCurrentPage = Map.from(state.currentPage);
@@ -45,6 +40,12 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
           currentPage: newCurrentPage,
           data: newMailbox,
         ));
+        await _dataLoad(emit, event.type);
+      });
+    });
+
+    on<MailboxLoadMore>((event, emit) async {
+      await _generateCallApi(event, emit, (emit) async {
         await _dataLoad(emit, event.type);
       });
     });
@@ -75,8 +76,7 @@ class MailboxBloc extends Bloc<MailboxEvent, MailboxState> {
     on<AddMailbox>((event, emit) async {
       emit(state.copyWith(submitStatus: FormStatus.submissionInProgress));
       try {
-        await _mailboxRepository.addMailbox(event.type, event.userName,
-            event.phone, event.title, event.content);
+        await _mailboxRepository.addMailbox(event.request);
         emit(state.copyWith(submitStatus: FormStatus.submissionSuccess));
         event.successCallback!();
       } catch (err) {

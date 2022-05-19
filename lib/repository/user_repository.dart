@@ -46,7 +46,8 @@ class UserRepository {
   }
 
   Future<String> updateAvatar(XFile avatar) async {
-    var fileResponse = await _apiDataProvider.uploadImage(avatar);
+    var imageBytes = await avatar.readAsBytes();
+    var fileResponse = await _apiDataProvider.upload(imageBytes, avatar.name);
     await _apiDataProvider
         .updateUserInfo(UserUpdateRequest(avatar: fileResponse.url));
     return fileResponse.url;
@@ -57,7 +58,8 @@ class UserRepository {
   }
 
   Future<String> updateWxQrCode(XFile image) async {
-    var fileResponse = await _apiDataProvider.uploadImage(image);
+    var imageBytes = await image.readAsBytes();
+    var fileResponse = await _apiDataProvider.upload(imageBytes, image.name);
     await _apiDataProvider
         .updateUserInfo(UserUpdateRequest(wxQrCode: fileResponse.url));
     return fileResponse.url;

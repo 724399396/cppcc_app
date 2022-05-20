@@ -1,6 +1,6 @@
 part of 'discuss_network_bloc.dart';
 
-class DiscussNetworkState extends Equatable {
+class DiscussNetworkState extends Equatable with WithListFetchState {
   final int unreadCount;
   final ListDataFetchStatus status;
   final Map<DiscussNetworkListType, List<DiscussNetwork>> data;
@@ -49,5 +49,10 @@ class DiscussNetworkState extends Equatable {
       currentDiscuss ?? '',
       submitStatus ?? '',
     ];
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

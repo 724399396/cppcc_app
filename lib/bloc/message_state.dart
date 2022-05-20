@@ -1,6 +1,6 @@
 part of 'message_bloc.dart';
 
-class MessageState extends Equatable {
+class MessageState extends Equatable with WithListFetchState {
   final ListDataFetchStatus status;
   final Map<MessageType, int> unreadCount;
   final Map<MessageType, List<Message>> messages;
@@ -33,4 +33,9 @@ class MessageState extends Equatable {
 
   @override
   List<Object> get props => [status, unreadCount, messages, currentPage];
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
+  }
 }

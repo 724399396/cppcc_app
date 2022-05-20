@@ -1,11 +1,9 @@
 import 'package:cppcc_app/bloc/message_bloc.dart';
 import 'package:cppcc_app/dto/message_type.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/models/message.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/message_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeMessage extends StatefulWidget {
@@ -64,22 +62,25 @@ class _HomeMessageState extends State<HomeMessage>
                             style: const TextStyle(
                                 color: Colors.white, fontSize: 16),
                           ),
-                          unreadCount > 0 ? Positioned(
-                            top: -2,
-                            right: -16,
-                            child: Container(
-                              width: 16,
-                              alignment: Alignment.center,
-                              decoration: const BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: Color(0xFFfa472f),
-                              ),
-                              child: Text(
-                                unreadCount.toString(),
-                                style: const TextStyle(color: Colors.white),
-                              ),
-                            ),
-                          ) : Container()
+                          unreadCount > 0
+                              ? Positioned(
+                                  top: -2,
+                                  right: -16,
+                                  child: Container(
+                                    width: 16,
+                                    alignment: Alignment.center,
+                                    decoration: const BoxDecoration(
+                                      shape: BoxShape.circle,
+                                      color: Color(0xFFfa472f),
+                                    ),
+                                    child: Text(
+                                      unreadCount.toString(),
+                                      style:
+                                          const TextStyle(color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              : Container()
                         ],
                       ),
                     );
@@ -107,47 +108,14 @@ class MessageContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EasyRefreshController _easyRefreshController =
-        EasyRefreshController();
     BlocProvider.of<MessageBloc>(context).add(MessageFirstFetch(type));
-    return BlocConsumer<MessageBloc, MessageState>(
-      listener: (previous, current) {
-        switch (current.status) {
-          case ListDataFetchStatus.normal:
-            _easyRefreshController.finishRefresh(success: true);
-            _easyRefreshController.finishLoad(success: true);
-            break;
-          case ListDataFetchStatus.refresh:
-            break;
-          case ListDataFetchStatus.loadMore:
-            break;
-          case ListDataFetchStatus.failure:
-            _easyRefreshController.finishRefresh(success: false);
-            _easyRefreshController.finishLoad(success: false);
-            break;
-        }
-      },
-      builder: (context, state) {
-        // TODO
-        var data = (state.messages[type] ?? [])
+    return BlocEasyFrefresh<MessageBloc, MessageState, Message>(
+        (state) => (state.messages[type] ?? [])
             .where((element) => !["提案办理通知", "社情民意通知"].contains(element.title))
-            .toList();
-        return EasyRefresh.custom(
-          controller: _easyRefreshController,
-          enableControlFinishRefresh: true,
-          enableControlFinishLoad: true,
-          header: easyRefreshHeader,
-          footer: easyRefreshFooter,
-          onLoad: () async {
-            BlocProvider.of<MessageBloc>(context).add(MessageLoadMore(type));
-          },
-          onRefresh: () async {
-            BlocProvider.of<MessageBloc>(context).add(MessageRefresh(type));
-          },
-          emptyWidget: data.isEmpty ? const EmptyData() : null,
-          slivers: data.map((p) => MessageListItem(p)).toList(),
-        );
-      },
-    );
+            .toList(), () async {
+      BlocProvider.of<MessageBloc>(context).add(MessageLoadMore(type));
+    }, () async {
+      BlocProvider.of<MessageBloc>(context).add(MessageRefresh(type));
+    }, (p) => MessageListItem(p));
   }
 }

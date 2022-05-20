@@ -1,6 +1,6 @@
 part of 'mailbox_bloc.dart';
 
-class MailboxState extends Equatable {
+class MailboxState extends Equatable with WithListFetchState {
   final int unreadCount;
   final ListDataFetchStatus status;
   final Map<String, List<Mail>> data;
@@ -49,5 +49,10 @@ class MailboxState extends Equatable {
       submitStatus ?? '',
       currentMail ?? '',
     ];
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

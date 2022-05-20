@@ -1,4 +1,5 @@
 import 'package:collection/collection.dart';
+import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 typedef GenericApiCall<T> = Future<void> Function(Emitter<T> emitter);
@@ -21,4 +22,8 @@ List<T> updateWithGenerateNewList<T>(List<T> data, bool Function(T value) test,
   } else {
     return data;
   }
+}
+
+abstract class WithListFetchState {
+  ListDataFetchStatus listFetchStatus();
 }

@@ -26,7 +26,7 @@ class PostKey extends Equatable {
   List<Object> get props => [type, category ?? -1];
 }
 
-class PostsState extends Equatable {
+class PostsState extends Equatable with WithListFetchState {
   final ListDataFetchStatus status;
   final Map<PostKey, List<Posts>> posts;
   final Map<PostKey, int> currentPage;
@@ -70,5 +70,10 @@ class PostsState extends Equatable {
   @override
   String toString() {
     return 'PostsState(status: $status, posts: $posts, currentPage: $currentPage, unreadCount: $unreadCount, currentPost: $currentPost)';
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

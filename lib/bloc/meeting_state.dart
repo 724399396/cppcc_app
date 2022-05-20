@@ -1,6 +1,6 @@
 part of 'meeting_bloc.dart';
 
-class MeetingState extends Equatable {
+class MeetingState extends Equatable with WithListFetchState {
   final int unreadCount;
   final ListDataFetchStatus status;
   final Map<String, List<Meeting>> meetings;
@@ -51,5 +51,10 @@ class MeetingState extends Equatable {
       currentMetting ?? '',
       submitStatus ?? '',
     ];
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

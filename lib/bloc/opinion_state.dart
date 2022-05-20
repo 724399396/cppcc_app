@@ -1,6 +1,6 @@
 part of 'opinion_bloc.dart';
 
-class OpinionState extends Equatable {
+class OpinionState extends Equatable with WithListFetchState {
   final int unreadCount;
   final ListDataFetchStatus status;
   final Map<OpinionListType, List<Opinion>> opinions;
@@ -50,5 +50,10 @@ class OpinionState extends Equatable {
   @override
   String toString() {
     return 'OpinionState(unreadCount: $unreadCount, status: $status, opinions: $opinions, currentPage: $currentPage, submitStatus: $submitStatus, currentOpinion: $currentOpinion)';
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

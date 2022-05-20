@@ -1,13 +1,11 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/meeting_bloc.dart';
 import 'package:cppcc_app/models/dict.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/models/meeting.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/meeting_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MeetingActivitiesPage extends StatefulWidget {
@@ -100,68 +98,28 @@ class MeetingContentPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     BlocProvider.of<MeetingBloc>(context).add(MeetingFirstFetch(type));
-    final EasyRefreshController _easyRefreshController =
-        EasyRefreshController();
-    return BlocConsumer<MeetingBloc, MeetingState>(
-      buildWhen: (previous, current) =>
-          previous.meetings != current.meetings ||
-          previous.status != current.status,
-      listenWhen: (previous, current) =>
-          previous.meetings != current.meetings ||
-          previous.status != current.status,
-      listener: (previous, current) {
-        switch (current.status) {
-          case ListDataFetchStatus.normal:
-            _easyRefreshController.finishRefresh(success: true);
-            _easyRefreshController.finishLoad(success: true);
-            break;
-          case ListDataFetchStatus.refresh:
-            break;
-          case ListDataFetchStatus.loadMore:
-            break;
-          case ListDataFetchStatus.failure:
-            _easyRefreshController.finishRefresh(success: false);
-            _easyRefreshController.finishLoad(success: false);
-            break;
-        }
-      },
-      builder: (context, state) {
-        var data = state.meetings[type] ?? [];
-        return EasyRefresh.custom(
-          controller: _easyRefreshController,
-          enableControlFinishRefresh: true,
-          enableControlFinishLoad: true,
-          header: easyRefreshHeader,
-          footer: easyRefreshFooter,
-          onLoad: () async {
-            BlocProvider.of<MeetingBloc>(context).add(MeetingLoadMore(type));
-          },
-          onRefresh: () async {
-            BlocProvider.of<MeetingBloc>(context).add(MeetingRefresh(type));
-          },
-          emptyWidget: data.isEmpty ? const EmptyData() : null,
-          slivers: type == '1'
-              ? [
-                  SliverToBoxAdapter(
-                    child: GestureDetector(
-                      onTap: () {
-                        Navigator.pushNamed(context, Routes.twoMeetingPage);
-                      },
-                      child: Container(
-                        padding: const EdgeInsets.symmetric(
-                            horizontal: 16, vertical: 8),
-                        child: Image.asset(
-                          'assets/bg/bg_two_meetings.png',
-                          width: double.infinity,
-                        ),
-                      ),
+    return BlocEasyFrefresh<MeetingBloc, MeetingState, Meeting>(
+        (state) => state.meetings[type] ?? [], () async {
+      BlocProvider.of<MeetingBloc>(context).add(MeetingLoadMore(type));
+    }, () async {
+      BlocProvider.of<MeetingBloc>(context).add(MeetingRefresh(type));
+    }, (p) => MeetingItem(p),
+        prefix: type == '1'
+            ? SliverToBoxAdapter(
+                child: GestureDetector(
+                  onTap: () {
+                    Navigator.pushNamed(context, Routes.twoMeetingPage);
+                  },
+                  child: Container(
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                    child: Image.asset(
+                      'assets/bg/bg_two_meetings.png',
+                      width: double.infinity,
                     ),
                   ),
-                  ...data.map((p) => MeetingItem(p)).toList()
-                ]
-              : data.map((p) => MeetingItem(p)).toList(),
-        );
-      },
-    );
+                ),
+              )
+            : null);
   }
 }

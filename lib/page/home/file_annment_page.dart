@@ -2,14 +2,11 @@ import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/posts.dart';
 import 'package:cppcc_app/styles.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class FileAnnmentPage extends StatefulWidget {
@@ -25,7 +22,6 @@ class _FileAnnmentPageState extends State<FileAnnmentPage> {
   @override
   Widget build(BuildContext context) {
     var postKey = const PostKey(PostType.fileAnnment, null);
-    var _easyRefreshController = EasyRefreshController();
     BlocProvider.of<PostsBloc>(context).add(PostFirstFetch(postKey));
     return Scaffold(
       appBar: AppBar(title: const Text('文件公告')),
@@ -43,54 +39,17 @@ class _FileAnnmentPageState extends State<FileAnnmentPage> {
             fillColor: Colors.white,
           ),
           Expanded(
-              child: BlocConsumer<PostsBloc, PostsState>(
-            buildWhen: (previous, current) =>
-                previous.posts != current.posts ||
-                previous.status != current.status,
-            listenWhen: (previous, current) =>
-                previous.posts != current.posts ||
-                previous.status != current.status,
-            listener: (previous, current) {
-              switch (current.status) {
-                case ListDataFetchStatus.normal:
-                  _easyRefreshController.finishRefresh(success: true);
-                  _easyRefreshController.finishLoad(success: true);
-                  break;
-                case ListDataFetchStatus.refresh:
-                  break;
-                case ListDataFetchStatus.loadMore:
-                  break;
-                case ListDataFetchStatus.failure:
-                  _easyRefreshController.finishRefresh(success: false);
-                  _easyRefreshController.finishLoad(success: false);
-                  break;
-              }
-            },
-            builder: (context, state) {
-              var data = state.posts[postKey] ?? [];
-              var filterData = (_searchKeyWord.isEmpty
-                  ? data
-                  : data
-                      .where((d) => d.title.contains(_searchKeyWord))
-                      .toList());
-              return EasyRefresh.custom(
-                controller: _easyRefreshController,
-                enableControlFinishRefresh: true,
-                enableControlFinishLoad: true,
-                header: easyRefreshHeader,
-                footer: easyRefreshFooter,
-                onLoad: () async {
-                  BlocProvider.of<PostsBloc>(context)
-                      .add(PostLoadMore(postKey));
-                },
-                onRefresh: () async {
-                  BlocProvider.of<PostsBloc>(context).add(PostRefresh(postKey));
-                },
-                emptyWidget: (filterData.isEmpty) ? const EmptyData() : null,
-                slivers: filterData.map((p) => FileAnnmentItem(p)).toList(),
-              );
-            },
-          )),
+              child: BlocEasyFrefresh<PostsBloc, PostsState, Posts>((state) {
+            var data = state.posts[postKey] ?? [];
+            var filterData = (_searchKeyWord.isEmpty
+                ? data
+                : data.where((d) => d.title.contains(_searchKeyWord)).toList());
+            return filterData;
+          }, () async {
+            BlocProvider.of<PostsBloc>(context).add(PostLoadMore(postKey));
+          }, () async {
+            BlocProvider.of<PostsBloc>(context).add(PostRefresh(postKey));
+          }, (p) => FileAnnmentItem(p))),
         ]),
       ),
     );

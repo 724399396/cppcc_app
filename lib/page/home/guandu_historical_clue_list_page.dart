@@ -4,6 +4,7 @@ import 'package:cppcc_app/bloc/guandu_historical_clue_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
+import 'package:cppcc_app/models/guandu_historical_clue.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -13,7 +14,6 @@ import 'package:cppcc_app/widget/historical_clue_item.dart';
 import 'package:cppcc_app/widget/posts_list_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class GuanduHistoralcalClueContainer extends StatefulWidget {
   const GuanduHistoralcalClueContainer({Key? key}) : super(key: key);
@@ -128,56 +128,25 @@ class GuanduHistoricalClueListPage extends StatelessWidget {
   Widget build(BuildContext context) {
     BlocProvider.of<GuanduHistoricalClueBloc>(context)
         .add(GuanduHistoricalClueFirstFetch());
-    var _easyRefreshController = EasyRefreshController();
     return SafeArea(
-      child:
-          BlocConsumer<GuanduHistoricalClueBloc, GuanduHistoricalClueState>(
-        buildWhen: (previous, current) =>
-            previous.data != current.data ||
-            previous.status != current.status,
-        listenWhen: (previous, current) =>
-            previous.data != current.data ||
-            previous.status != current.status,
-        listener: (previous, current) {
-          switch (current.status) {
-            case ListDataFetchStatus.normal:
-              _easyRefreshController.finishRefresh(success: true);
-              _easyRefreshController.finishLoad(success: true);
-              break;
-            case ListDataFetchStatus.refresh:
-              break;
-            case ListDataFetchStatus.loadMore:
-              break;
-            case ListDataFetchStatus.failure:
-              _easyRefreshController.finishRefresh(success: false);
-              _easyRefreshController.finishLoad(success: false);
-              break;
-          }
+      child: BlocEasyFrefresh<GuanduHistoricalClueBloc,
+          GuanduHistoricalClueState, GuanduHistoricalClue>(
+        (state) => filterSelf
+            ? state.data
+                .where((element) =>
+                    element.createBy ==
+                    BlocProvider.of<UserBloc>(context).state.userInfo?.username)
+                .toList()
+            : state.data,
+        () async {
+          BlocProvider.of<GuanduHistoricalClueBloc>(context)
+              .add(GuanduHistoricalClueLoadMore());
         },
-        builder: (context, state) {
-          var data = filterSelf
-              ? state.data.where((element) =>
-                  element.createBy ==
-                  BlocProvider.of<UserBloc>(context).state.userInfo?.username)
-              : state.data;
-          return EasyRefresh.custom(
-            controller: _easyRefreshController,
-            enableControlFinishRefresh: true,
-            enableControlFinishLoad: true,
-            header: easyRefreshHeader,
-            footer: easyRefreshFooter,
-            onLoad: () async {
-              BlocProvider.of<GuanduHistoricalClueBloc>(context)
-                  .add(GuanduHistoricalClueLoadMore());
-            },
-            onRefresh: () async {
-              BlocProvider.of<GuanduHistoricalClueBloc>(context)
-                  .add(GuanduHistoricalClueRefresh());
-            },
-            emptyWidget: data.isEmpty ? const EmptyData() : null,
-            slivers: data.map((p) => HistoricalClueItem(p)).toList(),
-          );
+        () async {
+          BlocProvider.of<GuanduHistoricalClueBloc>(context)
+              .add(GuanduHistoricalClueRefresh());
         },
+        (p) => HistoricalClueItem(p),
       ),
     );
   }

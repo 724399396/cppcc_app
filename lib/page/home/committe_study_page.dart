@@ -2,15 +2,13 @@ import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/posts_bloc.dart';
 import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/models/dict.dart';
+import 'package:cppcc_app/models/posts.dart';
 import 'package:cppcc_app/styles.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/posts_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 
 class CommitteStudyPage extends StatefulWidget {
   const CommitteStudyPage({Key? key}) : super(key: key);
@@ -110,7 +108,6 @@ class _CommitteStudyListContainerState
 
   @override
   Widget build(BuildContext context) {
-    var _easyRefreshController = EasyRefreshController();
     BlocProvider.of<PostsBloc>(context).add(PostFirstFetch(widget.postKey));
     return Container(
       padding: const EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
@@ -126,53 +123,17 @@ class _CommitteStudyListContainerState
           fillColor: Colors.white,
         ),
         Expanded(
-            child: BlocConsumer<PostsBloc, PostsState>(
-          buildWhen: (previous, current) =>
-              previous.posts != current.posts ||
-              previous.status != current.status,
-          listenWhen: (previous, current) =>
-              previous.posts != current.posts ||
-              previous.status != current.status,
-          listener: (previous, current) {
-            switch (current.status) {
-              case ListDataFetchStatus.normal:
-                _easyRefreshController.finishRefresh(success: true);
-                _easyRefreshController.finishLoad(success: true);
-                break;
-              case ListDataFetchStatus.refresh:
-                break;
-              case ListDataFetchStatus.loadMore:
-                break;
-              case ListDataFetchStatus.failure:
-                _easyRefreshController.finishRefresh(success: false);
-                _easyRefreshController.finishLoad(success: false);
-                break;
-            }
-          },
-          builder: (context, state) {
-            var data = state.posts[widget.postKey] ?? [];
-            var filterData = (_searchKeyWord.isEmpty
-                ? data
-                : data.where((d) => d.title.contains(_searchKeyWord)).toList());
-            return EasyRefresh.custom(
-              controller: _easyRefreshController,
-              enableControlFinishRefresh: true,
-              enableControlFinishLoad: true,
-              header: easyRefreshHeader,
-              footer: easyRefreshFooter,
-              onLoad: () async {
-                BlocProvider.of<PostsBloc>(context)
-                    .add(PostLoadMore(widget.postKey));
-              },
-              onRefresh: () async {
-                BlocProvider.of<PostsBloc>(context)
-                    .add(PostRefresh(widget.postKey));
-              },
-              emptyWidget: (filterData.isEmpty) ? const EmptyData() : null,
-              slivers: filterData.map((p) => PostsItem(p)).toList(),
-            );
-          },
-        )),
+            child: BlocEasyFrefresh<PostsBloc, PostsState, Posts>((state) {
+          var data = state.posts[widget.postKey] ?? [];
+          var filterData = (_searchKeyWord.isEmpty
+              ? data
+              : data.where((d) => d.title.contains(_searchKeyWord)).toList());
+          return filterData;
+        }, () async {
+          BlocProvider.of<PostsBloc>(context).add(PostLoadMore(widget.postKey));
+        }, () async {
+          BlocProvider.of<PostsBloc>(context).add(PostRefresh(widget.postKey));
+        }, (p) => PostsItem(p))),
       ]),
     );
   }

@@ -1,16 +1,14 @@
+import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/proposal_bloc.dart';
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:cppcc_app/models/proposal.dart';
 import 'package:cppcc_app/styles.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:dropdown_button2/dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:intl/intl.dart';
 
 class ProposalManagePage extends StatefulWidget {
@@ -131,132 +129,104 @@ class _ProposalListState extends State<ProposalList> {
   Widget build(BuildContext context) {
     BlocProvider.of<ProposalBloc>(context)
         .add(ProposalFirstFetch(widget._listType));
-    final _easyRefreshController = EasyRefreshController();
     return Container(
       color: AppColors.background,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: BlocConsumer<ProposalBloc, ProposalState>(
-        buildWhen: (previous, current) =>
-            previous.proposals != current.proposals ||
-            previous.status != current.status,
-        listenWhen: (previous, current) =>
-            previous.proposals != current.proposals ||
-            previous.status != current.status,
-        listener: (previous, current) {
-          switch (current.status) {
-            case ListDataFetchStatus.normal:
-              _easyRefreshController.finishRefresh(success: true);
-              _easyRefreshController.finishLoad(success: true);
-              break;
-            case ListDataFetchStatus.refresh:
-              break;
-            case ListDataFetchStatus.loadMore:
-              break;
-            case ListDataFetchStatus.failure:
-              _easyRefreshController.finishRefresh(success: false);
-              _easyRefreshController.finishLoad(success: false);
-              break;
-          }
-        },
-        builder: (context, state) {
-          var data = state.proposals[widget._listType] ?? [];
-          selectYear ??= data.map((e) => e.year).fold(
-              null,
-              (value, element) =>
-                  (value == null || value < element) ? element : value);
-          var filterData = (_searchKeyWord.isEmpty
-                  ? data
-                  : data
-                      .where((d) => d.title.contains(_searchKeyWord))
-                      .toList())
-              .where((element) => widget._filterSelf
-                  ? element.authorId ==
-                      BlocProvider.of<UserBloc>(context).state.userInfo?.userId
-                  : true)
-              .where((element) =>
-                  selectYear != null ? element.year == selectYear : true)
-              .toList();
-          var years = data.map((e) => e.year).toSet().toList();
-          years.sort((a, b) => b.compareTo(a));
-          return Column(
+      child: Column(children: [
+        GeneralSearch(
+          AppColors.greyTextColor,
+          (context, keyword) {
+            setState(() {
+              _searchKeyWord = keyword;
+            });
+          },
+          initValue: _searchKeyWord,
+          fillColor: Colors.white,
+        ),
+        const SizedBox(height: 8),
+        Container(
+          width: double.infinity,
+          decoration: const BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.all(Radius.circular(8))),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              GeneralSearch(
-                AppColors.greyTextColor,
-                (context, keyword) {
-                  setState(() {
-                    _searchKeyWord = keyword;
-                  });
-                },
-                initValue: _searchKeyWord,
-                fillColor: Colors.white,
-              ),
-              const SizedBox(height: 8),
-              Container(
-                width: double.infinity,
-                decoration: const BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.all(Radius.circular(8))),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    DropdownButtonHideUnderline(
-                      child: DropdownButton2(
-                        hint: Text(
-                          '选择年度',
-                          style: TextStyle(
-                            fontSize: 14,
-                            color: Theme.of(context).hintColor,
-                          ),
-                        ),
-                        items: years
-                            .map((item) => DropdownMenuItem<int>(
-                                  value: item,
-                                  child: Text(
-                                    '$item 年度',
-                                    style: const TextStyle(
-                                      fontSize: 14,
-                                    ),
-                                  ),
-                                ))
-                            .toList(),
-                        value: selectYear,
-                        onChanged: (value) {
-                          setState(() {
-                            selectYear = value as int;
-                          });
-                        },
-                        buttonHeight: 40,
-                        buttonWidth: 100,
-                        itemHeight: 40,
-                      ),
-                    )
-                  ],
+              DropdownButtonHideUnderline(
+                child: DropdownButton2(
+                  hint: Text(
+                    '选择年度',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Theme.of(context).hintColor,
+                    ),
+                  ),
+                  items: BlocProvider.of<AppSettingBloc>(context, listen: false)
+                      .state
+                      .dictMap['year']
+                      ?.map((item) => DropdownMenuItem<int>(
+                            value: int.tryParse(item.itemValue),
+                            child: Text(
+                              item.itemText,
+                              style: const TextStyle(
+                                fontSize: 14,
+                              ),
+                            ),
+                          ))
+                      .toList(),
+                  value: selectYear,
+                  onChanged: (value) {
+                    setState(() {
+                      selectYear = value as int;
+                    });
+                  },
+                  buttonHeight: 40,
+                  buttonWidth: 100,
+                  itemHeight: 40,
                 ),
-              ),
-              const SizedBox(height: 8),
-              Expanded(
-                  child: EasyRefresh.custom(
-                controller: _easyRefreshController,
-                enableControlFinishRefresh: true,
-                enableControlFinishLoad: true,
-                header: easyRefreshHeader,
-                footer: easyRefreshFooter,
-                onLoad: () async {
-                  BlocProvider.of<ProposalBloc>(context)
-                      .add(ProposalLoadMore(widget._listType));
-                },
-                onRefresh: () async {
-                  BlocProvider.of<ProposalBloc>(context)
-                      .add(ProposalRefresh(widget._listType));
-                },
-                emptyWidget: filterData.isEmpty ? const EmptyData() : null,
-                slivers: filterData.map((p) => ProposalItem(p)).toList(),
-              ))
+              )
             ],
-          );
-        },
-      ),
-      // ),
+          ),
+        ),
+        const SizedBox(height: 8),
+        Expanded(
+            child: BlocEasyFrefresh<ProposalBloc, ProposalState, Proposal>(
+          (state) {
+            var data = state.proposals[widget._listType] ?? [];
+            selectYear ??= data.map((e) => e.year).fold(
+                null,
+                (value, element) =>
+                    (value == null || value < element) ? element : value);
+            var filterData = (_searchKeyWord.isEmpty
+                    ? data
+                    : data
+                        .where((d) => d.title.contains(_searchKeyWord))
+                        .toList())
+                .where((element) => widget._filterSelf
+                    ? element.authorId ==
+                        BlocProvider.of<UserBloc>(context)
+                            .state
+                            .userInfo
+                            ?.userId
+                    : true)
+                .where((element) =>
+                    selectYear != null ? element.year == selectYear : true)
+                .toList();
+            var years = data.map((e) => e.year).toSet().toList();
+            years.sort((a, b) => b.compareTo(a));
+            return filterData;
+          },
+          () async {
+            BlocProvider.of<ProposalBloc>(context)
+                .add(ProposalLoadMore(widget._listType));
+          },
+          () async {
+            BlocProvider.of<ProposalBloc>(context)
+                .add(ProposalRefresh(widget._listType));
+          },
+          (p) => ProposalItem(p),
+        ))
+      ]),
     );
   }
 }

@@ -1,6 +1,6 @@
 part of 'guandu_historical_clue_bloc.dart';
 
-class GuanduHistoricalClueState extends Equatable {
+class GuanduHistoricalClueState extends Equatable with WithListFetchState {
   final ListDataFetchStatus status;
   final List<GuanduHistoricalClue> data;
   final int currentPage;
@@ -33,4 +33,9 @@ class GuanduHistoricalClueState extends Equatable {
 
   @override
   List<Object> get props => [status, data, currentPage, submitStatus ?? ''];
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
+  }
 }

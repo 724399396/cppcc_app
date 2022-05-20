@@ -1,11 +1,8 @@
 import 'package:cppcc_app/bloc/discuss_network_bloc.dart';
 import 'package:cppcc_app/models/discuss_network.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 import 'package:cppcc_app/widget/discuss_network_item.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class DicusssNetworkPage extends StatefulWidget {
@@ -86,51 +83,20 @@ class DiscussNetworkContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _easyRefreshController = EasyRefreshController();
     BlocProvider.of<DiscussNetworkBloc>(context)
         .add(DiscussNetworkFirstFetch(type));
-    return BlocConsumer<DiscussNetworkBloc, DiscussNetworkState>(
-      buildWhen: (previous, current) =>
-          previous.data != current.data || previous.status != current.status,
-      listenWhen: (previous, current) =>
-          previous.data != current.data || previous.status != current.status,
-      listener: (previous, current) {
-        switch (current.status) {
-          case ListDataFetchStatus.normal:
-            _easyRefreshController.finishRefresh(success: true);
-            _easyRefreshController.finishLoad(success: true);
-            break;
-          case ListDataFetchStatus.refresh:
-            break;
-          case ListDataFetchStatus.loadMore:
-            break;
-          case ListDataFetchStatus.failure:
-            _easyRefreshController.finishRefresh(success: false);
-            _easyRefreshController.finishLoad(success: false);
-            break;
-        }
+    return BlocEasyFrefresh<DiscussNetworkBloc, DiscussNetworkState,
+        DiscussNetwork>(
+      (state) => (state.data[type] ?? []),
+      () async {
+        BlocProvider.of<DiscussNetworkBloc>(context)
+            .add(DiscussNetworkLoadMore(type));
       },
-      builder: (context, state) {
-        var data = state.data[type];
-        return EasyRefresh.custom(
-          controller: _easyRefreshController,
-          enableControlFinishRefresh: true,
-          enableControlFinishLoad: true,
-          header: easyRefreshHeader,
-          footer: easyRefreshFooter,
-          onLoad: () async {
-            BlocProvider.of<DiscussNetworkBloc>(context)
-                .add(DiscussNetworkLoadMore(type));
-          },
-          onRefresh: () async {
-            BlocProvider.of<DiscussNetworkBloc>(context)
-                .add(DiscussNetworkRefresh(type));
-          },
-          emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
-          slivers:
-              data?.map<Widget>((p) => DiscussNetworkItem(p)).toList() ?? [],
-        );
+      () async {
+        BlocProvider.of<DiscussNetworkBloc>(context)
+            .add(DiscussNetworkRefresh(type));
       },
+      (p) => DiscussNetworkItem(p),
     );
   }
 }

@@ -1,12 +1,10 @@
 import 'package:cppcc_app/bloc/app_setting_bloc.dart';
 import 'package:cppcc_app/bloc/mailbox_bloc.dart';
 import 'package:cppcc_app/models/dict.dart';
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
+import 'package:cppcc_app/models/mail.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/mailbox_list_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:cppcc_app/utils/routes.dart';
 
@@ -108,48 +106,16 @@ class MailboxContentPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final EasyRefreshController _easyRefreshController =
-        EasyRefreshController();
     BlocProvider.of<MailboxBloc>(context).add(MailboxFirstFetch(type));
-    return BlocConsumer<MailboxBloc, MailboxState>(
-      buildWhen: (previous, current) =>
-          previous.data != current.data || previous.status != current.status,
-      listenWhen: (previous, current) =>
-          previous.data != current.data || previous.status != current.status,
-      listener: (previous, current) {
-        switch (current.status) {
-          case ListDataFetchStatus.normal:
-            _easyRefreshController.finishRefresh(success: true);
-            _easyRefreshController.finishLoad(success: true);
-            break;
-          case ListDataFetchStatus.refresh:
-            break;
-          case ListDataFetchStatus.loadMore:
-            break;
-          case ListDataFetchStatus.failure:
-            _easyRefreshController.finishRefresh(success: false);
-            _easyRefreshController.finishLoad(success: false);
-            break;
-        }
+    return BlocEasyFrefresh<MailboxBloc, MailboxState, Mail>(
+      (state) => state.data[type] ?? [],
+      () async {
+        BlocProvider.of<MailboxBloc>(context).add(MailboxLoadMore(type));
       },
-      builder: (context, state) {
-        var data = state.data[type];
-        return EasyRefresh.custom(
-          controller: _easyRefreshController,
-          enableControlFinishRefresh: true,
-          enableControlFinishLoad: true,
-          header: easyRefreshHeader,
-          footer: easyRefreshFooter,
-          onLoad: () async {
-            BlocProvider.of<MailboxBloc>(context).add(MailboxLoadMore(type));
-          },
-          onRefresh: () async {
-            BlocProvider.of<MailboxBloc>(context).add(MailboxRefresh(type));
-          },
-          emptyWidget: (data?.isEmpty ?? true) ? const EmptyData() : null,
-          slivers: data?.map((p) => MailboxListItem(p)).toList() ?? [],
-        );
+      () async {
+        BlocProvider.of<MailboxBloc>(context).add(MailboxRefresh(type));
       },
+      (p) => MailboxListItem(p),
     );
   }
 }

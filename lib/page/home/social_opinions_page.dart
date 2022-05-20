@@ -4,14 +4,11 @@ import 'package:cppcc_app/models/opinions.dart';
 import 'package:cppcc_app/styles.dart';
 import 'package:cppcc_app/utils/routes.dart';
 import 'package:cppcc_app/widget/easy_refresh.dart';
-import 'package:cppcc_app/widget/empty_data.dart';
 import 'package:cppcc_app/widget/general_search.dart';
 import 'package:cppcc_app/widget/opinion_item.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_easyrefresh/easy_refresh.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'package:cppcc_app/utils/list_data_fetch_status.dart';
 
 class SocialOpinionsPage extends StatefulWidget {
   const SocialOpinionsPage({Key? key}) : super(key: key);
@@ -126,7 +123,6 @@ class OpinionList extends StatefulWidget {
 }
 
 class _OpinionListState extends State<OpinionList> {
-  final _easyRefreshController = EasyRefreshController();
   String _searchKeyWord = "";
 
   @override
@@ -134,77 +130,45 @@ class _OpinionListState extends State<OpinionList> {
     return Container(
       color: AppColors.background,
       padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 8),
-      child: BlocConsumer<OpinionBloc, OpinionState>(
-        buildWhen: (previous, current) =>
-            previous.opinions != current.opinions ||
-            previous.status != current.status,
-        listenWhen: (previous, current) =>
-            previous.opinions != current.opinions ||
-            previous.status != current.status,
-        listener: (previous, current) {
-          switch (current.status) {
-            case ListDataFetchStatus.normal:
-              _easyRefreshController.finishRefresh(success: true);
-              _easyRefreshController.finishLoad(success: true);
-              break;
-            case ListDataFetchStatus.refresh:
-              break;
-            case ListDataFetchStatus.loadMore:
-              break;
-            case ListDataFetchStatus.failure:
-              _easyRefreshController.finishRefresh(success: false);
-              _easyRefreshController.finishLoad(success: false);
-              break;
-          }
-        },
-        builder: (context, state) {
-          var data = state.opinions[widget._listType] ?? [];
-          var filterData = (_searchKeyWord.isEmpty
-                  ? data
-                  : data
-                      .where((d) => d.title.contains(_searchKeyWord))
-                      .toList())
-              .where((element) => widget._filterSelf
-                  ? element.authorId ==
-                      BlocProvider.of<UserBloc>(context)
-                          .state
-                          .userInfo
-                          ?.userId
-                  : true)
-              .toList();
-          return Column(
-            children: [
-              GeneralSearch(
-                AppColors.greyTextColor,
-                (context, keyword) {
-                  setState(() {
-                    _searchKeyWord = keyword;
-                  });
-                },
-                initValue: _searchKeyWord,
-                fillColor: Colors.white,
-              ),
-              Expanded(
-                  child: EasyRefresh.custom(
-                controller: _easyRefreshController,
-                enableControlFinishRefresh: true,
-                enableControlFinishLoad: true,
-                header: easyRefreshHeader,
-                footer: easyRefreshFooter,
-                onLoad: () async {
-                  BlocProvider.of<OpinionBloc>(context)
-                      .add(OpinionLoadMore(widget._listType));
-                },
-                onRefresh: () async {
-                  BlocProvider.of<OpinionBloc>(context)
-                      .add(OpinionRefresh(widget._listType));
-                },
-                emptyWidget: filterData.isEmpty ? const EmptyData() : null,
-                slivers: filterData.map((p) => OpinionItem(p)).toList(),
-              ))
-            ],
-          );
-        },
+      child: Column(
+        children: [
+          GeneralSearch(
+            AppColors.greyTextColor,
+            (context, keyword) {
+              setState(() {
+                _searchKeyWord = keyword;
+              });
+            },
+            initValue: _searchKeyWord,
+            fillColor: Colors.white,
+          ),
+          Expanded(
+            child:
+                BlocEasyFrefresh<OpinionBloc, OpinionState, Opinion>((state) {
+              var data = state.opinions[widget._listType] ?? [];
+              var filterData = (_searchKeyWord.isEmpty
+                      ? data
+                      : data
+                          .where((d) => d.title.contains(_searchKeyWord))
+                          .toList())
+                  .where((element) => widget._filterSelf
+                      ? element.authorId ==
+                          BlocProvider.of<UserBloc>(context)
+                              .state
+                              .userInfo
+                              ?.userId
+                      : true)
+                  .toList();
+              return filterData;
+            }, () async {
+              BlocProvider.of<OpinionBloc>(context)
+                  .add(OpinionLoadMore(widget._listType));
+            }, () async {
+              BlocProvider.of<OpinionBloc>(context)
+                  .add(OpinionRefresh(widget._listType));
+            }, (p) => OpinionItem(p)),
+          )
+        ],
       ),
       // ),
     );

@@ -1,6 +1,6 @@
 part of 'proposal_bloc.dart';
 
-class ProposalState extends Equatable {
+class ProposalState extends Equatable with WithListFetchState {
   final int unreadCount;
   final ListDataFetchStatus status;
   final Map<ProposalListType, List<Proposal>> proposals;
@@ -50,5 +50,10 @@ class ProposalState extends Equatable {
       submitStatus ?? '',
       currentProposal ?? '',
     ];
+  }
+
+  @override
+  ListDataFetchStatus listFetchStatus() {
+    return status;
   }
 }

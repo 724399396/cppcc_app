@@ -64,4 +64,8 @@ class UserRepository {
         .updateUserInfo(UserUpdateRequest(wxQrCode: fileResponse.url));
     return fileResponse.url;
   }
+
+  Future feedback(String content, String userId) {
+    return _apiDataProvider.feedback(content, userId);
+  }
 }

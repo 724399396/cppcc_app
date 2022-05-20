@@ -84,3 +84,9 @@ class UserUpdateWxQrCode extends UserEvent {
   const UserUpdateWxQrCode(this.image, successCallback)
       : super(successCallback);
 }
+
+class UserFeedback extends UserEvent {
+  final String content;
+
+  const UserFeedback(this.content, successCallback) : super(successCallback);
+}

@@ -296,7 +296,7 @@ class SettingsSystem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        AppUpgrader(),
+        const AppUpgrader(),
         const SizedBox(height: 4),
         UserListItem(
           icon: Image.asset(

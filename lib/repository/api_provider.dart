@@ -491,4 +491,9 @@ class ApiDataProvider {
           BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
     });
   }
+
+  Future feedback(String content, String userId) {
+    return _dio.post('/app/feedback/add',
+        data: {'content': content, 'userId': userId});
+  }
 }

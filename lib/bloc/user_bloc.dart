@@ -68,6 +68,11 @@ class UserBloc extends Bloc<UserEvent, UserState> {
               emit(state.copyWith(
                   userInfo: state.userInfo?.copyWith(wxQrCode: image)));
             })));
+    on<UserFeedback>(
+        ((event, emit) => _generateCallApi(event, emit, (emit) async {
+              await _userRepository.feedback(
+                  event.content, state.userInfo?.userId ?? '');
+            })));
   }
 
   @override

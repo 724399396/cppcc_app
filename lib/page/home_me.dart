@@ -1,11 +1,21 @@
+import 'dart:io';
+
+import 'package:app_installer/app_installer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cppcc_app/repository/app_setting_repository.dart';
+import 'package:cppcc_app/repository/upload_repository.dart';
 import 'package:cppcc_app/styles.dart';
+import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
+import 'package:open_file/open_file.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:version/version.dart';
 import '../widget/user_list_item.dart';
 import 'package:cppcc_app/utils/routes.dart';
 
 import 'package:cppcc_app/bloc/user_bloc.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 /// 个人中心页面
 class HomeMe extends StatelessWidget {
@@ -230,12 +240,15 @@ class DutiesNumber extends StatelessWidget {
               ),
               Expanded(child: Container()),
               Container(
-                padding: const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
-                decoration: const BoxDecoration(
-                  color: Color(0xfffee0be),
-                  borderRadius: BorderRadius.all(Radius.circular(8))
-                ),
-                child: const Text("NO.123", style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),)),
+                  padding:
+                      const EdgeInsets.symmetric(vertical: 2, horizontal: 8),
+                  decoration: const BoxDecoration(
+                      color: Color(0xfffee0be),
+                      borderRadius: BorderRadius.all(Radius.circular(8))),
+                  child: const Text(
+                    "NO.123",
+                    style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
+                  )),
               const SizedBox(width: 14),
             ],
           )),
@@ -283,6 +296,8 @@ class SettingsSystem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
+        AppUpgrader(),
+        const SizedBox(height: 4),
         UserListItem(
           icon: Image.asset(
             'assets/icons/ic_wodmphdpi.png',
@@ -313,6 +328,62 @@ class SettingsSystem extends StatelessWidget {
           },
         )
       ],
+    );
+  }
+}
+
+class AppUpgrader extends StatefulWidget {
+  const AppUpgrader({
+    Key? key,
+  }) : super(key: key);
+
+  @override
+  State<AppUpgrader> createState() => _AppUpgraderState();
+}
+
+class _AppUpgraderState extends State<AppUpgrader> {
+  bool onUpdated = false;
+  @override
+  Widget build(BuildContext context) {
+    return UserListItem(
+      icon: Image.asset(
+        'assets/icons/ic-banbenhdpi.png',
+      ),
+      title: "检测新版本",
+      onClick: () async {
+        if (onUpdated) {
+          showToast('更新中，请耐心等待;');
+          return;
+        }
+        PackageInfo packageInfo = await PackageInfo.fromPlatform();
+        var latestVersionInfo =
+            await RepositoryProvider.of<AppSettingRepository>(context)
+                .getLatestAppVersion();
+        var latestVersion = latestVersionInfo.version;
+        if (Version.parse(latestVersion) > Version.parse(packageInfo.version)) {
+          if (Platform.isAndroid) {
+            showToast('检测到新版本，更新中，下载完成后自动打开安装界面，请耐心等待');
+            onUpdated = true;
+            var tempDir = await getTemporaryDirectory();
+            String fullPath = tempDir.path + "/" + latestVersion + ".apk";
+            File file = File(fullPath);
+            bool exists = await file.exists();
+            if (!exists) {
+              var bytes = await RepositoryProvider.of<FileRepository>(context)
+                  .download(latestVersionInfo.apkUrl);
+              await file.writeAsBytes(bytes);
+            }
+            onUpdated = false;
+            OpenFile.open(fullPath);
+          }
+          if (Platform.isIOS) {
+            String androidAppId = 'com.lingrit.cppcc.app';
+            // TODO
+            String iOSAppId = '';
+            AppInstaller.goStore(androidAppId, iOSAppId);
+          }
+        }
+      },
     );
   }
 }

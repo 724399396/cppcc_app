@@ -193,10 +193,6 @@ class _ProposalListState extends State<ProposalList> {
             child: BlocEasyFrefresh<ProposalBloc, ProposalState, Proposal>(
           (state) {
             var data = state.proposals[widget._listType] ?? [];
-            selectYear ??= data.map((e) => e.year).fold(
-                null,
-                (value, element) =>
-                    (value == null || value < element) ? element : value);
             var filterData = (_searchKeyWord.isEmpty
                     ? data
                     : data
@@ -212,8 +208,6 @@ class _ProposalListState extends State<ProposalList> {
                 .where((element) =>
                     selectYear != null ? element.year == selectYear : true)
                 .toList();
-            var years = data.map((e) => e.year).toSet().toList();
-            years.sort((a, b) => b.compareTo(a));
             return filterData;
           },
           () async {

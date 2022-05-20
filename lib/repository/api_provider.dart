@@ -19,6 +19,7 @@ import 'package:cppcc_app/dto/post_type.dart';
 import 'package:cppcc_app/dto/proposal_request.dart';
 import 'package:cppcc_app/dto/proposal_response.dart';
 import 'package:cppcc_app/dto/two_meetings_response.dart';
+import 'package:cppcc_app/dto/version_response.dart';
 import 'package:cppcc_app/models/guandu_historical_clue.dart';
 import 'package:cppcc_app/utils/navigation_service.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -482,5 +483,12 @@ class ApiDataProvider {
       ),
     );
     return response.data;
+  }
+
+  Future<VersionResponse> getLatestAppVersion() {
+    return _dio.get('/app/version/latest').then((value) {
+      return VersionResponse.fromJson(
+          BaseResponse.fromJson(value.data).result as Map<String, dynamic>);
+    });
   }
 }

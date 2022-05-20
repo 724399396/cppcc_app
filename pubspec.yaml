@@ -27,46 +27,49 @@ environment:
 # the latest version available on pub.dev. To see which dependencies have newer
 # versions available, run `flutter pub outdated`.
 dependencies:
+  app_installer: ^1.1.0
+  bloc_concurrency: ^0.2.0
+  cached_network_image: ^3.0.0
+  collection: ^1.15.0
   cupertino_icons: ^1.0.2
+  delta_markdown: ^0.6.0
   dio: ^4.0.4
+  dropdown_button2: ^1.4.0
   equatable: ^2.0.3
+  file_picker: ^4.5.1
   flutter:
     sdk: flutter
   flutter_bloc: ^8.0.1
-  fluttertoast: ^8.0.8
-  json_annotation: ^4.4.0
-  shared_preferences: ^2.0.13
-  flutter_native_splash: ^2.0.5
   flutter_easyrefresh: ^2.2.1
   flutter_html: ^2.2.1
-  cached_network_image: ^3.0.0
-  timeago: ^3.2.2
-  collection: ^1.15.0
-  intl: ^0.17.0
-  mobile_scanner: ^1.0.0
+  flutter_native_splash: ^2.0.5
+  flutter_quill: ^4.2.1
+  fluttertoast: ^8.0.8
   image_gallery_saver: ^1.7.1
-  timelines: ^0.1.0
-  web_socket_channel: ^2.1.0
   image_picker: ^0.8.5
-  dropdown_button2: ^1.4.0
+  intl: ^0.17.0
+  json_annotation: ^4.4.0
+  markdown: ^5.0.0
+  mobile_scanner: ^1.0.0
   multiselect_formfield:
     git:
       url: https://github.com/hitshydev/multiselect_formfield
-  flutter_quill: ^4.2.1
-  delta_markdown: ^0.6.0
-  markdown: ^5.0.0
-  file_picker: ^4.5.1
-  path_provider: ^2.0.10
   open_file: ^3.2.1
-  bloc_concurrency: ^0.2.0
+  package_info_plus: ^1.4.2
+  path_provider: ^2.0.10
+  shared_preferences: ^2.0.13
+  timeago: ^3.2.2
+  timelines: ^0.1.0
+  version: ^2.0.0
+  web_socket_channel: ^2.1.0
 
 dev_dependencies:
   build_runner: ^2.0.0
+  flutter_launcher_icons: ^0.9.2
   flutter_lints: ^1.0.0
   flutter_test:
     sdk: flutter
   json_serializable: ^6.0.0
-  flutter_launcher_icons: ^0.9.2
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec
@@ -107,7 +110,6 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
-
 flutter_icons:
   android: "ic_launcher"
   ios: true
@@ -116,5 +118,5 @@ flutter_icons:
 flutter_native_splash:
   background_image: "assets/splash.png"
   android_12:
-      image: assets/android12splash.png
-      icon_background_color: "#ffffff"
+    image: assets/android12splash.png
+    icon_background_color: "#ffffff"

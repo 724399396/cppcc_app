@@ -60,216 +60,225 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
-        child: Stack(alignment: Alignment.center, children: [
-      Positioned.fill(
-        child: Image.asset(
-          'assets/bg/bg_home.png',
-          fit: BoxFit.fitWidth,
-          alignment: Alignment.topLeft,
-        ),
-      ),
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
+      top: false,
+      child: Stack(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(16),
-            child: Text(
-              '官渡区政协委员履职平台',
-              style: Theme.of(context)
-                  .textTheme
-                  .titleLarge
-                  ?.copyWith(color: Colors.white, fontWeight: FontWeight.bold),
+             Container(
+              color: AppColors.primary,
+              height: 36,
+            ),
+          Positioned.fill(
+            top: 36,
+            child: Image.asset(
+              'assets/bg/bg_home.png',
+              fit: BoxFit.fitWidth,
+              alignment: Alignment.topLeft,
             ),
           ),
-          Row(
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const SizedBox(width: 8),
-              Expanded(
-                flex: 1,
-                child: Padding(
-                  padding: const EdgeInsets.all(8),
-                  child: Image.asset(
-                    'assets/icons/ic_logo.png',
-                  ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(16, 40, 16, 16),
+                child: Text(
+                  '官渡区政协委员履职平台',
+                  style: Theme.of(context).textTheme.titleLarge?.copyWith(
+                      color: Colors.white, fontWeight: FontWeight.bold),
                 ),
               ),
-              const SizedBox(width: 8),
-              Expanded(
-                  flex: 4,
-                  child: GeneralSearch(Colors.white, (context, keyword) {
-                    Navigator.of(context)
-                        .pushNamed(Routes.searchPage, arguments: keyword);
-                  })),
-              const SizedBox(width: 8),
-              Expanded(
-                  flex: 1,
-                  child: GestureDetector(
-                    onTap: () {
-                      Navigator.of(context).pushNamed(Routes.scanQRCode);
-                    },
+              Row(
+                children: [
+                  const SizedBox(width: 8),
+                  Expanded(
+                    flex: 1,
                     child: Padding(
-                        padding: const EdgeInsets.all(8),
-                        child: CircleAvatar(
-                          backgroundColor: const Color(0x88FFFFFF),
-                          child: Image.asset(
-                            'assets/icons/ic_saom.png',
-                            width: 24,
-                          ),
-                        )),
-                  )),
-              const SizedBox(width: 8),
-            ],
-          ),
-          Container(
-            decoration: const BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
-            ),
-            margin: const EdgeInsets.only(top: 8),
-            child: Column(children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  buildTabItem('履职档案', 'assets/icons/ic_lvzhidangan.png',
-                      Routes.performanceFilePage, 0, context),
-                  BlocBuilder<OpinionBloc, OpinionState>(
-                      builder: (context, state) => buildTabItem(
-                          '社情民意',
-                          'assets/icons/ic_sheqingmyi.png',
-                          Routes.socialOpinionsPage,
-                          state.unreadCount,
-                          context)),
-                  BlocBuilder<ProposalBloc, ProposalState>(
-                      builder: (contxst, state) => buildTabItem(
-                          '提案管理',
-                          'assets/icons/ic_tianbanli.png',
-                          Routes.proposalManagePage,
-                          state.unreadCount,
-                          context)),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  BlocBuilder<MeetingBloc, MeetingState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                          '会议活动',
-                          'assets/icons/ic_huiyihuod.png',
-                          Routes.meetingActivitiesPage,
-                          state.unreadCount,
-                          context);
-                    },
-                  ),
-                  BlocBuilder<PostsBloc, PostsState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                          '文件公告',
-                          'assets/icons/ic_wenjiangonggao.png',
-                          Routes.fileAnnmentPage,
-                          state.unreadCount[PostType.fileAnnment] ?? 0,
-                          context);
-                    },
-                  ),
-                  BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                          '网络议政',
-                          'assets/icons/ic_wangluoyiz.png',
-                          Routes.discussNetworkPage,
-                          state.unreadCount,
-                          context);
-                    },
-                  ),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-                  BlocBuilder<PostsBloc, PostsState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                          '委员学习',
-                          'assets/icons/ic_weiyuanxuexi.png',
-                          Routes.committeStudyPage,
-                          state.unreadCount[PostType.learning] ?? 0,
-                          context);
-                    },
-                  ),
-                  BlocBuilder<MailboxBloc, MailboxState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                          '领导信箱',
-                          'assets/icons/ic_lingdaoyoux.png',
-                          Routes.leaderMailboxPage,
-                          state.unreadCount,
-                          context);
-                    },
-                  ),
-                  BlocBuilder<PostsBloc, PostsState>(
-                    builder: (context, state) {
-                      return buildTabItem(
-                        '官渡文史',
-                        'assets/icons/ic_guanduwenshi.png',
-                        Routes.guanduHistoryListPage,
-                        state.unreadCount[PostType.guanduHistory] ?? 0,
-                        context,
-                      );
-                    },
-                  ),
-                ],
-              ),
-            ]),
-          ),
-          Container(
-            margin: const EdgeInsets.all(12),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container(
-                      decoration: BoxDecoration(
-                          color: AppColors.primary,
-                          borderRadius: BorderRadius.circular(8)),
-                      width: 6,
-                      height: 20,
+                      padding: const EdgeInsets.all(8),
+                      child: Image.asset(
+                        'assets/icons/ic_logo.png',
+                      ),
                     ),
-                    const SizedBox(width: 8),
-                    Text(
-                      '最新动态',
-                      style: Theme.of(context).textTheme.headline6,
-                    )
+                  ),
+                  const SizedBox(width: 8),
+                  Expanded(
+                      flex: 4,
+                      child: GeneralSearch(Colors.white, (context, keyword) {
+                        Navigator.of(context)
+                            .pushNamed(Routes.searchPage, arguments: keyword);
+                      })),
+                  const SizedBox(width: 8),
+                  Expanded(
+                      flex: 1,
+                      child: GestureDetector(
+                        onTap: () {
+                          Navigator.of(context).pushNamed(Routes.scanQRCode);
+                        },
+                        child: Padding(
+                            padding: const EdgeInsets.all(8),
+                            child: CircleAvatar(
+                              backgroundColor: const Color(0x88FFFFFF),
+                              child: Image.asset(
+                                'assets/icons/ic_saom.png',
+                                width: 24,
+                              ),
+                            )),
+                      )),
+                  const SizedBox(width: 8),
+                ],
+              ),
+              Container(
+                decoration: const BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(32)),
+                ),
+                margin: const EdgeInsets.only(top: 8),
+                child: Column(children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      buildTabItem('履职档案', 'assets/icons/ic_lvzhidangan.png',
+                          Routes.performanceFilePage, 0, context),
+                      BlocBuilder<OpinionBloc, OpinionState>(
+                          builder: (context, state) => buildTabItem(
+                              '社情民意',
+                              'assets/icons/ic_sheqingmyi.png',
+                              Routes.socialOpinionsPage,
+                              state.unreadCount,
+                              context)),
+                      BlocBuilder<ProposalBloc, ProposalState>(
+                          builder: (contxst, state) => buildTabItem(
+                              '提案管理',
+                              'assets/icons/ic_tianbanli.png',
+                              Routes.proposalManagePage,
+                              state.unreadCount,
+                              context)),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BlocBuilder<MeetingBloc, MeetingState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                              '会议活动',
+                              'assets/icons/ic_huiyihuod.png',
+                              Routes.meetingActivitiesPage,
+                              state.unreadCount,
+                              context);
+                        },
+                      ),
+                      BlocBuilder<PostsBloc, PostsState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                              '文件公告',
+                              'assets/icons/ic_wenjiangonggao.png',
+                              Routes.fileAnnmentPage,
+                              state.unreadCount[PostType.fileAnnment] ?? 0,
+                              context);
+                        },
+                      ),
+                      BlocBuilder<DiscussNetworkBloc, DiscussNetworkState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                              '网络议政',
+                              'assets/icons/ic_wangluoyiz.png',
+                              Routes.discussNetworkPage,
+                              state.unreadCount,
+                              context);
+                        },
+                      ),
+                    ],
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      BlocBuilder<PostsBloc, PostsState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                              '委员学习',
+                              'assets/icons/ic_weiyuanxuexi.png',
+                              Routes.committeStudyPage,
+                              state.unreadCount[PostType.learning] ?? 0,
+                              context);
+                        },
+                      ),
+                      BlocBuilder<MailboxBloc, MailboxState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                              '领导信箱',
+                              'assets/icons/ic_lingdaoyoux.png',
+                              Routes.leaderMailboxPage,
+                              state.unreadCount,
+                              context);
+                        },
+                      ),
+                      BlocBuilder<PostsBloc, PostsState>(
+                        builder: (context, state) {
+                          return buildTabItem(
+                            '官渡文史',
+                            'assets/icons/ic_guanduwenshi.png',
+                            Routes.guanduHistoryListPage,
+                            state.unreadCount[PostType.guanduHistory] ?? 0,
+                            context,
+                          );
+                        },
+                      ),
+                    ],
+                  ),
+                ]),
+              ),
+              Container(
+                margin: const EdgeInsets.all(12),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                              color: AppColors.primary,
+                              borderRadius: BorderRadius.circular(8)),
+                          width: 6,
+                          height: 20,
+                        ),
+                        const SizedBox(width: 8),
+                        Text(
+                          '最新动态',
+                          style: Theme.of(context).textTheme.headline6,
+                        )
+                      ],
+                    ),
                   ],
                 ),
-              ],
-            ),
-          ),
-          // 文件公告和资讯
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              child: BlocEasyFrefresh<PostsBloc, PostsState, Posts>(
-                  (state) =>
-                      (state.posts[const PostKey(PostType.news, null)] ?? []) +
-                      (state.posts[const PostKey(PostType.fileAnnment, null)] ??
-                          []), () async {
-                BlocProvider.of<PostsBloc>(context)
-                    .add(const PostLoadMore(PostKey(PostType.news, null)));
-                BlocProvider.of<PostsBloc>(context).add(
-                    const PostLoadMore(PostKey(PostType.fileAnnment, null)));
-              }, () async {
-                BlocProvider.of<PostsBloc>(context)
-                    .add(const PostRefresh(PostKey(PostType.news, null)));
-                BlocProvider.of<PostsBloc>(context).add(
-                    const PostRefresh(PostKey(PostType.fileAnnment, null)));
-              }, (p) => PostsItem(p)),
-            ),
+              ),
+              // 文件公告和资讯
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16),
+                  child: BlocEasyFrefresh<PostsBloc, PostsState, Posts>(
+                      (state) =>
+                          (state.posts[const PostKey(PostType.news, null)] ??
+                              []) +
+                          (state.posts[
+                                  const PostKey(PostType.fileAnnment, null)] ??
+                              []), () async {
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostLoadMore(PostKey(PostType.news, null)));
+                    BlocProvider.of<PostsBloc>(context).add(const PostLoadMore(
+                        PostKey(PostType.fileAnnment, null)));
+                  }, () async {
+                    BlocProvider.of<PostsBloc>(context)
+                        .add(const PostRefresh(PostKey(PostType.news, null)));
+                    BlocProvider.of<PostsBloc>(context).add(
+                        const PostRefresh(PostKey(PostType.fileAnnment, null)));
+                  }, (p) => PostsItem(p)),
+                ),
+              ),
+            ],
           ),
         ],
       ),
-    ]));
+    );
   }
 }

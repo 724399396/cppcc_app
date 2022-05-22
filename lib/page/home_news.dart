@@ -20,12 +20,17 @@ class _HomeNewsState extends State<HomeNews> {
   @override
   Widget build(BuildContext context) {
     return SafeArea(
+      top: false,
         child: Stack(
       alignment: Alignment.center,
       fit: StackFit.expand,
       children: [
+        Container(
+          color: AppColors.primary,
+          height: 36,
+        ),
         Positioned(
-          top: 0,
+          top: 36,
           child: SizedBox(
             child: Image.asset(
               'assets/bg/bg_news.png',
@@ -35,7 +40,7 @@ class _HomeNewsState extends State<HomeNews> {
           ),
         ),
         Container(
-          margin: const EdgeInsets.all(16),
+          margin: const EdgeInsets.fromLTRB(16, 56, 16, 16),
           child: GeneralSearch(
             Colors.white,
             ((context, keyword) => {
@@ -47,7 +52,7 @@ class _HomeNewsState extends State<HomeNews> {
           ),
         ),
         Container(
-            margin: const EdgeInsets.only(top: 80),
+            margin: const EdgeInsets.only(top: 116),
             padding: const EdgeInsets.symmetric(horizontal: 16),
             color: AppColors.background,
             child: BlocEasyFrefresh<PostsBloc, PostsState, Posts>(

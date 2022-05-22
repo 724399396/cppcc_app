@@ -1,6 +1,5 @@
 import 'dart:io';
 
-import 'package:app_installer/app_installer.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cppcc_app/repository/app_setting_repository.dart';
 import 'package:cppcc_app/repository/upload_repository.dart';
@@ -9,6 +8,7 @@ import 'package:cppcc_app/utils/toast.dart';
 import 'package:flutter/material.dart';
 import 'package:open_file/open_file.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:store_redirect/store_redirect.dart';
 import 'package:version/version.dart';
 import '../widget/user_list_item.dart';
 import 'package:cppcc_app/utils/routes.dart';
@@ -366,8 +366,9 @@ class _AppUpgraderState extends State<AppUpgrader> {
           if (Platform.isIOS) {
             String androidAppId = 'com.lingrit.cppcc.app';
             // TODO
-            String iOSAppId = '';
-            AppInstaller.goStore(androidAppId, iOSAppId);
+            String iOSAppId = 'com.lingrit.cppcc.iosApp';
+            StoreRedirect.redirect(
+                androidAppId: androidAppId, iOSAppId: iOSAppId);
           }
         }
       },

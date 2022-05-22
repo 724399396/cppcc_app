@@ -1,6 +1,4 @@
 PODS:
-  - app_installer (1.1.0):
-    - Flutter
   - device_info_plus (0.0.1):
     - Flutter
   - DKImagePickerController/Core (4.3.3):
@@ -136,6 +134,8 @@ PODS:
   - sqflite (0.0.2):
     - Flutter
     - FMDB (>= 2.7.5)
+  - store_redirect (0.0.1):
+    - Flutter
   - SwiftyGif (5.4.3)
   - Toast (4.0.0)
   - url_launcher_ios (0.0.1):
@@ -148,7 +148,6 @@ PODS:
     - Flutter
 
 DEPENDENCIES:
-  - app_installer (from `.symlinks/plugins/app_installer/ios`)
   - device_info_plus (from `.symlinks/plugins/device_info_plus/ios`)
   - file_picker (from `.symlinks/plugins/file_picker/ios`)
   - Flutter (from `Flutter`)
@@ -165,6 +164,7 @@ DEPENDENCIES:
   - path_provider_ios (from `.symlinks/plugins/path_provider_ios/ios`)
   - shared_preferences_ios (from `.symlinks/plugins/shared_preferences_ios/ios`)
   - sqflite (from `.symlinks/plugins/sqflite/ios`)
+  - store_redirect (from `.symlinks/plugins/store_redirect/ios`)
   - url_launcher_ios (from `.symlinks/plugins/url_launcher_ios/ios`)
   - video_player_avfoundation (from `.symlinks/plugins/video_player_avfoundation/ios`)
   - wakelock (from `.symlinks/plugins/wakelock/ios`)
@@ -194,8 +194,6 @@ SPEC REPOS:
     - Toast
 
 EXTERNAL SOURCES:
-  app_installer:
-    :path: ".symlinks/plugins/app_installer/ios"
   device_info_plus:
     :path: ".symlinks/plugins/device_info_plus/ios"
   file_picker:
@@ -228,6 +226,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/shared_preferences_ios/ios"
   sqflite:
     :path: ".symlinks/plugins/sqflite/ios"
+  store_redirect:
+    :path: ".symlinks/plugins/store_redirect/ios"
   url_launcher_ios:
     :path: ".symlinks/plugins/url_launcher_ios/ios"
   video_player_avfoundation:
@@ -238,7 +238,6 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/webview_flutter_wkwebview/ios"
 
 SPEC CHECKSUMS:
-  app_installer: 4301996bd8f3c6f75776416b8885a6d92928306f
   device_info_plus: e5c5da33f982a436e103237c0c85f9031142abed
   DKImagePickerController: 72fd378f244cef3d27288e0aebf217a4467e4012
   DKPhotoGallery: fdfad5125a9fdda9cc57df834d49df790dbb4179
@@ -273,6 +272,7 @@ SPEC CHECKSUMS:
   SDWebImage: 0905f1b7760fc8ac4198cae0036600d67478751e
   shared_preferences_ios: 548a61f8053b9b8a49ac19c1ffbc8b92c50d68ad
   sqflite: 6d358c025f5b867b29ed92fc697fd34924e11904
+  store_redirect: 2977747cf81689a39bd62c248c2deacb7a0d131e
   SwiftyGif: 6c3eafd0ce693cad58bb63d2b2fb9bacb8552780
   Toast: 91b396c56ee72a5790816f40d3a94dd357abc196
   url_launcher_ios: 839c58cdb4279282219f5e248c3321761ff3c4de

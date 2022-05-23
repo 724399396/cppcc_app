@@ -113,10 +113,6 @@ class HomeMe extends StatelessWidget {
                                       ),
                                     ),
                                     const SizedBox(width: 4),
-                                    Image.asset(
-                                      'assets/icons/ic_erweima.png',
-                                      width: 36,
-                                    )
                                   ],
                                 ),
                                 const SizedBox(height: 8),
@@ -274,15 +270,6 @@ class SettingsDuties extends StatelessWidget {
           },
         ),
         const SizedBox(height: 4),
-        UserListItem(
-          icon: Image.asset(
-            'assets/icons/ic_shouchdpi.png',
-          ),
-          title: "我的收藏",
-          onClick: () {
-            Navigator.of(context).pushNamed(Routes.collectionPage);
-          },
-        )
       ],
     );
   }
